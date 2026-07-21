@@ -325,6 +325,72 @@ cycle handling (auto-summarise into an overview) is a non-goal violation for
 us. See the conversation review; the components are worth harvesting, the
 architecture is not.
 
+### 2.11 Design note — ontology-first definitions (externally suggested; a decision, not adopted)
+
+Surfaced 2026-07-21 by a second AI tool. Unlike §2.10 (components), this is an
+*architectural* refinement worth capturing. It correctly observes that C9–C11
+are graph properties, not document properties, and agrees with us against the
+first tool that cycles must never be auto-resolved.
+
+**The idea:** make the definition itself a structured **graph record with a
+source span**, and treat `glossary.md` and `index.md` as **generated views**
+of the concept graph, rather than authoring `glossary.md` directly. A concept
+record:
+
+```yaml
+exposure:
+  definition:
+    source: [docA.md#L190-L225]   # span back to source text
+  depends_on: [position, instrument]
+  used_in: [risk-engine.md, fraud-detection.md]
+  aliases: [trading exposure]
+  classification: business-concept
+```
+
+**Why it is attractive:** if the concept record is canonical, three rules we
+currently specify separately fall out for free —
+
+- C10's "index is generated" and the dead-entry check become plain graph
+  queries;
+- the single-definition site becomes structurally impossible to violate
+  (one record; glossary entry and citations are views of it);
+- the definition's `source` span gives the precision and fabrication
+  validators a direct anchor, instead of re-deriving provenance.
+
+**The scope boundary — the reason it is not adopted wholesale.** Its headline
+("concept-graph compiler that emits Markdown; never Markdown → AI-rewrite →
+Markdown") is right for the *definition layer* and wrong for the *document
+bodies*. Our corpus is overwhelmingly non-definitional — scenarios, calibration
+tables, doctrine, worked examples, thresholds in prose. That cannot be
+regenerated from an ontology without the ontology becoming a verbatim copy of
+the document. The workable shape is **two layers**:
+
+- **Definition layer** — ontology-first: definitions are graph records;
+  glossary and index are generated views; regeneration, not rewrite; paraphrase
+  drift (C1/C2/C7) genuinely avoided here.
+- **Body layer** — restructured *source text*, tracked as moved / derived /
+  added, graph-driven reorder. Unchanged from the current plan; "never rewrite"
+  is unachievable here because reordering and bridging real prose is the point.
+
+**Open decision this raises (for Phase 4, or a rubric amendment):** does the
+canonical home of a definition become the **concept record** (glossary
+generated from it), or stay the **authored `glossary.md`**? This changes how
+the single-definition rule (C9) and the verification anchors are framed. Listed
+in §7 as an open item; not decided here.
+
+**Candidate command decomposition** (also from this tool; a Phase 4 skeleton,
+each step independently testable):
+
+```
+extract-concepts · infer-dependencies · build-graph · detect-cycles ·
+generate-glossary · generate-index · regenerate-docs ·
+verify-meaning · verify-precision · verify-references · create-pr-comments
+```
+
+Keep it, but split `regenerate-docs` into `generate-definition-views` (layer
+one, regenerated) and `restructure-bodies` (layer two, moved/derived/added),
+per the boundary above.
+
 ---
 
 ## 3. Per-stage mapping
@@ -412,6 +478,7 @@ Two of these are load-bearing and should be prioritised in a second round:
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python, provisional | **Undecided — research further** (round 2, priority D7) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
+| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first for the definition layer only — see §2.11 | **Open** — Phase 4, or a C9/C10 rubric amendment |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
 
