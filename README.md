@@ -66,7 +66,8 @@ question a glossary ordered for reading cannot: *where is this term?*
 | File | Purpose |
 |------|---------|
 | `./plan/detangle-agent-plan.md` | Full project plan: 9 phases, constraints, rubric, sequencing rationale |
-| `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — draft v3, pending sign-off)* |
+| `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
+| `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated *(Phase 2 — draft, pending decisions)* |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concept-graph.yaml` | Concept dependency edge list — source of truth *(Phase 3 — pending)* |
