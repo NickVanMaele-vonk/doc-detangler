@@ -545,8 +545,8 @@ evidence the method won't surface them and move on to building.
 | D1 | Adopt ISO 704 for definition shape and cycle policy? | Yes | **Yes** |
 | D2 | Concept-graph serialisation | SKOS/Turtle + local edge | **SKOS concept model, but a Mermaid-compatible file format** — see below |
 | D3 | Adopt TBX for the glossary? | No | **No** |
-| D4 | Reuse MiniCheck for fabrication checking? | **Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B** (round 2, evidence in) | **Awaiting Nick** — recommendation firm |
-| D5 | Reuse Vale for mechanical style checking? | **Yes for term/acronym rules; it CANNOT do concept-before-use, which we build** (round 2, evidence in) | **Awaiting Nick** — recommendation firm |
+| D4 | Reuse MiniCheck for fabrication checking? | Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B | **Confirmed by Nick 2026-07-21** — MIT checkpoint only |
+| D5 | Reuse Vale for mechanical style checking? | Yes for term/acronym rules; it CANNOT do concept-before-use, which we build | **Confirmed by Nick 2026-07-21** |
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python, provisional | **Still open** — round 2 only confirmed Node can do offline ONNX inference; per-stage comparison unresearched; lean Python |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
@@ -583,6 +583,10 @@ component.
 
 ### What is now settled for Phase 4 / build
 
-Adopt ISO 704 (D1). SKOS model + Mermaid serialisation, single
-`concept-graph.mmd` (D2). No TBX (D3). No `language_tool_python` (D6).
-MiniCheck, Vale, and the runtime remain open pending round 2.
+Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
+`concept-graph.yaml` source of truth, generated `concept-graph.mmd` render
+(D2). No TBX (D3). Reuse **MiniCheck** for fabrication checking, MIT
+Flan-T5-Large / DeBERTa-v3-Large checkpoint only (D4, confirmed). Reuse
+**Vale** for term/acronym rules only, not concept-before-use (D5, confirmed).
+No `language_tool_python` (D6). Runtime (D7) still open, leaning Python.
+D9 (ontology-first definitions) open for Phase 4.
