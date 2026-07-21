@@ -1,7 +1,7 @@
 # Definition of Done — Restructured Documents
 
-**Status:** Draft v3 — pending Nick's sign-off
-**Phase:** 1.1
+**Status:** **Approved** by Nick, 2026-07-21 (v3)
+**Phase:** 1.1 — complete
 **Last updated:** 2026-07-21
 
 A restructured document is "done" when it satisfies all eight criteria below,

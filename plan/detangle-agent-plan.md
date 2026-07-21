@@ -140,6 +140,8 @@ rubric only applies to tool output from Phase 6 onward.
 
 **Output:** `definition-of-done.md`
 **Done when:** Nick signs off, including the parameter values listed in it.
+**Status: complete.** Approved 2026-07-21. All parameters set except
+`param-low-confidence-threshold`, deferred to measurement in Phase 5.3.
 
 ## Phase 2 — Research
 Model/effort recommendation: Opus/high
@@ -148,7 +150,6 @@ Model/effort recommendation: Opus/high
 |------|-------------|
 | 2.1 | Search best practices: technical-writing structure frameworks (Diátaxis, minimalism, progressive disclosure); terminology standards (ISO 704, SKOS concept schemes); requirements-engineering document standards. |
 | 2.2 | Search open-source prior art: document-restructuring agents; term/keyphrase extraction libraries; concept-graph tooling; LLM claim-decomposition and claim-verification projects (RAG-evaluation space is the likely home of these). |
-| 2.3 | Write buy-vs-build memo: what we adopt, what we build. |
 
 **Output:** research memo with links.
 **Done when:** Nick has chosen what to reuse.

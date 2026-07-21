@@ -75,9 +75,9 @@ question a glossary ordered for reading cannot: *where is this term?*
 
 ## Status
 
-Plan approved. Phase 1.1 drafted: `plan/definition-of-done.md` (v3).
-Next step: Phase 1.2 — Nick approves or amends, including the parameter
-values listed in that document.
+Phase 1 complete — `plan/definition-of-done.md` approved 2026-07-21.
+Now in Phase 2: research into structure and terminology standards, and
+open-source prior art we can reuse when building.
 
 ## Owner
 
