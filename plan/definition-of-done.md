@@ -84,10 +84,19 @@ X, in the reading order of the set.
   against document text is satisfied structurally. The check still has real
   work to do in three places: inside the glossary, inside each document for
   its own local terms, and at every first use (below).
-- **First-use citation:** the first use of a glossary-defined term in each
-  document carries an explicit reference to its glossary entry. A shared
-  term's definition is **not** restated in the document — that would violate
-  the single-definition rule and create two maintenance sites.
+- **First-use citation — per section.** The first use of a glossary-defined
+  term **in each section** carries an explicit link to its glossary entry.
+  Not once per document: nobody reads documents of this size start to
+  finish, and readers arriving mid-document via search or a cross-reference
+  would otherwise meet an unexplained term whose only citation sits forty
+  pages earlier. Subsequent uses within the same section are not linked —
+  that would be link noise.
+- **Links point forward only.** Documents link to the glossary; the glossary
+  does not link back to the documents. A glossary defines terms, it does not
+  record where they are used. Usage locations are derived data and live in
+  `concept-graph.yaml`, not in prose (see criterion 6).
+- A shared term's definition is **not** restated in the document — that would
+  violate the single-definition rule and create two maintenance sites.
 - **Ordering inside the glossary:** glossary entries use other domain terms,
   so the glossary has its own concept-before-use problem, and a conventional
   alphabetical glossary is *not* compliant. `param-glossary-order` is
@@ -166,10 +175,15 @@ rule — and exactly one index entry pointing at it.
   a document-local term, that term is **promoted** to the glossary; if a
   term falls to a single document, it may be **demoted**. Both count as
   changed terms under 8b and are listed in the move-map.
-- **Acronyms:** every acronym is expanded at first use in each document. The
-  definition is keyed on the expansion, with the acronym as an alias.
+- **Acronyms:** every acronym is expanded at first use in each section,
+  matching the citation rule in criterion 1. The definition is keyed on the
+  expansion, with the acronym as an alias.
 - **Synonyms and aliases:** recorded explicitly; two entries may not define
   the same concept.
+- **No dead entries.** Every glossary entry has at least one use somewhere in
+  the set. An entry no document uses is cruft and is raised for disposition —
+  either the usage was lost in restructuring, which is an omission, or the
+  term does not belong in the glossary. Computed from term extraction.
 - **Scope:** one `glossary.md` for the set, never per-document.
 
 ### The index
@@ -191,9 +205,10 @@ rule — and exactly one index entry pointing at it.
 - **Generated, never hand-maintained.** The index is derived mechanically
   from the other four documents and is verified by regeneration
   (criterion 6). It is not a place where content can be lost or invented.
-- **Usage back-references stay on the glossary entry**, not in the index.
-  The index answers "where is this defined"; the glossary entry answers
-  "where is this used".
+- **Definition locations only.** The index answers "where is this term
+  defined". It does not answer "where is this term used" — no document
+  carries a usage concordance. Usage locations are derived data and live in
+  `concept-graph.yaml`, queryable there when needed.
 
 - **Verification method:** automatic — every term flagged by term extraction
   (Phase 3.1) has exactly one definition at the site the placement test
@@ -291,8 +306,17 @@ Restructuring must not break addressing, into or out of the set
   numbering as named companions; they are not "Document 0" or "of 5", and
   they renumber nothing. The glossary's position in the reading order is
   editorial, not a change to any document's identity metadata.
-- Every glossary entry lists back-references to each document and section
-  that uses the term, so the glossary is navigable in both directions.
+- **Every first use of a glossary term in a section links to its glossary
+  entry, and every such link resolves.** Links run forward only — no
+  document carries back-references to where its terms are used.
+- **Usage locations live in `concept-graph.yaml`.** Which documents and
+  sections use a term is recorded as graph edges, not duplicated into prose.
+  This is what makes impact analysis possible when a definition changes:
+  forward reachability over the graph names every section needing
+  re-verification. Storing the same data in the glossary would denormalise
+  it and churn the glossary on every content edit — including edits that
+  touch no definition, which would then wrongly count against
+  `param-max-terms-changed-per-PR`.
 - **The index is complete and resolving:** every term defined anywhere in the
   set appears exactly once in `index.md`; every index location resolves to
   the actual definition site; no index entry points at a term that no longer
@@ -313,7 +337,7 @@ Restructuring must not break addressing, into or out of the set
   preserved, the conflict is raised as a PR comment, and
   `param-manual-reviewer` decides which becomes the glossary entry.
 - **Verification method:** automatic (link/anchor resolution, metadata diff,
-  back-reference completeness); contradictions detected LLM-assisted and
+  first-use link resolution); contradictions detected LLM-assisted and
   dispositioned by `param-manual-reviewer`.
 - **Status:** buildable from Phase 6; specified now.
 
@@ -363,8 +387,10 @@ move-map (criterion 8).
 
 ### Generated navigation — outside the categories
 
-`index.md` in its entirety, the per-entry back-references in the glossary,
-and the move-map are **generated navigation**, not content. They carry no
+`index.md` in its entirety, the first-use glossary links inside the
+documents, and the move-map are **generated navigation**, not content. A
+first-use link asserts nothing about the domain — it points at a definition
+that already exists elsewhere in the set. They carry no
 provenance marking: they assert nothing about the domain, they are derived
 mechanically from the body text, and marking them would flood the
 fabrication check with noise — every index line would otherwise read as an

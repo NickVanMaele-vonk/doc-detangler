@@ -48,6 +48,10 @@ question a glossary ordered for reading cannot: *where is this term?*
 - Reading order and lookup order are separate artifacts: `glossary.md` is
   topological, `index.md` is alphabetical and covers every term across all
   four other documents. The index is generated and contains no definitions.
+- Links run forward only: each section links its first use of a glossary
+  term to that term's entry. A glossary defines terms; it does not record
+  where they are used. Usage locations are graph edges in
+  `concept-graph.yaml`.
 - A PR assembles changes relating to similar concepts and may touch any
   number of documents — document count is not the unit. A PR may not change
   more terms than `param-max-terms-changed-per-PR` (25). Each PR is two
