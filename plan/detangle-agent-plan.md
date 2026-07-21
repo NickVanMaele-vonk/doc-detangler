@@ -34,6 +34,7 @@ Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
 | C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document. No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
 | C10 | **Reading order and lookup order are separated.** `glossary.md` is ordered topologically so it can be read start to finish; `index.md` is alphabetical and covers every term across the other four documents. The index is generated, contains no definitions, and is verified by regeneration rather than by review. | Phase 3 + rubric criteria 3 and 6 |
+| C11 | **Links run forward only; usage data lives in the graph.** Each section links its first use of a glossary term to that term's entry. No document links back to where its terms are used: a glossary defines terms, it does not record usage. Usage locations are graph edges in `concept-graph.yaml`. | Phase 3 + rubric criteria 1 and 6 |
 
 ## 3. Scope
 
@@ -56,7 +57,10 @@ Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 The concept dependency graph is not a side feature; it drives the pipeline:
 
 - **Edge model:** directed edges "definition of X uses term Y".
-- **Forward reachability:** which downstream concepts use A.
+- **Forward reachability:** which downstream concepts use A, and which
+  document sections use A — the graph is the single home for usage data, so
+  no document carries a usage concordance. This is the impact-analysis query
+  run when a definition changes.
 - **Backward reachability:** which earlier concepts D depends on.
 - **Topological sort** of the graph = the correct concept-introduction order
   across the output set, and the ordering of `glossary.md` itself.
@@ -90,7 +94,9 @@ Model/effort recommendation: Opus/high
    the reading order `glossary.md` → Doc 1 → Doc 2 → Doc 3. Shared terms are
    satisfied structurally by the glossary preceding everything; the check
    still bites inside the glossary, inside each document for its local terms,
-   and at every first use (which must cite the glossary entry). Cycles
+   and at every first use **per section**, which must link to the glossary
+   entry. Links run forward only — documents link to the glossary, never the
+   reverse. Cycles
    require a human disposition plus a marked forward reference.
    *Automatically verifiable against the graph.*
 2. **Abstraction pyramid** — every document, glossary included, opens with a
@@ -161,7 +167,7 @@ input to any architecture and de-risks everything downstream.
 | 3.4 | Build dependency edge list; generate Mermaid render; run topological sort and cycle detection. |
 | 3.5 | Assemble `glossary.md`: an overview, then the definitions in **topological order** (`param-glossary-order`), so the glossary reads start to finish without ever meeting an undefined term. No alphabetical section — lookup lives in the index. The glossary is reader-facing and must pass criteria 1, 2, and 3 itself. |
 | 3.6 | Generate `index.md`: an alphabetical list of **every** term defined anywhere in the set — glossary or document — each with the location of its definition, plus alias and acronym entries pointing at the same location. Terms only, no definitions. Generated and verified by regeneration, never hand-maintained. |
-| 3.7 | Generate the glossary's per-entry back-references (each entry lists the documents and sections that use the term). The index answers "where is this defined"; the back-references answer "where is this used". |
+| 3.7 | Record term **usage locations as graph edges** in `concept-graph.yaml` — which document and section uses which term. Usage data lives in the graph only; the glossary defines terms and does not list where they are used. Forward reachability over these edges is what makes impact analysis possible when a definition changes. Also flag **dead entries**: glossary terms with no use anywhere in the set. |
 | 3.8 | Review via PR (Nick, optionally Ivo), within `param-max-terms-changed-per-PR` — the initial glossary will exceed 25 terms, so this lands as a sequence of concept-scoped PRs, not one. |
 
 **Outputs:** `glossary.md`, `index.md`, `concept-graph.yaml`, `concept-graph.mmd`
