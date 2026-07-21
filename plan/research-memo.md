@@ -131,7 +131,14 @@ should stop expecting external validation for them. The nearest candidate
 foundations — Information Mapping and the prerequisite-graph literature — were
 not researched (see gaps).
 
-### 2.4 SKOS — concept-scheme serialisation **(adopt, with a local extension)**
+### 2.4 SKOS — concept-scheme serialisation **(model adopted; serialisation is Mermaid, not Turtle — see D2)**
+
+> **Decision D2 overrides the serialisation recommendation below.** We keep
+> the SKOS concept *model* and the project-local dependency edge, but serialise
+> in a single Mermaid flowchart (`concept-graph.mmd`) that is both source and
+> render, not Turtle. The SKOS-limits findings (no dependency edge, cycles
+> permitted) still hold and still fall to us to handle.
+
 
 SKOS is a W3C Recommendation (18 Aug 2009, Miles & Bechhofer), not superseded.
 SKOS data are RDF triples encodable in any concrete RDF syntax; **Turtle** is
@@ -283,7 +290,7 @@ What it does **not** do:
 |---|---|---|---|
 | Term extraction | — | **not researched** | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
-| Graph serialisation | **SKOS**, Turtle | rdflib (unverified) | local dependency property |
+| Graph serialisation | **SKOS** model, **Mermaid** file (D2) | Mermaid tooling (round 2) | single `concept-graph.mmd` source+render, local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | qSKOS/Skosify (unverified) | detector + exception path |
 | Topological ordering | **none — refuted** | — | **all of it** |
 | Reorder planning | none | — | **all of it** |
@@ -349,15 +356,52 @@ Two of these are load-bearing and should be prioritised in a second round:
 
 ---
 
-## 7. Decisions requested (Phase 2 done when these are made)
+## 7. Decisions — recorded 2026-07-21
 
-| # | Decision | Recommendation |
-|---|---|---|
-| D1 | Adopt ISO 704 for definition shape and cycle policy? | **Yes** |
-| D2 | Adopt SKOS/Turtle for the concept graph, with a project-local dependency property? | **Yes** |
-| D3 | Adopt TBX for the glossary? | **No** — high cost, weak adoption, no edge model |
-| D4 | Reuse MiniCheck for fabrication checking? | **Yes**, subject to a maintenance and weights-licence check |
-| D5 | Reuse Vale for mechanical style checking? | **Yes**, vendored styles, subprocess |
-| D6 | Accept GPL-3.0-only `language_tool_python`? | **Defer** — not needed yet, and copyleft warrants a deliberate call |
-| D7 | Runtime | **Python**, provisionally — revisit after the library gaps are researched |
-| D8 | Commission a second research round for the gaps in §4? | **Yes** — at minimum 29148 traceability and prerequisite-graph sequencing |
+| # | Decision | Recommendation | **Nick's decision** |
+|---|---|---|---|
+| D1 | Adopt ISO 704 for definition shape and cycle policy? | Yes | **Yes** |
+| D2 | Concept-graph serialisation | SKOS/Turtle + local edge | **SKOS concept model, but a Mermaid-compatible file format** — see below |
+| D3 | Adopt TBX for the glossary? | No | **No** |
+| D4 | Reuse MiniCheck for fabrication checking? | Yes, subject to checks | **Deferred — needs more info** (round 2, priority D4) |
+| D5 | Reuse Vale for mechanical style checking? | Yes | **Deferred — needs more info** (round 2, priority D5) |
+| D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
+| D7 | Runtime | Python, provisional | **Undecided — research further** (round 2, priority D7) |
+| D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
+
+### D2 — SKOS model, Mermaid serialisation
+
+Keep the SKOS *concept model* (concepts, plus our project-local "definition
+of X uses term Y" dependency edge), but serialise the graph in a
+**Mermaid-compatible format** rather than Turtle. Consequence: the earlier
+plan's split — a YAML/Turtle source of truth plus a separately generated
+Mermaid render — collapses into a **single `concept-graph.mmd` flowchart that
+is both source and render**. It renders natively in Azure DevOps and GitHub
+with no build step, and each edge is one line, so git diffs stay clean.
+
+Open sub-questions this raises, now folded into round 2 (C2):
+
+- Mermaid flowchart is a diagram syntax, not a data model. Typed edges
+  (dependency vs. usage) can ride as edge labels, and cycle dispositions as
+  `%%` comments — but whether that holds up as the *sole* source of truth at
+  corpus scale is being checked. If it proves inadequate, the fallback is a
+  data source plus a generated render, reintroducing the split we just
+  removed.
+- Whether existing SKOS-to-Mermaid or graph-to-Mermaid tooling exists, or
+  the conversion is ours to write.
+
+### D6 — note on the reasoning
+
+Recorded as **No**, so `language_tool_python` is out. One clarification for
+future licence calls: GPL-3.0 copyleft attaches to distributing the *tool*,
+not to the *documents it produces* — the restructured output is not a
+derivative work of the checker. The "cannot make the documents public"
+concern is real but is a separate matter (document confidentiality), not a
+GPL consequence. The decision stands regardless, since we did not need the
+component.
+
+### What is now settled for Phase 4 / build
+
+Adopt ISO 704 (D1). SKOS model + Mermaid serialisation, single
+`concept-graph.mmd` (D2). No TBX (D3). No `language_tool_python` (D6).
+MiniCheck, Vale, and the runtime remain open pending round 2.
