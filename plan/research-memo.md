@@ -1,11 +1,14 @@
 # Phase 2 — Research Memo
 
-**Status:** Draft — pending Nick's decisions
+**Status:** Draft — rounds 1 & 2 complete; pending Nick's decisions on D4/D5/D7
 **Phase:** 2.1 / 2.2
 **Last updated:** 2026-07-21
-**Method:** fan-out web research with adversarial verification. 21 sources
-fetched, 100 candidate claims extracted, 25 verified by 3-vote adversarial
-check (2 of 3 refutations kill a claim). 21 confirmed, 4 refuted.
+**Method:** fan-out web research with adversarial verification (2 of 3
+refutations kill a claim).
+- **Round 1:** 21 sources, 100 candidate claims, 25 verified → 21 confirmed,
+  4 refuted.
+- **Round 2:** 28 sources, 123 candidate claims, 25 verified → 22 confirmed,
+  3 refuted. Targeted D4/D5/D7 and the round-1 gaps.
 
 This memo covers what to **follow** (standards, published technique) and what
 to **reuse** (self-hostable open-source components) when building the
@@ -13,7 +16,48 @@ pipeline. It is not a procurement exercise: we are building the tool.
 
 > **Read the coverage gaps section before acting on this.** Roughly half the
 > brief produced no verified finding and must be treated as *unresearched*,
-> not as an absence of options.
+> not as an absence of options. Round 2 resolved D4 and D5 but **did not fill
+> the two load-bearing gaps** (G1 29148 traceability, G2 prerequisite-graph
+> ordering) — see §4.
+
+## Round 2 addendum (2026-07-21)
+
+**D4 — MiniCheck: reuse, but only the MIT checkpoints.** Confirmed 3-0: the
+repo is Apache-2.0 and installs as a pip library running local in-process
+inference (self-hostable, nothing leaves the environment). But the flagship
+**Bespoke-MiniCheck-7B weights are CC BY-NC 4.0 — non-commercial**, paid
+licence required from Bespoke Labs. The smaller checkpoints under the `lytang`
+namespace are **MIT**: **MiniCheck-Flan-T5-Large** (~0.8B, described as the
+best sub-1B fact-checker, GPT-4-level) and **MiniCheck-DeBERTa-v3-Large**
+(~0.4B). Standardise on one of those, not the 7B — also far lighter to host
+(runs on modest GPU/CPU). **Caveat:** the "MiniCheck is dormant" claim was
+*refuted* (1-2), so maintenance status is genuinely unverified — we can assert
+neither healthy nor abandoned. Verify the RoBERTa checkpoint's weight licence
+and each checkpoint's base-model licence before vendoring.
+
+**D5 — Vale: reuse for term rules, but it cannot do concept-before-use.**
+Confirmed 3-0: MIT core; enforces controlled-language word rules via
+`Vale.Terms` (preferred) and `Vale.Avoid` (banned); the `conditional` check
+enforces acronym-definition **co-existence**. Packages vendor offline from a
+local dir/zip — no network at lint time. **But `conditional` checks
+co-existence in scope, not relative order** — the Vale docs themselves answer
+"Not directly" to definition-ordering. So **criterion 1 (concept-before-use)
+must be built by us**; Vale cannot enforce it. This confirms round 1's
+refutation. Integration is the Go binary as a subprocess. Bundled style
+packages (write-good, proselint, Microsoft, Google) carry separate licences —
+still unverified.
+
+**D7 — still open, still leaning Python.** Only one slice verified: Node
+**can** do offline ML inference via **Transformers.js** (server-side, ONNX-only,
+inference-only, ~2-4× slower than native). But the claim that Transformers.js
+is functionally equivalent to Python `transformers` was **refuted 0-3** — so
+Node cannot be assumed to run an arbitrary MiniCheck checkpoint without ONNX
+conversion, and the per-stage comparison (term extraction, graph, pandoc,
+Azure DevOps client) produced no verified claims. **D7 remains undecided**;
+the ONNX-only friction on our chosen verifier is a mark against Node.
+
+**C1 datapoint:** KeyBERT is MIT (but pulls sentence-transformers + model
+weights with their own licences).
 
 ---
 
@@ -397,16 +441,17 @@ per the boundary above.
 
 | Stage | Standard / technique | Component to reuse | We build |
 |---|---|---|---|
-| Term extraction | — | **not researched** | unknown |
+| Term extraction | — | **KeyBERT** (MIT; deps carry own licences) — one datapoint, rest not researched | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
 | Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | `concept-graph.yaml` source of truth + generated `concept-graph.mmd` render, local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
 | Markdown parsing / structure | — | **Marko / mistune** AST (unverified; grid-table round-trip is the deciding test) | section-move logic |
 | Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
 | Reorder planning | none | — | **all of it** |
-| LLM rewriting | ASD-STE100 technique | Vale (style lint, MIT) | rewriter |
+| LLM rewriting | ASD-STE100 technique | Vale (MIT) — term/acronym rules only, **not** ordering | rewriter |
+| Concept-before-use (C1) | none (refuted) | **none — Vale confirmed it cannot** | all of it |
 | Claim decomposition | **Wanner et al.** atomicity/coverage/coherence | — | decomposer, fixed + versioned |
-| Fabrication checking | — | **MiniCheck** (Apache-2.0) | wrapper, sentence splitting |
+| Fabrication checking | — | **MiniCheck** (repo Apache-2.0; **use MIT Flan-T5-Large / DeBERTa-v3-Large, not CC BY-NC 7B**) | wrapper, sentence splitting |
 | Coverage checking | — | **none exists** | MiniCheck run in reverse |
 | Precision preservation (C7) | — | — | token-multiset diff |
 | Index generation | — | — | trivial |
@@ -416,33 +461,60 @@ per the boundary above.
 
 ## 4. Coverage gaps — treat as unresearched
 
-This round clustered heavily on normative standards and core verification. The
-following produced **no verified claim** and must not be read as "nothing
-exists":
+**Still open after round 2.** Round 2 was aimed squarely at these and closed
+D4/D5 plus one C1 datapoint (KeyBERT), but the two load-bearing gaps and most
+of the component sweep **still produced no verified claim** and remain
+unresearched — not negative findings:
 
-**Strand A:** ISO 24495-1 plain language · ISO/IEC/IEEE 29148 requirements
-traceability across revisions · Information Mapping · minimalism (Carroll) ·
-progressive disclosure · ISO 1087 · prerequisite-relation extraction and
-prerequisite-aware sequencing · text-reuse and near-duplicate detection
+**The two that matter most (targeted in round 2, still empty):**
 
-**Strand B:** *all* term-extraction libraries (spaCy, KeyBERT, YAKE, pyate,
-TermSuite, LLM-based) · graph libraries and DOT/YAML/Turtle diff ergonomics ·
-SKOS tooling at single-corpus scale (Skosmos, VocBench) · most of the
-verification field (RAGAS, DeepEval, FActScore code, AlignScore, RefChecker,
-SAFE) · dependency-driven reordering prior art in docs/curriculum/legal
-drafting · semantic diff and pandoc grid-table round-tripping · Azure DevOps
-REST PR-comment-thread integration
+- **ISO/IEC/IEEE 29148 traceability (G1)** — central to the losslessness goal,
+  the closest existing standard to "prove no claim was lost". No verified
+  claim in either round.
+- **Prerequisite-graph literature (G2)** — the *only* candidate academic
+  foundation for criterion 1, since ISO 704 was refuted as an ordering basis.
+  No verified claim in either round. Criterion 1 currently has **no external
+  foundation at all** — we build it, and a third round should still try G2.
 
-Two of these are load-bearing and should be prioritised in a second round:
+**Remaining component sweep, unresearched:**
 
-- **ISO/IEC/IEEE 29148 traceability** — central to the losslessness goal, and
-  the closest thing to an existing standard for proving no claim was lost.
-- **The prerequisite-graph literature** — now the *only* candidate foundation
-  for criterion 1, since ISO 704 was refuted as a basis for ordering.
+- graph libraries and Mermaid-serialisation ergonomics (C2) — NetworkX and
+  Marko/mistune remain *externally-suggested, unverified* (§2.10)
+- rest of the verification field (C3): RAGAS, DeepEval, FActScore code,
+  AlignScore, RefChecker, SAFE — and whether any does the **coverage**
+  direction (still believed: none does; we build it)
+- dependency-driven reordering prior art (C4)
+- semantic diff and **pandoc grid-table round-tripping (C5)** — a known-hard
+  case for our corpus, still unresearched
+- Azure DevOps REST PR-comment client (C6)
+- most term-extraction libraries (C1): spaCy, YAKE, pyate, TermSuite,
+  LLM-based — only KeyBERT has a datapoint
+
+**From round 1, never researched:** ISO 24495-1 · Information Mapping ·
+minimalism (Carroll) · progressive disclosure · ISO 1087 · text-reuse /
+near-duplicate detection · SKOS tooling at single-corpus scale.
+
+**Recommendation:** a **round 3** is warranted, scoped tightly to G1, G2, C5
+(pandoc tables), and C6 (Azure DevOps) — the items that are both load-bearing
+and genuinely findable. G1/G2 have now failed twice, so treat a third miss as
+evidence the method won't surface them and move on to building.
 
 ---
 
 ## 5. Claims actively refuted — do not repeat these
+
+**Round 2 refutations:**
+
+5. MiniCheck is dormant / lightly-maintained (last update Sept 2024). **1-2**
+   — so maintenance status is *unverified*, not "abandoned".
+6. Transformers.js is functionally equivalent to Python `transformers`. **0-3**
+   — Node cannot be assumed to run arbitrary NLI checkpoints without ONNX
+   conversion.
+7. Vale exposes exactly 11 fixed regex-only check types. **0-3** — do not
+   treat the check list as a closed boundary (but ordering is still not among
+   them; see §2.7).
+
+**Round 1 refutations:**
 
 1. ISO 704 mandates a topological define-before-use ordering. **0–3.**
 2. The TechScribe ASD-STE100 checker is a self-hostable LanguageTool
@@ -473,10 +545,10 @@ Two of these are load-bearing and should be prioritised in a second round:
 | D1 | Adopt ISO 704 for definition shape and cycle policy? | Yes | **Yes** |
 | D2 | Concept-graph serialisation | SKOS/Turtle + local edge | **SKOS concept model, but a Mermaid-compatible file format** — see below |
 | D3 | Adopt TBX for the glossary? | No | **No** |
-| D4 | Reuse MiniCheck for fabrication checking? | Yes, subject to checks | **Deferred — needs more info** (round 2, priority D4) |
-| D5 | Reuse Vale for mechanical style checking? | Yes | **Deferred — needs more info** (round 2, priority D5) |
+| D4 | Reuse MiniCheck for fabrication checking? | **Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B** (round 2, evidence in) | **Awaiting Nick** — recommendation firm |
+| D5 | Reuse Vale for mechanical style checking? | **Yes for term/acronym rules; it CANNOT do concept-before-use, which we build** (round 2, evidence in) | **Awaiting Nick** — recommendation firm |
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
-| D7 | Runtime | Python, provisional | **Undecided — research further** (round 2, priority D7) |
+| D7 | Runtime | Python, provisional | **Still open** — round 2 only confirmed Node can do offline ONNX inference; per-stage comparison unresearched; lean Python |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
 | D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first for the definition layer only — see §2.11 | **Open** — Phase 4, or a C9/C10 rubric amendment |
 
