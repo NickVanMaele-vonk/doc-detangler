@@ -290,7 +290,7 @@ What it does **not** do:
 |---|---|---|---|
 | Term extraction | — | **not researched** | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
-| Graph serialisation | **SKOS** model, **Mermaid** file (D2) | Mermaid tooling (round 2) | single `concept-graph.mmd` source+render, local dependency edge |
+| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | `concept-graph.yaml` source of truth + generated `concept-graph.mmd` render, local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | qSKOS/Skosify (unverified) | detector + exception path |
 | Topological ordering | **none — refuted** | — | **all of it** |
 | Reorder planning | none | — | **all of it** |
@@ -369,26 +369,24 @@ Two of these are load-bearing and should be prioritised in a second round:
 | D7 | Runtime | Python, provisional | **Undecided — research further** (round 2, priority D7) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
 
-### D2 — SKOS model, Mermaid serialisation
+### D2 — SKOS model, Mermaid-compatible rendering
 
 Keep the SKOS *concept model* (concepts, plus our project-local "definition
-of X uses term Y" dependency edge), but serialise the graph in a
-**Mermaid-compatible format** rather than Turtle. Consequence: the earlier
-plan's split — a YAML/Turtle source of truth plus a separately generated
-Mermaid render — collapses into a **single `concept-graph.mmd` flowchart that
-is both source and render**. It renders natively in Azure DevOps and GitHub
-with no build step, and each edge is one line, so git diffs stay clean.
+of X uses term Y" dependency edge), and require a **Mermaid-compatible
+format** so the graph displays natively in Azure DevOps and GitHub, rather
+than Turtle. The two-artifact arrangement is retained: a plain-text edge-list
+**source of truth** (`concept-graph.yaml`) with a **Mermaid render**
+(`concept-graph.mmd`) generated from it. Mermaid is a compatible *view*, not
+the sole source of truth.
 
-Open sub-questions this raises, now folded into round 2 (C2):
+Open sub-questions, folded into round 2 (C2):
 
-- Mermaid flowchart is a diagram syntax, not a data model. Typed edges
-  (dependency vs. usage) can ride as edge labels, and cycle dispositions as
-  `%%` comments — but whether that holds up as the *sole* source of truth at
-  corpus scale is being checked. If it proves inadequate, the fallback is a
-  data source plus a generated render, reintroducing the split we just
-  removed.
-- Whether existing SKOS-to-Mermaid or graph-to-Mermaid tooling exists, or
-  the conversion is ours to write.
+- Whether the source-of-truth format could itself be Mermaid-native (one
+  artifact) without losing the ability to carry typed edges and cycle
+  dispositions — or whether keeping a separate data source is the right call.
+  This is an open question, **not** a settled collapse to a single file.
+- Whether existing SKOS-to-Mermaid or graph-to-Mermaid tooling exists, or the
+  conversion is ours to write.
 
 ### D6 — note on the reasoning
 

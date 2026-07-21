@@ -74,7 +74,7 @@ the rubric can be signed off without silently pre-committing to numbers.
 For every domain term X, the definition of X appears before the first use of
 X, in the reading order of the set.
 
-- **Formal check:** for each edge `X depends-on Y` in `concept-graph.mmd`,
+- **Formal check:** for each edge `X depends-on Y` in `concept-graph.yaml`,
   `position(definition of Y) < position(first use of X)`, where position is
   taken over the concatenated reading order `glossary.md` → Doc 1 → Doc 2 →
   Doc 3. The order need only be *consistent with* the graph's partial order;
@@ -94,7 +94,7 @@ X, in the reading order of the set.
 - **Links point forward only.** Documents link to the glossary; the glossary
   does not link back to the documents. A glossary defines terms, it does not
   record where they are used. Usage locations are derived data and live in
-  `concept-graph.mmd`, not in prose (see criterion 6).
+  `concept-graph.yaml`, not in prose (see criterion 6).
 - A shared term's definition is **not** restated in the document — that would
   violate the single-definition rule and create two maintenance sites.
 - **Ordering inside the glossary:** glossary entries use other domain terms,
@@ -110,7 +110,7 @@ X, in the reading order of the set.
   neither compromises for the other.
 - **Cycles:** a genuine definitional cycle cannot be fixed by reordering.
   A cycle satisfies this criterion when all of the following hold:
-  1. the cycle is recorded in `concept-graph.mmd` with a human disposition;
+  1. the cycle is recorded in `concept-graph.yaml` with a human disposition;
   2. one member is designated the entry point and defined first, using a
      forward reference of the form "…see [Term] below", marked as bridging
      text per criterion 7;
@@ -120,7 +120,7 @@ X, in the reading order of the set.
   documents, cross-document cycles collapse into intra-glossary cycles,
   which are resolvable by reordering the glossary. This is a primary
   motivation for glossary-first.
-- **Verification method:** automatic, against `concept-graph.mmd`.
+- **Verification method:** automatic, against `concept-graph.yaml`.
 - **Status:** ⏸ Deferred to Phase 3 (the graph does not exist yet).
 - **Interim (Phases 1–2):** manual reviewer check, advisory only.
 
@@ -208,7 +208,7 @@ rule — and exactly one index entry pointing at it.
 - **Definition locations only.** The index answers "where is this term
   defined". It does not answer "where is this term used" — no document
   carries a usage concordance. Usage locations are derived data and live in
-  `concept-graph.mmd`, queryable there when needed.
+  `concept-graph.yaml`, queryable there when needed.
 
 - **Verification method:** automatic — every term flagged by term extraction
   (Phase 3.1) has exactly one definition at the site the placement test
@@ -309,7 +309,7 @@ Restructuring must not break addressing, into or out of the set
 - **Every first use of a glossary term in a section links to its glossary
   entry, and every such link resolves.** Links run forward only — no
   document carries back-references to where its terms are used.
-- **Usage locations live in `concept-graph.mmd`.** Which documents and
+- **Usage locations live in `concept-graph.yaml`.** Which documents and
   sections use a term is recorded as graph edges, not duplicated into prose.
   This is what makes impact analysis possible when a definition changes:
   forward reachability over the graph names every section needing
@@ -496,7 +496,7 @@ A PR **changes a term** when it:
 - moves the definition between documents, or between a document and the
   glossary (promotion or demotion per criterion 3);
 - changes the term's name, expansion, or aliases;
-- changes an edge incident to that term in `concept-graph.mmd`.
+- changes an edge incident to that term in `concept-graph.yaml`.
 
 Adding or updating a *citation* to an unchanged definition does not count as
 changing the term; nor does relocating text that merely uses it.

@@ -51,7 +51,7 @@ question a glossary ordered for reading cannot: *where is this term?*
 - Links run forward only: each section links its first use of a glossary
   term to that term's entry. A glossary defines terms; it does not record
   where they are used. Usage locations are graph edges in
-  `concept-graph.mmd`.
+  `concept-graph.yaml`.
 - A PR assembles changes relating to similar concepts and may touch any
   number of documents — document count is not the unit. A PR may not change
   more terms than `param-max-terms-changed-per-PR` (25). Each PR is two
@@ -70,7 +70,8 @@ question a glossary ordered for reading cannot: *where is this term?*
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated *(Phase 2 — draft, pending decisions)* |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
-| `concept-graph.mmd` | Concept dependency graph — Mermaid flowchart, both source of truth and render (SKOS concept model, Mermaid serialisation) *(Phase 3 — pending)* |
+| `concept-graph.yaml` | Concept dependency edge list — source of truth (SKOS concept model) *(Phase 3 — pending)* |
+| `concept-graph.mmd` | Mermaid render of the graph, generated from the source of truth; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
 
 ## Status
