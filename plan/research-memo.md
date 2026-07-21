@@ -282,6 +282,49 @@ What it does **not** do:
 
 *Sources:* [arXiv:2404.10774](https://arxiv.org/html/2404.10774v1) (EMNLP 2024), [github.com/Liyan06/MiniCheck](https://github.com/Liyan06/MiniCheck), [LLM-AggreFact leaderboard](https://llm-aggrefact.github.io/)
 
+### 2.10 Externally-suggested components — **unverified, captured for round 2**
+
+Surfaced 2026-07-21 by a second AI tool asked to propose an architecture, and
+recorded here as candidates for the round-2 C-sweep. **None has been through
+our adversarial verification** (round 2 is paused). Licence and maintenance
+claims below are as-reported / from general knowledge, not vetted this round —
+treat them as leads, not facts, and hold them to the same check we applied to
+MiniCheck and Vale.
+
+- **NetworkX** — Python graph library; the concrete answer to the
+  ordering-engine stage that round 1 left unresearched. Provides
+  `topological_sort`, and `simple_cycles` / `find_cycle` /
+  `is_directed_acyclic_graph` — the detector our ISO 704 §6.5.2 cycle policy
+  needs. Believed BSD-3, mature, widely used. **Strongest of the batch;
+  verify licence/maintenance in C2.** Caveat carried from our own criterion 1:
+  a topological sort yields a *total* order, but document order need only be
+  *consistent with* the graph's partial order — use NetworkX for the sort and
+  cycle detection, not as "topo-sort = document order".
+- **Marko** / **mistune** — Python Markdown parsers exposing an AST, for
+  deterministic heading/section manipulation instead of regex. Candidates for
+  the markdown-parsing stage. **Open question for C5: do either round-trip the
+  heavily tabular pandoc grid tables in our corpus without loss?** — that is
+  the known-hard case, and it is what actually decides this choice.
+
+Also mentioned and **deliberately not adopted:**
+
+- **Flowmark** (LLM-oriented Markdown formatter) — its "smart typography"
+  rewrites quotes, dashes and spacing, which collides with C7 (verbatim
+  preservation of numbers, codes, citations). If used at all, whitespace/
+  wrapping only, never on content characters. Not a fit as described.
+- **`llm` CLI / LangChain / LlamaIndex** — orchestration; a Phase 4
+  architecture-decision matter, not a Phase 2 component. `llm` fits the
+  Unix-pipeline / hybrid candidate and can target self-hosted models.
+- **PyMuPDF4LLM** — PDF→Markdown ingestion; only relevant if source originals
+  arrive as PDF/Word rather than the pandoc-converted Markdown we already
+  have. Low priority.
+
+The proposal these came from omitted losslessness verification, provenance
+marking, the PR/review layer, and the five-document set entirely, and its
+cycle handling (auto-summarise into an overview) is a non-goal violation for
+us. See the conversation review; the components are worth harvesting, the
+architecture is not.
+
 ---
 
 ## 3. Per-stage mapping
@@ -291,8 +334,9 @@ What it does **not** do:
 | Term extraction | — | **not researched** | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
 | Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | `concept-graph.yaml` source of truth + generated `concept-graph.mmd` render, local dependency edge |
-| Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | qSKOS/Skosify (unverified) | detector + exception path |
-| Topological ordering | **none — refuted** | — | **all of it** |
+| Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
+| Markdown parsing / structure | — | **Marko / mistune** AST (unverified; grid-table round-trip is the deciding test) | section-move logic |
+| Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
 | Reorder planning | none | — | **all of it** |
 | LLM rewriting | ASD-STE100 technique | Vale (style lint, MIT) | rewriter |
 | Claim decomposition | **Wanner et al.** atomicity/coverage/coherence | — | decomposer, fixed + versioned |
