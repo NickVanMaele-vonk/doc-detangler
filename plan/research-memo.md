@@ -1,6 +1,7 @@
 # Phase 2 — Research Memo
 
-**Status:** Draft — rounds 1 & 2 complete; pending Nick's decisions on D4/D5/D7
+**Status:** Rounds 1–3 complete. D1–D6 decided; D7 (runtime) and D9
+(ontology-first) open for Phase 4. Ready to close Phase 2.
 **Phase:** 2.1 / 2.2
 **Last updated:** 2026-07-21
 **Method:** fan-out web research with adversarial verification (2 of 3
@@ -16,9 +17,10 @@ pipeline. It is not a procurement exercise: we are building the tool.
 
 > **Read the coverage gaps section before acting on this.** Roughly half the
 > brief produced no verified finding and must be treated as *unresearched*,
-> not as an absence of options. Round 2 resolved D4 and D5 but **did not fill
-> the two load-bearing gaps** (G1 29148 traceability, G2 prerequisite-graph
-> ordering) — see §4.
+> not as an absence of options. Round 2 resolved D4 and D5; **round 3 (lean,
+> single-source, not adversarially verified)** returned reusable method for
+> the two load-bearing gaps and resolved C5/C6 — see the round-3 addendum
+> and §4.
 
 ## Round 2 addendum (2026-07-21)
 
@@ -58,6 +60,40 @@ the ONNX-only friction on our chosen verifier is a mark against Node.
 
 **C1 datapoint:** KeyBERT is MIT (but pulls sentence-transformers + model
 weights with their own licences).
+
+## Round 3 addendum (2026-07-21) — lean, single-source, NOT adversarially verified
+
+Three budget-capped agents (no 3-vote check; ~74k tokens total, deliberately
+cheap). **Treat these as leads at lower confidence than rounds 1–2** — verify
+before relying on them; do not elevate them to rounds-1–2 confidence.
+
+- **C5 — pandoc grid tables: RESOLVED (build steer).** Marko and mistune are
+  CommonMark parsers with **no grid-table support** — they corrupt pandoc
+  grid tables. Drive the pipeline off **pandoc's JSON AST**
+  (`pandoc -t json` → panflute/Lua filter on `Table` nodes →
+  `pandoc -t markdown+grid_tables`), or mask each table as an opaque block and
+  restore it verbatim. This rules Marko/mistune out for our corpus — the
+  round-1 "deciding test" resolves against them.
+- **C6 — Azure DevOps: RESOLVED (reuse a client).** MIT `azure-devops` Python
+  SDK `GitClient` wraps PR threads (`create_thread`/`create_comment`/
+  `update_thread`), API 7.1; anchor to file+line via `threadContext`; status
+  enum `active → fixed/closed`. The merge gate is a **branch policy**, not the
+  tool; the PAT needs only **Code Read & Write** (`vso.code_write`), no merge
+  scope. Confirms the Phase 8 plan.
+- **G1 — ISO/IEC/IEEE 29148: method found.** A **bidirectional Requirements
+  Traceability Matrix** — unique ID per requirement, backward (derived-from) +
+  forward (coverage) links. Maps directly onto losslessness: give each atomic
+  source claim an ID; an unlinked source ID = a dropped claim, an unlinked
+  output element = an unsourced addition. A named frame for our coverage and
+  fabrication checks. Standard is paywalled; free secondary summaries only.
+- **G2 — prerequisite graphs: foundation found (reverses "no external basis").**
+  RefD metric (Liang et al. 2015) with released code+data
+  (`harrylclc/RefD-dataset`), the **AL-CPL** dataset, R-VGAE unsupervised
+  prerequisite-chain learning, and an ACM Computing Surveys 2025 survey.
+  Ordering follows from topo-sort / link-prediction on the extracted graph.
+  **Licences NOT FOUND** — per-repo due diligence before reuse. **Criterion 1
+  now has a candidate external foundation**, at low confidence — the earlier
+  "no external basis at all" is softened, not overturned.
 
 ---
 
@@ -445,17 +481,17 @@ per the boundary above.
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
 | Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | `concept-graph.yaml` source of truth + generated `concept-graph.mmd` render, local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
-| Markdown parsing / structure | — | **Marko / mistune** AST (unverified; grid-table round-trip is the deciding test) | section-move logic |
+| Markdown parsing / structure | — | **pandoc JSON AST** via panflute/Lua (R3); **Marko/mistune ruled out — no grid-table support** | section-move logic on the AST |
 | Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
 | Reorder planning | none | — | **all of it** |
 | LLM rewriting | ASD-STE100 technique | Vale (MIT) — term/acronym rules only, **not** ordering | rewriter |
-| Concept-before-use (C1) | none (refuted) | **none — Vale confirmed it cannot** | all of it |
+| Concept-before-use (C1) | **RefD / prerequisite-graph literature** (R3, low-confidence, licences unchecked) | none — Vale confirmed it cannot | ordering algorithm (RefD baseline + topo sort) |
 | Claim decomposition | **Wanner et al.** atomicity/coverage/coherence | — | decomposer, fixed + versioned |
 | Fabrication checking | — | **MiniCheck** (repo Apache-2.0; **use MIT Flan-T5-Large / DeBERTa-v3-Large, not CC BY-NC 7B**) | wrapper, sentence splitting |
-| Coverage checking | — | **none exists** | MiniCheck run in reverse |
+| Coverage checking | **bidirectional RTM** framing (ISO 29148, R3) | **none exists** | per-claim IDs + MiniCheck run in reverse |
 | Precision preservation (C7) | — | — | token-multiset diff |
 | Index generation | — | — | trivial |
-| PR integration | — | **not researched** | unknown |
+| PR integration | Azure DevOps REST 7.1 thread model | **`azure-devops` Python SDK `GitClient`** (MIT, R3) | finding→thread mapping; branch policy is the merge gate |
 
 ---
 
@@ -466,27 +502,22 @@ D4/D5 plus one C1 datapoint (KeyBERT), but the two load-bearing gaps and most
 of the component sweep **still produced no verified claim** and remain
 unresearched — not negative findings:
 
-**The two that matter most (targeted in round 2, still empty):**
+**Closed in round 3 (low confidence — single-source, not adversarially
+verified):** G1 (29148 RTM method), G2 (RefD / prerequisite-graph foundation),
+C5 (pandoc grid tables → pandoc JSON AST), C6 (Azure DevOps `GitClient`). See
+the round-3 addendum. These need a verification pass before being relied on,
+but each has a concrete primary source.
 
-- **ISO/IEC/IEEE 29148 traceability (G1)** — central to the losslessness goal,
-  the closest existing standard to "prove no claim was lost". No verified
-  claim in either round.
-- **Prerequisite-graph literature (G2)** — the *only* candidate academic
-  foundation for criterion 1, since ISO 704 was refuted as an ordering basis.
-  No verified claim in either round. Criterion 1 currently has **no external
-  foundation at all** — we build it, and a third round should still try G2.
+**Still genuinely unresearched:**
 
-**Remaining component sweep, unresearched:**
-
-- graph libraries and Mermaid-serialisation ergonomics (C2) — NetworkX and
-  Marko/mistune remain *externally-suggested, unverified* (§2.10)
+- graph libraries and Mermaid-serialisation ergonomics (C2) — NetworkX and the
+  AST question remain *externally-suggested / partly-resolved*, not fully
+  vetted (§2.10)
 - rest of the verification field (C3): RAGAS, DeepEval, FActScore code,
   AlignScore, RefChecker, SAFE — and whether any does the **coverage**
   direction (still believed: none does; we build it)
-- dependency-driven reordering prior art (C4)
-- semantic diff and **pandoc grid-table round-tripping (C5)** — a known-hard
-  case for our corpus, still unresearched
-- Azure DevOps REST PR-comment client (C6)
+- dependency-driven reordering prior art (C4) — though G2's prerequisite-graph
+  work (§Round 3) partly covers this
 - most term-extraction libraries (C1): spaCy, YAKE, pyate, TermSuite,
   LLM-based — only KeyBERT has a datapoint
 
@@ -494,10 +525,12 @@ unresearched — not negative findings:
 minimalism (Carroll) · progressive disclosure · ISO 1087 · text-reuse /
 near-duplicate detection · SKOS tooling at single-corpus scale.
 
-**Recommendation:** a **round 3** is warranted, scoped tightly to G1, G2, C5
-(pandoc tables), and C6 (Azure DevOps) — the items that are both load-bearing
-and genuinely findable. G1/G2 have now failed twice, so treat a third miss as
-evidence the method won't surface them and move on to building.
+**Recommendation:** research is complete enough to build. Every stage now has
+either a component, a method, or an explicit "we build this". The remaining
+gaps (C3 coverage-checker field, C1 term-extraction sweep) are best resolved
+during Phase 3/6 against the real corpus, not by more desk research. Verify
+the round-3 leads (especially G2 licences and the RTM framing) when they are
+actually implemented.
 
 ---
 
