@@ -78,9 +78,12 @@ question a glossary ordered for reading cannot: *where is this term?*
 
 Phases 1 and 2 complete (2026-07-21). Rubric approved
 (`plan/definition-of-done.md`); research memo delivered
-(`plan/research-memo.md`) across three rounds. Next: Phase 3 — build the
-glossary, index, and concept graph. Open architecture calls for Phase 4:
-runtime (D7, leaning Python) and ontology-first definitions (D9).
+(`plan/research-memo.md`) across three rounds. Phase 4's gating architecture
+decisions signed off 2026-07-22: runtime is **Python** (D7), and the
+definition layer is **ontology-first** (D9) — structured concept records are
+the source of truth, with `glossary.md`/`index.md`/`concept-graph.mmd`
+generated as anchored views. Next: Phase 3 — build the concept records and
+view-generator (glossary, index, concept graph).
 
 ## Owner
 

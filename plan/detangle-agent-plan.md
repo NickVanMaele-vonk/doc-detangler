@@ -2,8 +2,8 @@
 
 **Repo:** MTSAM-docs
 **Owner:** Nick Van Maele
-**Status:** Plan approved — execution not started
-**Last updated:** 2026-07-18
+**Status:** Phases 1–2 complete; all Phase 4 gate decisions (D1–D9) signed off. Phase 3 unblocked, not yet started.
+**Last updated:** 2026-07-22
 
 ---
 
@@ -170,8 +170,10 @@ concept-before-use ourselves (D5); no `language_tool_python` (D6). Components:
 pandoc JSON AST for parsing (Marko/mistune ruled out on grid tables), NetworkX
 for graph/topo/cycle, `azure-devops` SDK for PR threads. Method: 29148 RTM
 frame for coverage; RefD/prerequisite-graph for criterion-1 ordering (low
-confidence). **Open for Phase 4:** D7 runtime (leaning Python) and D9
-ontology-first definitions.
+confidence). **Signed off 2026-07-22:** D7 runtime is **Python**; D9 is
+**ontology-first** for the definition layer — structured concept records are
+the source of truth, glossary/index/mermaid are generated views. Phase 4's
+gating decisions are closed and Phase 3 is unblocked.
 
 ## Phase 3 — Glossary + concept graph (MTSAM domain asset)
 Model/effort recommendation: Fable or Opus/xhigh
@@ -179,15 +181,15 @@ Model/effort recommendation: Fable or Opus/xhigh
 Deliberately sequenced **before** the architecture decision: the graph is an
 input to any architecture and de-risks everything downstream.
 
-> **Sequencing flag — decide D9 before starting this phase.** Steps 3.3 and
-> 3.5–3.7 as written *author* `glossary.md` directly. If D9 (Phase 4) resolves
-> to ontology-first — definitions as concept records in the graph, with
-> `glossary.md` and `index.md` as *generated views* — those steps invert: the
-> concept graph becomes the definition store and the glossary/index are
-> generated from it, not hand-authored. This changes the deliverable, so D9
-> must be settled first. D7 (runtime) does **not** gate Phase 3 — Phase 3
-> produces data (YAML/Markdown), not code — so it can wait for Phase 4. See
-> research-memo §2.11 and decision D9.
+> **Resolved — D9 settled ontology-first (signed off 2026-07-22).** Steps 3.3
+> and 3.5–3.7 no longer *author* `glossary.md`; they populate structured
+> concept records (one file per concept) as the source of truth and
+> **generate** `glossary.md`, `index.md`, and `concept-graph.mmd` as anchored
+> views. The view-generator (with source-map anchors, per §D9) must exist
+> before the first review, so reviewers always read markdown, never records.
+> D7 (Python) does not gate Phase 3 — Phase 3 produces data, not code. See
+> research-memo §D9 for the full decision, including the comment→edit
+> round-trip.
 
 | Step | Description |
 |------|-------------|
@@ -211,8 +213,8 @@ Model/effort recommendation: Opus/high
 
 | Step | Description |
 |------|-------------|
-| 4.1 | **Decide D9 — canonical home of a definition:** concept record with `glossary.md`/`index.md` as generated views (ontology-first), vs authored `glossary.md`. **Gates Phase 3** (see the sequencing flag there) — resolve this before Phase 3 begins, or as a C9/C10 rubric amendment. Recommendation: ontology-first for the definition layer only; document bodies stay on the moved/derived/added model. See research-memo §2.11. |
-| 4.2 | **Decide D7 — runtime:** Python vs Node/TypeScript. Research leaned Python (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK are all Python-first; Node needs ONNX conversion for the verifier). Does not gate Phase 3. See research-memo D7. |
+| 4.1 | **D9 — canonical home of a definition: DECIDED ontology-first (signed off 2026-07-22).** Structured concept records (one file per concept) are the source of truth; `glossary.md`/`index.md`/`concept-graph.mmd` are generated views with source-map anchors enabling a deterministic comment→edit round-trip; document bodies stay on the moved/derived/added model. Vector/graph DBs rejected as the truth store; NetworkX supplies the algorithms. Fold the C9/C10 framing into the rubric when Phase 3 starts. See research-memo §D9. |
+| 4.2 | **D7 — runtime: DECIDED Python (signed off 2026-07-22).** Python-first ecosystem (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK); Node would need ONNX conversion for the verifier. Did not gate Phase 3. See research-memo D7. |
 | 4.3 | Present form-factor options with trade-offs (candidates below). |
 | 4.4 | Nick chooses; decision recorded with rationale. |
 
@@ -303,9 +305,12 @@ Model/effort recommendation: Opus/high
 1. **Phase 3 before Phase 4:** the glossary and graph are architecture-independent
    inputs and retain standalone value for the MTSAM project even if the agent is
    never completed.
-2. **Phase 7 is first-class, not an afterthought:** for FSMA-facing documentation,
-   restructured documents that cannot be proven lossless are unusable. The harness
-   is the item most tempting to defer and the one to hold firm on.
+2. **Phase 7 is first-class, not an afterthought:** these documents are the
+   authoritative specifications the tool is built from, so restructured
+   documents that cannot be proven lossless are unusable — lost or invented
+   meaning would propagate into the tool. (The specs are not FSMA-facing; only
+   the resulting tool and its later documentation are.) The harness is the item
+   most tempting to defer and the one to hold firm on.
 
 ## Working agreements (applies to all phases)
 
