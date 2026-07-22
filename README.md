@@ -76,9 +76,11 @@ question a glossary ordered for reading cannot: *where is this term?*
 
 ## Status
 
-Phase 1 complete — `plan/definition-of-done.md` approved 2026-07-21.
-Now in Phase 2: research into structure and terminology standards, and
-open-source prior art we can reuse when building.
+Phases 1 and 2 complete (2026-07-21). Rubric approved
+(`plan/definition-of-done.md`); research memo delivered
+(`plan/research-memo.md`) across three rounds. Next: Phase 3 — build the
+glossary, index, and concept graph. Open architecture calls for Phase 4:
+runtime (D7, leaning Python) and ontology-first definitions (D9).
 
 ## Owner
 

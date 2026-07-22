@@ -160,8 +160,18 @@ Model/effort recommendation: Opus/high
 | 2.1 | Search best practices: technical-writing structure frameworks (Diátaxis, minimalism, progressive disclosure); terminology standards (ISO 704, SKOS concept schemes); requirements-engineering document standards. |
 | 2.2 | Search open-source prior art: document-restructuring agents; term/keyphrase extraction libraries; concept-graph tooling; LLM claim-decomposition and claim-verification projects (RAG-evaluation space is the likely home of these). |
 
-**Output:** research memo with links.
+**Output:** research memo with links (`plan/research-memo.md`).
 **Done when:** Nick has chosen what to reuse.
+**Status: complete.** 2026-07-21, three research rounds. Decided: adopt ISO 704
+(D1); SKOS model + Mermaid render, `concept-graph.yaml` source of truth (D2);
+no TBX (D3); reuse MiniCheck via the MIT Flan-T5-Large/DeBERTa-v3-Large
+checkpoint only (D4); reuse Vale for term/acronym rules but build
+concept-before-use ourselves (D5); no `language_tool_python` (D6). Components:
+pandoc JSON AST for parsing (Marko/mistune ruled out on grid tables), NetworkX
+for graph/topo/cycle, `azure-devops` SDK for PR threads. Method: 29148 RTM
+frame for coverage; RefD/prerequisite-graph for criterion-1 ordering (low
+confidence). **Open for Phase 4:** D7 runtime (leaning Python) and D9
+ontology-first definitions.
 
 ## Phase 3 — Glossary + concept graph (MTSAM domain asset)
 Model/effort recommendation: Fable or Opus/xhigh
