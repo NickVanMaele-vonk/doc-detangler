@@ -179,6 +179,16 @@ Model/effort recommendation: Fable or Opus/xhigh
 Deliberately sequenced **before** the architecture decision: the graph is an
 input to any architecture and de-risks everything downstream.
 
+> **Sequencing flag — decide D9 before starting this phase.** Steps 3.3 and
+> 3.5–3.7 as written *author* `glossary.md` directly. If D9 (Phase 4) resolves
+> to ontology-first — definitions as concept records in the graph, with
+> `glossary.md` and `index.md` as *generated views* — those steps invert: the
+> concept graph becomes the definition store and the glossary/index are
+> generated from it, not hand-authored. This changes the deliverable, so D9
+> must be settled first. D7 (runtime) does **not** gate Phase 3 — Phase 3
+> produces data (YAML/Markdown), not code — so it can wait for Phase 4. See
+> research-memo §2.11 and decision D9.
+
 | Step | Description |
 |------|-------------|
 | 3.1 | Extract candidate terms from the three shortened files + full Analytical Layer blueprint (UCE, SBSP, MCL, IBEB, CQS, BOA, …). LLM-assisted, human-reviewed. |
@@ -201,8 +211,10 @@ Model/effort recommendation: Opus/high
 
 | Step | Description |
 |------|-------------|
-| 4.1 | Present options with trade-offs (candidates below). |
-| 4.2 | Nick chooses; decision recorded with rationale. |
+| 4.1 | **Decide D9 — canonical home of a definition:** concept record with `glossary.md`/`index.md` as generated views (ontology-first), vs authored `glossary.md`. **Gates Phase 3** (see the sequencing flag there) — resolve this before Phase 3 begins, or as a C9/C10 rubric amendment. Recommendation: ontology-first for the definition layer only; document bodies stay on the moved/derived/added model. See research-memo §2.11. |
+| 4.2 | **Decide D7 — runtime:** Python vs Node/TypeScript. Research leaned Python (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK are all Python-first; Node needs ONNX conversion for the verifier). Does not gate Phase 3. See research-memo D7. |
+| 4.3 | Present form-factor options with trade-offs (candidates below). |
+| 4.4 | Nick chooses; decision recorded with rationale. |
 
 **Candidate architectures:**
 
