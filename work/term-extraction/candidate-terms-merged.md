@@ -4,18 +4,19 @@
 Nothing here is a concept record yet; this is the review artifact that step 3.1
 ("LLM-assisted, human-reviewed") requires before records are created.
 
-**Sources:** the three component blueprints — `blueprint-UCE-shortened.md` (U),
-`blueprint-SBSP-shortened.md` (S), `blueprint-MCL-shortened.md` (M) — plus
-`blueprint-analytical-layer.md` (A, read-only reference, **excluded from the
-C9 placement test** per Nick's ruling 2026-07-22).
+**Sources:** the three component blueprints 
+| Source doc | Abbreviation | Notes |
+|---|---|---|
+| `blueprint-UCE-shortened.md` | (U) | | 
+| `blueprint-SBSP-shortened.md` | (S) | |
+| `blueprint-MCL-shortened.md` | (M) | |
+| `blueprint-analytical-layer.md` | (A) | read-only reference, **excluded from the C9 placement test** per Nick's ruling 2026-07-22 | 
 
 **Raw per-document extractions** (definition quotes, line spans, aliases, full
-notes): `blueprint-*.terms.yaml` in this directory. This file is the merge:
-one row per candidate concept, with per-document presence and computed
-placement.
+notes): `blueprint-*.terms.yaml` in this directory. File `candidate-terms-merged.md` is the merge: one row per candidate concept, with per-document presence and computed placement.
 
 **Placement rule (C9):** used in ≥2 of {U, S, M} → `glossary.md`; used in
-exactly 1 → defined locally in that document. `A` never counts toward
+exactly 1 → defined locally in that document. Document `A` never counts toward
 placement; an `(A)` flag is informational only.
 
 Raw record counts before merging: U ≈ 135, S ≈ 120, M ≈ 130, A ≈ 100.
@@ -34,12 +35,12 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 | Term | Acronym | Used in | Def? | Notes |
 |---|---|---|---|---|
 | Universal Core Engine | UCE | U,S,M (A) | U (A) | M also calls it "Veridict Core Engine"; version skew: M applies to v28, S cites v30 |
-| Sector Intelligence Pack (Sovereign Government Bond Sector Intelligence Pack) | SBSP | U,S,M (A) | U,S (A) | A calls it "Sovereign Bond Sector Pack", never uses acronym SBSP |
-| Institution Calibration Layer | MCL | U,M (A) | U (A) | Acronym MCL only in filename; A calls it "MTSAM Calibration Layer" |
+| Sovereign Bond Sector Pack | SBSP | U,S,M (A) | U,S (A) | Alternatively also "Sector Intelligence Pack" or "Sovereign Government Bond Sector Intelligence Pack" - goal is replace these alternatives by "SBSP" / "Sovereign Bond Sector Pack" |
+| MTSAM Calibration Layer | MCL | U,M (A) | U (A) | Acronym MCL only in filename; alternatively also "Institution Calibration Layer" - a layer of the solution that contains any company-specific definitions and rules, with `MTSAM` being one company |
 | Veridict MAR Intelligence Platform | — | U,S,M | ⊘ | Vendor/product family; never described |
 | Document set (Doc 1/2/3 + Doc 6, Doc 7, ECIL Suppl.) | — | U,S,M | ⊘ | "3 of 3" claimed, but Docs 6 & 7 cited — set-extent conflict |
-| MTSAM (MTS Associated Markets) | MTSAM | U,S,M (A) | M (A) | Meaning drifts: venue vs surveilling institution; A spells both "Associated" and "Associate" |
-| MTS S.p.A. | MTS | S,M (A) | A | Platform operator; high confusion risk with MTSAM |
+| MTSAM (MTS Associated Markets) | MTSAM | U,S,M (A) | M (A) | real definition: legal entity in Belgium; its meaning drifts: venue vs surveilling institution; (A) uses both "Associated" and "Associate" spellings |
+| MTS S.p.A. | MTS | S,M (A) | A | real definition: legal entity in Italy, sister company of MTSAM; financial markets platform operator; high confusion risk with MTSAM |
 
 ### 1b. Pipeline objects and units of analysis
 
@@ -215,6 +216,7 @@ Definition conflicts (two docs disagree):
 15. **Alert provenance** (informational, A vs M): A attributes RT/RD alerts to Eagle/ATS; M to "MTS S.p.A. surveillance system".
 
 Identity questions (same concept, different names? — resolve before records):
+
 16. IBE (S usage) ≡ IBE (U/A definition)? and IBEB as separate concept.
 17. DAF ≡ DependencyFactor (U)?
 18. Removal Register ≡ explicit exclusion register ≡ Formally Removed Data Categories.
@@ -230,27 +232,66 @@ Identity questions (same concept, different names? — resolve before records):
 28. SCS vs SCS_bpl — two constructs sharing a name.
 
 Word-overload cluster (glossary must disambiguate, criterion 1):
+
 29. **"Tier"**: pattern tiers 1/2/3 · escalation Tier 1 · AI-governance Tier 1 controls · MTSAM supervisory tier · ECIL feed tiers · SB-26 "Tier 3 investigative hypothesis".
 30. **"Level"**: Four-Level Observability (1–4) · CICI levels (1–3) · evidence hierarchy (1–5) · audit chain (L1–L5) · Level 0 closure · BCI levels (named) · classification levels · maturity levels.
 31. **"Layer"**: Five-Layer FSMA architecture · four data layers (API stack) · six software layers (A) · three logical layers (A) · UCE/BPL/ECIL/CCL "layers" · Layer 2 feeds (Doc 3).
 32. **"IS"**: Intent Score vs the English verb — extraction hazard; also IS vs IScore vs ISS.
 
-Set-level orphans (used somewhere, letter-expanded nowhere): CQS, CCT, MDCS,
-CWPS, QDSP, PLCS, SRI, IPI, POFP, HQLD, UEEO, BOA, EMT, PFNE, DQS, BIVM, VMI,
-OAIC, HSL, RSN, SSF/DF, CF, OPL, EDT, ISGO, BEP_E, BDS, SDAIL, RAAF, NFIL,
-plus RT/RD themselves. These become the step 3.3 orphan/flag list.
+Set-level orphans (used somewhere, letter-expanded nowhere): 
+33. CQS
+34. CCT
+35. MDCS
+36. CWPS, 
+37. QDSP, 
+38. PLCS
+39. SRI, 
+40. IPI, 
+41. POFP, 
+42. HQLD, 
+43. UEEO, 
+44. BOA, 
+45. EMT, 
+46. PFNE, 
+47. DQS
+48. BIVM
+49. VMI
+50. OAIC
+51. HSL
+52. RSN
+53. SSF/DF
+54. CF
+55. OPL
+56. EDT
+57. ISGO
+58. BEP_E
+59. BDS
+60. SDAIL
+61. RAAF
+62. NFIL
+63. RT/RD
+These become the step 3.3 orphan/flag list.
 
 ## 5. Source-document structural anomalies (feed into C8 reference checks)
 
-- S: duplicated section number A.4.3.1 (two different sections); A.5 missing;
-  §D.4 text embedded inside a table row; archetype table truncated at SB-20;
-  UTF-8 mojibake in A.4.3; TOC promises absent Sections B–J.
-- U: "XI" numbering reused (Insider Dealing vs Deployment Maturity); OCR-garbled
-  Step 11b rationale; same amendment ID (UCE-AMD-BVR-001) on two change sets.
-- M: v21 title vs v22 changelog; MTSAM-L register extent inconsistent.
-- A: "Associated" vs "Associate" Markets; Phase 1 vs Phase 2 assignment of the
-  five must-have external sources contradicts itself across §4.1/§8.2/§9.3;
-  broken cross-reference (T+1 "as mentioned in 4.1 and 5.1" — absent).
+- S: 
+  - duplicated section number A.4.3.1 (two different sections); 
+  - A.5 missing; 
+  - §D.4 text embedded inside a table row; 
+  - archetype table truncated at SB-20; 
+  - UTF-8 mojibake in A.4.3; 
+  - TOC promises absent Sections B–J.
+- U: 
+  - "XI" numbering reused (Insider Dealing vs Deployment Maturity); 
+  - OCR-garbled Step 11b rationale; 
+  - same amendment ID (UCE-AMD-BVR-001) on two change sets.
+- M: 
+  - v21 title vs v22 changelog; 
+  - MTSAM-L register extent inconsistent.
+- A: 
+  - "Associated" vs "Associate" Markets; 
+  - Phase 1 vs Phase 2 assignment of the five must-have external sources contradicts itself across §4.1/§8.2/§9.3; 
+  - broken cross-reference (T+1 "as mentioned in 4.1 and 5.1" — absent).
 
 ## 6. Next steps (per plan §Phase 3)
 
