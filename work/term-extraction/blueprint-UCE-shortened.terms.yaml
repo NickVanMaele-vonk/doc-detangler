@@ -1,0 +1,1556 @@
+# Step 3.1 raw extraction — LLM-assisted, NOT yet human-reviewed.
+# Source: samples/blueprint-UCE-shortened.md. Extracted 2026-07-22.
+# Line numbers are approximate; verify before citing as provenance.
+document: blueprint-UCE-shortened.md
+document_note: "File is 294 physical lines (~116KB; very long pandoc-grid-table lines). Only front matter (title block, Version History table, Part-contents tables), Part I (I.1-I.3) and Part II (II.1-II.2) are present in this shortened version; Parts III-XX exist only as one-line summaries in the Part-contents table (L58-L92). Line numbers below refer to physical lines."
+terms:
+  - term: Universal Core Engine
+    acronym: UCE
+    aliases: ["the engine", "Core Engine", "UCE"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"This document specifies the Universal Core Engine --- the sector-agnostic analytical architecture that underpins all Veridict MAR Intelligence deployments. It is independent of market type, instrument class, or institutional context.\" (Title block, L11); also \"The Universal Core Engine answers one question with analytical precision: 'Is this behaviour consistent with market manipulation or insider dealing under MAR Article 12?'\" (I.1, L98)"
+    first_use: "Title block, L3"
+    used_before_defined: true
+    sections_used: ["Title block", "Version History", "I.1 The Analytical Question", "I.2 Core Design Principles", "I.3 What the Engine Is Not", "II.1 Pipeline Overview"]
+    notes: "Acronym UCE appears only inside amendment IDs (UCE-AMD-BVR-001) and the code path veridict_uce/bci.py, never as standalone prose."
+  - term: Veridict MAR Intelligence Platform
+    acronym: null
+    aliases: ["Veridict Intelligence", "MAR Intelligence", "Veridict MAR Intelligence deployments"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Title block, L1-L5"
+    used_before_defined: false
+    sections_used: ["Title block", "Version History (L15)"]
+    notes: "Product/platform name; the three-document structure (Doc 1 UCE, Doc 2 Sector Packs, Doc 3 Calibration Layers) is stated at L11."
+  - term: Sector Intelligence Pack
+    acronym: null
+    aliases: ["Sector Pack", "Document 2", "Doc 2"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Market-specific pattern detection, threshold calibration, and contextual enrichment are provided by Sector Intelligence Packs (Document 2).\" (pre-I.1 paragraph, L94)"
+    first_use: "Title block, L11"
+    used_before_defined: true
+    sections_used: ["Title block", "Version History", "pre-I.1 paragraph L94", "I.3 What the Engine Is Not", "II.1 Pipeline Overview"]
+    notes: "OCR-mangled fragments 'refi S ector Pack ( Doc 2)' at L245 and L267 are corrupted marginal callouts of this term."
+  - term: Institution Calibration Layer
+    acronym: null
+    aliases: ["Calibration Layer", "Document 3", "Doc 3"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Institutional configuration is provided by Institution Calibration Layers (Document 3).\" (pre-I.1 paragraph, L94)"
+    first_use: "Title block, L11"
+    used_before_defined: true
+    sections_used: ["Title block", "Part contents table (Parts XIX, XX rows)", "pre-I.1 paragraph L94"]
+    notes: "Part XX asserts Calibration Layers may operationalise but never vary universal doctrine (L81)."
+  - term: Market Abuse Regulation
+    acronym: MAR
+    aliases: ["MAR"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Title block, L5"
+    used_before_defined: false
+    sections_used: ["Title block", "Version History (Article 16 at L30)", "Part contents table (Doc 7 row)", "I.1 The Analytical Question"]
+    notes: "Never expanded to 'Market Abuse Regulation' in this doc; always used as acronym."
+  - term: MAR Article 12
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "I.1 The Analytical Question, L98"
+    used_before_defined: false
+    sections_used: ["I.1 The Analytical Question"]
+    notes: "The engine's single analytical question is framed against Article 12 (manipulation / insider dealing)."
+  - term: MAR Article 16
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, XI.2, L30"
+    used_before_defined: false
+    sections_used: ["Version History (Price Impact Gate rationale)"]
+    notes: "Quoted as requiring that the transaction 'could have an impact on price'; basis for the Price Impact Gate."
+  - term: Suspicious Transaction and Order Report
+    acronym: STOR
+    aliases: ["STOR filing", "STOR philosophy", "STOR decision architecture", "STOR draft", "STOR_Readiness"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part X, Doc 7 rows)", "I.2 Core Design Principles (Principle 8)", "I.3 What the Engine Is Not", "II.2 Human Intervention Checkpoints (HCP-3, HCP-4)"]
+    notes: "Never expanded in this doc. STOR_Readiness is a project-specific assessed state at HCP-3 (L289)."
+  - term: FSMA
+    acronym: FSMA
+    aliases: ["fsma_2016_08_d"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table (Doc 7 row)"]
+    notes: "Belgian regulator; fsma_2016_08_d is its six-section STOR template mapped by Doc 7. ESMA and MiFID do NOT appear anywhere in this document."
+  - term: EU AI Act
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table (Doc 7 row)"]
+    notes: "Listed as a Doc 7 readiness concern only."
+  - term: market manipulation
+    acronym: null
+    aliases: ["manipulation", "manipulation event"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "I.1 The Analytical Question, L98"
+    used_before_defined: false
+    sections_used: ["I.1 The Analytical Question", "II.1 Pipeline Overview (Step 11b rationale)"]
+    notes: "MAR concept the engine adjudicates against."
+  - term: insider dealing
+    acronym: null
+    aliases: ["Insider Dealing (Part XI of full doc)"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, L24"
+    used_before_defined: false
+    sections_used: ["Version History", "I.1 The Analytical Question"]
+    notes: "MAR concept; full doc has a Part XI on it (not present in this shortened version — the shortened Part contents table reuses 'XI' for Deployment Maturity, a numbering conflict)."
+  - term: 22-step analytical pipeline
+    acronym: null
+    aliases: ["22-step pipeline", "twenty-two sequential steps", "Stage 1", "the analytical pipeline"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Stage 1: twenty-two sequential steps, organised across three phases: structural qualification (Steps 1--11), causal and outcome validation (Steps 12--18), and explanatory adjudication (Steps 19--22).\" (II.1 Pipeline Overview, L168)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "II.1 Pipeline Overview"]
+    notes: "Table actually enumerates steps 1-22 plus lettered steps 5b, 11b, 11c, 21b — more than 22 rows."
+  - term: Intraday Behavioural Event Builder
+    acronym: IBEB
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Stage 0 (pre-pipeline): the Intraday Behavioural Event Builder (IBEB, §XVII.10) groups raw data streams --- trades, quotes, alerts, ECIL context, and participant history --- into Intraday Behavioural Events (IBEs) for each participant-instrument pair within a configurable temporal window.\" (II.1 Pipeline Overview, L168)"
+    first_use: "II.1 Pipeline Overview, L166-L168 (also Part II banner L171)"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (overview and Step 1 row)"]
+    notes: "Referenced to §XVII.10 which is not included in this shortened doc."
+  - term: Intraday Behavioural Event
+    acronym: IBE
+    aliases: ["IBEs", "IBE object"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Same sentence as IBEB (II.1, L168); plus \"Each IBE is the primary input to Stage 1. ... The pipeline receives IBEs, not individual alerts.\" (II.1, L168)"
+    first_use: "II.1 Pipeline Overview, L168"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview"]
+    notes: "Carries fields ibe_stream_count, ibe_primitives, ibe_score, ibe_sensitive_timing_flag and constituent event references (Step 1 row, L179)."
+  - term: Behavioural Episode Consolidation
+    acronym: BEP_E
+    aliases: ["episode consolidation", "episode", "active episode"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Episode consolidation (BEP_E, §XVII.0) operates downstream of the pipeline: classified signals for the same participant are grouped into episodes that constitute the analyst review unit.\" (II.1 Pipeline Overview, L168)"
+    first_use: "Version History v23 row, L20 (\"BEP_E / BPL (XVII)\")"
+    used_before_defined: true
+    sections_used: ["Version History", "II.1 Pipeline Overview (overview; Step 21 Three-Tier modifier)"]
+    notes: "BEP_E acronym never expanded; canonical name inferred from context. 'Episode' itself is a load-bearing local concept (the analyst review unit)."
+  - term: gate
+    acronym: null
+    aliases: ["structural gate", "gate architecture", "deterministic gate conditions", "capping gate", "closure gate"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"The architecture is non-compensatory: no dimension in a later step can compensate for a failed gate in an earlier step. Classification is determined by the highest structural gate cleared.\" (II.1 Pipeline Overview, L168)"
+    first_use: "Version History v23 row, L20 (\"gate architecture (CQT/CQS, OS, IS, CCL, EscalationReadiness)\")"
+    used_before_defined: true
+    sections_used: ["Version History", "I.2 Core Design Principles", "II.1 Pipeline Overview"]
+    notes: "Central architectural concept; every pipeline row is typed GATE / SCORED OUTPUT / etc."
+  - term: non-compensatory architecture
+    acronym: null
+    aliases: ["non-compensatory"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The architecture is non-compensatory: no dimension in a later step can compensate for a failed gate in an earlier step.\" (II.1 Pipeline Overview, L168)"
+    first_use: "II.1 Pipeline Overview, L168"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (overview; Step 13 row)"]
+    notes: null
+  - term: classification
+    acronym: null
+    aliases: ["LOW", "MEDIUM", "HIGH", "VERY HIGH", "classification bands", "classification ceiling", "MEDIUM ceiling"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Classification is determined by the highest structural gate cleared. Scoring orders signals within classification bands for workload prioritisation. These two roles are strictly separated.\" (II.1, L168); Step 12: \"LOW/MEDIUM/HIGH/VERY HIGH determined by structural gates. PriorityScore does not influence classification.\" (L227)"
+    first_use: "Version History (implicit); II.1 Pipeline Overview L168 for definition"
+    used_before_defined: true
+    sections_used: ["Version History", "I.2 Core Design Principles", "II.1 Pipeline Overview", "II.2 Human Intervention Checkpoints"]
+    notes: "Strict classification-vs-scoring separation is a repeated doctrinal point."
+  - term: MEDIUM-INVESTIGATE
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b row, L195"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 11b, 21b)"]
+    notes: "Sub-band of MEDIUM used as the retention state when DIF/PG/BDRS block HIGH; never formally defined here."
+  - term: MEDIUM-STRUCTURED REVIEW
+    acronym: null
+    aliases: ["structured review"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "I.2 Core Design Principles, Principle 12, L147"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 12)"]
+    notes: "Another MEDIUM sub-band; relationship to MEDIUM-INVESTIGATE never clarified in this doc — possible near-synonym or distinct tiers."
+  - term: PriorityScore
+    acronym: null
+    aliases: ["PriorityScore formula", "PriorityScore_final"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 13: \"PriorityScore = IScore × CF × IntentFactor × DependencyFactor. Non-compensatory; bounded by gate strength.\" (II.1, L229); Step 18: \"PriorityScore_final = PriorityScore + RRF. Requires CQT≥2.\" (L239/L253)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "I.2 Core Design Principles (Principles 5, 8 context)", "II.1 Pipeline Overview (Steps 8, 10, 12, 13, 18)"]
+    notes: "Explicitly a SECONDARY OUTPUT (ranking only); OS=0 and IS=0 both collapse it to 0."
+  - term: IScore
+    acronym: null
+    aliases: ["IScore (0--24.3)", "IScore mapping"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, L24 (\"§VI.1c IScore mapping\")"
+    used_before_defined: false
+    sections_used: ["Version History", "II.1 Pipeline Overview (Steps 9, 13)"]
+    notes: "Composite of the six reweighted indicators, range 0--24.3; the mapping section (§VI.1c) is not in this shortened doc. Not to be confused with IS (Intent Score) or ISS."
+  - term: Six Indicators
+    acronym: null
+    aliases: ["Volume", "Price", "Dominance", "Timing", "Cross-alert", "Repetition", "indicator confirmation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 9: \"Six indicators reweighted for behaviour-centricity (Volume, Price, Dominance, Timing, Cross-alert, Repetition). IScore (0--24.3). Behaviour-centric reweighting: raw alert outputs (Volume, Price) are weighted lower than behavioural indicators...\" (II.1, L203/L209)"
+    first_use: "II.1 Pipeline Overview, Step 9 row, L203"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 9)"]
+    notes: "Weights referenced to §IX.1 (not included)."
+  - term: behaviour-centric reweighting
+    acronym: null
+    aliases: ["behaviour-centricity"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Behaviour-centric reweighting: raw alert outputs (Volume, Price) are weighted lower than behavioural indicators (Cross-alert, Repetition, Dominance with persistence).\" (II.1, Step 9, L209)"
+    first_use: "II.1 Pipeline Overview, Step 9, L203-L209"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 9)"]
+    notes: null
+  - term: Convergence Quality Score
+    acronym: CQS
+    aliases: ["CQS uplift", "CQS contributions"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20 (\"CQT/CQS\")"
+    used_before_defined: false
+    sections_used: ["Version History (v29 CQS Uplift by BCI Level)", "II.1 Pipeline Overview (Steps 5, 5b, 11c, 21)"]
+    notes: "Expansion 'Convergence Quality Score' never given verbatim — inferred from Step 5 'Convergence validation (CQS/CQT)'. Scale ambiguity: Step 5 uses integer bands (CQS 3--5, 6--8, ≥9) but Step 21 uses fractional thresholds (CQS≥0.85, CQS≥0.90) — apparent unit inconsistency within this doc."
+  - term: Convergence Quality Tier
+    acronym: CQT
+    aliases: ["CQT1", "CQT2", "CQT3", "CQT gate"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 5: \"CQT1 (CQS 3--5) = MEDIUM minimum; CQT2 (CQS 6--8) = HIGH minimum; CQT3 (CQS ≥9) = VERY HIGH eligible.\" (II.1, L187); also Principle 3: \"CQT gate: CQT2 required for HIGH; CQT3 for VERY HIGH.\" (I.2, L117)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "I.2 Core Design Principles (Principle 3)", "II.1 Pipeline Overview (Steps 5, 5b, 18, 21)"]
+    notes: "Expansion never given; inferred."
+  - term: convergence
+    acronym: null
+    aliases: ["convergence validation", "false convergence", "coherent alignment"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "Principle 3: \"HIGH and VERY HIGH require coherent alignment across multiple independent analytical dimensions.\" (I.2, L117)"
+    first_use: "I.2 Core Design Principles, Principle 3, L117"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principles 3, 4)", "II.1 Pipeline Overview (Steps 4, 5, 5b)"]
+    notes: null
+  - term: Dependency Score
+    acronym: DS
+    aliases: ["DS gate", "DS (0--2)", "DS=2", "DS=1"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 4: \"DS (0--2) assessed; DAF applied. DS=2 → convergence invalidated. DS=1 → weight reduced 30%.\" (II.1, L185)"
+    first_use: "I.2 Core Design Principles, Principle 4, L119 (\"DS gate: DS=2 collapses DAF to 0.0\")"
+    used_before_defined: true
+    sections_used: ["I.2 Core Design Principles (Principle 4)", "II.1 Pipeline Overview (Steps 1, 4)"]
+    notes: "Expansion 'Dependency Score' inferred from 'Dependency filter' context, never stated. SRS=3 force-assigns DS=2 (Step 1)."
+  - term: Dependency Filter
+    acronym: null
+    aliases: ["dependency filter (Step 4)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 4: \"The Dependency Filter ensures convergence is built on genuinely independent signals.\" (I.2, L119)"
+    first_use: "I.2 Core Design Principles, Principle 4, L119"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles", "II.1 Pipeline Overview (Step 4)"]
+    notes: null
+  - term: DAF
+    acronym: DAF
+    aliases: ["DAF dual-mechanism", "DependencyFactor (possibly)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XIII row, L67 (\"DAF dual-mechanism\"); enforcement use at I.2 Principle 4, L119"
+    used_before_defined: false
+    sections_used: ["Part contents table (Part XIII)", "I.2 Core Design Principles (Principle 4)", "II.1 Pipeline Overview (Step 4)"]
+    notes: "Never expanded (likely Dependency Adjustment Factor). Step 13's PriorityScore formula uses 'DependencyFactor' — probably the same construct under a different surface form; flag for reconciliation."
+  - term: Domain Independence Filter
+    acronym: DIF
+    aliases: ["domain diversity check"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 5b: \"DIF verifies that CQS is built from contributions in ≥2 independent analytical domains. Domains: (A) Behavioural/Transactional ... (B) Persistence ... (C) Interaction ... (D) Outcome ... (E) Contextual ... Single-domain CQT2 (all CQS contributions from domain A only) → HIGH blocked, retained at MEDIUM-INVESTIGATE.\" (II.1, L189-L195)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139"
+    used_before_defined: true
+    sections_used: ["I.2 Core Design Principles (Principle 11)", "II.1 Pipeline Overview (Steps 5b, 11b)"]
+    notes: "Includes an 'anonymous quoting attribution constraint': domain C alone with attribution_confidence=LOW cannot satisfy DIF (L195). Bypassed by Collusion Override Path."
+  - term: DIF analytical domains
+    acronym: null
+    aliases: ["domain A Behavioural/Transactional", "domain B Persistence", "domain C Interaction", "domain D Outcome", "domain E Contextual", "single-domain", "cross-domain evidence"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Domains: (A) Behavioural/Transactional --- RT alert patterns, order book behaviour, execution sequences; (B) Persistence --- BPL components (BDS, SCS_bpl, MDCS, CWPS, EDT); (C) Interaction --- IDS/ISS/IQ participant interaction; (D) Outcome --- OS, CCL, CFS, OPL; (E) Contextual --- ECIL AMPLIFIES_SUSPICION.\" (II.1, Step 5b, L195)"
+    first_use: "II.1 Pipeline Overview, Step 5b, L195"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 5b)"]
+    notes: "The five-domain taxonomy is itself a named analytical construct."
+  - term: Persistence Gate
+    acronym: PG
+    aliases: ["Step 11b"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 11b: \"where no BPL component is confirmed (bpl_drift_flag=FALSE AND session_consistency_confirmed=FALSE AND multi_day_conditioning_detected=FALSE AND cwps_intra < 0.50 AND escalating_dominance_trend=FALSE) AND no participant interaction is active (IDS=0, ISS=0): classification capped at MEDIUM-INVESTIGATE.\" (II.1, L215)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139 (\"Persistence Gate (PG) requires behavioural repetition before HIGH absent explicit structures\")"
+    used_before_defined: true
+    sections_used: ["I.2 Core Design Principles (Principle 11)", "II.1 Pipeline Overview (Step 11b)"]
+    notes: "Step 11b rationale text is severely OCR-garbled (interleaved characters at L215). Exceptions: Collusion Override Path; confirmed EscalationReadiness."
+  - term: Contextual Suppression Gate
+    acronym: CSG
+    aliases: ["Contextual Suppression Gates"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 11: \"(c) Contextual Suppression Gates (CSG) allow classification downgrade under strong contextual legitimacy\" (I.2, L139)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 11)"]
+    notes: "Named only here; no operational spec in this shortened doc."
+  - term: Early Disposal Layer
+    acronym: EDL
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 11: \"(d) Early Disposal Layer (EDL) aggressively disposes benign signals before analyst review\" (I.2, L139)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 11)"]
+    notes: null
+  - term: Market-Wide Behavioural Reference
+    acronym: MWBR
+    aliases: ["MWBR_metric", "MWBR_score", "peer normalisation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 11c: \"MWBR computes the participant's behaviour relative to the observed peer distribution in the same session and instrument. MWBR_metric = (participant_behaviour_score − peer_median_score) / peer_std_dev. MWBR_score: ANOMALOUS (>2σ from peer median); ELEVATED (1σ--2σ); NORMAL (<1σ); BELOW_NORMAL (<0).\" (II.1, L217-L225)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139"
+    used_before_defined: true
+    sections_used: ["I.2 Core Design Principles (Principle 11)", "II.1 Pipeline Overview (Steps 11c, 21b)"]
+    notes: "MWBR_NORMAL reduces quote-domain CQS uplift by 30%; described as the primary false-positive suppressor in stressed sovereign bond sessions (Sector Pack example)."
+  - term: MWBR score levels
+    acronym: null
+    aliases: ["ANOMALOUS", "ELEVATED", "NORMAL", "BELOW_NORMAL", "MWBR_NORMAL", "MWBR_ANOMALOUS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MWBR_score: ANOMALOUS (>2σ from peer median); ELEVATED (1σ--2σ); NORMAL (<1σ); BELOW_NORMAL (<0 --- participant is less active than peers).\" (II.1, Step 11c, L225)"
+    first_use: "II.1 Pipeline Overview, Step 11c, L225"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 11c)"]
+    notes: null
+  - term: Minimum Necessary Escalation
+    acronym: MNE
+    aliases: ["MNE principle", "cost-aware design", "disposal-oriented first, escalation-oriented second"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 11: \"Where two scoring approaches produce equally defensible escalation conclusions, the architecture must prefer the one that generates fewer analyst queue entries. ... the architecture is disposal-oriented first, escalation-oriented second. Detection must be complete; escalation must be selective.\" (I.2, L139)"
+    first_use: "I.2 Core Design Principles, Principle 11, L139"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 11)"]
+    notes: "DIF, PG, CSG, EDL, MWBR are enumerated as its five enforcement mechanisms."
+  - term: Behavioural Distinctiveness Score
+    acronym: BDRS
+    aliases: ["BDRS_THRESHOLD", "BPL_distinctiveness_score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 21b: \"BDRS measures whether the participant's behaviour is materially different from peer participants in the same session. BDRS = max(MWBR_metric, BPL_distinctiveness_score) ... BDRS ≥ BDRS_THRESHOLD (reference: 1.0σ above peer on at least one primary dimension) required for HIGH classification that is not already eligible for AUTO_CLOSE or BATCH.\" (II.1, L261)"
+    first_use: "II.1 Pipeline Overview, Step 21b, L261"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 21b)"]
+    notes: "Acronym BDRS does not match the expanded name (would be BDS, which is already taken by a BPL component) — likely 'Behavioural Distinctiveness Relative Score' or similar; flag for reconciliation."
+  - term: Kill Switch
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 11: \"Kill Switch forces downgrade to MEDIUM/CLOSE where ≥3 negative conditions apply.\" (II.1, L213)"
+    first_use: "II.1 Pipeline Overview, Step 11, L213"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 11)"]
+    notes: "Fires before classification lock; negative conditions not enumerated in this shortened doc."
+  - term: Outcome Score
+    acronym: OS
+    aliases: ["OS (0--2/U)", "OS=U", "OS gate", "outcome materiality", "outcome score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 10: \"OS (0--2/U) = max(Price, Liquidity, Information Impact). OS=0 → PriorityScore=0; MEDIUM ceiling.\" (II.1, L211)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History (OS=U Disclosure Requirements, v27)", "Part contents table (Part XIV)", "I.2 Core Design Principles (Principle 5)", "II.1 Pipeline Overview (Steps 5b, 10, 16, 20, 21)"]
+    notes: "U is an 'undetermined' state with tiered disclosure requirements (§VI-A.4.2, not included). Expansion 'Outcome Score' inferred from 'no outcome score' (L30) and 'Outcome materiality (OS, OPL)'."
+  - term: OPL
+    acronym: OPL
+    aliases: ["OPL (0--2)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 10 row, L211"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 10, 16, 19)"]
+    notes: "Glossed only as 'persistence' at Step 16 (likely Outcome Persistence Level); expansion never given. Feeds ELS as OS×OPL×15%."
+  - term: Intent Score
+    acronym: IS
+    aliases: ["IS (0--3)", "Intent assessment", "IS=0 path", "IS gate"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 8: \"IS (0--3). IS=0 → IntentFactor=0 → PriorityScore collapses. EscalationReadiness cannot be TRUE.\" (II.1, L201)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "Part contents table (Part XIV: IS=0 path)", "II.1 Pipeline Overview (Steps 8, 21)"]
+    notes: "Expansion 'Intent Score' inferred from 'Intent assessment (IS)'. Step 21 requires IS≥2 (IS≥3 for Tier 1 single-session signals)."
+  - term: IntentFactor
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 8, L201"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 8, 13)"]
+    notes: "Multiplier derived from IS; IS=0 → IntentFactor=0."
+  - term: Causality Confidence Layer
+    acronym: CCL
+    aliases: ["CCL (0--2)", "CCL gate", "CCL indicators"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 15: \"CCL (0--2). CCL=0 caps classification at HIGH.\" (II.1, L233); Principle 6: \"CCL gate: CCL=0 blocks VERY HIGH regardless of all other scores.\" (I.2, L129)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "Part contents table (Part XIV)", "I.2 Core Design Principles (Principle 6)", "II.1 Pipeline Overview (Steps 5b, 15, 19, 20, 21)"]
+    notes: "Enforces 'Causality is required for VERY HIGH' — correlation insufficient."
+  - term: Counterfactual Strength
+    acronym: CFS
+    aliases: ["CFS (0--2)", "but-for argument"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 16: \"CFS (0--2): but-for argument. CFS≥1 required where OS≥1.\" (II.1, L235)"
+    first_use: "II.1 Pipeline Overview, Step 5b row, L195 (domain D list)"
+    used_before_defined: true
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 16, 19, 21)"]
+    notes: null
+  - term: Explanation Fragility Score
+    acronym: EFS
+    aliases: ["EFS (0--2)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 17: \"EFS (0--2): three stress tests. EFS=2 → mandatory senior sign-off for closure.\" (II.1, L237)"
+    first_use: "II.1 Pipeline Overview, Step 17, L237"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 17)"]
+    notes: "Post-validation check, not a gate."
+  - term: Regulatory Risk Factor
+    acronym: RRF
+    aliases: ["RRF (0--6)", "Regulatory Context (RRF)", "RRF doctrine", "regulatory context"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 18: \"RRF (0--6). PriorityScore_final = PriorityScore + RRF. Requires CQT≥2.\" — ADDITIVE AMPLIFIER (II.1, L239/L253); Principle 2: \"Regulatory context (RRF) ... are corroborative amplifiers only.\" (I.2, L115)"
+    first_use: "Part contents table, Part XIV row, L69; substantive first use I.2 Principle 2, L115"
+    used_before_defined: true
+    sections_used: ["Part contents table (Part XIV: RRF doctrine)", "I.2 Core Design Principles (Principle 2)", "II.1 Pipeline Overview (Steps 18, 19, 22)"]
+    notes: "Expansion never given ('Regulatory Risk Factor' is an inference; doc says only 'Regulatory Context (RRF)'). RRF≥3 elevates the Derisking evidential standard (Step 22)."
+  - term: Escalation Likelihood Score
+    acronym: ELS
+    aliases: ["ELS (0.0--1.0)", "ELS bands", "ELS weight governance"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 19: \"ELS (0.0--1.0): f(ExplanationFailure×25%, CCL×25%, CFS×20%, OS×OPL×15%, RRF×10%, CCS_penalty×5%). Rebalanced from original ExplanationFailure×30% to reduce false-positive pressure from binary explanation flag.\" (II.1, L255)"
+    first_use: "Part contents table, Part X row, L61"
+    used_before_defined: true
+    sections_used: ["Part contents table (Parts X, XIII, XIV)", "II.1 Pipeline Overview (Step 19)"]
+    notes: "Doc records a weight-rebalancing history (30%→25% on ExplanationFailure) — versioned definition."
+  - term: Minimum Evidence Requirement
+    acronym: MER
+    aliases: ["MER-1", "MER-2", "MER-3"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 20: \"MER-1: ≥2 MEDIUM+ indicators. MER-2: interaction confirmed. MER-3: OS≥1 OR CCL≥1. All three required.\" (II.1, L257)"
+    first_use: "II.1 Pipeline Overview, Step 20, L257"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 20)"]
+    notes: "Pre-EscalationReadiness gate."
+  - term: EscalationReadiness
+    acronym: null
+    aliases: ["EscalationReadiness gate", "six gates"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 21: \"CQT3 AND IS≥2 AND OS≥1 AND ExplanationFailure=TRUE AND CCL≥1 AND CFS≥1. All six simultaneously.\" (II.1, L259)"
+    first_use: "Version History v23 row, L20"
+    used_before_defined: true
+    sections_used: ["Version History", "II.1 Pipeline Overview (Steps 8, 11b, 21, 21b)"]
+    notes: "Final gate for VERY HIGH; exception path that overrides PG and BDRS caps."
+  - term: No-Benign-Explanation Challenge
+    acronym: NBEC
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 21, L259"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 21)"]
+    notes: "Expanded in-line but specified in §VI.3.1, which is not in this shortened doc."
+  - term: Three-Tier Escalation modifier
+    acronym: null
+    aliases: ["Tier 1 single-session signals"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 21: \"for Tier 1 single-session signals (no BPL component confirmed, not in active episode), IS≥3 and CQS≥0.90 are required in place of IS≥2 and CQS≥0.85.\" (II.1, L259)"
+    first_use: "II.1 Pipeline Overview, Step 21, L259"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 21)"]
+    notes: "Full spec at §VI.3.0 (not included). 'Tier 1' here (escalation tier) collides with 'Tier 1/2/3 patterns' (Step 2) and 'Tier 1 controls' (Principle 8) — three distinct Tier-1 meanings in this doc."
+  - term: ExplanationFailure
+    acronym: null
+    aliases: ["ExplanationFailure=TRUE", "binary explanation flag"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 14: \"Positive confirmation required (timing, structure, outcome). ExplanationFailure=TRUE where no sufficient explanation.\" (II.1, L231)"
+    first_use: "II.1 Pipeline Overview, Step 14, L231"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 14, 19, 21)"]
+    notes: null
+  - term: Legitimate explanation framework
+    acronym: null
+    aliases: ["legitimate explanations", "alternative explanation governance (Doc 7 RAAF context)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part X row, L61"
+    used_before_defined: false
+    sections_used: ["Part contents table (Part X)", "I.2 Core Design Principles (Principle 7)", "II.1 Pipeline Overview (Step 14)"]
+    notes: null
+  - term: Derisking Assessment
+    acronym: null
+    aliases: ["nine-condition standard", "nine conditions"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 7 enforcement: \"Derisking Assessment: nine conditions, all mandatory.\" (I.2, L131); Step 22: \"Nine-condition standard. All mandatory. RRF≥3 elevates evidential standard.\" (L279)"
+    first_use: "I.2 Core Design Principles, Principle 7, L131"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 7)", "II.1 Pipeline Overview / II.2 (Step 22 closure gate, L279)"]
+    notes: "The nine conditions themselves are not enumerated in this shortened doc."
+  - term: Evidence Hierarchy
+    acronym: null
+    aliases: ["Level 1--2 evidence", "Level 3--5 evidence", "evidence hierarchy governance"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part XVIII: evidence hierarchy governance)", "I.2 Core Design Principles (Principle 2: \"Level 3--5 cannot substitute Level 1--2\")"]
+    notes: "Specified in Part V of the full doc, absent here. Distinct from 'Level 0' signal closure state."
+  - term: Three-Level Review
+    acronym: null
+    aliases: ["three-level review"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part X)"]
+    notes: "Distinct from 'three-level suspicion taxonomy' (Part XVII row) — do not merge."
+  - term: Signal Integrity Summary
+    acronym: null
+    aliases: ["weakest_link", "escalation_distance"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 10 enforcement: \"Signal Integrity Summary: weakest_link and escalation_distance documented per signal.\" (I.2, L137)"
+    first_use: "Part contents table, Part XIII row, L67"
+    used_before_defined: true
+    sections_used: ["Part contents table (Part XIII)", "I.2 Core Design Principles (Principle 10)"]
+    notes: null
+  - term: ReplayObject
+    acronym: null
+    aliases: ["replay and evidence reconstruction"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 9 enforcement: \"ReplayObject: full score chain and configuration snapshot archived per signal.\" (I.2, L135)"
+    first_use: "I.2 Core Design Principles, Principle 9, L135"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 9)", "Part contents table (Part XIX: replay and evidence reconstruction)"]
+    notes: null
+  - term: AI_HARD controls
+    acronym: null
+    aliases: ["AI_HARD_01", "AI_HARD_06", "AI_HARD_01 through AI_HARD_06", "Tier 1 controls"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 8 enforcement: \"Tier 1 controls: AI_HARD_01 through AI_HARD_06 code-level enforcement.\" (I.2, L133)"
+    first_use: "I.2 Core Design Principles, Principle 8, L133"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 8)"]
+    notes: "Enforce 'AI may assist but never decide' — AI never determines suspicion or triggers STOR filing."
+  - term: Holistic Output Schema
+    acronym: null
+    aliases: ["Output Schema", "holistic output schema", "output fields", "explainability output fields"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20 (\"Output Schema\")"
+    used_before_defined: false
+    sections_used: ["Version History (v24, v29 field additions)", "Part contents table (Part XIII)", "I.2 Core Design Principles (Principle 12: qa_validation_result field)"]
+    notes: "v29 added 18 BCI/Campaign-Role fields (§XIII.2a). Schema itself (§XIII.2) not included."
+  - term: QA Validation
+    acronym: null
+    aliases: ["qa_validation_result", "PASS / PASS WITH VARIANCE / FAIL", "QA Validation as first-class control", "Core Design Principle 12"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 12: \"Every qualified signal at MEDIUM-STRUCTURED REVIEW or above must be validated against the Behavioural Scenario Library. ... An unvalidated signal is an analytically incomplete signal.\" Enforcement: \"PASS / PASS WITH VARIANCE / FAIL result recorded per signal. qa_validation_result field in Output Schema.\" (I.2, L143-L147)"
+    first_use: "Version History v24 row, L22"
+    used_before_defined: true
+    sections_used: ["Version History", "I.2 Core Design Principles (Principle 12)"]
+    notes: "FAIL without root-cause analysis is declared a governance failure equivalent to classification without explanation_trace."
+  - term: explanation_trace
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "I.2 Core Design Principles, Principle 12 enforcement, L147"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 12)"]
+    notes: "Output-schema field; treated as the canonical explainability artifact."
+  - term: Behavioural Scenario Library
+    acronym: null
+    aliases: ["63 scenarios, 195 test cases"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22 (\"§XV.5 Behavioural Scenario Library (63 scenarios, 195 test cases)\")"
+    used_before_defined: false
+    sections_used: ["Version History", "I.2 Core Design Principles (Principle 12)"]
+    notes: "Validation corpus for QA Validation; spec §XV.5 not included."
+  - term: Behavioural Concern Framework
+    acronym: null
+    aliases: ["Part VI-A"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22"
+    used_before_defined: false
+    sections_used: ["Version History", "I.2 Core Design Principles (Principle 12 note, L143)"]
+    notes: "Elevated to Part VI-A in v24/v25; content not in this shortened doc."
+  - term: Behavioural Concern Layer
+    acronym: null
+    aliases: ["BehaviouralConcern", "Final Behavioural Concern"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22 (\"§VI.1a Behavioural Concern Layer --- Detection Signal Taxonomy\")"
+    used_before_defined: false
+    sections_used: ["Version History (v24; v29 Follower Rule: \"BehaviouralConcern capped at MEDIUM\")"]
+    notes: "'Behavioural Concern Layer', 'Final Behavioural Concern' and code-form 'BehaviouralConcern' likely one concept family — verify against full doc."
+  - term: Detection Signal Taxonomy
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Behaviour Category Taxonomy
+    acronym: null
+    aliases: ["17 categories", "Behaviour Category 17"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22"
+    used_before_defined: false
+    sections_used: ["Version History (v24, v25)"]
+    notes: "Category 17 = Event-Driven Information Behaviour, added in v25."
+  - term: Event-Driven Information Behaviour
+    acronym: null
+    aliases: ["Behaviour Category 17"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, L24"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Risk Archetype Taxonomy
+    acronym: null
+    aliases: ["45 archetypes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "45 archetypes at UCE level; note SBSP's table claims 35 — reconcile."
+  - term: Amplifier/Suppressor Assessment
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22 (§VI.1b)"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "§VI.1b was 'shortened to forward-reference' in v25. 'Amplifier' here (assessment) collides with 'Amplifier' as a BCI level — distinct concepts."
+  - term: Evidence Confidence
+    acronym: null
+    aliases: ["Evidence Confidence Caps"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v24 row, L22"
+    used_before_defined: false
+    sections_used: ["Version History (v24; v27 Gate-Failure Cause Distinction and Evidence Confidence Caps)"]
+    notes: null
+  - term: Gate-Failure Cause Distinction
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v27 row, L37 (§VI-A.4.1)"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: OS=U Disclosure Requirements
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v27 row, L37 (\"§VI-A.4.2 OS=U Disclosure Requirements --- tiered by signal priority\")"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part XIV: OS=U)"]
+    notes: null
+  - term: Behavioural Causality Principle
+    acronym: null
+    aliases: ["§VI-A.3.7"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "v29 row: \"formalises the universal principle that analytical assessments shall distinguish participants that materially influenced the observed pattern from those that merely reacted to prevailing conditions. Concern proportionate to demonstrated behavioural influence, not analytical coincidence.\" (Version History, L41)"
+    first_use: "Version History v29 row, L41"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Behavioural Causality Indicator
+    acronym: BCI
+    aliases: ["BCI engine", "BCI composite", "bci_score", "bci_level", "bci_concern_driver_code", "bci_data_limitation", "bci_d1_available", "bci_d2_available"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The Behavioural Causality Indicator (BCI) engine is fully implemented and operational in veridict_uce/bci.py. BCI composite range [0--12] = D1 + D2 + D3 + D4, each scored [0--3]. Five levels: Follower (0--2) · Contributor (3--4) · Amplifier (5--6) · Leader (7--9) · Primary Driver (10--12).\" (Version History v29 row, §VI-A.3.7.1, L45)"
+    first_use: "Version History v29 row, L43 (heading \"§VI-A.3.7 BCI Engine\")"
+    used_before_defined: false
+    sections_used: ["Version History (VI-A.3.7.1 through VI-A.3.7.3, §XIII.2a field additions)"]
+    notes: "Gates: HIGH requires BCI≥3; VERY HIGH requires BCI≥7 (general case); BCI≥10 → BCI_PRIMARY_DRIVER code. Under MTSAM-L08 data limitation, max achievable BCI = 6."
+  - term: BCI dimensions D1--D4
+    acronym: null
+    aliases: ["D1 (Quote Leadership)", "D2 (Liquidity Leadership)", "D3", "D4"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"D1 (Quote Leadership) and D2 (Liquidity Leadership) require HQLD, which is not currently available.\" (Version History v29 row, §VI-A.3.7.2, L47)"
+    first_use: "Version History v29 row, L45"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "D3 and D4 are never named/expanded in this doc — only D1 and D2 get names."
+  - term: BCI levels
+    acronym: null
+    aliases: ["Follower", "Contributor", "Amplifier", "Leader", "Primary Driver", "PRIMARY_DRIVER", "BCI_PRIMARY_DRIVER"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Five levels: Follower (0--2) · Contributor (3--4) · Amplifier (5--6) · Leader (7--9) · Primary Driver (10--12).\" (Version History v29 row, L45)"
+    first_use: "Version History v29 row, L45"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Follower Rule
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Follower Rule: BCI < 3 → BehaviouralConcern capped at MEDIUM (hard cap, not overridable).\" (Version History v29 row, L45)"
+    first_use: "Version History v29 row, L45"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Campaign Role
+    acronym: null
+    aliases: ["campaign_role", "BCI and Campaign Role Output Fields", "campaign intelligence roadmap"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v29 row, L51 (\"§XIII.2a BCI and Campaign Role Output Fields\")"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part XVII: campaign intelligence roadmap)"]
+    notes: "Derived from Document 3 §12 and §11.9; fields 'do not affect classification'."
+  - term: Eight-Dimension assessment
+    acronym: null
+    aliases: ["VERY HIGH Eight-Dimension fields", "five VERY HIGH Eight-Dimension fields"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v29 row, L51"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Named output-field group; the eight dimensions are not enumerated in this doc."
+  - term: RSN trigger fields
+    acronym: RSN
+    aliases: ["rsn_triggered", "rsn_trigger_code"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v29 row, L51"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "RSN never expanded (plausibly Reasonable Suspicion Notification, given RSA context in Doc 3)."
+  - term: HQLD
+    acronym: HQLD
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v29 row, §VI-A.3.7.2, L47"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Never expanded (plausibly high-quality liquidity/quote-level data). A data prerequisite for BCI D1/D2; 'HQLD remediation is the highest-priority MTSAM-L item'."
+  - term: MTSAM
+    acronym: MTSAM
+    aliases: ["MTSAM sessions", "MTSAM-L", "MTSAM-L08"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v29 row, §VI-A.3.7.2, L47"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Never expanded; appears to be a deployment/market context defined in Doc 3 §6. MTSAM-L08 is a named remediation/limitation item."
+  - term: Reasonable Suspicion Assessment
+    acronym: RSA
+    aliases: ["RSAEngine", "RSAEngine._assess()", "preliminary RSA assessment", "rsa_scaled", "RSA Net Score Thresholds", "net score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"XI.3 RSA Net Score Thresholds (v22). Scaling formula: rsa_scaled = min(100, round((net_score / 18) × 100)). Max net score = 18 (six factors × 3 = 18).\" (Version History v25 row, L32)"
+    first_use: "Version History v25 row, L26"
+    used_before_defined: false
+    sections_used: ["Version History (XI.1--XI.3 amendment text)"]
+    notes: "Assessment levels LOW/MEDIUM/HIGH; six suspicion factors scored with states ABSENT/WEAK/UNCONFIRMED/POSSIBLE/STRONG/PRESENT. Primary spec lives in Doc 3 v22."
+  - term: Participant History
+    acronym: PIR
+    aliases: ["participant_history (factor)", "§VII.4 PIR"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"XI.1 PIR Amplifier-Only Rule. Participant History (PIR) cannot sole-drive a MEDIUM or HIGH preliminary RSA assessment.\" (Version History v25 row, L28)"
+    first_use: "Version History v24 row, L22 (\"§VII.4 PIR\")"
+    used_before_defined: true
+    sections_used: ["Version History (v24, v25 amendment)", "II.1 Pipeline Overview (IBEB input streams include participant history)"]
+    notes: "Acronym PIR does not match 'Participant History' letters — expansion is likely e.g. 'Participant Incident Record'; doc glosses it only as Participant History."
+  - term: PIR Amplifier-Only Rule
+    acronym: null
+    aliases: ["PIR amplifier-only rule", "PIR Amplifier Rule"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The PIR amplifier-only rule (Doc 3 v22 §11.4) is implemented as a capping gate in RSAEngine._assess(): where ALL suspicion factors OTHER THAN participant_history are ABSENT, WEAK, UNCONFIRMED, or POSSIBLE AND participant_history is STRONG or PRESENT, the preliminary assessment is capped at LOW regardless of raw net score.\" (Version History v25 row, XI.1, L28)"
+    first_use: "Version History v25 row, L26"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Audit field assessment_basis records rule application."
+  - term: assessment_basis
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Audit field: assessment_basis records 'PIR amplifier-only rule applied: capped at LOW. [Raw net=N]'.\" (Version History v25 row, XI.1, L28)"
+    first_use: "Version History v25 row, L28"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: Price Impact Gate
+    acronym: null
+    aliases: ["Price Impact"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"XI.2 Price Impact Gate. If Price Impact is confirmed ABSENT (VMI LOW, no outcome score), the preliminary assessment is capped at LOW regardless of other factor weights. Basis: MAR Article 16 requires that the transaction or order 'could have an impact on price'.\" (Version History v25 row, L30)"
+    first_use: "Version History v25 row, L30"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: null
+  - term: VMI
+    acronym: VMI
+    aliases: ["VMI LOW"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, XI.2, L30"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Never expanded (plausibly a market-impact metric); used as evidence of confirmed-absent price impact."
+  - term: Amendment UCE-AMD-BVR-001
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, L26"
+    used_before_defined: false
+    sections_used: ["Version History (v25 RSA amendment; v29 BCI amendment)"]
+    notes: "Same amendment ID attached to two different change sets (RSA rules in v25 and BCI engine in v29) — verify whether intentional."
+  - term: Participant interaction assessment
+    acronym: null
+    aliases: ["IDS", "ISS", "IQ", "IQ gate", "IDS (0--3)", "ISS (0--3)", "interaction_outcome_score", "interaction confirmed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 6: \"IDS (0--3); ISS (0--3); IQ gate. interaction_outcome_score=0 suppresses escalation from interaction.\" (II.1, L197)"
+    first_use: "II.1 Pipeline Overview, Step 5b row, L195 (domain C: \"IDS/ISS/IQ participant interaction\")"
+    used_before_defined: true
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 6, 11b, 20)"]
+    notes: "IDS, ISS, IQ never expanded. IDS=0 and ISS=0 are part of the Persistence Gate trigger condition."
+  - term: Collusion assessment
+    acronym: null
+    aliases: ["CS (0--3)", "CCT", "CCaS (0--2)", "CFPS (0--2)", "CCT=IMPLICIT"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 7: \"CS (0--3); CCT; CCaS (0--2); CFPS (0--2). CFPS=2 suspends collusion.\" (II.1, L199)"
+    first_use: "II.1 Pipeline Overview, Step 7, L199 (CCT=IMPLICIT cap earlier at L195)"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 7)"]
+    notes: "None of CS/CCT/CCaS/CFPS expanded here. CCT=IMPLICIT cap applies in anonymous markets (refs Doc 3 §1.2, Doc 2 §D.5.3)."
+  - term: Collusion Override Path
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b, L195 (\"Exception: Collusion Override Path bypasses DIF\")"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 11b, 21b)"]
+    notes: "Named exception path bypassing DIF, PG and BDRS; never specified in this shortened doc."
+  - term: Structural Relationship Score
+    acronym: SRS
+    aliases: ["SRS (0--3)", "structural relationships (SRS)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 1: \"IBE input: participant data loaded; SRS (0--3) assigned. SRS=3 assigns DS=2 and redirects to internal abuse pathway.\" (II.1, L179)"
+    first_use: "I.2 Core Design Principles, Principle 2, L115"
+    used_before_defined: true
+    sections_used: ["I.2 Core Design Principles (Principle 2)", "II.1 Pipeline Overview (Step 1)"]
+    notes: "Expansion inferred from 'structural relationships (SRS)' at L115."
+  - term: internal abuse pathway
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 1, L179"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 1)"]
+    notes: "Redirect target for SRS=3 signals; not specified further here."
+  - term: Enrichment Gate
+    acronym: null
+    aliases: ["ENRICHMENT GATE", "data enrichment and participant classification"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 1 row: \"IBE input: participant data loaded; SRS (0--3) assigned. ... Step 1 receives the IBE object from the IBEB (§XVII.10), not raw alert data.\" (II.1, L179)"
+    first_use: "II.1 Pipeline Overview, Step 1, L179"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 1)"]
+    notes: null
+  - term: Pattern gate
+    acronym: null
+    aliases: ["pattern_matched=TRUE", "pattern detection", "Level 0"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Principle 1 enforcement: \"Pattern gate: mandatory at Step 2. No pattern → signal closed at Level 0.\" (I.2, L113); Step 2: \"Behavioural structures identified across Tier 1/2/3 patterns.\" (L181)"
+    first_use: "I.2 Core Design Principles, Principle 1, L113"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles (Principle 1)", "II.1 Pipeline Overview (Step 2)"]
+    notes: "'Level 0' is a signal-disposition level, unrelated to Evidence Hierarchy Levels 1--5."
+  - term: Tier 1/2/3 patterns
+    acronym: null
+    aliases: ["Tier 1 patterns", "Tier 2 patterns", "Tier 3 patterns"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 2, L181"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 2)"]
+    notes: "Pattern tier taxonomy never defined here; collides lexically with 'Tier 1 controls' and 'Tier 1 single-session signals'."
+  - term: RT alert
+    acronym: RT
+    aliases: ["RT alert patterns", "RT alert cluster", "raw alert outputs", "directional RT--RD convergence"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b, L195 (earlier as 'RT--RD convergence' in Part contents table L75)"
+    used_before_defined: false
+    sections_used: ["Part contents table (Part XVII)", "II.1 Pipeline Overview (Steps 5b, 9)"]
+    notes: "RT (and RD) never expanded — presumably the upstream real-time surveillance alert system whose outputs the UCE qualifies. Treat RT alert as the incumbent-system alert primitive."
+  - term: Behavioural Persistence Layer
+    acronym: BPL
+    aliases: ["BPL components", "BPL availability", "bpl_drift_flag", "session_consistency_confirmed", "multi_day_conditioning_detected", "cwps_intra", "escalating_dominance_trend"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20 (\"BEP_E / BPL (XVII)\")"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Parts XI, XVII: \"BPL (five persistence components)\")", "II.1 Pipeline Overview (Steps 5b, 9, 11b, 21, 21b)"]
+    notes: "Expansion never given ('Behavioural Persistence Layer' inferred from 'five persistence components' + Part XVII title). Components: BDS, SCS_bpl, MDCS, CWPS, EDT."
+  - term: BPL persistence components
+    acronym: null
+    aliases: ["BDS", "SCS_bpl", "MDCS", "CWPS", "EDT"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b, L195"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 11b)"]
+    notes: "None of the five expanded here. SCS_bpl is deliberately disambiguated from plain SCS (Part XIV) — two different SCS constructs. cwps_intra (Step 11b) is evidently the intra-session CWPS variable."
+  - term: External Context Intelligence Layer
+    acronym: ECIL
+    aliases: ["ECIL context", "ECIL events", "event ingestion"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20 (\"ECIL (XVIII)\")"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part XVIII, ECIL Supplemental Specification row)", "II.1 Pipeline Overview (IBEB inputs; Steps 5b, 19)"]
+    notes: "Expansion given in Part XVIII title 'External Context Intelligence Layer' (L77). Its event-relationship states AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / FULLY_EXPLAINED are enum values with gating effect."
+  - term: ECIL event relationship states
+    acronym: null
+    aliases: ["AMPLIFIES_SUSPICION", "CONTRADICTS_PATTERN", "FULLY_EXPLAINED"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b, L195 (AMPLIFIES_SUSPICION); Step 19, L255 (CONTRADICTS_PATTERN, FULLY_EXPLAINED)"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 5b, 19)"]
+    notes: "Contextual directionality enum: context can amplify, contradict, or fully explain a pattern."
+  - term: ECIL Supplemental Specification
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVIII row, L77"
+    used_before_defined: false
+    sections_used: ["Part contents table (Part XVIII and dedicated row L91)"]
+    notes: "Companion document; its constructs (SDAIL, CRS, ECO, CCS, sovereign event types) are only name-checked here."
+  - term: Event Object Schema
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVIII row, L77"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: Temporal Correlation Engine
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVIII row, L77"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: event materiality scoring
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVIII row, L77"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: contextual directionality logic
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVIII row, L77"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Operationalised by the AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / FULLY_EXPLAINED states."
+  - term: Contextual Convergence Score
+    acronym: CCS
+    aliases: ["CCS_penalty"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 19: \"CCS_penalty: where CCS ≥ HIGH and all active ECIL events are CONTRADICTS_PATTERN or FULLY_EXPLAINED, CCS_penalty = −0.05 applied before normalisation (active deduction, not just weight reduction).\" (II.1, L255); expansion at L91 \"CCS (Contextual Convergence Score)\""
+    first_use: "Part contents table, ECIL Supplemental Specification row, L91"
+    used_before_defined: true
+    sections_used: ["Part contents table (ECIL Suppl row)", "II.1 Pipeline Overview (Step 19)"]
+    notes: "Owned by the ECIL Supplemental Specification but already wired into the ELS formula here."
+  - term: Context Reliability Score
+    acronym: CRS
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, ECIL Supplemental Specification row, L91"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Expansion given in-line; no definition. NOTE: SBSP uses 'ECIL CRS' apparently as a relevance score — reconcile expansion (Context Reliability vs relevance)."
+  - term: Event Cascade Object
+    acronym: ECO
+    aliases: ["Event Cascade Objects"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, ECIL Supplemental Specification row, L91"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: SDAIL
+    acronym: SDAIL
+    aliases: ["sovereign debt agencies (gloss)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, ECIL Supplemental Specification row, L91"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Glossed only as '(sovereign debt agencies)'; related constructs: fifteen sovereign event types, sovereign benchmark mapping, missing context governance doctrine, human override governance (all L91, name-checked only)."
+  - term: Statistical Governance & Calibration Assurance
+    acronym: null
+    aliases: ["Statistical Governance (XV.4)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part XV)"]
+    notes: null
+  - term: Participant-Day Risk Profile
+    acronym: PDRP
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVI row, L73"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: no-data-no-risk principle
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVI row, L73"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: ISGO
+    acronym: ISGO
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVI row, L73"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Never expanded; Part XVI (gap architecture) construct."
+  - term: QBBE
+    acronym: QBBE
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVII row, L75"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Never expanded; Part XVII behavioural-intelligence construct (plausibly Quote-Based Behavioural Engine/Evidence)."
+  - term: OS_BC
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVII row, L75"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Variant/extension of OS in behavioural-concern context; never expanded."
+  - term: three-level suspicion taxonomy
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVII row, L75"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Distinct from Three-Level Review (Part X)."
+  - term: regime transition intelligence
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XVII row, L75"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Listed alongside 'adversarial adaptation' and 'automated instability detection' — all Part XVII named capabilities, name-checked only."
+  - term: MM_SAFEHARBOUR
+    acronym: null
+    aliases: ["Market-Maker Safe-Harbour Scoring Integration", "twelve-criteria assessment", "market-maker safe harbour"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v25 row, L24 (\"§X.3 MM_SAFEHARBOUR twelve-criteria assessment\")"
+    used_before_defined: false
+    sections_used: ["Version History", "Part contents table (Part X: structural effect of MM_SAFEHARBOUR outcomes on ELS, classification, and escalation pathways)"]
+    notes: "Project construct implementing the MAR market-maker safe-harbour concept. NOTE: UCE says twelve-criteria; MCL says seven-criteria test — conflict to resolve."
+  - term: BOA
+    acronym: BOA
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Version History v23 row, L20"
+    used_before_defined: false
+    sections_used: ["Version History"]
+    notes: "Single occurrence, never expanded; baseline v23 construct."
+  - term: STOR Reporting Intelligence Layer
+    acronym: null
+    aliases: ["Doc 7", "terminal supervisory articulation layer"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "A separate document (Doc 7) outside the stated 1-of-3 structure; contains NIM-MAR, RAAF, XS-MAR, SCL, NFIL, RCS-MAR, QA-MAR."
+  - term: NIM-MAR
+    acronym: null
+    aliases: ["four-layer narrative"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Doc 7 narrative model; unexpanded."
+  - term: RAAF
+    acronym: RAAF
+    aliases: ["alternative explanation governance"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded."
+  - term: XS-MAR
+    acronym: null
+    aliases: ["explainability scoring"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded."
+  - term: SCL
+    acronym: SCL
+    aliases: ["supervisory confidence tiers"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded."
+  - term: NFIL
+    acronym: NFIL
+    aliases: ["non-filing defensibility"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded."
+  - term: RCS-MAR
+    acronym: null
+    aliases: ["challenge simulation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded; distinct from 'supervisory challenge pack' (Part XV)."
+  - term: QA-MAR
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Doc 7 row, L83"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Unexpanded; presumably Doc 7's QA framework, related to but distinct from UCE QA Validation."
+  - term: Human Intervention Checkpoint
+    acronym: HCP
+    aliases: ["HCP-1: Analyst Review", "HCP-2: CCO Notification", "HCP-3: CCO Decision", "HCP-4: STOR Filing", "HCP-5: Calibration Review"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "II.2 table defines all five checkpoints with Trigger, Required Human Action, SLA, Audit Record columns (II.2 Human Intervention Checkpoints, L283-L294)"
+    first_use: "II.2 Human Intervention Checkpoints, L272-L285"
+    used_before_defined: false
+    sections_used: ["II.2 Human Intervention Checkpoints"]
+    notes: "SLAs: HIGH 5 business days / VERY HIGH 24 hours; HCP-5 has no SLA (governance action)."
+  - term: HUMAN_REVIEW_REQUIRED
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.2 Human Intervention Checkpoints, HCP-1 row, L285"
+    used_before_defined: false
+    sections_used: ["II.2 Human Intervention Checkpoints"]
+    notes: "System state that triggers HCP-1; companion state CCO_REVIEW triggers HCP-3."
+  - term: CCO
+    acronym: CCO
+    aliases: ["CCO_REVIEW", "CCO Notification", "CCO Decision", "CCO-initiated human action"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "II.2 Human Intervention Checkpoints, HCP-2 row, L287"
+    used_before_defined: false
+    sections_used: ["II.2 Human Intervention Checkpoints"]
+    notes: "Never expanded (presumably Chief Compliance Officer); the sole role authorized to approve/execute STOR filing."
+  - term: FP code
+    acronym: FP
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.2 Human Intervention Checkpoints, HCP-1 row, L285"
+    used_before_defined: false
+    sections_used: ["II.2 Human Intervention Checkpoints"]
+    notes: "False-positive closure code assigned by analyst; code taxonomy not in this doc."
+  - term: Methodology lead
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "II.2 Human Intervention Checkpoints, HCP-5 row, L293"
+    used_before_defined: false
+    sections_used: ["II.2 Human Intervention Checkpoints"]
+    notes: "Named governance role approving calibration adjustments after ≥3 same-type closures."
+  - term: AUTO_CLOSE
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 21b, L261"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 21b)"]
+    notes: "Disposition eligibility state, paired with BATCH; neither defined in this shortened doc."
+  - term: BATCH
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 21b, L261"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 21b)"]
+    notes: "Disposition/processing state alongside AUTO_CLOSE."
+  - term: SSF/DF
+    acronym: null
+    aliases: ["SSF", "DF"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XIV row, L69"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Never expanded; Part XIV operational-precision constructs."
+  - term: SCS
+    acronym: SCS
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XIV row, L69"
+    used_before_defined: false
+    sections_used: ["Part contents table", "II.1 Pipeline Overview (as SCS_bpl variant, Step 5b)"]
+    notes: "Ambiguous: plain SCS (Part XIV) vs SCS_bpl (BPL component) — the _bpl suffix implies two distinct SCS constructs; likely 'Session Consistency Score' for the BPL one given session_consistency_confirmed flag."
+  - term: Summary Principle
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XIV row, L69"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Named doctrine, name-checked only."
+  - term: Six-level progressive deployment model
+    acronym: null
+    aliases: ["Deployment Maturity", "maturity level", "MVP specification (P0--P3)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XI row, L63"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "P0--P3 are named MVP phases; BPL availability varies by maturity level."
+  - term: generic alert primitives
+    acronym: null
+    aliases: ["ibe_primitives (related field)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XII row, L65"
+    used_before_defined: false
+    sections_used: ["Part contents table", "II.1 Pipeline Overview (ibe_primitives field, Step 1)"]
+    notes: null
+  - term: degraded-mode doctrine
+    acronym: null
+    aliases: ["degraded-mode procedures"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XIX row, L79"
+    used_before_defined: false
+    sections_used: ["Part contents table (Parts XIX, XX)"]
+    notes: "Part XIX provides institution-instantiable frameworks; Part XX the invariant doctrine — deliberate framework/doctrine split."
+  - term: Production Operations Governance
+    acronym: null
+    aliases: ["universal doctrine", "throughput governance", "queue prioritisation", "resiliency and operational failure escalation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Part XX row: \"Universal doctrine applying to every deployment regardless of institution or market ... These principles cannot be varied by Calibration Layers --- only operationalised.\" (Part contents table, L81)"
+    first_use: "Part contents table, Part XX row, L81"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: supervisory challenge pack
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XV row, L71"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: "Part XV governance artifact alongside model validation and false negative governance."
+  - term: false negative governance
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Part contents table, Part XV row, L71"
+    used_before_defined: false
+    sections_used: ["Part contents table"]
+    notes: null
+  - term: signal
+    acronym: null
+    aliases: ["qualified signal", "quote-domain signal", "single-session signal", "signal qualification", "signal closed at Level 0"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "I.2 Core Design Principles, Principle 1, L113"
+    used_before_defined: false
+    sections_used: ["I.2 Core Design Principles", "I.3 What the Engine Is Not", "II.1 Pipeline Overview", "II.2 Human Intervention Checkpoints"]
+    notes: "The pipeline's unit of adjudication (distinct from upstream 'alert' and downstream 'episode'). 'The pipeline receives IBEs, not individual alerts' — signal/alert/IBE distinction is doctrinal."
+  - term: quote-domain signal
+    acronym: null
+    aliases: ["ADS/QBRS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Step 11c: \"For quote-domain signals (where ADS/QBRS is the primary scoring dimension): MWBR...\" (II.1, L217-L225)"
+    first_use: "II.1 Pipeline Overview, Step 11c, L217"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 11c, and MWBR discussion)"]
+    notes: "ADS and QBRS never expanded — quote-behaviour scoring dimensions presumably defined in Doc 2/Part XVII."
+  - term: attribution_confidence
+    acronym: null
+    aliases: ["post-session attribution", "anonymous quoting attribution constraint", "model_confidence"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 5b, L195"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 5b)"]
+    notes: "Confidence levels (LOW/MEDIUM) gate whether anonymous-market interaction evidence can satisfy DIF domain C."
+  - term: CF
+    acronym: CF
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 13, L229"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Step 13)"]
+    notes: "Multiplier in PriorityScore = IScore × CF × IntentFactor × DependencyFactor; never expanded (plausibly Confidence Factor)."
+  - term: sovereign bond dealer market
+    acronym: null
+    aliases: ["stressed sovereign bond sessions", "bond dealer markets", "market-wide behavioural synchronisation", "market-wide quote withdrawal"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "II.1 Pipeline Overview, Step 11c, L225"
+    used_before_defined: false
+    sections_used: ["II.1 Pipeline Overview (Steps 11b rationale, 11c, 21b)"]
+    notes: "Flagged in-text as Sector Pack (Doc 2) example content that leaked into the universal spec — annotations 'fi S ector Pack (' are OCR-corrupted. Evidence the 'sector-agnostic' claim is imperfect."
+  - term: Core Design Principles
+    acronym: null
+    aliases: ["Ten foundational principles", "Principles 1--12", "Core Design Principle 12"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Ten foundational principles govern the engine. These are architectural commitments enforced by deterministic gate conditions and hard-coded controls --- not aspirational statements.\" (I.2 Core Design Principles, L102)"
+    first_use: "I.2 Core Design Principles, L100-L102"
+    used_before_defined: false
+    sections_used: ["Version History (Principle 12 addition)", "I.2 Core Design Principles"]
+    notes: "Internal inconsistency: I.2 says 'Ten foundational principles' but the tables enumerate 12 (Principles 11 MNE and 12 QA Validation appended without updating the count)."
