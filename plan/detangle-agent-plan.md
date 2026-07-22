@@ -29,7 +29,7 @@ Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 | C3 | **Omissions require human approval.** Any omission is surfaced as an Azure DevOps PR comment; branch policy requires all comments Resolved before merge. | DevOps integration (Phase 8) |
 | C4 | **All document updates go through PRs with reviewer approval.** The tool posts findings as PR comments; it never merges. A PR assembles changes relating to similar concepts and may touch any number of documents; it may not change more terms than `param-max-terms-changed-per-PR`. | DevOps integration (Phase 8) |
 | C5 | **Bridging/explanatory additions are allowed** but must be visually and mechanically distinguishable from source-derived text. | Rubric (Phase 1) + fabrication check (Phase 7) |
-| C6 | **Version-controllable artifacts only.** Concept graph stored as plain-text edge list; rendered views generated from it. | Phase 3 |
+| C6 | **Version-controllable artifacts only.** Concept graph is a plain-text edge list (`concept-graph.yaml`, source of truth); a Mermaid render (`concept-graph.mmd`) is generated from it and displays natively in Azure DevOps (D2: SKOS concept model, Mermaid-compatible view). | Phase 3 |
 | C7 | **No meaning weakened.** Numbers, thresholds, units, comparison operators, normative modality (`must` vs `should`), scoping qualifiers, internal codes, regulatory citations, and classification/version metadata are reproduced verbatim wherever their claim survives. A claim may map correctly and still have lost its force — so this is checked mechanically, independent of C1/C2. | Precision check (Phase 6), rubric criterion 5 |
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
 | C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document. No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
@@ -74,8 +74,17 @@ The concept dependency graph is not a side feature; it drives the pipeline:
   cycles collapse into intra-glossary cycles, which reordering *can* fix.
 - **Orphan detection** (terms used but never defined) = a direct convolutedness
   measure of the source.
-- **Storage:** sorted plain-text edge list (YAML or DOT) as source of truth →
-  clean git diffs. Mermaid generated from it → renders natively in Azure DevOps.
+- **Concept model:** SKOS (concepts, and our project-local "definition of X
+  uses term Y" dependency edge, which SKOS itself does not define). ISO 704
+  supplies the definition shape and the cycle policy.
+- **Storage:** a plain-text edge-list source of truth (`concept-graph.yaml`)
+  → clean git diffs, with a Mermaid render (`concept-graph.mmd`) generated
+  from it that displays natively in Azure DevOps and GitHub. Decision D2
+  (2026-07-21): SKOS concept *model*, Mermaid-compatible *rendering* — chosen
+  over Turtle so the graph displays without extra tooling. The exact
+  source-of-truth format, and how close it can sit to Mermaid syntax, is
+  being confirmed in round-2 research (C2). Mermaid is a compatible view, not
+  the sole source of truth.
 
 ---
 
@@ -140,6 +149,8 @@ rubric only applies to tool output from Phase 6 onward.
 
 **Output:** `definition-of-done.md`
 **Done when:** Nick signs off, including the parameter values listed in it.
+**Status: complete.** Approved 2026-07-21. All parameters set except
+`param-low-confidence-threshold`, deferred to measurement in Phase 5.3.
 
 ## Phase 2 — Research
 Model/effort recommendation: Opus/high
@@ -148,10 +159,19 @@ Model/effort recommendation: Opus/high
 |------|-------------|
 | 2.1 | Search best practices: technical-writing structure frameworks (Diátaxis, minimalism, progressive disclosure); terminology standards (ISO 704, SKOS concept schemes); requirements-engineering document standards. |
 | 2.2 | Search open-source prior art: document-restructuring agents; term/keyphrase extraction libraries; concept-graph tooling; LLM claim-decomposition and claim-verification projects (RAG-evaluation space is the likely home of these). |
-| 2.3 | Write buy-vs-build memo: what we adopt, what we build. |
 
-**Output:** research memo with links.
+**Output:** research memo with links (`plan/research-memo.md`).
 **Done when:** Nick has chosen what to reuse.
+**Status: complete.** 2026-07-21, three research rounds. Decided: adopt ISO 704
+(D1); SKOS model + Mermaid render, `concept-graph.yaml` source of truth (D2);
+no TBX (D3); reuse MiniCheck via the MIT Flan-T5-Large/DeBERTa-v3-Large
+checkpoint only (D4); reuse Vale for term/acronym rules but build
+concept-before-use ourselves (D5); no `language_tool_python` (D6). Components:
+pandoc JSON AST for parsing (Marko/mistune ruled out on grid tables), NetworkX
+for graph/topo/cycle, `azure-devops` SDK for PR threads. Method: 29148 RTM
+frame for coverage; RefD/prerequisite-graph for criterion-1 ordering (low
+confidence). **Open for Phase 4:** D7 runtime (leaning Python) and D9
+ontology-first definitions.
 
 ## Phase 3 — Glossary + concept graph (MTSAM domain asset)
 Model/effort recommendation: Fable or Opus/xhigh
@@ -164,13 +184,14 @@ input to any architecture and de-risks everything downstream.
 | 3.1 | Extract candidate terms from the three shortened files + full Analytical Layer blueprint (UCE, SBSP, MCL, IBEB, CQS, BOA, …). LLM-assisted, human-reviewed. |
 | 3.2 | Count each term's document usage and apply the **placement test** (C9): used in ≥ 2 documents → glossary; used in exactly 1 → that document. Placement is computed, not judged. |
 | 3.3 | Draft one-sentence definitions per term, sourced from the documents. Flag terms used but never defined (orphans), and terms defined differently in two documents (conflicts — surface, do not reconcile). |
-| 3.4 | Build dependency edge list; generate Mermaid render; run topological sort and cycle detection. |
+| 3.4 | Build the dependency edge list (`concept-graph.yaml`, source of truth); generate the Mermaid render (`concept-graph.mmd`); run topological sort and cycle detection. ISO 704 §6.5.2 defines the cycle policy (inner/outer circle), §6.4.4 the substitution-principle diagnostic; the self-loop check needs a documented-exception path per §6.5.2's graded prohibition. |
 | 3.5 | Assemble `glossary.md`: an overview, then the definitions in **topological order** (`param-glossary-order`), so the glossary reads start to finish without ever meeting an undefined term. No alphabetical section — lookup lives in the index. The glossary is reader-facing and must pass criteria 1, 2, and 3 itself. |
 | 3.6 | Generate `index.md`: an alphabetical list of **every** term defined anywhere in the set — glossary or document — each with the location of its definition, plus alias and acronym entries pointing at the same location. Terms only, no definitions. Generated and verified by regeneration, never hand-maintained. |
 | 3.7 | Record term **usage locations as graph edges** in `concept-graph.yaml` — which document and section uses which term. Usage data lives in the graph only; the glossary defines terms and does not list where they are used. Forward reachability over these edges is what makes impact analysis possible when a definition changes. Also flag **dead entries**: glossary terms with no use anywhere in the set. |
 | 3.8 | Review via PR (Nick, optionally Ivo), within `param-max-terms-changed-per-PR` — the initial glossary will exceed 25 terms, so this lands as a sequence of concept-scoped PRs, not one. |
 
-**Outputs:** `glossary.md`, `index.md`, `concept-graph.yaml`, `concept-graph.mmd`
+**Outputs:** `glossary.md`, `index.md`, `concept-graph.yaml` (edge-list
+source of truth), `concept-graph.mmd` (Mermaid render)
 **Done when:** PRs merged; every cycle, orphan, and conflicting definition has
 a human disposition; every term has exactly one definition site and exactly
 one index entry resolving to it.

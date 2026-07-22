@@ -66,18 +66,21 @@ question a glossary ordered for reading cannot: *where is this term?*
 | File | Purpose |
 |------|---------|
 | `./plan/detangle-agent-plan.md` | Full project plan: 9 phases, constraints, rubric, sequencing rationale |
-| `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — draft v3, pending sign-off)* |
+| `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
+| `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated *(Phase 2 — draft, pending decisions)* |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
-| `concept-graph.yaml` | Concept dependency edge list — source of truth *(Phase 3 — pending)* |
-| `concept-graph.mmd` | Mermaid render of the graph *(Phase 3 — pending)* |
+| `concept-graph.yaml` | Concept dependency edge list — source of truth (SKOS concept model) *(Phase 3 — pending)* |
+| `concept-graph.mmd` | Mermaid render of the graph, generated from the source of truth; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
 
 ## Status
 
-Plan approved. Phase 1.1 drafted: `plan/definition-of-done.md` (v3).
-Next step: Phase 1.2 — Nick approves or amends, including the parameter
-values listed in that document.
+Phases 1 and 2 complete (2026-07-21). Rubric approved
+(`plan/definition-of-done.md`); research memo delivered
+(`plan/research-memo.md`) across three rounds. Next: Phase 3 — build the
+glossary, index, and concept graph. Open architecture calls for Phase 4:
+runtime (D7, leaning Python) and ontology-first definitions (D9).
 
 ## Owner
 
