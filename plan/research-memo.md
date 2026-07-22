@@ -1,9 +1,9 @@
 # Phase 2 — Research Memo
 
-**Status:** Rounds 1–3 complete. D1–D6 decided; D7 (runtime) and D9
-(ontology-first) open for Phase 4. Ready to close Phase 2.
+**Status:** Rounds 1–3 complete. D1–D9 all decided — D7 (runtime) and D9
+(ontology-first) signed off by Nick 2026-07-22. Phase 2 closed.
 **Phase:** 2.1 / 2.2
-**Last updated:** 2026-07-21
+**Last updated:** 2026-07-22
 **Method:** fan-out web research with adversarial verification (2 of 3
 refutations kill a claim).
 - **Round 1:** 21 sources, 100 candidate claims, 25 verified → 21 confirmed,
@@ -49,14 +49,16 @@ refutation. Integration is the Go binary as a subprocess. Bundled style
 packages (write-good, proselint, Microsoft, Google) carry separate licences —
 still unverified.
 
-**D7 — still open, still leaning Python.** Only one slice verified: Node
+**D7 — Python (signed off 2026-07-22).** Only one slice was verified: Node
 **can** do offline ML inference via **Transformers.js** (server-side, ONNX-only,
 inference-only, ~2-4× slower than native). But the claim that Transformers.js
 is functionally equivalent to Python `transformers` was **refuted 0-3** — so
 Node cannot be assumed to run an arbitrary MiniCheck checkpoint without ONNX
 conversion, and the per-stage comparison (term extraction, graph, pandoc,
-Azure DevOps client) produced no verified claims. **D7 remains undecided**;
-the ONNX-only friction on our chosen verifier is a mark against Node.
+Azure DevOps client) produced no verified claims. That ONNX-only friction on
+the chosen verifier, plus the Python-first ecosystem (MiniCheck checkpoints,
+NetworkX, pandoc filters, `azure-devops` SDK), settled it: **Nick chose Python
+2026-07-22.**
 
 **C1 datapoint:** KeyBERT is MIT (but pulls sentence-transformers + model
 weights with their own licences).
@@ -581,9 +583,9 @@ actually implemented.
 | D4 | Reuse MiniCheck for fabrication checking? | Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B | **Confirmed by Nick 2026-07-21** — MIT checkpoint only |
 | D5 | Reuse Vale for mechanical style checking? | Yes for term/acronym rules; it CANNOT do concept-before-use, which we build | **Confirmed by Nick 2026-07-21** |
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
-| D7 | Runtime | Python, provisional | **Still open** — round 2 only confirmed Node can do offline ONNX inference; per-stage comparison unresearched; lean Python |
+| D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
-| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first for the definition layer only — see §2.11 | **Open** — Phase 4, or a C9/C10 rubric amendment |
+| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9 |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
 
@@ -614,6 +616,106 @@ concern is real but is a separate matter (document confidentiality), not a
 GPL consequence. The decision stands regardless, since we did not need the
 component.
 
+### D9 — ontology-first definition layer (decision — signed off 2026-07-22)
+
+Decided 2026-07-22 after reasoning through the **business-user review
+workflow** (the lens §2.11 did not apply). Confirmed premise: business users
+**read and comment**; they do not hand-edit the store. The tool proposes,
+they approve via PR comments (C3/C4).
+
+**Decision: adopt ontology-first for the definition layer only.**
+Definitions are the canonical data; `glossary.md`, `index.md`, and
+`concept-graph.mmd` are **generated views**. Document *bodies* are unchanged —
+restructured source text tracked as moved / derived / added (§2.11's two-layer
+boundary).
+
+**Why, not mainly tokens — provability.** If prose is canonical, every
+structural guarantee (defined-before-use, single-definition-site, index,
+cycles, orphans, impact analysis) rests on an LLM re-parse of prose: fuzzy,
+non-deterministic, and repeated every review round. These documents are the
+**authoritative specifications the tool is built from** — lost or invented
+meaning propagates straight into the tool — so Phase 7 must *prove*
+losslessness, and a proof cannot rest on a re-parse. (The specs themselves are
+not FSMA-facing; only the resulting tool and its later documentation are.)
+Structured-canonical makes C9/C10/C11 structural — impossible to violate
+rather than checked-and-hopefully-caught — and makes every graph query
+deterministic code (zero tokens, same answer every time). The token saving is
+real and recurs across versions, but provability is the headline.
+
+**Storage — structured plain-text records in git; not a database.** The data
+is exact, relational, and small (hundreds of terms), and must stay plain-text
+and git-reviewable (C6). Therefore:
+
+- **Source of truth:** structured records in git, **one file per concept**
+  (`concepts/exposure.yaml`) rather than one monolith — surgical diffs,
+  per-concept PR review that matches concept-scoped PRs (DoD-8), fewer merge
+  conflicts across versions, and "edit one definition" = change one flat field.
+- **Algorithms:** **NetworkX** in memory at runtime (topo sort, `simple_cycles`,
+  reachability) — every query a graph DB would give, no server.
+- **Views:** generated `glossary.md` / `index.md` / `concept-graph.mmd`.
+- **Rejected as the truth store:** *vector DB* — wrong tool; embeddings are
+  fuzzy/lossy and cannot topologically sort or guarantee defined-before-use
+  (legitimate only as an *extraction-time* synonym/duplicate helper in Phase 3).
+  *Graph DB (Neo4j)* — right model, wrong medium; binary store, running server,
+  breaks C6 and PR review; NetworkX covers the algorithms at this scale.
+  *SQLite* — binary, not git-diff-reviewable; permissible only as a *derived
+  cache* rebuilt from the records, never canonical.
+
+**The round-trip — comment → precise edit of the truth.** This is the
+mechanism that makes generated-views safe, and it is a required part of the
+decision, not an afterthought:
+
+1. **Source-map anchors.** The generator emits, on every human-visible block,
+   a machine anchor back to `record-id + field`, e.g.
+   `<!-- gen:concept=exposure field=definition src=blueprint-UCE.md#L190-L225 -->`.
+   Reviewers never see them; they make the return trip exact.
+2. **Resolve location — deterministic, no LLM.** A PR comment pins to a line;
+   walk up to the enclosing `gen:` marker → exact record + field. No guessing
+   which part of the truth the comment touches.
+3. **Propose the value — bounded LLM (or human).** One small call gets only the
+   current field, the comment, and the source span, and proposes the new field
+   value. Not a glossary re-parse.
+4. **Verify before accepting.** Localised-to-a-field edits are checkable: does
+   the new definition still trace to its `source` span (C2)? new `depends_on`
+   term (orphan check)? re-run topo/cycle on the changed subgraph; forward
+   reachability lists affected downstream concepts/docs. Reviewer-supplied facts
+   not in source are recorded as `added`/`derived` with the **PR thread** as
+   provenance — never laundered to look like source text (a C1/C2/C7 strength).
+5. **Regenerate + re-present.** New views, PR (moves commit, then field-level
+   text change); reviewer confirms their comment in a fresh readable view.
+
+**Hard cases.** Comments on *computed* regions (order, index, mermaid) carry a
+distinct anchor (`gen:computed=…`) and route to the upstream cause (usually a
+dependency edge), not to a field. One comment may map to a *set* of records
+(per-cluster comments, DoD-8d) — verified as a set within
+`param-max-terms-changed-per-PR`. Key off the embedded anchor, **not** the line
+number (robust to regeneration reflow). Direct edits to generated files are
+**forbidden** initially and caught by a CI regenerate-and-compare guard plus a
+visible "GENERATED — comment, don't edit" banner.
+
+**Staging.** Location resolution is deterministic, so the round-trip is precise
+even with a human doing step 3. Ship **assisted-manual** first (tool resolves
+the anchor, operator confirms the value); automate value-proposal later. The
+precision comes from the source map, not the AI.
+
+**Consequences for the plan.**
+
+- **Phase 3 inverts (unblocks it).** Steps 3.3, 3.5–3.7 no longer *author*
+  `glossary.md`; they populate concept records and **generate** the glossary,
+  index, and mermaid. The build-early requirement: the view-generator (with
+  anchors) must exist before the first review, so reviewers always see markdown.
+- **Rubric framing.** C9 (single definition site) and C10 (index generated)
+  become structural properties of the record set; the verification anchors
+  (C7 precision, C2 fabrication) attach to each record's `source` span. Fold in
+  as a C9/C10 note when Phase 3 starts; no criterion is weakened.
+- **Body layer unchanged.** Moved / derived / added, graph-driven reorder.
+
+**Scope guard:** ontology-first is the *definition* layer only. The corpus is
+overwhelmingly non-definitional (scenarios, tables, doctrine, prose thresholds)
+and cannot be regenerated from an ontology without the ontology becoming a
+verbatim copy of the document. "Never rewrite" applies to definitions, not
+bodies.
+
 ### What is now settled for Phase 4 / build
 
 Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
@@ -621,5 +723,9 @@ Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
 (D2). No TBX (D3). Reuse **MiniCheck** for fabrication checking, MIT
 Flan-T5-Large / DeBERTa-v3-Large checkpoint only (D4, confirmed). Reuse
 **Vale** for term/acronym rules only, not concept-before-use (D5, confirmed).
-No `language_tool_python` (D6). Runtime (D7) still open, leaning Python.
-D9 (ontology-first definitions) open for Phase 4.
+No `language_tool_python` (D6). Runtime is **Python** (D7, signed off
+2026-07-22). Definition layer is **ontology-first** — structured plain-text
+concept records as the source of truth, `glossary.md`/`index.md`/`.mmd`
+generated as anchored views, comment→edit round-trip per §D9 (D9, signed off
+2026-07-22). Phase 4's architecture-gate decisions are closed; Phase 3 is
+unblocked.
