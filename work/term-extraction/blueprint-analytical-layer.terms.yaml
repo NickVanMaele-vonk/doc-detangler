@@ -1,0 +1,1147 @@
+# Step 3.1 raw extraction — LLM-assisted, NOT yet human-reviewed.
+# Source: samples/blueprint-analytical-layer.md — READ-ONLY REFERENCE document
+# (Nick's ruling 2026-07-22): NOT part of the detangler output set; excluded
+# from the C9 placement test. Kept for term discovery and definitional evidence.
+# Line numbers are approximate; verify before citing as provenance.
+document: blueprint-analytical-layer.md
+terms:
+  - term: MTSAM Market Surveillance & Transaction Monitoring Platform
+    acronym: null
+    aliases: ["the Solution", "the solution", "MTSAM platform"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The Blueprint defines the target architecture, functional scope, delivery phasing, and governance framework for the MTSAM Market Surveillance and Transaction Monitoring Platform (hereafter, 'the Solution').\" — ## 1. Executive Summary, L48"
+    first_use: "Document title, L6"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "4. Scope", "6.1 Security", "7.1 Six-Layer Software Architecture", "11. Constraints", "14. Summary of project approach", "16. Sign-off"]
+    notes: "Title uses ampersand ('&'), definition uses 'and'. 'The Solution' is the defined shorthand used throughout."
+  - term: MTS S.p.A.
+    acronym: MTS
+    aliases: ["MTS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MTS S.p.A. (hereafter, 'MTS') is an Italian firm operating an electronic fixed income trading market for European government bonds, corporate bonds, covered bonds and repo, with average daily trading volume exceeding EUR 85 billion.\" — ## 0. Definitions, L37"
+    first_use: "Document header ('MTS Associated Markets N.V.'), L12; standalone use ## 0. Definitions, L37"
+    used_before_defined: true
+    sections_used: ["0. Definitions", "1. Executive Summary", "3.1 Client — MTSAM", "4.2 Explicitly Out of Scope", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "Distinct from MTSAM but easily confused; 'MTS' also appears embedded in 'MTS AM' (A-01, A-02, L449-450), which actually means MTSAM."
+  - term: MTS Associated Markets N.V.
+    acronym: MTSAM
+    aliases: ["MTS Associate Markets N.V.", "MTS AM", "MTSAM"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MTS Associate Markets N.V. (hereafter, 'MTSAM'), is a joint venture between MTS and a consortium of banks. As a Belgian investment firm, it is supervised by the FSMA and subject to the EU Market Abuse Regulation (MAR).\" — ## 0. Definitions, L39"
+    first_use: "Document header (Client), L12"
+    used_before_defined: true
+    sections_used: ["0. Definitions", "1. Executive Summary", "2. Business Context", "3. Main Stakeholders & Project Roles", "4. Scope", "6. Non-Functional Requirements", "7. Architecture Overview", "9. Integrations", "10. Assumptions & Dependencies", "11. Constraints", "13. Acceptance Criteria", "16. Sign-off"]
+    notes: "Spelling inconsistency: 'Associated Markets' (L12) vs 'Associate Markets' (L39). Also written 'MTS AM' with a space in A-01/A-02 (L449-450)."
+  - term: TriFinance Belgium N.V.
+    acronym: null
+    aliases: ["TriFinance", "TriFinance Belgium NV"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"TriFinance Belgium N.V. (hereafter 'TriFinance'), is a Belgian firm active in consulting and staffing.\" — ## 0. Definitions, L41"
+    first_use: "Document header (Prepared by), L11"
+    used_before_defined: true
+    sections_used: ["0. Definitions", "1. Executive Summary", "3.2 TriFinance", "6.1 Security", "9.1 Internal Integrations", "10. Assumptions & Dependencies", "13. Acceptance Criteria", "16. Sign-off"]
+    notes: null
+  - term: FSMA
+    acronym: FSMA
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "## 0. Definitions, L39"
+    used_before_defined: false
+    sections_used: ["0. Definitions", "1. Executive Summary", "2.1 Regulatory Driver", "5.6 STOR Generation (Phase 2)", "6.3 Regulatory Compliance", "9.4 Regulatory Output", "10. Assumptions & Dependencies", "11. Constraints", "13. Acceptance Criteria"]
+    notes: "Belgian Financial Services and Markets Authority; never expanded in this document. Source of the remediation deadline (end Q1 2027)."
+  - term: EU Market Abuse Regulation
+    acronym: MAR
+    aliases: ["MAR", "Market Abuse Regulation"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "## 0. Definitions, L39"
+    used_before_defined: false
+    sections_used: ["0. Definitions", "2.1 Regulatory Driver", "2.2 Strategic Objectives", "5.5 Replayability", "6.3 Regulatory Compliance", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending"]
+    notes: "The 'MAR definition of replayability' (FR-R03, A-04, OI-02) is referenced as an external definition still to be confirmed by Hans Hermans."
+  - term: Blueprint
+    acronym: null
+    aliases: ["Blueprint document", "blueprint document", "this Blueprint"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"This Blueprint document is the primary deliverable of Phase 0 of the engagement between TriFinance and MTSAM... The Blueprint defines the target architecture, functional scope, delivery phasing, and governance framework for the MTSAM Market Surveillance and Transaction Monitoring Platform.\" — ## 1. Executive Summary, L46-48"
+    first_use: "Document subtitle, L8"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "3.2 TriFinance", "4.1 In Scope (Phase 0)", "11. Constraints", "13. Acceptance Criteria", "14. Summary of project approach", "16. Sign-off"]
+    notes: "Also the doc's own front-matter type ('type: blueprint', L2). Signing it finalizes Phase 0."
+  - term: Phase 0 (Blueprint)
+    acronym: null
+    aliases: ["Phase 0"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Phase 0 - Blueprint** Scope: writing and signing off a mutually agreed blueprint document.\" — ### 4.1 In Scope, L139-141"
+    first_use: "## 1. Executive Summary, L46"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "4.1 In Scope", "6.5 Performance & Availability", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: null
+  - term: Phase 1 (Foundation)
+    acronym: null
+    aliases: ["Phase 1"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Phase 1 — Foundation**\" followed by scope bullet list (infrastructure, ingestion, Main Surveillance Pipeline, Simplified Analyst Workstation, Replayability, end-to-end analyst workflow) — ### 4.1 In Scope, L148-163"
+    first_use: "### 4.1 In Scope, L148"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "9.3 External Data (Phase 2)", "10. Assumptions & Dependencies", "11. Constraints", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria", "14. Summary of project approach"]
+    notes: null
+  - term: Phase 2 (Enrichment)
+    acronym: null
+    aliases: ["Phase 2"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Phase 2 — Enrichment**\" followed by scope bullet list (QA Pipeline, additional external data sources, STOR file generation, workstation extension, confidence score, escalation readiness, AI reasoning engine) — ### 4.1 In Scope, L165-179"
+    first_use: "### 4.1 In Scope, L163"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline", "5.6 STOR Generation (Phase 2)", "8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)", "9.4 Regulatory Output", "10. Assumptions & Dependencies", "11. Constraints", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: null
+  - term: Phase 3 (Extensions)
+    acronym: null
+    aliases: ["Phase 3", "The Extensions"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Phase 3 — Extensions** The Extensions may optionally be built if the project has budget and time left.\" — ### 4.1 In Scope, L182-183"
+    first_use: "### 4.1 In Scope, L182"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: "Explicitly optional/post-deadline (A-09)."
+  - term: Universal Core Engine
+    acronym: UCE
+    aliases: ["UCE", "the UCE"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Universal Core Engine (UCE): the core capability of turning input data into analyst-ready output\" — ## 1. Executive Summary, L53; AND \"**Universal Core Engine (UCE)** | The base detection and scoring framework; implements an analytical pipeline from IBE ingestion to case classification\" — ### 7.2 Main Surveillance Pipeline Architecture, L335"
+    first_use: "## 1. Executive Summary, L53"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "5.2 Main Surveillance Pipeline", "7.1 Six-Layer Software Architecture", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Two definitions in the same document (L53 capability-oriented; L335 framework-oriented). FR-P02 adds a third characterisation: 'the Universal Core Engine (UCE) 22-step analytical pipeline'."
+  - term: Sovereign Bond Sector Pack
+    acronym: null
+    aliases: ["Sector Pack"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Sovereign Bond Sector Pack: extends the UCE with business rules related to bond markets\" — ## 1. Executive Summary, L54; AND \"**Sovereign Bond Sector Pack** | Sector-specific Behaviour Categories and Detection Signal mappings applied on top of the UCE\" — ### 7.2, L336"
+    first_use: "## 1. Executive Summary, L54"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "5.2 Main Surveillance Pipeline", "7.1 Six-Layer Software Architecture", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Acronym 'SBSP' is NOT used in this document. Shortened to 'Sector Pack' in 7.1 (L324). Two definitions (L54 vs L336)."
+  - term: MTSAM Calibration Layer
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MTSAM Calibration Layer: technical configuration specific to MTSAM\" — ## 1. Executive Summary, L55; AND \"**MTSAM Calibration Layer** | Client-specific calibration: Risk Archetypes, Behavioural Categories, CQS/CQT/BOA thresholds, and data limitation constraints (MTSAM-L01, MTSAM-L03)\" — ### 7.2, L337"
+    first_use: "## 1. Executive Summary, L55"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "5.2 Main Surveillance Pipeline", "7.1 Six-Layer Software Architecture", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Acronym 'MCL' is NOT used in this document. L55 says 'technical configuration'; L337 says 'client-specific calibration' including business content — definition drift between technical and business framing."
+  - term: Eagle system
+    acronym: null
+    aliases: ["Eagle", "the Eagle system", "ATS Italy (Eagle)", "existing Eagle system", "legacy system"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MTSAM's existing alert-based surveillance capability is based on the Eagle system provided by vendor ATS and operated by MTS.\" — ## 1. Executive Summary, L50"
+    first_use: "## 1. Executive Summary, L50"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.1 Regulatory Driver", "2.3 Current State", "4.2 Explicitly Out of Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "Remains in parallel operation (4.2). Attributed variously to 'vendor ATS', 'ATS (Eagle)', 'ATS Italy (Eagle)', and 'Eagle system (MTS)'."
+  - term: ATS
+    acronym: null
+    aliases: ["vendor ATS", "ATS Italy"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L50"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "Vendor of the Eagle system; never expanded. 'ATS Italy' (L404, L450) treated as integration owner/counterparty."
+  - term: RT/RD alert
+    acronym: null
+    aliases: ["RT/RD alerts", "RT/RD alert outputs", "RT/RD alert export"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 1), L153"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "RT/RD never expanded anywhere in the document. Output of the Eagle system; export format still TBD (L404)."
+  - term: RTS24
+    acronym: RTS24
+    aliases: ["RTS24 format", "trading data RTS24", "RTS24 data feed"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 2.3 Current State, L94"
+    used_before_defined: false
+    sections_used: ["2.3 Current State", "4.1 In Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "FR-D01 glosses it only as '(EU standard)'. ESMA/MiFIR regulatory technical standard for order record keeping; not expanded in this doc."
+  - term: RTS23
+    acronym: RTS23
+    aliases: ["RTS23 format"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.1 Summary Internal Data Entities, L364"
+    used_before_defined: false
+    sections_used: ["8.1 Summary Internal Data Entities"]
+    notes: "Single occurrence; never expanded. Quote data in RTS23 format is listed as an entity but does not appear in the 5.1 ingestion requirements — potential scope gap."
+  - term: Main Surveillance Pipeline
+    acronym: null
+    aliases: ["main pipeline", "the surveillance pipeline", "the pipeline"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Main Surveillance Pipeline: from ingested raw data to final behavioural concern\" — ### 4.1 In Scope (Phase 1), L157; AND \"**3. Main Surveillance Pipeline** | Deterministic behavioural scoring engine; implements UCE, Sector Pack, and MTSAM Calibration Layer; currently comprises approximately 186 tests across 55 modules\" — ### 7.1, L324"
+    first_use: "### 4.1 In Scope, L157"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline", "7.1 Six-Layer Software Architecture", "7.2 Main Surveillance Pipeline Architecture", "10. Assumptions & Dependencies", "11. Constraints", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria", "14. Summary of project approach"]
+    notes: "Composed of UCE + Sovereign Bond Sector Pack + MTSAM Calibration Layer (7.2). '186 tests across 55 modules' is a stated size metric."
+  - term: Quality Assurance Pipeline
+    acronym: null
+    aliases: ["QA Pipeline", "QA pipeline"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Quality Assurance Pipeline - independent assessment of the final behavioural concern - outcome is used to verify the Main Surveillance Pipeline\" — ### 4.1 In Scope (Phase 2), L167-169; AND \"**4. QA Pipeline** | Scores data independently of Main Surveillance Pipeline and verifies the outcome\" — ### 7.1, L325"
+    first_use: "### 4.1 In Scope (Phase 1 exclusion), L163"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "7.1 Six-Layer Software Architecture", "13. Acceptance Criteria"]
+    notes: "Distinct from the 'two-stage AI QA pattern' of FR-A04 and from the 'QA review' responsibility of the AI reasoning engine (L326) — three QA-flavoured concepts that could be conflated."
+  - term: Intraday Behavioural Event Builder
+    acronym: IBEB
+    aliases: ["IBEB"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The system shall implement the Intraday Behavioural Event Builder (IBEB) to aggregate raw data streams per participant, per instrument cluster, per time window into a structured Intraday Behavioural Event (IBE)\" — ### 5.2 Main Surveillance Pipeline, FR-P01, L218"
+    first_use: "### 5.2 Main Surveillance Pipeline, L218"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "8.1 Summary Internal Data Entities"]
+    notes: null
+  - term: Intraday Behavioural Event
+    acronym: IBE
+    aliases: ["IBE", "IBEs"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "FR-P01, L218; AND \"Intraday Behavioural Event (IBE) | Aggregated behavioural object produced by IBEB for one participant, one instrument cluster, one time window | Pipeline (derived)\" — ### 8.1 Summary Internal Data Entities, L369"
+    first_use: "### 5.2 Main Surveillance Pipeline, L218"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture", "8.1 Summary Internal Data Entities"]
+    notes: "FR-P07 scores 'each IBE'; UCE pipeline runs 'from IBE ingestion to case classification' (L335). The two definitions are consistent."
+  - term: 22-step analytical pipeline
+    acronym: null
+    aliases: ["UCE 22-step analytical pipeline"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P02, L219"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline"]
+    notes: "The 22 steps are never enumerated in this document; presumably specified in the UCE component document. Relationship to '186 tests across 55 modules' (L324) is unexplained."
+  - term: Behaviour Category
+    acronym: null
+    aliases: ["Behaviour Categories", "Behavioural Categories", "behaviour categories"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P03, L220"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Naming drift: 'Behaviour Categories' in Sector Pack context (FR-P03, L336) but 'Behavioural Categories' in MTSAM Calibration Layer context (FR-P04, L337). Unclear whether these are the same concept or a sector-level vs client-level pair."
+  - term: Detection Signal
+    acronym: null
+    aliases: ["detection signal mappings", "Detection Signal mappings"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P03, L220"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Only ever appears as 'Detection Signal mappings' paired with Behaviour Categories; the signal concept itself is never defined here."
+  - term: Risk Archetype
+    acronym: null
+    aliases: ["Risk Archetypes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P04, L221"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Part of the MTSAM Calibration Layer; never defined in this document."
+  - term: CQS
+    acronym: CQS
+    aliases: ["CQS/CQT/BOA scoring", "CQS/CQT/BOA thresholds"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P04, L221"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Never expanded anywhere in the document. Appears only in the triplet 'CQS/CQT/BOA', described as 'scoring' in FR-P04 but as 'thresholds' in 7.2 (L337)."
+  - term: CQT
+    acronym: CQT
+    aliases: ["CQS/CQT/BOA scoring", "CQS/CQT/BOA thresholds"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P04, L221"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Never expanded. Same scoring-vs-thresholds inconsistency as CQS."
+  - term: BOA
+    acronym: BOA
+    aliases: ["CQS/CQT/BOA scoring", "CQS/CQT/BOA thresholds"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P04, L221"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Never expanded. Same scoring-vs-thresholds inconsistency as CQS/CQT."
+  - term: severity classification
+    acronym: null
+    aliases: ["severity scoring model", "proposed severity classification", "case classification", "scoring"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Case generation with severity classification: NONE / LOW / MEDIUM / HIGH / VERY HIGH\" — ### 4.1 In Scope (Phase 1), L158; restated in FR-P08, L225"
+    first_use: "### 2.3 Current State, L95"
+    used_before_defined: true
+    sections_used: ["2.3 Current State", "4.1 In Scope", "5.2 Main Surveillance Pipeline", "5.4 Analyst Workstation", "8.1 Summary Internal Data Entities", "10. Assumptions & Dependencies"]
+    notes: "Five-level scale; Audit Records only kept for LOW and above (L372). Analyst may override the proposed classification (FR-W03). HIGH/VERY HIGH cases drive manual-review capacity assumption A-13."
+  - term: concern score
+    acronym: null
+    aliases: ["concern and confidence score", "final behavioural concern", "behavioural concern"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 1), L157"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline"]
+    notes: "FR-P07: 'The system shall generate a concern and confidence score for each IBE (Phase 2 or Phase 3)'. 'Final behavioural concern' and 'concern score' appear to be the same concept but this is never made explicit; relationship to severity classification is also not stated."
+  - term: confidence score
+    acronym: null
+    aliases: ["Confidence score"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L177"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline"]
+    notes: "Phase 2/3 addition per FR-P07; semantics undefined here."
+  - term: escalation readiness
+    acronym: null
+    aliases: ["Escalation readiness"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L178"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope"]
+    notes: "Single mention; presumably related to the analyst/CCO escalation decision that triggers STOR generation (FR-S02, 9.4), but the link is not made."
+  - term: Case
+    acronym: null
+    aliases: ["cases", "surveillance case", "case generation"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Case | Scored and classified surveillance output; primary analyst-facing object | Pipeline (derived)\" — ### 8.1 Summary Internal Data Entities, L370"
+    first_use: "### 2.2 Strategic Objectives, L83; first structural use ### 4.1 In Scope, L158"
+    used_before_defined: true
+    sections_used: ["2.2 Strategic Objectives", "2.3 Current State", "4.1 In Scope", "5.2 Main Surveillance Pipeline", "5.3 AI Reasoning Engine", "5.4 Analyst Workstation", "5.5 Replayability", "5.6 STOR Generation", "6.4 Auditability", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles", "8.1 Summary Internal Data Entities", "10. Assumptions & Dependencies", "13. Acceptance Criteria"]
+    notes: "Core unit of work. 'No case' finding (L70) is a related concept — a documented negative conclusion. Contrast with 'Alert' (Eagle-era output, no severity model)."
+  - term: Case Decision
+    acronym: null
+    aliases: ["case decision", "analyst decision"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Case Decision | Analyst verdict and rationale, linked to Case | Analyst Workstation\" — ### 8.1 Summary Internal Data Entities, L371"
+    first_use: "### 4.1 In Scope (Phase 1), L162"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "5.4 Analyst Workstation", "5.5 Replayability", "7.4 Key Architectural Principles", "8.1 Summary Internal Data Entities", "13. Acceptance Criteria"]
+    notes: null
+  - term: Case status
+    acronym: null
+    aliases: ["New / Ongoing / Closed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Case status shall be tracked: New / Ongoing / Closed\" — ### 5.4 Analyst Workstation, FR-W04, L245"
+    first_use: "### 5.4 Analyst Workstation, L245"
+    used_before_defined: false
+    sections_used: ["5.4 Analyst Workstation"]
+    notes: "Three-state lifecycle; note 'concluded case records' (NFR-AUD02) implies a 'concluded' state not in this enumeration."
+  - term: Audit Record
+    acronym: null
+    aliases: ["audit records", "audit trail"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Audit Record | For a Case with scoring LOW / MEDIUM / HIGH / VERY HIGH, keep an immutable log of all pipeline steps and analyst actions for that Case | System-generated\" — ### 8.1 Summary Internal Data Entities, L372"
+    first_use: "### 5.4 Analyst Workstation, FR-W06, L247"
+    used_before_defined: true
+    sections_used: ["5.4 Analyst Workstation", "6.4 Auditability", "7.1 Six-Layer Software Architecture", "8.1 Summary Internal Data Entities", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: "Only kept for cases scored LOW and above (i.e. not NONE) per L372, but FR-W06 and NFR-AUD01 imply universal traceability — possible tension. Immutability enforced via RBAC (NFR-AUD02). OI-01 leaves the captured-action set open."
+  - term: Trading Event
+    acronym: null
+    aliases: ["trading data", "trade or order"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Trading Event | Individual trade or order in RTS24 format | MTSAM trading systems\" — ### 8.1 Summary Internal Data Entities, L363"
+    first_use: "### 8.1 Summary Internal Data Entities, L363 (as named entity); 'trading data' from ## 1, L50 onward"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "2.3 Current State", "4.1 In Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: null
+  - term: Quote
+    acronym: null
+    aliases: ["Quotes"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Quotes | Individual quote in RTS23 format | MTSAM trading systems\" — ### 8.1 Summary Internal Data Entities, L364"
+    first_use: "### 8.1 Summary Internal Data Entities, L364"
+    used_before_defined: false
+    sections_used: ["8.1 Summary Internal Data Entities"]
+    notes: "Entity appears only here; quote ingestion is absent from 5.1 requirements."
+  - term: Legacy Alerts
+    acronym: null
+    aliases: ["alerts", "alert outputs", "Alert data"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Legacy Alerts | RT/RD alert output from ATS (Eagle) and High and medium risk blocktrade & Liquidity suspension alerts (developed by TriFinance in powerquery) | Eagle system\" — ### 8.1 Summary Internal Data Entities, L365"
+    first_use: "### 8.1 Summary Internal Data Entities, L365 (as named entity); generic 'alert' usage from ## 1, L50"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "2.1 Regulatory Driver", "2.3 Current State", "4.1 In Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "9.1 Internal Integrations", "10. Assumptions & Dependencies"]
+    notes: "L366 contains a dangling fragment 'High and medium risk blocktrade and' — table corruption in the source. Generic 'alert' (Eagle output) is deliberately contrasted with the new 'Case' concept."
+  - term: high and medium risk blocktrade & liquidity suspension alerts
+    acronym: null
+    aliases: ["high volumes and liquidity suspension alerts", "Liquidity suspension alerts"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 1), L153"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "8.1 Summary Internal Data Entities"]
+    notes: "Inconsistent naming: L153 says 'high volumes and liquidity suspension alerts'; L365 says 'High and medium risk blocktrade & Liquidity suspension alerts (developed by TriFinance in powerquery)'. Possibly the same alert family — needs reconciliation. Also implies a TriFinance-built PowerQuery artifact outside Eagle proper."
+  - term: Participant
+    acronym: null
+    aliases: ["participant reference data", "participant data", "trading counterparty", "participant database"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Participant | Trading counterparty including UBO | MTSAM participant database\" — ### 8.1 Summary Internal Data Entities, L367"
+    first_use: "### 2.1 Regulatory Driver, L71"
+    used_before_defined: true
+    sections_used: ["2.1 Regulatory Driver", "4.1 In Scope", "5.1 Data Ingestion", "5.2 Main Surveillance Pipeline", "8.1 Summary Internal Data Entities", "8.2 External Data Entities", "9.1 Internal Integrations", "9.3 External Data"]
+    notes: "IBE aggregation unit ('per participant'). 'Party data' in A-10 appears to mean participant data."
+  - term: ultimate beneficial owner
+    acronym: UBO
+    aliases: ["UBO"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.1 Data Ingestion, FR-D03, L208"
+    used_before_defined: false
+    sections_used: ["5.1 Data Ingestion", "8.1 Summary Internal Data Entities"]
+    notes: "Expanded at first use but not defined; AML/KYC regulatory concept."
+  - term: Instrument / ISIN
+    acronym: ISIN
+    aliases: ["financial instruments", "instrument reference data", "instruments, ISINs, products", "product reference data"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Instrument / ISIN | Financial instrument reference data | Reference data feed\" — ### 8.1 Summary Internal Data Entities, L368"
+    first_use: "### 4.1 In Scope (Phase 1), L155-156"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "5.1 Data Ingestion", "8.1 Summary Internal Data Entities", "8.2 External Data Entities", "9.3 External Data"]
+    notes: "'Product reference data' (L156) vs 'reference data (instruments, ISINs, products)' (FR-D04) vs 'Instrument / ISIN' entity — three surface forms for what appears to be the same reference-data concept."
+  - term: instrument cluster
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P01, L218"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "8.1 Summary Internal Data Entities"]
+    notes: "Clustering rule never defined; an IBE dimension."
+  - term: Analyst Workstation
+    acronym: null
+    aliases: ["Simplified Analyst Workstation", "analyst workstation", "the workstation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Simplified Analyst Workstation (React-based): minimum viable version\" — ### 4.1 In Scope (Phase 1), L159; AND \"**6. Analyst Workstation** | React-based front end for case review, decision recording, and audit trail\" — ### 7.1, L327"
+    first_use: "### 2.3 Current State, L96 (negatively); named at L159"
+    used_before_defined: false
+    sections_used: ["2.3 Current State", "4.1 In Scope", "5.4 Analyst Workstation", "7.1 Six-Layer Software Architecture", "8.1 Summary Internal Data Entities", "12. Open Issues & Decisions Pending"]
+    notes: "Phase 1 delivers 'Simplified'/MVP version; Phase 2 extends core functionality excluding workflow management; Phase 3 adds 'Analyst Workstation workflow management' (L186)."
+  - term: AI reasoning engine
+    acronym: null
+    aliases: ["AI Reasoning Engine", "the AI"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"AI reasoning engine (case narrative generation and supporting evidence assembly)\" — ### 4.1 In Scope (Phase 2), L179; AND \"**5. AI reasoning engine** | Non-deterministic layer responsible for narrative generation, evidence assembly, and QA review; human-in-the-loop by design\" — ### 7.1, L326"
+    first_use: "### 4.1 In Scope, L179"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.3 AI Reasoning Engine", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles", "9.2 AI Infrastructure"]
+    notes: "Explicitly NOT a decision-maker (FR-A03, C-05). L326 adds 'QA review' to its responsibilities, which L179 does not mention. Slight non-determinism accepted (FR-A05) versus fully deterministic scoring pipeline."
+  - term: two-stage AI QA pattern
+    acronym: null
+    aliases: ["AI 1", "AI 2"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The system shall implement a two-stage AI QA pattern: AI 1 generates the risk file; AI 2 reviews and challenges it\" — ### 5.3 AI Reasoning Engine, FR-A04, L235"
+    first_use: "### 5.3 AI Reasoning Engine, L235"
+    used_before_defined: false
+    sections_used: ["5.3 AI Reasoning Engine"]
+    notes: "Distinct from the (deterministic) Quality Assurance Pipeline of Phase 2 — same 'QA' word, different mechanism."
+  - term: risk file
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.3 AI Reasoning Engine, FR-A04, L235"
+    used_before_defined: false
+    sections_used: ["5.3 AI Reasoning Engine"]
+    notes: "Single occurrence, never defined. Unclear relation to 'case narrative', 'evidence package', or 'Case' — likely the AI-generated case dossier."
+  - term: case narrative
+    acronym: null
+    aliases: ["narrative summary", "AI-generated narrative", "AI narrative", "case narrative generation", "narrative generation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L179"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.3 AI Reasoning Engine", "5.4 Analyst Workstation", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles", "13. Acceptance Criteria"]
+    notes: "FR-A01: 'a human-readable narrative summary for each case'. Non-determinism tolerated (FR-A05)."
+  - term: evidence assembly
+    acronym: null
+    aliases: ["supporting evidence assembly", "supporting evidence"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L179"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.3 AI Reasoning Engine", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles"]
+    notes: "AI responsibility (FR-A02); related to 'supervisory-defensible evidence packages'."
+  - term: supervisory-defensible evidence package
+    acronym: null
+    aliases: ["evidence packages", "supervisory-defensible"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 2.2 Strategic Objectives, L85"
+    used_before_defined: false
+    sections_used: ["2.2 Strategic Objectives", "6.3 Regulatory Compliance"]
+    notes: "'Supervisory-defensible' recurs as a quality attribute (NFR-REG02); the package artifact itself is never specified."
+  - term: Replayability
+    acronym: null
+    aliases: ["replayable", "replayed", "replayability by design"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Replayability by design:** All inputs, intermediate outputs, and decisions are persisted in a form that allows any case to be reconstructed at any later date.\" — ### 7.4 Key Architectural Principles, L350; operationalised in FR-R01, L254"
+    first_use: "## 1. Executive Summary, L50"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "2.2 Strategic Objectives", "2.3 Current State", "4.1 In Scope", "5.5 Replayability", "7.4 Key Architectural Principles", "8.3 Data Governance Notes", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: "The authoritative 'MAR definition of replayability' is external and unconfirmed (FR-R03, A-04, OI-02) — the local definition may need revision. Key compliance driver of the whole solution."
+  - term: Suspicious Transaction and Order Report
+    acronym: STOR
+    aliases: ["STOR", "STOR file", "STOR file generation", "STOR generation"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"STOR = Suspicious Transaction and Order Report\" — ### 4.1 In Scope (Phase 2), L173; also FR-S01, L262"
+    first_use: "### 4.1 In Scope (Phase 2), L172"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "4.2 Explicitly Out of Scope", "5.6 STOR Generation (Phase 2)", "9.4 Regulatory Output", "13. Acceptance Criteria"]
+    notes: "MAR Art. 16 concept with local scope nuance: file generation in scope, transmission to FSMA out of scope (manual submission by analyst, L441). Trigger stated as 'the CCO's decision to escalate' (FR-S02) vs 'Analyst escalation decision' (9.4) — role inconsistency."
+  - term: cross-venue pattern detection
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P09, L226"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline"]
+    notes: "Subject to data limitation constraints MTSAM-L01 and MTSAM-L03."
+  - term: MTSAM-L01
+    acronym: null
+    aliases: ["data availability constraints", "data limitation constraints"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P09, L226"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "Named constraint identifier belonging to the MTSAM Calibration Layer; content never given in this document."
+  - term: MTSAM-L03
+    acronym: null
+    aliases: ["data availability constraints", "data limitation constraints"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.2 Main Surveillance Pipeline, FR-P09, L226"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "7.2 Main Surveillance Pipeline Architecture"]
+    notes: "As MTSAM-L01. Note MTSAM-L02 is never mentioned — numbering gap suggests an external constraint register."
+  - term: Six-Layer Software Architecture
+    acronym: null
+    aliases: ["six logical layers"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The Solution is structured in six logical layers:\" followed by table (Data Ingestion, Data Persistence, Main Surveillance Pipeline, QA Pipeline, AI reasoning engine, Analyst Workstation) — ### 7.1 Six-Layer Software Architecture, L316-327"
+    first_use: "### 7.1 Six-Layer Software Architecture, L316"
+    used_before_defined: false
+    sections_used: ["7.1 Six-Layer Software Architecture"]
+    notes: "Tension with Executive Summary L52, which says the Solution 'consists of three logically independent layers' (UCE, Sector Pack, Calibration Layer) — those three are actually sub-layers of layer 3 per 7.2. Two different 'layer' vocabularies in one document."
+  - term: Data Ingestion (layer)
+    acronym: null
+    aliases: ["Data ingestion pipeline", "ingestion pipeline"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"**1. Data Ingestion** | Connectivity to all internal MTSAM data sources and external data sources\" — ### 7.1, L322"
+    first_use: "### 4.1 In Scope (Phase 1), L151"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "5.1 Data Ingestion", "7.1 Six-Layer Software Architecture", "10. Assumptions & Dependencies"]
+    notes: null
+  - term: Data Persistence (layer)
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"**2. Data Persistence** | Storage of all ingested data, pipeline outputs, AI outputs, and audit records; EU-hosted\" — ### 7.1, L323"
+    first_use: "### 7.1 Six-Layer Software Architecture, L323"
+    used_before_defined: false
+    sections_used: ["7.1 Six-Layer Software Architecture", "8.3 Data Governance Notes"]
+    notes: null
+  - term: determinism
+    acronym: null
+    aliases: ["deterministic", "deterministic pipeline", "Determinism in scoring"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"The pipeline shall be deterministic: identical inputs shall always produce identical outputs\" — FR-P05, L222; AND \"**Determinism in scoring:** ... AI is used only for narrative and evidence assembly, not for scoring.\" — ### 7.4, L348"
+    first_use: "### 5.2 Main Surveillance Pipeline, L222"
+    used_before_defined: false
+    sections_used: ["5.2 Main Surveillance Pipeline", "5.3 AI Reasoning Engine", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles", "11. Constraints"]
+    notes: "C-04 hardens it: 'no probabilistic scoring'. Counterpart concept: accepted 'slight non-determinism' in AI narrative (FR-A05)."
+  - term: human in the loop
+    acronym: null
+    aliases: ["human-in-the-loop", "Human in the loop", "human analyst is in the loop"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"**Human in the loop:** No case is concluded without an analyst decision. AI outputs are advisory.\" — ### 7.4 Key Architectural Principles, L349"
+    first_use: "### 5.3 AI Reasoning Engine, FR-A05, L236"
+    used_before_defined: true
+    sections_used: ["5.3 AI Reasoning Engine", "7.1 Six-Layer Software Architecture", "7.4 Key Architectural Principles", "11. Constraints"]
+    notes: "C-05: AI must not be the final decision-maker; analyst approval mandatory."
+  - term: data residency
+    acronym: null
+    aliases: ["EU-only", "Data Residency"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 3.3 Decision Rights, L128"
+    used_before_defined: false
+    sections_used: ["3.3 Decision Rights", "6.2 Data Residency", "7.3 Hosting & Infrastructure", "9.2 AI Infrastructure", "10. Assumptions & Dependencies", "11. Constraints"]
+    notes: "Project-specific meaning: all data stays in the EU at all times (NFR-DR01, C-01); drives AWS Bedrock EU inference profile choice and Azure AI Foundry ban."
+  - term: PII separation
+    acronym: PII
+    aliases: ["personally identifiable information", "Separation of PII", "PII isolation"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"**Separation of PII:** Personally Identifiable Information shall be isolated from data passed to AI inference infrastructure.\" — ### 7.4 Key Architectural Principles, L351"
+    first_use: "### 6.1 Security, NFR-SEC02, L274"
+    used_before_defined: true
+    sections_used: ["6.1 Security", "7.4 Key Architectural Principles", "8.3 Data Governance Notes", "9.2 AI Infrastructure", "10. Assumptions & Dependencies"]
+    notes: "A-10 assumes PII isolation is legally sufficient and full anonymisation is not required."
+  - term: transferability
+    acronym: null
+    aliases: ["Transferability", "transferable"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"**Transferability:** The solution architecture shall be designed for transfer to MTSAM ownership and operation without TriFinance dependency.\" — ### 7.4 Key Architectural Principles, L352"
+    first_use: "### 6.1 Security, NFR-SEC04, L276"
+    used_before_defined: true
+    sections_used: ["6.1 Security", "7.4 Key Architectural Principles", "11. Constraints"]
+    notes: null
+  - term: Role-Based Access Control
+    acronym: RBAC
+    aliases: ["RBAC"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 1), L150"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "6.1 Security", "6.4 Auditability"]
+    notes: "Generic term but given a project-specific job: enforcing immutability of concluded case records (NFR-AUD02)."
+  - term: Azure tenant
+    acronym: null
+    aliases: ["MTSAM Azure tenant", "MTSAM tenant"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 1), L150"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "6.1 Security", "7.3 Hosting & Infrastructure", "10. Assumptions & Dependencies", "11. Constraints", "12. Open Issues & Decisions Pending", "13. Acceptance Criteria"]
+    notes: "Local meaning: MTSAM-owned tenant that is the data-residency boundary; TriFinance acts as tenant administrator during engagement (NFR-SEC03); Microsoft written guarantee that no data leaves it is a precondition (NFR-SEC05, A-06, OI-05)."
+  - term: AWS Bedrock EU inference profile
+    acronym: null
+    aliases: ["AWS Bedrock", "EU inference profiles", "Bedrock API"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 6.2 Data Residency, NFR-DR02, L284"
+    used_before_defined: false
+    sections_used: ["6.2 Data Residency", "7.3 Hosting & Infrastructure", "9.2 AI Infrastructure", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending"]
+    notes: "Preferred AI inference mechanism (Frankfurt, Ireland, or Paris); encryption keys must remain in Europe (NFR-DR03); final confirmation pending (OI-04, A-05). Primary model Anthropic Claude, fallback OpenAI/GPT (L342, 9.2)."
+  - term: Azure AI Foundry
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 6.2 Data Residency, NFR-DR04, L286"
+    used_before_defined: false
+    sections_used: ["6.2 Data Residency", "11. Constraints"]
+    notes: "Explicitly NOT approved pending Microsoft EU data residency guarantees (NFR-DR04, C-08)."
+  - term: Bloomberg data feed
+    acronym: null
+    aliases: ["Bloomberg data", "Bloomberg"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.2 Explicitly Out of Scope, L195"
+    used_before_defined: false
+    sections_used: ["4.2 Explicitly Out of Scope", "11. Constraints"]
+    notes: "Explicitly out of scope: 'MTS uses Bloomberg; Belgium does not' (L195); C-09 says Bloomberg data 'is not available in Belgium' — slightly different rationale wording."
+  - term: Power BI
+    acronym: null
+    aliases: ["Power BI reporting", "Power BI reports"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 3), L185"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "13. Acceptance Criteria"]
+    notes: "Phase 3 deliverable for management information / board reporting (see OI-13)."
+  - term: Azure DevOps
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 7.3 Hosting & Infrastructure, L344"
+    used_before_defined: false
+    sections_used: ["7.3 Hosting & Infrastructure", "9.1 Internal Integrations"]
+    notes: "Project repository at https://dev.azure.com/TF-DR-PreSales/MTSAM/; also source control and CI/CD."
+  - term: OpenSanctions
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L171"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "External data source for 'participant intelligence'. Listed under Phase 2 in 4.1 but under Phase 1 must-have scope in 9.3 (L423) — phase-assignment inconsistency."
+  - term: Belgian Debt Agency Calendar
+    acronym: null
+    aliases: ["Debt Agency (DMO)", "Sovereign Debt Agency Calendars", "Belgian, Danish and Finnish Debt Agency"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L171"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Data content: 'sovereign issuance and auction events'. Country list drifts: L171 Belgian/Danish/Finnish; L387 Finland/Denmark; L433 Finland/Denmark/Italy."
+  - term: DMO
+    acronym: DMO
+    aliases: ["Debt Agency"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L171"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope"]
+    notes: "Debt Management Office; never expanded in the document."
+  - term: ESMA FIRDS
+    acronym: FIRDS
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L380"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Used for 'instrument reference data'; FIRDS never expanded (Financial Instruments Reference Data System). Phase 1 must-have per 9.3 despite section heading '(Phase 2)'."
+  - term: ESMA FITRS
+    acronym: FITRS
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L384"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Used for 'Liquidity status, LIS, SSTI, transparency regime'; FITRS never expanded (Financial Instruments Transparency System)."
+  - term: ESMA
+    acronym: ESMA
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L380"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Only appears as prefix of FIRDS/FITRS; never expanded or discussed as a supervisor."
+  - term: LIS
+    acronym: LIS
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L384"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Large In Scale (MiFID II transparency threshold); never expanded in the document."
+  - term: SSTI
+    acronym: SSTI
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L384"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "Size Specific To the Instrument (MiFID II transparency threshold); never expanded in the document."
+  - term: transparency regime
+    acronym: null
+    aliases: ["Liquidity status"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L384"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "MiFID II/MiFIR concept sourced from ESMA FITRS; listed as data attributes without definition."
+  - term: ECB Data API
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L381"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "For 'macroeconomic and monetary policy context'; Phase 1 must-have per 9.3."
+  - term: ECB SDMX Yield Curve Data
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L386"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "For 'Sovereign curve analytics'; SDMX never expanded; Phase 2 per 9.3."
+  - term: GDELT
+    acronym: GDELT
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L382"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "For 'geopolitical and news-event intelligence'; never expanded; Phase 1 must-have per 9.3. Related governance note: news data stored as metadata only (L391)."
+  - term: OpenCorporates
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.2 External Data Entities (Phase 2), L383"
+    used_before_defined: false
+    sections_used: ["8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "For 'Corporate ownership & participant relationships'; Phase 2 per 9.3."
+  - term: Eurex Market Data
+    acronym: null
+    aliases: ["Eurex"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L171"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "8.2 External Data Entities (Phase 2)", "9.3 External Data (Phase 2)"]
+    notes: "For 'Cash vs futures behaviour'; supports cross-market analysis; Phase 2 per 9.3."
+  - term: must-have external data source
+    acronym: null
+    aliases: ["five must-have external data sources", "must-have external data integrations"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"All must-have external data integrations are classified as Phase 1 scope; with others in Phase 2 scope. Are considered to be a part of the Phase 1 scope: 1. OpenSanctions ... 5. GDELT\" — ### 9.3 External Data (Phase 2), L420-427"
+    first_use: "### 4.1 In Scope (Phase 1), L157"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "9.3 External Data (Phase 2)", "13. Acceptance Criteria"]
+    notes: "The five must-haves (OpenSanctions, Belgian Debt Agency Calendar, ESMA FIRDS, ECB Data API, GDELT) are only enumerated in 9.3; 4.1 Phase 1 does not name them, and 8.2/4.1 label the same sources Phase 2 — internal inconsistency."
+  - term: GDPR
+    acronym: GDPR
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "### 6.3 Regulatory Compliance, NFR-REG03, L294"
+    used_before_defined: false
+    sections_used: ["6.3 Regulatory Compliance"]
+    notes: "Related pending item: 'Data privacy / data impact assessment' (OI-06)."
+  - term: Steerco
+    acronym: null
+    aliases: ["Steerco member"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 3.1 Client — MTSAM, L108"
+    used_before_defined: false
+    sections_used: ["3.1 Client — MTSAM", "3.2 TriFinance", "15. Summary of Change Request Process"]
+    notes: "Steering committee; never formally defined or given a composition/mandate section, yet it is the decision body for Change Requests (L568)."
+  - term: Change Request
+    acronym: null
+    aliases: ["change request", "CR", "Change Requests", "change request process"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Change Requests are formal instruments for modifying the agreed project scope.\" — ## 15. Summary of Change Request Process, L552"
+    first_use: "## 1. Executive Summary, L57"
+    used_before_defined: true
+    sections_used: ["1. Executive Summary", "4.2 Explicitly Out of Scope", "11. Constraints", "14. Summary of project approach", "15. Summary of Change Request Process", "16. Sign-off"]
+    notes: "Four possible Steerco decisions: Approved / Approved with modifications / Deferred / Rejected. Ad-hoc verbal requests explicitly excluded. Related artifacts: Change Request log, standard template, unique identifier."
+  - term: Change Request log
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 15. Summary of Change Request Process, L566"
+    used_before_defined: false
+    sections_used: ["15. Summary of Change Request Process"]
+    notes: "Register maintained by the Project Manager; each CR gets a unique identifier."
+  - term: scope baseline
+    acronym: null
+    aliases: ["project scope baseline"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "## 15. Summary of Change Request Process, L552"
+    used_before_defined: false
+    sections_used: ["15. Summary of Change Request Process"]
+    notes: "Implicitly, the signed Blueprint constitutes the initial scope baseline, but this is never stated."
+  - term: remediation obligation
+    acronym: null
+    aliases: ["MAR surveillance remediation programme", "remediation process", "FSMA remediation deadline", "remediation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L60 ('FSMA deadline for delivery of the full remediation process (=solution+manual review of high/very high cases): End of Q1 2027')"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.1 Regulatory Driver", "2.2 Strategic Objectives", "10. Assumptions & Dependencies", "11. Constraints"]
+    notes: "The 'full remediation process' explicitly includes manual review of HIGH/VERY HIGH cases, not just the Solution (L60, A-13). Deadline end Q1 2027 (C-02); A-09 ties it to Phase 2 completion. 'FSMA ratification' (A-13) is a further undefined related concept."
+  - term: data onboarding
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 6.1 Security, NFR-SEC05, L277"
+    used_before_defined: false
+    sections_used: ["6.1 Security", "10. Assumptions & Dependencies", "12. Open Issues & Decisions Pending"]
+    notes: "Named project milestone (target end of July per A-01) gated by the Microsoft written guarantee."
+  - term: T+1 feed
+    acronym: null
+    aliases: ["daily batch increments", "intraday processing window"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.2 Explicitly Out of Scope, L193"
+    used_before_defined: false
+    sections_used: ["4.2 Explicitly Out of Scope", "6.5 Performance & Availability"]
+    notes: "Real-time/intra-day surveillance is out of scope, yet the core event object is called 'Intraday Behavioural Event' and NFR-PERF01 references an 'intraday processing window' — the word 'intraday' is used with two different senses. L193 cross-reference claims T+1 is 'mentioned in section 4.1 and 5.1' but it is not."
+  - term: re-ingestion of corrected data records
+    acronym: null
+    aliases: ["re-ingestion"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.1 Data Ingestion, FR-D07, L212"
+    used_before_defined: false
+    sections_used: ["5.1 Data Ingestion", "12. Open Issues & Decisions Pending"]
+    notes: "Phase and approach still open (OI-11); interacts with replayability/determinism but the interaction is not addressed."
+  - term: behavioural test module
+    acronym: null
+    aliases: ["behavioural test modules", "tests", "test modules", "test outcomes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 2), L176"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope", "5.2 Main Surveillance Pipeline", "5.4 Analyst Workstation", "7.1 Six-Layer Software Architecture", "12. Open Issues & Decisions Pending"]
+    notes: "Pipeline 'currently comprises approximately 186 tests across 55 modules' (L324). FR-P06 requires documenting which tests were executed per case. OI-10 references an 'API → test → scenario dependency mapping', introducing 'scenario' as a further undefined term."
+  - term: scenario
+    acronym: null
+    aliases: ["API → test → scenario dependency mapping"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 12. Open Issues & Decisions Pending, OI-10, L493"
+    used_before_defined: false
+    sections_used: ["12. Open Issues & Decisions Pending"]
+    notes: "Single occurrence; appears to be a pipeline-level concept never introduced elsewhere in this document."
+  - term: end-to-end analyst workflow
+    acronym: null
+    aliases: ["End-to-end analyst workflow", "analyst workflow"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"An analyst can complete an end-to-end workflow: internal and must-have external data are ingested, the main pipeline runs, a case is generated with scoring and AI narrative, and the analyst can review, decide, and record their decision with a full audit trail.\" — ### Phase 1 (Foundation) acceptance criteria, L512"
+    first_use: "### 4.1 In Scope (Phase 1), L162"
+    used_before_defined: true
+    sections_used: ["4.1 In Scope", "10. Assumptions & Dependencies", "13. Acceptance Criteria"]
+    notes: "A-09 makes 'end-to-end analyst workflow operational' the FSMA-deadline-relevant milestone."
+  - term: analyst
+    acronym: null
+    aliases: ["human analyst", "analysts", "analyst-ready output", "analyst-facing"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L53"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.3 Current State", "4.1 In Scope", "5.3 AI Reasoning Engine", "5.4 Analyst Workstation", "5.5 Replayability", "7.4 Key Architectural Principles", "8.1 Summary Internal Data Entities", "9.4 Regulatory Output", "10. Assumptions & Dependencies", "11. Constraints", "13. Acceptance Criteria"]
+    notes: "Mandatory human decision-maker (C-05). A-13 refers to 'internal MTS analyst capacity' — MTS, not MTSAM, which may be an error or deliberate. FR-W07 implies multiple analyst profile types, undefined."
+  - term: CCO
+    acronym: CCO
+    aliases: ["CRO/CCO"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 3.1 Client — MTSAM, L107 ('CRO/CCO, MTSAM')"
+    used_before_defined: false
+    sections_used: ["3.1 Client — MTSAM", "5.6 STOR Generation (Phase 2)", "16. Sign-off"]
+    notes: "Chief Compliance Officer (never expanded); FR-S02 makes 'the CCO's decision to escalate a case' the STOR trigger, while 9.4 says 'Analyst escalation decision' — role ambiguity in the escalation authority."
+  - term: escalation decision
+    acronym: null
+    aliases: ["Analyst escalation decision", "decision to escalate a case", "escalate"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.6 STOR Generation (Phase 2), FR-S02, L263"
+    used_before_defined: false
+    sections_used: ["5.6 STOR Generation (Phase 2)", "9.4 Regulatory Output"]
+    notes: "The act that triggers STOR generation; attributed to the CCO in FR-S02 but to the analyst in 9.4 — conflicting authority."
+  - term: assignment agreement
+    acronym: null
+    aliases: ["assignment contract", "the engagement"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L46 ('the assignment agreement signed in June 2026')"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.2 Strategic Objectives", "6.1 Security", "11. Constraints"]
+    notes: "Called 'assignment agreement' (L46) and 'assignment contract' (L78) — same instrument, two names."
+  - term: TriFinance General Terms and Conditions
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L57"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary"]
+    notes: "External document said to define the change management process, yet Section 15 also defines a Change Request Process — potential overlap/conflict of authority."
+  - term: AI-driven pattern discovery
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 3), L187"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope"]
+    notes: "Phase 3 exploratory feature; single mention; sits in tension with the determinism constraint (C-04) — unresolved."
+  - term: adaptive test calibration
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 4.1 In Scope (Phase 3), L187"
+    used_before_defined: false
+    sections_used: ["4.1 In Scope"]
+    notes: "Phase 3 exploratory feature; single mention; same determinism tension as AI-driven pattern discovery."
+  - term: country-dependent parameter
+    acronym: null
+    aliases: ["Country-dependent parameters", "country-dependent parameter modelling"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 8.3 Data Governance Notes, L394"
+    used_before_defined: false
+    sections_used: ["8.3 Data Governance Notes", "12. Open Issues & Decisions Pending"]
+    notes: "Modelling approach TBD by Ivo Merchiers (OI-08); reflects multi-market (Belgium/Denmark/Finland/Italy) calibration need."
+  - term: user tracking
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"The system shall record who performed each action and when (user tracking)\" — ### 5.4 Analyst Workstation, FR-W05, L246"
+    first_use: "### 5.4 Analyst Workstation, L246"
+    used_before_defined: false
+    sections_used: ["5.4 Analyst Workstation"]
+    notes: null
+  - term: analyst profile
+    acronym: null
+    aliases: ["types of profiles"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 5.4 Analyst Workstation, FR-W07, L248"
+    used_before_defined: false
+    sections_used: ["5.4 Analyst Workstation"]
+    notes: "Profile types never enumerated; presumably tied to RBAC roles."
+  - term: behavioural intelligence platform
+    acronym: null
+    aliases: ["behavioural insights", "behaviourally grounded analysis"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L50"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.1 Regulatory Driver", "2.3 Current State"]
+    notes: "Descriptive characterisation of the Solution; the 'behavioural(ly)' family forms the doc's central but never-formally-defined concept cluster."
+  - term: market abuse
+    acronym: null
+    aliases: ["market abuse patterns", "potential market abuse"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "## 1. Executive Summary, L50"
+    used_before_defined: false
+    sections_used: ["1. Executive Summary", "2.2 Strategic Objectives"]
+    notes: "MAR-owned concept; the document relies entirely on the external MAR definition."
+  - term: no case finding
+    acronym: null
+    aliases: ["'no case' finding"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "### 2.1 Regulatory Driver, L70"
+    used_before_defined: false
+    sections_used: ["2.1 Regulatory Driver"]
+    notes: "Documented negative conclusion; motivates replayability and audit requirements. Relationship to severity 'NONE' cases (for which no Audit Record is kept per L372) is worth probing — the original audit failure was exactly about undocumented negative findings."
+  - term: management information
+    acronym: null
+    aliases: ["management information dashboards", "board-level reporting"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "### 2.2 Strategic Objectives, L85"
+    used_before_defined: false
+    sections_used: ["2.2 Strategic Objectives", "4.1 In Scope (Phase 3)", "12. Open Issues & Decisions Pending"]
+    notes: "Delivered via Power BI in Phase 3; cadence/format open (OI-13)."

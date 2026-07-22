@@ -1,0 +1,1786 @@
+# Step 3.1 raw extraction — LLM-assisted, NOT yet human-reviewed.
+# Source: samples/blueprint-MCL-shortened.md. Extracted 2026-07-22.
+# Line numbers are approximate; verify before citing as provenance.
+document: blueprint-MCL-shortened.md
+document_note: "302 lines, 87.6KB. Contains front matter plus Sections 0 and 1 only. Title page says Version 21 but changelog is headed 'What is new in v22' — version inconsistency."
+terms:
+  - term: "Veridict Intelligence"
+    acronym: null
+    aliases: ["Veridict"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front matter, L1"
+    used_before_defined: false
+    sections_used: ["Front matter", "0.1 Five-Pillar FSMA Argument (as 'Veridict Core Engine')"]
+    notes: "Vendor/product family name; appears in document ref 'Veridict-Doc3-MTSAM-v21' and in 'Veridict Core Engine'."
+  - term: "MTS Associated Markets"
+    acronym: "MTSAM"
+    aliases: ["MTSAM", "MTS Belgium OLO sovereign bond market", "the MTSAM market"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Market type: Electronic interdealer trading venue for Belgian OLO sovereign bonds (and selected other sovereign instruments). Quote-driven: price formation through dealer quotes, not through auction order matching.' — ## 1.1 MTS Associated Markets — Key Characteristics, L253-L273"
+    first_use: "Front matter, L3 ('MTSAM Institution Calibration Layer')"
+    used_before_defined: true
+    sections_used: ["Front matter", "SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA", "0.3 Language Governance", "1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories", "1.1 MTS Associated Markets — Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Meaning drifts: MTSAM denotes both the trading venue (the market) and the surveilling institution ('MTSAM's surveillance framework', 'MTSAM considers...'). Distinct from MTS S.p.A. (the platform operator) and the MTS platform."
+  - term: "Institution Calibration Layer"
+    acronym: "MCL"
+    aliases: ["Calibration Layer", "MTSAM Institution Calibration Layer"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front matter, L3"
+    used_before_defined: false
+    sections_used: ["Front matter", "SECTION 0 intro (L41: 'a different Section 0 in their own Calibration Layer')"]
+    notes: "Acronym MCL appears only in the filename, never in the document body. Concept implied at L41: institution-specific layer sitting on the universal engine."
+  - term: "Universal Core Engine"
+    acronym: "UCE"
+    aliases: ["Veridict Core Engine", "Core Engine", "UCE v28", "the analytical engine", "behavioural convergence engine"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front matter, L18 ('Applies to UCE v28 (Document 1 of 3)')"
+    used_before_defined: false
+    sections_used: ["Front matter", "SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA", "1.0 MTSAM API Stack"]
+    notes: "Two surface names — 'Universal Core Engine' (L41) and 'Veridict Core Engine' (L100, L142) — appear to be the same concept; never reconciled explicitly. Defined in Document 1, only used here. NOTE: applies to UCE v28, but SBSP cites UCE v30 — version skew across the set."
+  - term: "Three-Output Integration"
+    acronym: null
+    aliases: ["three-output model", "BehaviouralConcern / EvidenceConfidence / EscalationReadiness three-output model"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Section 11 --- Three-Output Integration (new): formalises the BehaviouralConcern / EvidenceConfidence / EscalationReadiness three-output model and its MTSAM calibration.' — ## What is new in v22, L28"
+    first_use: "Front matter, L7"
+    used_before_defined: true
+    sections_used: ["Front matter"]
+    notes: "Section 11 itself is absent from this shortened document; only the changelog description survives."
+  - term: "BehaviouralConcern"
+    acronym: null
+    aliases: ["five-level BehaviouralConcern axis", "concern"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "Five-level axis NONE / LOW / MEDIUM / HIGH / VERY HIGH (L28). The HIGH / VERY HIGH classification levels referenced throughout 0.1 and 1.2 appear to be values of this axis, though never stated explicitly in this doc."
+  - term: "EvidenceConfidence"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "One of the three outputs; possibly related to 'ModelConfidence' used in 1.1/1.2 — near-synonym risk, relationship not stated."
+  - term: "EscalationReadiness"
+    acronym: null
+    aliases: ["EscalationReadiness conditions"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter", "SECTION 0 intro (L41)", "0.3 Language Governance (L174: 'specific EscalationReadiness condition [named] was not met')"]
+    notes: null
+  - term: "Review Action mapping"
+    acronym: null
+    aliases: ["four-outcome Review Action mapping", "Monitoring / Auto-close resolution"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "'Simplified four-outcome' mapping with Monitoring / Auto-close resolution at LOW concern; the four outcomes are not enumerated in this shortened doc."
+  - term: "BIVM"
+    acronym: "BIVM"
+    aliases: ["BIVM v28"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28 ('aligned with BIVM v28 §10b')"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "Never expanded anywhere in this document. Single mention."
+  - term: "RSA Framework"
+    acronym: "RSA"
+    aliases: ["RSA indicator weights", "six-indicator weighted scoring"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter (L28, L30)"]
+    notes: "Changelog says Section 11.4 gives 'formal specification of the six-indicator weighted scoring with MTSAM-specific assessment basis for each indicator', but Section 11.4 is not present in this shortened doc. RSA never expanded here (UCE doc expands as Reasonable Suspicion Assessment)."
+  - term: "MWBR"
+    acronym: "MWBR"
+    aliases: ["MWBR volume dimension", "MWBR quote dimension", "MWBR downward adjustment"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28 ('corrected MWBR downward adjustment scoping rule')"
+    used_before_defined: false
+    sections_used: ["Front matter", "1.0 MTSAM API Stack (L192 'MWBR volume dimension'; L210 'MWBR confirms population-wide reaction')"]
+    notes: "Never expanded here (UCE expands as Market-Wide Behavioural Reference). Market-wide baseline engine with volume and quote dimensions."
+  - term: "MWBR_ANOMALOUS"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L32"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "'MWBR_ANOMALOUS downward adjustment now correctly scoped to non-LOW classifications only' — a state/flag whose adjustment rule was corrected in v5/v22; underlying definition not in this doc."
+  - term: "driver code"
+    acronym: null
+    aliases: ["concern/confidence/suppressor driver codes", "MTSAM concern/confidence/suppressor driver codes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L28"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "Three families implied (concern drivers, confidence drivers, suppressors); codes themselves not listed in this shortened doc."
+  - term: "CCO Assessment"
+    acronym: null
+    aliases: ["CCO Assessment target"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L34"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: "A named calibration target ('reduced from ≤ 5% to ≤ 1%') — apparently the target share of signals requiring CCO assessment."
+  - term: "calibration target"
+    acronym: null
+    aliases: ["five-level output distribution targets", "calibration targets"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L34"
+    used_before_defined: false
+    sections_used: ["Front matter"]
+    notes: null
+  - term: "Chief Compliance Officer"
+    acronym: "CCO"
+    aliases: ["CCO reporting", "CCO approval", "CCO escalation pathway", "CCO non-STOR justification"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "What is new in v22, L34"
+    used_before_defined: false
+    sections_used: ["Front matter", "0.3 Language Governance (L153, L172)", "1.0 MTSAM API Stack (L235 data-feed approval)", "1.2 Anonymous Quoting (L288)"]
+    notes: "Acronym never expanded in this doc. Carries specific procedural roles: mandatory escalation pathway target, data-feed approval authority, non-STOR justification author."
+  - term: "Financial Services and Markets Authority"
+    acronym: "FSMA"
+    aliases: ["FSMA Belgium"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 — Regulatory Positioning Framework, L37 (expanded L39)"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA", "0.3 Language Governance", "1.0 MTSAM API Stack", "1.1 Key Characteristics", "1.2 Anonymous Quoting"]
+    notes: "Belgian national competent authority; the primary supervisory audience of the whole document. Only doc in the set that expands the acronym."
+  - term: "ESMA"
+    acronym: "ESMA"
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L39 ('consistent with ESMA supervisory expectations')"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument (L124)", "1.1 Key Characteristics (L268, L270)"]
+    notes: "Never expanded (European Securities and Markets Authority)."
+  - term: "RT/RD surveillance scenarios"
+    acronym: null
+    aliases: ["RT/RD framework", "RT/RD trade-based surveillance scenarios", "RT/RD signals", "MTS Alerts (RT/RD)", "existing scenarios", "implemented surveillance scenarios"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Nine implemented alert types from MTS S.p.A. surveillance system: RT01, RT02, RT04, RT05, RT08 (intraday RT); RD01, RD02, RD03, RD04 (end-of-day RD).' — ## 1.0 MTSAM API Stack, L194"
+    first_use: "SECTION 0 intro, L39"
+    used_before_defined: true
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA", "0.3 Language Governance", "1.0 MTSAM API Stack", "1.1 Key Characteristics"]
+    notes: "RT = intraday real-time alerts, RD = end-of-day alerts (only made explicit at L194). Nine of c.30 available MTS alerts are implemented."
+  - term: "behavioural intelligence overlay"
+    acronym: null
+    aliases: ["behavioural adjudication", "behavioural adjudication layer", "Layer 2"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Behavioural intelligence overlay --- assesses each signal through non-compensatory convergence analysis, contextual causality assessment, legitimate explanation testing, and evidence hierarchy. Converts alerts into supervisory-defensible escalation packages.' — ## 0.2 Five-Layer Architecture for FSMA, L142"
+    first_use: "SECTION 0 intro, L39"
+    used_before_defined: true
+    sections_used: ["SECTION 0 intro", "0.2 Five-Layer Architecture for FSMA"]
+    notes: null
+  - term: "architectural separation principle"
+    acronym: null
+    aliases: ["regulatory positioning doctrine"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Regulatory positioning doctrine --- architectural separation principle: the FSMA regulatory narrative contained in this section is institution-specific. ... The analytical framework is universal; the supervisory narrative is institutional.' — ## SECTION 0 intro, L41"
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: null
+  - term: "convergence gate"
+    acronym: null
+    aliases: ["non-compensatory gate architecture", "non-compensatory gate methodology", "non-compensatory convergence analysis", "convergence gates"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Non-compensatory gate architecture: convergence must be independently confirmed across multiple analytical dimensions. No single alert can independently drive HIGH or VERY HIGH classification.' — ## 0.1 Pillar 3, L100"
+    first_use: "SECTION 0 intro, L41 ('convergence gates')"
+    used_before_defined: true
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (L164)"]
+    notes: null
+  - term: "convergence dimension"
+    acronym: null
+    aliases: ["analytical dimensions", "intent confirmation", "outcome materiality", "causal evidence", "explanation failure"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3, L100"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "The four named co-dimensions (intent confirmation, outcome materiality, causal evidence, explanation failure) are each candidate terms in their own right; enumerated only in passing here."
+  - term: "evidence hierarchy"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.2 Five-Layer Architecture for FSMA (L142)"]
+    notes: null
+  - term: "CCL"
+    acronym: "CCL"
+    aliases: ["CCL causal requirements", "CCL causal evidence"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument (L104)"]
+    notes: "Never expanded here (UCE expands as Causality Confidence Layer). Note also QBCCL (L84), which looks like a quote-domain variant of CCL — relationship not stated."
+  - term: "derisking standards"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "Single mention; presumably defined in Document 1."
+  - term: "AI governance prohibitions"
+    acronym: null
+    aliases: ["strict governance (LLM)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "1.0 MTSAM API Stack (L230: 'the LLM is a rendering and summarisation layer, not an analytical engine')"]
+    notes: "The L230 governance rule appears to instantiate these prohibitions."
+  - term: "national competent authority"
+    acronym: "NCA"
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "EU regulatory concept; instances named: CONSOB, AMF, BaFin, FCA, FSMA."
+  - term: "CONSOB"
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "Italian NCA; mentioned only as example of alternative deployment."
+  - term: "AMF"
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "French NCA; example only."
+  - term: "BaFin"
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "German NCA; example only."
+  - term: "FCA"
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: "UK regulator; example only."
+  - term: "Core Regulatory Position"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The Core Regulatory Position: MTSAM considers the currently implemented RT/RD trade-based surveillance scenarios to provide a sufficient foundational detection framework for core trade-based market abuse risks, provided that this framework is complemented by enhanced behavioural analysis, block trade behavioural intelligence, and additional quote-driven surveillance capabilities...' — ## SECTION 0 intro, L43"
+    first_use: "SECTION 0 intro, L43"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro"]
+    notes: null
+  - term: "Five-Pillar FSMA Argument"
+    acronym: null
+    aliases: ["five-pillar position", "five pillars"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The regulatory position is built on five analytically distinct pillars. Each pillar must be present in any FSMA engagement narrative.' — ## 0.1 The Five-Pillar FSMA Argument, L45-L47"
+    first_use: "0.1 heading, L45"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (L162, L179)"]
+    notes: null
+  - term: "Market Abuse Regulation"
+    acronym: "MAR"
+    aliases: ["MAR Article 12", "MAR technical standards", "MAR coverage"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1, L51"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA", "0.3 Language Governance", "1.0 MTSAM API Stack (L232)"]
+    notes: "Never expanded in this doc. Article 12 (market manipulation) is the anchoring legal provision."
+  - term: "RT01 — Momentum ignition"
+    acronym: "RT01"
+    aliases: ["momentum ignition", "RT01 alert"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT01 --- Momentum ignition | Artificial price movement through aggressive directional trading or order-book pressure | Strong --- both execution-based and quote-induced variants covered' — ## 0.1 Pillar 1 table, L56"
+    first_use: "0.1 Pillar 1 table, L56"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture for FSMA (L140)", "1.0 MTSAM API Stack (L194)"]
+    notes: "NOTE: SBSP names SB-01 'Momentum Ignition' as a risk archetype; RT01 here is an alert — same phrase, two object types."
+  - term: "RT02 — Abnormal trade count"
+    acronym: "RT02"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT02 --- Abnormal trade count | Abnormal number of trades in a session relative to participant's historical baseline' — ## 0.1 Pillar 1 table, L58"
+    first_use: "0.1 Pillar 1 table, L58"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RT04 — Price deviation"
+    acronym: "RT04"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT04 --- Price deviation | Off-market pricing, fixing manipulation, benchmark distortion | Strong --- deviation measured in basis points from prevailing MTS mid' — ## 0.1 Pillar 1 table, L60"
+    first_use: "0.1 Pillar 1 table, L60"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RT05 — Opposite trades"
+    acronym: "RT05"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT05 --- Opposite trades | Wash trading, economic neutrality violations, non-arm's-length transactions' — ## 0.1 Pillar 1 table, L62"
+    first_use: "0.1 Pillar 1 table, L62"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: "Row notes OTC bilateral component limited by MTSAM-L05."
+  - term: "RT08 — Liquidity stress proximity"
+    acronym: "RT08"
+    aliases: ["RT08 (liquidity stress)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT08 --- Liquidity stress proximity | Liquidity triggering, pre-suspension abuse, stress exploitation | Strong --- most important fixed income-specific alert; PRE_SUSPENSION_WINDOW captured. Primary detection pathway for pre-stress manipulation given RT22 is not yet implemented' — ## 0.1 Pillar 1 table, L64"
+    first_use: "0.1 Pillar 1 table, L64"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture (L146)", "0.3 Language Governance (L168)", "1.0 MTSAM API Stack (L194)"]
+    notes: "Doctrine repeatedly stresses RT08 is 'compensating coverage, not equivalent replacement' for absent RT22."
+  - term: "RD01 — High EOD volume"
+    acronym: "RD01"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RD01 --- High EOD volume | Abnormal end-of-day volume concentration in CLOSE_WINDOW' — ## 0.1 Pillar 1 table, L66"
+    first_use: "0.1 Pillar 1 table, L66"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RD02 — Participant market share"
+    acronym: "RD02"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RD02 --- Participant market share | Closing-window dominance, market control, concentration at reference price formation | Strong --- calibrated relative to dealer population (12--18 ADA primary dealers); primary EOD dominance signal' — ## 0.1 Pillar 1 table, L68"
+    first_use: "0.1 Pillar 1 table, L68"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RD03 — EOD price influence"
+    acronym: "RD03"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RD03 --- EOD price influence | Marking the close, reference price manipulation, NAV influence | Strong --- downstream exposure to repo, ECB collateral, NAV confirmed as mandatory assessment' — ## 0.1 Pillar 1 table, L70"
+    first_use: "0.1 Pillar 1 table, L70"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RD04 — Closing price deviation"
+    acronym: "RD04"
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RD04 --- Closing price deviation | Off-market closing execution, closing reference price distortion | Strong --- 2bps threshold for benchmark OLOs; 1bps for off-benchmark tenors' — ## 0.1 Pillar 1 table, L72"
+    first_use: "0.1 Pillar 1 table, L72"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L194)"]
+    notes: null
+  - term: "RT22"
+    acronym: "RT22"
+    aliases: ["pre-stress liquidity withdrawal (RT22)", "the RT22 gap", "the absent RT22 alert"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Pre-stress liquidity withdrawal (RT22) is the most important manipulation vector in sovereign bond dealer markets. This layer is the only pathway to its full detection --- RT08 provides compensating coverage, not equivalent replacement.' — ## 0.2 Five-Layer Architecture, L146"
+    first_use: "0.1 Pillar 1 table, L64 ('given RT22 is not yet implemented')"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "0.3 Language Governance (L168)"]
+    notes: "An alert that does not exist yet — a named gap, flagged CRITICAL remediation priority."
+  - term: "RD05"
+    acronym: "RD05"
+    aliases: ["RD05 timing context"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L194 ('RD05 and RD06 not yet implemented')"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack (L194, L206)"]
+    notes: "Not-yet-implemented alert; also referenced as ECIL auction-calendar integration point ('RD05 timing context', L206) despite non-implementation."
+  - term: "RD06"
+    acronym: "RD06"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L194"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Not-yet-implemented alert; high-priority addition in enhancement roadmap."
+  - term: "PRE_SUSPENSION_WINDOW"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L64"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Named analytical window primitive; definition presumably in Document 1/2."
+  - term: "CLOSE_WINDOW"
+    acronym: null
+    aliases: ["closing window", "CLOSE_WINDOW share", "CLOSE_WINDOW dominance"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'CLOSE_WINDOW_START_MINUTES = 30 minutes before 17:00 CET.' — ## 1.1 Key Characteristics (Trading hours row), L262"
+    first_use: "0.1 Pillar 1 table, L66"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.1 Key Characteristics"]
+    notes: "The MTSAM-specific parameterisation (start = 17:00 CET minus 30 min) is given at L262; the window concept itself comes from the core engine."
+  - term: "CLOSE_WINDOW_START_MINUTES"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'CLOSE_WINDOW_START_MINUTES = 30 minutes before 17:00 CET.' — ## 1.1 Key Characteristics, L262"
+    first_use: "1.1 Key Characteristics, L262"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "Named calibration parameter."
+  - term: "Marking-the-Close Triad"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Marking-the-Close Triad requires RD01 + RD02 + RD04 simultaneously' — ## 0.1 Pillar 1 table (RD01 row), L66"
+    first_use: "0.1 Pillar 1 table, L66"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Note the triad omits RD03 (EOD price influence) even though RD03 is the 'marking the close' alert — possible inconsistency worth checking against Document 1."
+  - term: "Belgian Debt Agency"
+    acronym: "ADA"
+    aliases: ["ADA primary dealer list", "ADA Calendar", "ADA auction", "ADA issuance"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L68 ('12--18 ADA primary dealers')"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L198, L206)", "1.1 Key Characteristics (L260, L268)"]
+    notes: "Acronym used at L68 before expansion at L206/L260 ('Belgian Debt Agency (ADA)'). External authority — authorises primary dealers, runs OLO auctions."
+  - term: "primary dealer"
+    acronym: null
+    aliases: ["ADA primary dealers", "dealer population", "authorised primary dealers"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "'Primary dealers authorised by the Belgian Debt Agency (ADA) to quote OLOs. Typically 12--18 dealers active at any given time.' — ## 1.1 Key Characteristics (Participant universe row), L260"
+    first_use: "0.1 Pillar 1 table, L68"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.1 Key Characteristics"]
+    notes: "Local meaning: the ~12–18 dealer population against which all dominance thresholds are calibrated. NOTE: SBSP says 'typically 10--20 primary dealers' — numeric conflict with 12--18 here."
+  - term: "OLO"
+    acronym: "OLO"
+    aliases: ["Belgian OLO sovereign bonds", "benchmark OLOs", "off-benchmark tenors", "OLO series classification"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Front matter, L18"
+    used_before_defined: false
+    sections_used: ["Front matter", "0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack", "1.1 Key Characteristics"]
+    notes: "Never expanded (Obligation Linéaire / Lineaire Obligatie — Belgian government bond). Instrument type owned by the Belgian Treasury/ADA."
+  - term: "MTS mid"
+    acronym: null
+    aliases: ["prevailing MTS mid"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L60"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Reference price for RT04 deviation measurement."
+  - term: "MTSAM limitation code register"
+    acronym: null
+    aliases: ["MTSAM-L01 through MTSAM-L07", "limitation code"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L62 (MTSAM-L05)"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (L166)", "1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories", "1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Codes cited: L01, L05, L07, L10, L11; L166 says 'MTSAM-L01 through MTSAM-L07' but L10/L11 also exist — register extent inconsistent within this doc."
+  - term: "MTSAM-L01"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.3 Language Governance, L166; substantive content 1.0 L192"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance", "1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories (L244)"]
+    notes: "OTC bilateral trade-timestamp / position-visibility limitation; full definition presumably elsewhere."
+  - term: "MTSAM-L05"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L62"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Limits RT05 OTC bilateral component; not defined in this doc."
+  - term: "MTSAM-L07"
+    acronym: null
+    aliases: ["MTSAM-L07 surveillance gap flag", "MTSAM-L07 remediation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'MTSAM-L07 | MTS surveillance export does not include order-level participant identifiers at quote event level (ORDER_NEW, ORDER_MODIFY, ORDER_CANCEL) --- only aggregate market data and trade-level participant IDs are available. Post-session participant attribution for quote events is therefore not possible from the surveillance export alone.' — ## 1.3 New Surveillance Gap — MTSAM-L07, L295-L300"
+    first_use: "0.2 Five-Layer Architecture, L146"
+    used_before_defined: true
+    sections_used: ["0.2 Five-Layer Architecture", "0.3 Language Governance (L166)", "1.0 MTSAM API Stack (L196)", "1.2 Anonymous Quoting (L284)", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "The document's headline 'new' gap; drives ModelConfidence caps, anonymity_attribution_basis defaults, and ISGO-02. Remediation priority CRITICAL."
+  - term: "MTSAM-L10"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'MTSAM-L10: cross-asset futures data absent.' — ## 1.0.1 Formally Removed Data Categories, L246"
+    first_use: "1.0.1 Formally Removed Data Categories, L244"
+    used_before_defined: false
+    sections_used: ["1.0.1 Formally Removed Data Categories"]
+    notes: null
+  - term: "MTSAM-L11"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'MTSAM-L11: RFQ order flow absent.' — ## 1.0.1 Formally Removed Data Categories, L250"
+    first_use: "1.0.1 Formally Removed Data Categories, L244"
+    used_before_defined: false
+    sections_used: ["1.0.1 Formally Removed Data Categories"]
+    notes: null
+  - term: "quote intelligence architecture"
+    acronym: null
+    aliases: ["quote intelligence", "quote intelligence surveillance", "quote intelligence enhancement", "quoting behaviour detection architecture", "Layer 4"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Quote-driven market enhancement --- extends surveillance to order-book-visible manipulation mechanisms (withdrawal cycling, spread conditioning, depth manipulation, pre-stress withdrawal) that are not visible in trade-level data.' — ## 0.2 Five-Layer Architecture (Layer 4 row), L146"
+    first_use: "0.1 Pillar 2 table, L84"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "1.0 MTSAM API Stack", "1.1 Key Characteristics"]
+    notes: "Called 'THE SINGLE MOST IMPORTANT STRATEGIC ENHANCEMENT DEPENDENCY' (L146). Dependent on MTS order book data / MTSAM-L07 remediation."
+  - term: "QBRS"
+    acronym: "QBRS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2 table, L84"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.1 Key Characteristics (L258: 'QBRS is co-primary with PriorityScore for all signals generated on MTSAM')"]
+    notes: "Never expanded; a quote-behaviour risk score from Document 2 Section H."
+  - term: "QBLI"
+    acronym: "QBLI"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2 table, L84"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Never expanded; part of the quote intelligence trio (QBRS, QBLI, QBCCL)."
+  - term: "QBCCL"
+    acronym: "QBCCL"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2 table, L84"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Never expanded; likely quote-behaviour CCL (see CCL entry) — possible compound of two terms."
+  - term: "Behavioural Persistence Layer"
+    acronym: "BPL"
+    aliases: ["repetition and recurrence analysis (BPL)", "BPL session consistency confirmation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Repetition and recurrence analysis (BPL) | Cross-session pattern detection converting isolated alert episodes into structural campaign evidence.' — ## 0.1 Pillar 3 table, L106 (expanded 'Behavioural Persistence Layer (BPL) --- Universal Core Engine Document 1 Part XVII', L88)"
+    first_use: "0.1 Pillar 2 table, L88"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L192)"]
+    notes: "Owns the 'campaign' concept (multi-session campaigns, campaign-level evidence). Only doc in the set that expands BPL."
+  - term: "External Context Intelligence Layer"
+    acronym: "ECIL"
+    aliases: ["contextual enrichment (ECIL)", "ECIL contextual assessment", "ECIL auction calendar", "ECIL ECB event calendar", "ECIL economic event calendar"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Contextual enrichment (ECIL) | Structured assessment of whether each signal occurred in the context of a market-moving event that provides an alternative explanation --- ADA auction, ECB decision, macro release.' — ## 0.1 Pillar 3 table, L104 (expanded 'External Context Intelligence Layer (ECIL) --- Document 1 Part XVIII', L90)"
+    first_use: "0.1 Pillar 2 table, L90"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "1.0 MTSAM API Stack (Layer 2 Context feeds)"]
+    notes: "Only doc in the set that expands ECIL. Outcome codes appearing here: CONTRADICTS_PATTERN, SUPPORTS_EXPLANATION."
+  - term: "RT–RD cross-pass scoring"
+    acronym: "RDCS"
+    aliases: ["RDCS cross-pass scoring", "RT--RD cross-pass scoring (RDCS)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT--RD cross-pass scoring (RDCS) | Intraday RT alerts combined with EOD RD materiality confirmation to produce a composite risk score that reflects both the behaviour and its market consequence.' — ## 0.1 Pillar 3 table, L102"
+    first_use: "0.1 Pillar 3 intro, L95"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "'RT04+RD04 combination ... produces a presumptive STOR review signal' (L102)."
+  - term: "CONTRADICTS_PATTERN"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L104"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "ECIL assessment outcome code; counterpart of SUPPORTS_EXPLANATION."
+  - term: "SUPPORTS_EXPLANATION"
+    acronym: null
+    aliases: ["ECIL SUPPORTS_EXPLANATION"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Economic Calendar row), L210"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "ECIL outcome code."
+  - term: "absence_of_contemporaneous_exogenous_cause"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L104"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Boolean evidence field; TRUE strengthens CCL causal evidence."
+  - term: "LOOKBACK_30D"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L106"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Named lookback window parameter (30 days), used for cross-session repetition."
+  - term: "QBBE"
+    acronym: "QBBE"
+    aliases: ["QBBE quote baseline engine", "participant-specific baseline comparison (QBBE/POFP)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Participant-specific baseline comparison (QBBE/POFP) | Comparison of current behaviour against each participant's own historical profile --- not against a population threshold.' — ## 0.1 Pillar 3 table, L108"
+    first_use: "0.1 Pillar 3 table, L108"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack (L196 'QBBE quote baseline engine')"]
+    notes: "Never expanded as an acronym."
+  - term: "POFP"
+    acronym: "POFP"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L108"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "Never expanded; paired with QBBE for participant-own-baseline comparison — likely participant profile engine."
+  - term: "Suspicious Transaction and Order Report"
+    acronym: "STOR"
+    aliases: ["STOR filing", "presumptive STOR review signal", "STOR narrative", "STOR precedents", "non-STOR justification", "PRECAUTIONARY STOR", "COMPELLING STOR"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L102"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance", "1.0 MTSAM API Stack (Layer 4 AI)", "1.1 Key Characteristics", "1.2 Anonymous Quoting"]
+    notes: "MAR Article 16 concept (not expanded in this doc). Filing/non-filing symmetry is a doctrinal point: 'Non-filing language must be as specific as filing language' (L174)."
+  - term: "supervisory-defensible escalation package"
+    acronym: null
+    aliases: ["escalation package"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 intro, L95"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture (L142)", "0.3 Language Governance (L164)"]
+    notes: "The output artifact the engine 'converts alerts into'."
+  - term: "block trade behavioural analysis"
+    acronym: null
+    aliases: ["block trade behavioural intelligence", "Layer 3", "behavioural categorisation methodologies"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Layer 3: Block trade behavioural analysis | Risk-based enhancement --- applies behavioural and contextual indicators to high-risk block trade and liquidity-event scenarios already identified through existing RT/RD signals.' — ## 0.2 Five-Layer Architecture, L144"
+    first_use: "SECTION 0 intro, L43"
+    used_before_defined: true
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument (Pillar 4)", "0.2 Five-Layer Architecture"]
+    notes: "'Partially operational. PowerQuery-based categorisation logic applied to alert population' (L144)."
+  - term: "BLOCK_TRADE primitive"
+    acronym: null
+    aliases: ["BLOCK_TRADE"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "UCE behavioural primitive derived from the trade stream."
+  - term: "BLOCK_TRADE_THRESHOLD"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Instrument Reference Data row), L198"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Instrument-specific named threshold parameter."
+  - term: "risk-based prioritisation"
+    acronym: null
+    aliases: ["LOW/MEDIUM/HIGH prioritisation", "risk stratification"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 4 table, L124"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "LOW/MEDIUM/HIGH triage of the alert population; distinct from (and potentially confusable with) the five-level BehaviouralConcern axis."
+  - term: "Five-Layer Architecture"
+    acronym: null
+    aliases: ["five-layer architecture for FSMA", "Layer 1..Layer 5"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The following table presents the complete surveillance architecture as it should be described to FSMA.' (Layers: 1 RT/RD scenarios; 2 Behavioural adjudication; 3 Block trade behavioural analysis; 4 Quote intelligence surveillance; 5 Contextual enrichment and replayable audit) — ## 0.2 The Five-Layer Architecture for FSMA, L133-L149"
+    first_use: "0.2 heading, L133"
+    used_before_defined: false
+    sections_used: ["0.2 Five-Layer Architecture for FSMA"]
+    notes: "Not to be confused with the four data layers of the MTSAM API Stack (Section 1.0) — two different 'layer' taxonomies in the same document."
+  - term: "primary signal generation layer"
+    acronym: null
+    aliases: ["foundational detection layer", "detection foundation", "core trade-based surveillance baseline"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'the existing RT/RD framework ... should be presented as the primary signal generation layer --- the detection foundation on which behavioural adjudication, contextual enrichment, and quote intelligence are built.' — ## 0.1 Pillar 1, L75"
+    first_use: "0.1 Pillar 1, L75"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture (L140)", "0.3 Language Governance (L158 approved formulation)"]
+    notes: "An 'approved formulation' under language governance — the term itself is a governed phrase."
+  - term: "Sector Intelligence Pack"
+    acronym: null
+    aliases: ["Document 2"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.2 Five-Layer Architecture (Layer 4 row), L146"
+    used_before_defined: false
+    sections_used: ["0.2 Five-Layer Architecture"]
+    notes: "Name of Document 2 in the document set; also referenced as 'Document 2 Section D/H', '§A.4.1 Doc 2'."
+  - term: "Supervisory Challenge Pack"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.2 Five-Layer Architecture (Layer 5 row), L148"
+    used_before_defined: false
+    sections_used: ["0.2 Five-Layer Architecture"]
+    notes: "Assembled artifact ensuring escalations/closures can be defended before FSMA; related to 'supervisory challenge pre-emption' (L292)."
+  - term: "replayable audit"
+    acronym: null
+    aliases: ["replay capability", "immutable audit trail", "Level 1--4 audit chain"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.2 Five-Layer Architecture (Layer 5 row), L148"
+    used_before_defined: false
+    sections_used: ["0.2 Five-Layer Architecture", "1.0 MTSAM API Stack (L230)"]
+    notes: "Specified in 'Document 6 (Audit Trail)' — note document-set inconsistency: title says 'Document 3 of 3' yet Documents 6 and 7 are cited."
+  - term: "language governance"
+    acronym: null
+    aliases: ["approved formulations", "prohibited formulations", "language governance failure"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The following table defines which formulations are approved for FSMA engagement, internal compliance documentation, CCO reporting, and Board-level governance reporting.' — ## 0.3 Language Governance — Approved and Prohibited Formulations, L151-L153"
+    first_use: "0.3 heading, L151"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance"]
+    notes: "A named governance process, not just style guidance — violations are 'language governance failures' (L176)."
+  - term: "ISGO"
+    acronym: "ISGO"
+    aliases: ["ISGO finding", "gap documented in ISGO"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.3 Language Governance table, L166"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance", "1.2 Anonymous Quoting (L284)", "1.3 New Surveillance Gap — MTSAM-L07 (L300)"]
+    notes: "Never expanded. Context implies an internal surveillance-gap/coverage self-assessment register that issues numbered findings (ISGO-02). NOTE: SBSP uses ISGO as the narrative/output object with mandatory language — reconcile."
+  - term: "ISGO-02"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'ISGO-02: order-level quote attribution data absent from surveillance export' — ## 1.3 New Surveillance Gap — MTSAM-L07, L300"
+    first_use: "1.2 Anonymous Quoting, L284 ('ISGO-02 finding generated')"
+    used_before_defined: true
+    sections_used: ["1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "The ISGO finding generated by MTSAM-L07."
+  - term: "MM_SAFEHARBOUR"
+    acronym: null
+    aliases: ["MM_SAFEHARBOUR_CONFIRMED", "MM_SAFEHARBOUR PARTIAL", "MM_SAFEHARBOUR FAILED", "Market Maker safe-harbour"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'MM_SAFEHARBOUR is a seven-criteria test with documented outcome codes. The correct formulation names the outcome code (CONFIRMED/PARTIAL/FAILED) and references the specific criteria assessed.' — ## 0.3 Language Governance table, L172"
+    first_use: "0.3 Language Governance table, L172"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance"]
+    notes: "'MM_SAFEHARBOUR_CONFIRMED removes the mandatory CCO escalation pathway --- this is a structural scoring effect, not only an explanatory label' (L172). NOTE: UCE says twelve-criteria assessment — seven vs twelve conflict. Related but distinct: 'Market Making explanation category' (L268)."
+  - term: "Market Making explanation category"
+    acronym: null
+    aliases: ["market making obligations", "quoting obligations"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Market Making explanation category: requires positive confirmation that quoting was symmetric and consistent with ADA obligation. Obligation documentation must be on file.' — ## 1.1 Key Characteristics (Primary dealer obligations row), L268"
+    first_use: "0.1 Pillar 3 table, L108"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (safe-harbour row)", "1.1 Key Characteristics"]
+    notes: "One of the engine's legitimate-explanation categories; overlaps conceptually with MM_SAFEHARBOUR — near-synonym pair worth reconciling."
+  - term: "CLOSED_JUSTIFIED"
+    acronym: null
+    aliases: ["non-filing decision"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.3 Language Governance table, L174"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance"]
+    notes: "Disposal/closure code; required documentation is the 'non-filing documentation package ... per Document 7 §8b'."
+  - term: "non-filing documentation package"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.3 Language Governance table, L174"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance"]
+    notes: "Governed by Document 7 §8b (a document outside the stated 'Document 3 of 3' set)."
+  - term: "SCL"
+    acronym: "SCL"
+    aliases: ["SCL tier", "supervisory confidence (SCL tier)", "SCL-COMPELLING", "SCL-PRECAUTIONARY"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'SCL-COMPELLING: the convergent evidence across [n] dimensions constitutes a strong basis for reasonable grounds; SCL-PRECAUTIONARY: reasonable grounds exist notwithstanding [specific uncertainty] --- precautionary filing is appropriate because [specific basis]' — ## 0.3 Language Governance table, L176"
+    first_use: "0.3 Language Governance table, L176"
+    used_before_defined: false
+    sections_used: ["0.3 Language Governance"]
+    notes: "Acronym never expanded (plausibly Supervisory Confidence Level). Tier language must match tier: 'Certainty language in a PRECAUTIONARY STOR is a language governance failure.'"
+  - term: "MTSAM API Stack"
+    acronym: null
+    aliases: ["data stack", "four data layers"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The MTSAM analytical engine operates across four data layers. This section formally specifies which data feeds are in scope, what each feed contributes to the analytical architecture, and what feeds are explicitly excluded.' — ## 1.0 MTSAM API Stack — Data Architecture and Scope Specification, L183-L185"
+    first_use: "1.0 heading, L183"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories"]
+    notes: "Layers: 1 Core Surveillance, 2 Context, 3 Intelligence, 4 AI. A second, unrelated 'layer' taxonomy from the Five-Layer Architecture (0.2) coexists — collision risk."
+  - term: "explicit exclusion register"
+    acronym: null
+    aliases: ["Formally Removed Data Categories"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The explicit exclusion register is architecturally important: it documents that the model was designed around what MTSAM can realistically obtain, not around what a theoretically complete surveillance system would require.' — ## 1.0 MTSAM API Stack, L185; operationalised in ## 1.0.1 Formally Removed Data Categories, L237-L251"
+    first_use: "1.0 MTSAM API Stack, L185"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories"]
+    notes: "Removed categories: OTC Positions / Repo Intelligence; Futures Position Intelligence; Cross-Venue Surveillance Feed; Client Portfolio / Order Flow Intelligence. SBSP calls this the 'Removal Register' (Document 3 §1.0.1) — same artifact, two names."
+  - term: "MTS Trades feed"
+    acronym: null
+    aliases: ["MTS Trades", "foundational trade stream"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Every executed trade on the MTS Associated Markets platform: instrument, price, size, timestamp, aggressor side, participant identifiers. The foundational trade stream for all RT alert primitive detection.' — ## 1.0 MTSAM API Stack (Layer 1 table), L192"
+    first_use: "1.0 MTSAM API Stack, L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: null
+  - term: "MTS S.p.A."
+    acronym: null
+    aliases: ["MTS", "MTS surveillance system", "MTS surveillance export", "MTS export", "MTS platform"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L194"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "The platform operator/vendor; source of the alerts and the surveillance export. 'MTS' alone is used loosely for platform, operator, and export."
+  - term: "UEEO"
+    acronym: "UEEO"
+    aliases: ["UEEO primary trade stream"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; an engine integration point consuming the trade stream."
+  - term: "SRS"
+    acronym: "SRS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded here (UCE: Structural Relationship Score)."
+  - term: "MDCS"
+    acronym: "MDCS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded."
+  - term: "CWPS"
+    acronym: "CWPS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; plausibly Close-Window Participation/Pressure Score given CLOSE_WINDOW context."
+  - term: "BEP_E"
+    acronym: "BEP_E"
+    aliases: ["BEP_E constituent trades", "BEP_E episode grouping"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Trades row), L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; an episode construct grouped by instrument cluster (UCE: Behavioural Episode Consolidation)."
+  - term: "Alert Abstraction Layer"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Alert Abstraction Layer (Section 3.2): translates MTS alert names to UCE behavioural primitives. All nine alerts mapped to Domain 3 primitive codes.' — ## 1.0 MTSAM API Stack (MTS Alerts row), L194"
+    first_use: "1.0 MTSAM API Stack, L194"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "References 'Section 3.2' of this document, which is not present in the shortened version."
+  - term: "behavioural primitive"
+    acronym: null
+    aliases: ["UCE behavioural primitives", "Domain 3 primitive codes", "RT alert primitive detection"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L192"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Named primitives in this doc: BLOCK_TRADE, SPREAD_WIDENING, QUOTE_WITHDRAWAL, LIQUIDITY_REMOVAL. 'Domain 3' taxonomy is unexplained here."
+  - term: "SPREAD_WIDENING"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Quote-domain behavioural primitive."
+  - term: "QUOTE_WITHDRAWAL"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Quote-domain behavioural primitive; conceptually adjacent to 'pre-stress liquidity withdrawal' and 'withdrawal cycling'."
+  - term: "LIQUIDITY_REMOVAL"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Quote-domain behavioural primitive."
+  - term: "PLCS"
+    acronym: "PLCS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded."
+  - term: "QDSP"
+    acronym: "QDSP"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded."
+  - term: "SRI"
+    acronym: "SRI"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded."
+  - term: "QML"
+    acronym: "QML"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded here (SBSP: Quote Market Leadership)."
+  - term: "HQLD"
+    acronym: "HQLD"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (MTS Quotes row), L196"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; plausibly high-quality/historical quote-level data — the data deliverable that remediates MTSAM-L07."
+  - term: "instrument cluster assignment"
+    acronym: null
+    aliases: ["instrument cluster"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Instrument Reference Data row), L198"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Used for BEP_E episode grouping."
+  - term: "benchmark designation"
+    acronym: null
+    aliases: ["on-the-run", "off-the-run", "benchmark OLOs", "off-benchmark tenors"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Instrument Reference Data row), L198"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument (L72)", "1.0 MTSAM API Stack", "1.1 Key Characteristics (L270)"]
+    notes: "Drives differential thresholds (2bps vs 1bps in RD04) and systematic os_downstream_exposure for benchmark tenors."
+  - term: "IPI"
+    acronym: "IPI"
+    aliases: ["IPI instrument persistence scoring"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Instrument Reference Data row), L198"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; instrument persistence score."
+  - term: "SD02"
+    acronym: "SD02"
+    aliases: ["SD02 cross-instrument pair definitions"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Instrument Reference Data row), L198"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.1 Key Characteristics (L264)"]
+    notes: "Cross-instrument scenario/definition code; active pairs OLO/Bund, OLO/OAT, OLO cross-maturity."
+  - term: "correlated instrument pair"
+    acronym: null
+    aliases: ["instrument_correlation_confirmed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Correlated instrument pairs active for this deployment: OLO/Bund (SD02), OLO/OAT (SD02), OLO cross-maturity. instrument_correlation_confirmed=TRUE for these pairs.' — ## 1.1 Key Characteristics (Instrument scope row), L264"
+    first_use: "1.1 Key Characteristics, L264"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "instrument_correlation_confirmed is a named boolean calibration field."
+  - term: "Belgian Treasury Certificate"
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.1 Key Characteristics (L264)"]
+    notes: "Secondary instrument scope."
+  - term: "SF_issuance"
+    acronym: null
+    aliases: ["SF_issuance flag"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "ECIL situational flag for issuance events; 'SF_' prefix suggests a family of situational flags not otherwise listed here."
+  - term: "AUCTION_WINDOW"
+    acronym: null
+    aliases: ["AUCTION_WINDOW activation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Named analytical window tied to ADA auctions."
+  - term: "pre-event positioning analysis"
+    acronym: null
+    aliases: ["dominant pre-ECB positioning"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206 ('Pre-event positioning analysis (SB-05, SB-28/SB-29 frameworks)')"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: null
+  - term: "SB-05"
+    acronym: "SB-05"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "SB-xx codes are sector behavioural archetypes/hypotheses (from Document 2); SB-05 tied to pre-event positioning."
+  - term: "SB-28/SB-29"
+    acronym: null
+    aliases: ["SB-28", "SB-29"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Pre-event positioning frameworks; always cited as a pair here."
+  - term: "SB-26"
+    acronym: "SB-26"
+    aliases: ["SB-26 hypothesis", "SB-26 cash bond / futures interaction archetype"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The SB-26 cash bond / futures interaction archetype is retained as a Tier 3 investigative hypothesis but is explicitly not a primary detection pillar.' — ## 1.0.1 Formally Removed Data Categories, L246"
+    first_use: "1.0 MTSAM API Stack (Eurex row), L212"
+    used_before_defined: true
+    sections_used: ["1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories"]
+    notes: null
+  - term: "SB-30"
+    acronym: "SB-30"
+    aliases: ["SB-30 misuse of confidential order information archetype"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The SB-30 misuse of confidential order information archetype uses a market footprint detection approach based solely on MTS trade timing.' — ## 1.0.1 Formally Removed Data Categories, L250"
+    first_use: "1.0.1 Formally Removed Data Categories, L250"
+    used_before_defined: false
+    sections_used: ["1.0.1 Formally Removed Data Categories"]
+    notes: "NOTE: SBSP names SB-30 'RFQ front-running footprint' — different characterisation of the same code; reconcile."
+  - term: "Level 4 data"
+    acronym: null
+    aliases: ["Four-Level Observability Framework", "Level 1", "Level 2", "Level 3"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'The Four-Level Observability Framework (§A.4.1 Doc 2) correctly positions MTS-only cross-instrument intelligence (Level 1) and public market context (Level 2) as the operational detection layers. Cross-venue analytical hypotheses (Level 3) use only data already in scope.' — ## 1.0.1 Formally Removed Data Categories, L248"
+    first_use: "1.0 MTSAM API Stack (ADA Calendar row), L206"
+    used_before_defined: true
+    sections_used: ["1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories"]
+    notes: "Yet another 'level/layer' scale (observability Levels 1-4), coexisting with API Stack layers 1-4, architecture Layers 1-5, audit chain Levels 1-4, and Eurex data Levels 1-3 — high collision risk for the ontology."
+  - term: "CRS"
+    acronym: "CRS"
+    aliases: ["CRS scoring", "CRS_VERY_HIGH", "high-CRS macro release"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ECB Event Calendar row), L208 ('CRS_VERY_HIGH for surprise ECB events')"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded; a context relevance/surprise score by event type and magnitude. Rule: 'Surprise magnitude ≥ 2σ from consensus = CRS_VERY_HIGH' (L210). UCE gives expansion Context Reliability Score — reconcile."
+  - term: "MANDATORY_ASSESS"
+    acronym: null
+    aliases: ["MANDATORY_ASSESS override"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ECB Event Calendar row), L208"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "'MANDATORY_ASSESS override where dominant pre-ECB positioning AND IS ≥ 2'."
+  - term: "IS"
+    acronym: "IS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (ECB Event Calendar row), L208 ('AND IS ≥ 2')"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded here (UCE: Intent Score). Highly ambiguous surface form ('IS') — risky for automated extraction."
+  - term: "ECB"
+    acronym: "ECB"
+    aliases: ["ECB Governing Council", "ECB collateral", "ECB Event Calendar", "surprise ECB events"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1 table, L70 ('ECB collateral')"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack", "1.1 Key Characteristics (L270)"]
+    notes: "APP/PEPP/TLTRO programme names also appear (L208). ECB collateral use drives systematic os_downstream_exposure=TRUE for benchmark OLOs."
+  - term: "CICI"
+    acronym: "CICI"
+    aliases: ["CICI Level 1 event type"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Eurex row), L212"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded here (SBSP: Cross-Instrument Context Intelligence); typed events (FUTURES_ACTIVITY_ELEVATED)."
+  - term: "FUTURES_ACTIVITY_ELEVATED"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Eurex row), L212"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "CICI Level 1 event type code."
+  - term: "CMCS"
+    acronym: "CMCS"
+    aliases: ["cmcs_confirmed", "cmcs_s1_olo_dominance", "cmcs_s2_futures_volume", "cmcs_s3_oi_change", "cmcs_s4_basis_move", "cmcs_s5_olo_yield", "cmcs_s6_sovereign_spread", "six-component CMCS weighting"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Six-component CMCS weighting: CMCS = (0.25 × cmcs_s1_olo_dominance) + (0.20 × cmcs_s2_futures_volume) + (0.15 × cmcs_s3_oi_change) + (0.15 × cmcs_s4_basis_move) + (0.15 × cmcs_s5_olo_yield) + (0.10 × cmcs_s6_sovereign_spread). cmcs_confirmed threshold = 0.55 standard / 0.45 with ECB or ADA event co-occurrence.' — ## 1.0 MTSAM API Stack (Eurex row), L212"
+    first_use: "1.0 MTSAM API Stack (Eurex row), L212"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Formula given but acronym never expanded here (SBSP: Cross-Market Convergence Score). 'CMCS Level 2 adds +0.50 CQS as contextual amplifier for SB-26 hypothesis.' Component names differ slightly from SBSP's list — verify signal-by-signal identity."
+  - term: "CQS"
+    acronym: "CQS"
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Eurex row), L212"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Never expanded here (UCE: Convergence Quality Score); a score that receives additive amplifiers."
+  - term: "OpenSanctions"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Open-source sanctions, regulatory enforcement, and financial crime database covering OFAC, EU sanctions, national regulatory actions, PEP lists, and adverse media.' — ## 1.0 MTSAM API Stack (Layer 3 table), L220"
+    first_use: "1.0 MTSAM API Stack, L220"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Third-party data source feeding RRF enrichment."
+  - term: "Regulatory Risk Factor"
+    acronym: "RRF"
+    aliases: ["RRF enrichment", "RRF assessment", "RRF Jurisdiction Adjustment"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (OpenSanctions row), L220 ('RRF (Regulatory Risk Factor) enrichment')"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.1 Key Characteristics (L268, L270)"]
+    notes: "Expanded at first use but not formally defined. Jurisdiction Adjustment assigns weights by regulator ('FSMA findings receive +2 (EU regulator)')."
+  - term: "HSL_prior_stor"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (OpenSanctions row), L220"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "HSL never expanded; a participant history field proxied from enforcement data."
+  - term: "LEI"
+    acronym: "LEI"
+    aliases: ["participant LEI"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (OpenSanctions row), L220"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Legal Entity Identifier (never expanded); external ISO/ROC standard used as participant key."
+  - term: "OpenCorporates"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Open database of global company registrations, corporate structures, beneficial ownership (where public), and registered addresses.' — ## 1.0 MTSAM API Stack (Layer 3 table), L222"
+    first_use: "1.0 MTSAM API Stack, L222"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Third-party source for participant entity mapping and counterparty affiliate identification."
+  - term: "BT-06"
+    acronym: "BT-06"
+    aliases: ["BT-06 counterparty concentration"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (OpenCorporates row), L222"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "BT-xx code family (block-trade indicators) not defined in this doc."
+  - term: "PI09"
+    acronym: "PI09"
+    aliases: ["PI09 block trade network"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (OpenCorporates row), L222"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "PI-xx code family not defined in this doc."
+  - term: "automated narrative generation"
+    acronym: null
+    aliases: ["narrative templates", "MEDIUM-BATCH closure", "MEDIUM-INVESTIGATE reviewed", "STOR narrative input", "LLM narrative assembly"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Automated narrative generation (§XX.5.1 Doc 1): the three narrative templates (MEDIUM-BATCH closure, MEDIUM-INVESTIGATE reviewed, STOR narrative input) are populated from structured Level 1--4 audit chain fields and passed to the LLM for fluent narrative assembly. The LLM does not make analytical decisions...' — ## 1.0 MTSAM API Stack (Layer 4 table), L230"
+    first_use: "1.0 MTSAM API Stack, L225-L230"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "MEDIUM-BATCH and MEDIUM-INVESTIGATE imply a disposal-category taxonomy not otherwise described in this shortened doc."
+  - term: "Azure OpenAI / AWS Bedrock (LLM feed)"
+    acronym: null
+    aliases: ["LLM", "Large Language Model API"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "'the LLM is a rendering and summarisation layer, not an analytical engine. All LLM outputs are reviewed by the analyst before any disposal decision is recorded.' — ## 1.0 MTSAM API Stack (Layer 4 table), L230"
+    first_use: "1.0 MTSAM API Stack, L230"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Generic vendor tech given a project-specific governed role; data residency constraint (EU residency for GDPR) attached."
+  - term: "Azure AI Search (analyst query interface)"
+    acronym: null
+    aliases: ["analytical knowledge base", "analyst query interface", "STOR precedent retrieval"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "'Vector search and full-text search index for the analytical knowledge base: STOR precedents, FSMA guidance documents, MAR technical standards, internal policy documents, and historical signal/episode records.' — ## 1.0 MTSAM API Stack (Layer 4 table), L232"
+    first_use: "1.0 MTSAM API Stack, L232"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: null
+  - term: "calibration change register"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L235"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Named governance artifact; part of 'data stack governance' rule requiring CCO approval for new feeds."
+  - term: "analytical perimeter"
+    acronym: null
+    aliases: ["MTS surveillance perimeter", "MTSAM perimeter", "outside the perimeter"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack, L212/L235"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories"]
+    notes: "Boundary concept: what data/behaviour the model may claim to observe. 'A new data feed changes the analytical perimeter of the model' (L235)."
+  - term: "OTC bilateral component"
+    acronym: null
+    aliases: ["OTC bilateral trading", "bilateral OTC", "OTC bilateral sessions", "post-session OTC review pass"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'A proportion of interdealer OLO trading occurs as bilateral OTC outside the electronic MTS platform. This trading is typically reported but may not include order book data.' — ## 1.1 Key Characteristics (OTC bilateral component row), L266"
+    first_use: "0.1 Pillar 1 table, L62"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (L170)", "1.0 MTSAM API Stack", "1.0.1 Formally Removed Data Categories", "1.1 Key Characteristics"]
+    notes: "Treated in 'Lite data mode'; T+1 trade reports only; excluded from RT pass, handled in a 'post-session OTC review pass' (L262)."
+  - term: "Lite data mode"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (OTC bilateral component row), L266"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "Named degraded-data operating mode of the engine; definition presumably in Document 1."
+  - term: "os_liquidity_unmeasurable"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (OTC bilateral component row), L266"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "'os_' field family (outcome/observability state) also includes os_downstream_exposure — family not defined here."
+  - term: "os_downstream_exposure"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (Regulatory authority row), L270 ('os_downstream_exposure=TRUE systematic for OLO benchmark tenors')"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "Captures downstream use of OLO prices (repo, ECB collateral, NAV) as materiality amplifier."
+  - term: "surveillance_gap_flag"
+    acronym: null
+    aliases: ["QUOTE_DATA_ABSENT", "MTSAM-L07 surveillance gap flag"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (OTC bilateral component row), L266"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics", "1.2 Anonymous Quoting (L284)"]
+    notes: "Flag mechanism linking data absence to analytical output; QUOTE_DATA_ABSENT is one enumerated value."
+  - term: "DOMINANCE_THRESHOLD_PCT"
+    acronym: null
+    aliases: ["dominance thresholds", "session_ADV", "active_dealer_count", "sector_sensitivity_multiplier"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'DOMINANCE_THRESHOLD_PCT = session_ADV / active_dealer_count × sector_sensitivity_multiplier. dominance_population_size = documented ADA primary dealer list.' — ## 1.1 Key Characteristics (Participant universe row), L260"
+    first_use: "1.1 Key Characteristics, L260"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "Formula parameters (session_ADV, active_dealer_count, sector_sensitivity_multiplier) are themselves named calibration inputs. NOTE: SBSP has DOMINANCE_THRESHOLD (no _PCT) — verify same parameter."
+  - term: "dominance_population_size"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'dominance_population_size = documented ADA primary dealer list.' — ## 1.1 Key Characteristics, L260"
+    first_use: "1.1 Key Characteristics, L260"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: null
+  - term: "PriorityScore"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (Market type row), L258"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "Core-engine ranking score; not defined in this doc. 'QBRS is co-primary with PriorityScore for all signals generated on MTSAM'."
+  - term: "RT pass"
+    acronym: null
+    aliases: ["post-session OTC review pass", "cross-pass"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics (Trading hours row), L262"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics"]
+    notes: "'Pass' is a processing-stage concept (RT pass, RD pass implied by RDCS 'cross-pass') — the pass taxonomy is assumed, not defined, in this doc."
+  - term: "anonymous quote-driven structure"
+    acronym: null
+    aliases: ["anonymous quoting", "anonymous interdealer electronic order book", "anonymity"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'MTS Associated Markets operates as an anonymous interdealer electronic order book. Quote activity is visible to all participants in the form of aggregated depth, best bid/ask, and spread --- but the identity of the dealer posting, modifying, or withdrawing any specific quote is not disclosed during the trading session.' — ## 1.1 Key Characteristics, L272; elaborated ## 1.2 Anonymous Quoting, L275-L293"
+    first_use: "0.1 Pillar 2 (L79)"
+    used_before_defined: true
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Called 'the single most important market structure characteristic for analytical calibration' (L277)."
+  - term: "anonymity_attribution_basis"
+    acronym: null
+    aliases: ["order_id_post_session", "market_pattern_probabilistic", "trade_execution_confirmed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'anonymity_attribution_basis field mandatory in explanation_trace for all quote-domain interaction signals: order_id_post_session (confirmed), market_pattern_probabilistic (unconfirmed), or trade_execution_confirmed.' — ## 1.2 Anonymous Quoting, L286"
+    first_use: "1.1 Key Characteristics, L272"
+    used_before_defined: true
+    sections_used: ["1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Three enumerated values; defaults to market_pattern_probabilistic under MTSAM-L07."
+  - term: "explanation_trace"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics, L272"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics", "1.2 Anonymous Quoting"]
+    notes: "Audit structure holding mandatory fields; defined elsewhere in the document set."
+  - term: "ModelConfidence"
+    acronym: null
+    aliases: ["MEDIUM-confidence"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'ModelConfidence is capped at MEDIUM for any quote-domain interaction signal where attribution relies on anonymous order book observation alone.' — ## 1.1 Key Characteristics, L272 (cap rule restated 1.2 L288 and 1.3 L300)"
+    first_use: "1.1 Key Characteristics, L272"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Only the MTSAM cap rule is defined here, not the score itself. Possible overlap/conflict with 'EvidenceConfidence' from the three-output model — relationship never stated."
+  - term: "LIQUIDITY_DRIVEN_REACTION"
+    acronym: null
+    aliases: ["liquidity-driven reaction"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Where participant B's quote activity follows participant A's quote activity in the anonymous order book: default classification is LIQUIDITY_DRIVEN_REACTION. The reclassification to identity-driven coordination requires post-session order attribution.' — ## 1.2 Anonymous Quoting, L286"
+    first_use: "1.2 Anonymous Quoting, L286"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting"]
+    notes: "Default classification for sequential quote behaviour; counterpart concept 'identity-driven coordination' is named but not coded."
+  - term: "CCT"
+    acronym: "CCT"
+    aliases: ["CCT=EXPLICIT", "CCT=IMPLICIT"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.2 Anonymous Quoting, L290 ('Explicit coordination (CCT=EXPLICIT) in quote-domain signalling requires order_id_post_session attribution or statistical_specificity_confirmed')"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07 (L300)"]
+    notes: "Never expanded (plausibly Coordination Classification Type); values EXPLICIT/IMPLICIT; MTSAM defaults to IMPLICIT for anonymous quote interaction."
+  - term: "statistical_specificity_confirmed"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.2 Anonymous Quoting, L290"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting"]
+    notes: "Alternative evidence basis for CCT=EXPLICIT; not defined here."
+  - term: "Methodology Lead"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.2 Anonymous Quoting, L290 ('Methodology Lead sign-off required before CCT=EXPLICIT is recorded')"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting"]
+    notes: "Named governance role, distinct from CCO and analyst."
+  - term: "anonymity_attribution_narrative"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'Every quote-domain interaction signal reaching HIGH or VERY HIGH classification must include an anonymity_attribution_narrative field. This is a MTSAM mandatory field not required in non-anonymous deployments.' — ## 1.2 Anonymous Quoting, L292"
+    first_use: "1.2 Anonymous Quoting, L292"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting"]
+    notes: "Institution-specific mandatory field — a calibration-layer addition to the universal engine schema."
+  - term: "quote-domain interaction signal"
+    acronym: null
+    aliases: ["quote-domain signals", "interaction-based quote conclusions", "quote-level signals"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.1 Key Characteristics, L272"
+    used_before_defined: false
+    sections_used: ["1.1 Key Characteristics", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Signal subtype subject to the anonymity rules (attribution basis, ModelConfidence cap, CCT restrictions)."
+  - term: "quote event"
+    acronym: null
+    aliases: ["ORDER_NEW", "ORDER_MODIFY", "ORDER_CANCEL", "quote event level"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "1.3 New Surveillance Gap — MTSAM-L07, L300"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting (L284)", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Three enumerated order-book event types (ORDER_NEW, ORDER_MODIFY, ORDER_CANCEL)."
+  - term: "signal"
+    acronym: null
+    aliases: ["signals generated on MTSAM", "historical signal/episode records"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 1, L75"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "0.3 Language Governance", "1.0 MTSAM API Stack", "1.1 Key Characteristics", "1.2 Anonymous Quoting"]
+    notes: "Locally distinct from 'alert': alerts are MTS-generated detections; signals are the engine's assessed analytical objects. The distinction is used consistently but never explicitly defined."
+  - term: "alert"
+    acronym: null
+    aliases: ["alert population", "alert universe", "MTS alerts", "alert types"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L41 ('implemented alert population')"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "1.0 MTSAM API Stack"]
+    notes: "Local meaning: an RT/RD detection produced by the MTS S.p.A. surveillance system, the raw input to the behavioural layer. See 'signal' note."
+  - term: "episode"
+    acronym: null
+    aliases: ["alert episodes", "BEP_E episode", "signal/episode records"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 3 table, L106 ('isolated alert episodes')"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "1.0 MTSAM API Stack"]
+    notes: "Analytical grouping unit above signal level (BEP_E grouping by instrument cluster); formal definition not in this doc."
+  - term: "campaign"
+    acronym: null
+    aliases: ["multi-session campaigns", "campaign-level dominance and momentum signal", "structural campaign evidence"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2 table, L88"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument"]
+    notes: "BPL-owned concept: cross-session coordinated pattern; escalation unit above episode."
+  - term: "pre-stress liquidity withdrawal"
+    acronym: null
+    aliases: ["pre-stress withdrawal", "systematic pre-stress liquidity withdrawal", "anticipatory withdrawal"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "'RT08 detects stress events --- it does not detect the anticipatory withdrawal that causes them. These are analytically distinct.' — ## 0.3 Language Governance table, L168; also 'Trade data alone cannot detect systematic pre-stress liquidity withdrawal that occurs through quoting behaviour without execution.' — ## 0.1 Pillar 2 table, L84"
+    first_use: "0.1 Pillar 2 table, L84"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture (L146)", "0.3 Language Governance (L168)"]
+    notes: "The manipulation vector RT22 is meant to detect; 'the most important manipulation vector in sovereign bond dealer markets' (L146)."
+  - term: "quote-driven manipulation vectors"
+    acronym: null
+    aliases: ["spread conditioning", "depth manipulation", "withdrawal cycling", "systematic quote pressure", "liquidity withdrawal", "order book depth manipulation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2 table, L86"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture (L146)", "1.2 Anonymous Quoting (L279)"]
+    notes: "A recurring enumerated family of named mechanisms; each member (spread conditioning, withdrawal cycling, depth manipulation, quote pressure) is a candidate term. Membership varies slightly between the three enumerations."
+  - term: "surveillance gap"
+    acronym: null
+    aliases: ["residual gap", "residual detection gap", "structural gap", "New Surveillance Gap"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "0.1 Pillar 2, L79"
+    used_before_defined: false
+    sections_used: ["0.1 Five-Pillar FSMA Argument", "0.3 Language Governance", "1.2 Anonymous Quoting", "1.3 New Surveillance Gap — MTSAM-L07"]
+    notes: "Locally formalised via MTSAM-Lxx limitation codes, ISGO findings, and surveillance_gap_flag values — 'gap' is a governed object, not loose prose."
+  - term: "enhancement roadmap"
+    acronym: null
+    aliases: ["enhancement layer", "proportionate enhancement", "enhancement plan"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "SECTION 0 intro, L39"
+    used_before_defined: false
+    sections_used: ["SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.3 Language Governance (L162)", "1.0 MTSAM API Stack (L194)"]
+    notes: "Language-governed: must be described as 'complement/extend', never 'replace/correct deficiencies'."
+  - term: "supervisory challenge pre-emption"
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "'FSMA or a regulatory authority reviewing a quote-based interaction signal will ask: How did you identify coordination if the order book was anonymous? The answer must be in the case record, not produced in response to the challenge.' — ## 1.2 Anonymous Quoting, L292"
+    first_use: "1.2 Anonymous Quoting, L292"
+    used_before_defined: false
+    sections_used: ["1.2 Anonymous Quoting"]
+    notes: "Doctrine underlying the Supervisory Challenge Pack and anonymity_attribution_narrative requirements."
+  - term: "GDPR"
+    acronym: "GDPR"
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "1.0 MTSAM API Stack (Layer 4 table), L230"
+    used_before_defined: false
+    sections_used: ["1.0 MTSAM API Stack"]
+    notes: "Single mention; drives LLM data-residency constraint."
+  - term: "document set (Documents 1, 2, 3, 6, 7)"
+    acronym: null
+    aliases: ["Document 1 of 3", "Document 2 of 3", "Document 3 of 3", "Document 6 (Audit Trail)", "Document 7"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front matter, L3 ('Document 3 of 3')"
+    used_before_defined: false
+    sections_used: ["Front matter", "SECTION 0 intro", "0.1 Five-Pillar FSMA Argument", "0.2 Five-Layer Architecture", "0.3 Language Governance", "1.0 MTSAM API Stack"]
+    notes: "Internal inconsistency: front matter claims a three-document set ('Document 3 of 3'), yet Layer 5 cites 'Document 6 (Audit Trail)' (L148) and non-filing rules cite 'Document 7 §8b' (L174). Also version confusion: title page says 'Version 21' / 'v21 --- Full document release' (L5, L14) but the changelog is headed 'What is new in v22' (L23)."

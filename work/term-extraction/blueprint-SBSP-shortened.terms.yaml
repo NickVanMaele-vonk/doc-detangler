@@ -1,0 +1,1634 @@
+# Step 3.1 raw extraction — LLM-assisted, NOT yet human-reviewed.
+# Source: samples/blueprint-SBSP-shortened.md. Extracted 2026-07-22.
+# Line numbers are approximate; verify before citing as provenance.
+document: blueprint-SBSP-shortened.md
+terms:
+  - term: Veridict Intelligence
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Title block, L1"
+    used_before_defined: false
+    sections_used: ["Title block"]
+    notes: "Vendor/product brand owning the document set; never described further in this document."
+
+  - term: Sovereign Government Bond Sector Intelligence Pack
+    acronym: SBSP
+    aliases: ["Sector Intelligence Pack", "the Pack", "SBSP (in amendment code SBSP-AMD-BVR-001)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"This document specifies the Sovereign Government Bond Sector Intelligence Pack --- the pattern taxonomy, alert architecture, scoring calibration, and analytical doctrine that extend the Universal Core Engine (Document 1) for sovereign bond market surveillance.\" Front-matter abstract, L12"
+    first_use: "Title block, L3-L5"
+    used_before_defined: true
+    sections_used: ["Title block", "Front-matter abstract", "Section overview table", "A.4.3 (via SBSP-AMD-BVR-001)"]
+    notes: "Acronym SBSP appears only inside the amendment identifier SBSP-AMD-BVR-001; body text says 'Pack' (e.g. 'Pack Response' column, A.1)."
+
+  - term: Universal Core Engine
+    acronym: UCE
+    aliases: ["UCE v30", "Document 1"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract", "Section overview table (Section B row)", "A.4.3.1 ECIL Context Thresholds (§VI-A.5.3 UCE v30)", "SB-12 embedded §D.4 text"]
+    notes: "Defined in Document 1, only referenced here. Cross-references to '§VI-A.5.3 UCE v30' imply a versioned UCE spec."
+
+  - term: MTSAM
+    acronym: MTSAM
+    aliases: ["MTSAM interdealer market", "the MTSAM perimeter"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12 ('Institution-specific calibration for the MTSAM interdealer market is provided in Document 3.')"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract", "A.4", "A.4.1", "A.4.2", "A.4.3 and subsections", "A.6 archetype table (MTSAM Tier column)"]
+    notes: "Never expanded. Used ambiguously as both the market/venue instance and the surveillance model deployment ('MTSAM data', 'MTSAM can provide...', 'MTSAM receives'). Calibration lives in Document 3."
+
+  - term: MTS
+    acronym: MTS
+    aliases: ["MTS electronic venue", "MTS order book", "anonymous electronic MTS venue", "MTS OLO universe"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 Cross-Instrument & External Context Intelligence, L130"
+    used_before_defined: false
+    sections_used: ["A.4", "A.4.1", "A.4.2", "A.4.3", "A.6 archetype table"]
+    notes: "The interdealer electronic trading platform; never expanded. Distinct from MTSAM but graphically similar — easy confusion risk."
+
+  - term: Market Abuse Regulation
+    acronym: MAR
+    aliases: ["MAR Art. 12(2)(b)", "MAR Art. 12(2)(c)", "MAR Intelligence"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Title block, L7 ('MAR Intelligence --- Fixed Income Market Abuse Detection')"
+    used_before_defined: false
+    sections_used: ["Title block", "A.3.1 (Art. 12(2)(b)/(c) citation, L114)"]
+    notes: "EU regulation; cited by article for identity-driven coordination."
+
+  - term: FSMA
+    acronym: FSMA
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.6.1 ISGO Mandatory Language — BVR Validation Basis, L230 ('Five-year retention required per FSMA supervisory defensibility requirements.')"
+    used_before_defined: false
+    sections_used: ["§A.6.1"]
+    notes: "Belgian Financial Services and Markets Authority; not expanded in document."
+
+  - term: European Central Bank
+    acronym: ECB
+    aliases: ["ECB collateral haircuts", "ECB decisions", "ECIL ECB calendar", "ECB event"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L59"
+    used_before_defined: false
+    sections_used: ["A.1", "A.4.1 (Level 2)", "A.4.3 (ECB calendar, ECB event co-occurrence in CMCS)"]
+    notes: null
+
+  - term: Belgian Debt Agency
+    acronym: ADA
+    aliases: ["ECIL ADA calendar", "ADA auction window", "Belgian Debt Agency auctions"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Four-Level Observability Framework, L158"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.3 (ADA calendar, ADA auction co-occurrence)"]
+    notes: "ADA acronym (L194) never explicitly tied to 'Belgian Debt Agency' in text; the mapping is inferable from parallel usage."
+
+  - term: European Market Infrastructure Regulation
+    acronym: EMIR
+    aliases: ["EMIR-reported derivatives positions"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.2 CICI and the Three-Position Data Types, L219"
+    used_before_defined: false
+    sections_used: ["A.4.3.2"]
+    notes: "Single mention as a data source MTSAM lacks."
+
+  - term: Legal Entity Identifier
+    acronym: LEI
+    aliases: ["LEI-based participant mapping"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.2 Cross-Venue Analytical Framework, L178"
+    used_before_defined: false
+    sections_used: ["A.4.2"]
+    notes: "Prerequisite for cross-venue participant identity bridging (MTSAM-L03 remediation)."
+
+  - term: Suspicious Transaction and Order Report
+    acronym: STOR
+    aliases: ["STOR filing", "STOR basis", "STOR narrative support"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Four-Level Observability Framework, L160"
+    used_before_defined: false
+    sections_used: ["A.4.1"]
+    notes: "Never expanded. Doctrine rule: STOR basis is always MTS-observable behaviour, never the Level 3 hypothesis itself."
+
+  - term: Eurex
+    acronym: null
+    aliases: ["Eurex Public Market Data", "Eurex market data feed", "Eurex position records"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3 heading, L188"
+    used_before_defined: false
+    sections_used: ["A.4.3", "A.4.3.1 CICI Data Inputs", "A.4.3.2"]
+    notes: "External exchange (owner of Bund futures market data). 'Eurex Public Market Data' becomes a named Layer 2 API feed in Document 3."
+
+  - term: OLO
+    acronym: OLO
+    aliases: ["OLOs", "Belgian OLOs", "benchmark OLOs", "OLO 10Y/15Y"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract", "A.4.1", "A.4.3 (all subsections)", "A.6 archetype table"]
+    notes: "Belgian linear sovereign bond; never expanded (Obligation Linéaire/Lineaire Obligatie). Central instrument of the pack."
+
+  - term: OAT
+    acronym: OAT
+    aliases: ["OATs", "OAT futures", "OLO/OAT spread"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract", "A.4.3.1 CICI Data Inputs", "A.4.3.2"]
+    notes: "French sovereign bond, used as spread comparator."
+
+  - term: Bund
+    acronym: null
+    aliases: ["Bunds", "Bund futures", "OLO/Bund spread", "OLO/Bund cash-futures basis"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract", "A.4.1 (Level 2, Level 4, MTSAM-L10)", "A.4.3 (all subsections)"]
+    notes: "German sovereign bond; Bund futures (Eurex) are the core CICI/CMCS context instrument."
+
+  - term: BTP
+    acronym: BTP
+    aliases: ["BTPs"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract"]
+    notes: "Italian sovereign bond; mentioned only in scope statement."
+
+  - term: Gilt
+    acronym: null
+    aliases: ["Gilts"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12"
+    used_before_defined: false
+    sections_used: ["Front-matter abstract"]
+    notes: "UK sovereign bond; scope statement only."
+
+  - term: behavioural primitive
+    acronym: null
+    aliases: ["Behavioural Primitive Mapping", "primitives"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section B row), L21"
+    used_before_defined: false
+    sections_used: ["Section overview table", "SECTION B heading", "A.6 archetype table (AGGRESSIVE_BUY/SELL, QUOTE_WITHDRAWAL, SPREAD_WIDENING, LIQUIDITY_REMOVAL, SUSPENSION primitives)"]
+    notes: "UCE concept mapped here to fixed income. Named primitive instances used: AGGRESSIVE_BUY/SELL (L239), QUOTE_WITHDRAWAL (L261), SPREAD_WIDENING (L263), LIQUIDITY_REMOVAL (L267), 'SUSPENSION context primitive' (L286). Section B body is absent from this shortened file."
+
+  - term: pattern tier
+    acronym: null
+    aliases: ["Tier 1 Core Patterns", "Tier 2 Behavioural Amplifiers", "Tier 3 Advanced Detection", "MTSAM Tier", "Tier 1 archetypes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section C row), L23"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.4.1 (Tier 1 archetypes list, L165)", "A.6 archetype table (MTSAM Tier column)"]
+    notes: "'Tier' is overloaded three ways in this doc: pattern tiers (Tier 1/2/3 detection), external-context feed tiers ('sovereign auction calendar Tier 1 mandatory (not Tier 2 recommended)', L61), and MTSAM supervisory tier per archetype. Same word, three taxonomies."
+
+  - term: RT alert taxonomy
+    acronym: RT
+    aliases: ["RT alert", "25-code intraday RT alert taxonomy", "RT01", "RT04", "RT08", "RT14"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"E --- RT Alert Taxonomy: Complete 25-code intraday RT alert taxonomy for sovereign bond markets with fixed income-specific calibration notes.\" Section overview table, L27"
+    first_use: "Section overview table, L27"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1 (RT14)", "A.4 (RT08 pre-stress, RT04)", "A.6 archetype table (RT01)"]
+    notes: "Section E itself is missing from this shortened file, so individual RT codes (RT01 price move, RT04 price deviation, RT08 pre-stress, RT14 dominance) are used but never defined here."
+
+  - term: RD alert taxonomy
+    acronym: RD
+    aliases: ["RD alert", "15-code end-of-day RD alert taxonomy", "RD02", "RD03", "RD04", "RD05", "RD06", "RD07", "RD12", "RD-03"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"F --- RD Alert Taxonomy: Complete 15-code end-of-day RD alert taxonomy with CLOSE_WINDOW framework and Marking-the-Close Triad.\" Section overview table, L29"
+    first_use: "Section overview table, L29"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1 (RD02, RD03, RD04, RD07, RD12)", "A.4.1 (RD06)", "A.6 archetype table (RD03 quote, RD04 execution, RD05, RD06)"]
+    notes: "Section F body missing from shortened file. Inconsistent surface form: 'RD-03 repeated liquidity concentration' (SB-11 row, L267) vs 'RD03' elsewhere — likely the same code, flag for normalisation."
+
+  - term: CLOSE_WINDOW
+    acronym: null
+    aliases: ["CLOSE_WINDOW framework", "CLOSE_WINDOW campaign", "closing window"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section F row), L29"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.6 archetype table (SB-04, SB-06, SB-18)"]
+    notes: "Named end-of-day analysis window; framework itself is in missing Section F."
+
+  - term: Marking-the-Close Triad
+    acronym: null
+    aliases: ["Marking the Close (SB-04 archetype)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section F row), L29"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.6 archetype table (SB-04)"]
+    notes: "Triad membership never enumerated in the shortened file."
+
+  - term: RT–RD Cross-Pass Convergence
+    acronym: null
+    aliases: ["Intraday × EOD materiality scoring", "RT–RD combinations", "cross-pass"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"G --- RT--RD Cross-Pass Convergence: Intraday × EOD materiality scoring (RDCS), fifteen named RT--RD combinations, and the five priority combinations for sovereign bond markets.\" Section overview table, L31"
+    first_use: "Section overview table, L31"
+    used_before_defined: false
+    sections_used: ["Section overview table"]
+    notes: "Section G body absent from shortened file."
+
+  - term: RDCS
+    acronym: RDCS
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Intraday × EOD materiality scoring (RDCS)\" Section overview table, L31; behaviour: \"RDCS receives additional +0.10 systemic_consequence_uplift where downstream_exposure includes repo margin calculations.\" A.1, L65"
+    first_use: "Section overview table, L31"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1"]
+    notes: "Acronym never letter-expanded; only glossed as intraday×EOD materiality score."
+
+  - term: Quote Intelligence Architecture
+    acronym: null
+    aliases: ["quote intelligence architecture (Section H)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section H row), L33"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1 ('Quote intelligence architecture (Section H) is co-primary with trade-based detection', L55)"]
+    notes: "Umbrella for QBRS/QBLI/QBCCL; Section H body missing from shortened file."
+
+  - term: QBRS
+    acronym: QBRS
+    aliases: ["composite quote risk scoring"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section H row), L33"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1 ('QBRS substitutes for IScore where quote-domain patterns are dominant', L55)"]
+    notes: "Never expanded (Quote Behaviour Risk Score implied). Explicit substitution relation with IScore."
+
+  - term: QBLI
+    acronym: QBLI
+    aliases: ["QBLI_SUSPENSION"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section H row), L33"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.6 archetype table (SB-14, QBLI_SUSPENSION, L286)"]
+    notes: "Never expanded."
+
+  - term: QBCCL
+    acronym: QBCCL
+    aliases: ["SF_issuance (its issuance sensitivity factor)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section H row), L33"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1 ('QBCCL SF_issuance = 1.5 --- highest contextual sensitivity factor', L61)", "A.6 archetype table (SB-05 SF_issuance)"]
+    notes: "Never expanded; carries named sensitivity factors (SF_issuance)."
+
+  - term: IScore
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L55"
+    used_before_defined: false
+    sections_used: ["A.1"]
+    notes: "UCE-level composite score; here only as the thing QBRS substitutes for."
+
+  - term: Outcome Severity
+    acronym: OS
+    aliases: ["OS=0", "OS=2", "OS Liquidity Impact dimension", "OS Information Impact dimension", "OS Price Impact dimension"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L59 ('OS=2 automatic where downstream exposure confirmed.')"
+    used_before_defined: false
+    sections_used: ["A.1", "A.4.3.2 ('OS=0 while conditioning confirmed' AOB pathway, L221)"]
+    notes: "Expansion 'Outcome Severity' is inferred, never spelled out here. Multi-dimensional (Price/Liquidity/Information Impact) with sovereign-bond rule that OS=0 on price alone does not cap classification (L63)."
+
+  - term: DOMINANCE_THRESHOLD
+    acronym: null
+    aliases: ["dominance threshold"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L57 ('Dealer population size feeds DOMINANCE_THRESHOLD calibration.')"
+    used_before_defined: false
+    sections_used: ["A.1", "A.2 (regime-based reductions of 20%/40%)"]
+    notes: "Named calibration parameter, dealer-population-relative."
+
+  - term: QDSP
+    acronym: QDSP
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L57"
+    used_before_defined: false
+    sections_used: ["A.1", "A.6 archetype table (SB-11, L267)"]
+    notes: "Never expanded; a dominance-family quote metric."
+
+  - term: Intraday Dominance
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L57"
+    used_before_defined: false
+    sections_used: ["A.1"]
+    notes: "Listed alongside RD02/RT14/QDSP as a dominance detector — appears to be a named detector, not a generic phrase."
+
+  - term: primary dealer
+    acronym: null
+    aliases: ["primary dealer context", "dealer population", "concentrated dealer network"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section J row), L37; substantive at A.1 L57 ('typically 10--20 primary dealers')"
+    used_before_defined: false
+    sections_used: ["Section overview table (Section J)", "A.1"]
+    notes: "Industry term, but locally load-bearing: dealer population size drives threshold calibration and Section J explanation constraints."
+
+  - term: downstream exposure
+    acronym: null
+    aliases: ["downstream exposure assessment", "downstream_exposure (field)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L59"
+    used_before_defined: false
+    sections_used: ["A.1"]
+    notes: "Exposure of reference-price consumers (repo margins, ECB haircuts, covered bond pools, NAV, structured product barriers). Mandatory assessment for RD03/RD04/RD07/RD12; triggers OS=2 and RDCS systemic_consequence_uplift (+0.10)."
+
+  - term: systemic_consequence_uplift
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"RDCS receives additional +0.10 systemic_consequence_uplift where downstream_exposure includes repo margin calculations.\" A.1, L65"
+    first_use: "A.1 Structural Characteristics Governing Detection, L65"
+    used_before_defined: false
+    sections_used: ["A.1"]
+    notes: null
+
+  - term: repo market linkage
+    acronym: null
+    aliases: ["repo margin", "repo financing", "repo books", "repo positions"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "A.1 Structural Characteristics Governing Detection, L65"
+    used_before_defined: false
+    sections_used: ["A.1", "A.4.1 (Level 4)", "A.4.3.2 (repo positions FORMALLY REMOVED)"]
+    notes: "Generic finance term but with project rule: repo market impact = systemic consequence, OS=2 automatic."
+
+  - term: Liquid Regime Classification
+    acronym: null
+    aliases: ["regime", "NORMAL", "THIN", "ILLIQUID", "STRESSED"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"A.2 Liquid Regime Classification for Sovereign Bonds\" table defining each regime, e.g. \"NORMAL: Bid-ask spread within 1.5× historical median; order book depth within 20% of 30-day baseline; no circuit breaker or suspension events.\" and \"STRESSED: Sovereign spread widening >50bps in session; confirmed macro event driving market-wide directional moves.\" A.2, L68-L80"
+    first_use: "A.2 heading, L68"
+    used_before_defined: false
+    sections_used: ["A.2"]
+    notes: "Four named regimes each with EMT threshold adjustments; STRESSED caps ModelConfidence at MEDIUM and suspends PFNE."
+
+  - term: EMT threshold
+    acronym: EMT
+    aliases: ["EMT Threshold Adjustment", "all EMT thresholds elevated 30%"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.2 Liquid Regime Classification, L71 (column heading)"
+    used_before_defined: false
+    sections_used: ["A.2"]
+    notes: "EMT never expanded anywhere in the file; presumably a UCE Document 1 term."
+
+  - term: ModelConfidence
+    acronym: null
+    aliases: ["ModelConfidence capped at MEDIUM", "HIGH/MEDIUM/LOW confidence levels"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.2 Liquid Regime Classification, L79"
+    used_before_defined: false
+    sections_used: ["A.2", "A.3 (anonymity-driven capping rules, L94, L100)"]
+    notes: "This doc adds an attribution-confidence adjustment on top of the (Document 1) data-quality basis: capped MEDIUM when interaction conclusions rest on anonymous order book patterns alone."
+
+  - term: PFNE
+    acronym: PFNE
+    aliases: ["PFNE monitoring"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.2 Liquid Regime Classification, L79 ('PFNE monitoring suspended for stressed session.')"
+    used_before_defined: false
+    sections_used: ["A.2"]
+    notes: "Never expanded; single mention."
+
+  - term: anonymous quote-driven market structure
+    acronym: null
+    aliases: ["anonymous quoting", "anonymous interdealer market", "anonymous order book"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"in anonymous interdealer electronic sovereign bond markets, quote activity is visible to all participants but is not immediately attributed to specific dealers.\" A.3, L85"
+    first_use: "A.3 heading, L82"
+    used_before_defined: false
+    sections_used: ["A.3", "A.3.1", "A.3.2", "A.4", "A.6 intro (L232)"]
+    notes: "Foundational structural premise driving CCT defaults, ModelConfidence caps, and attribution doctrine."
+
+  - term: liquidity-driven reaction
+    acronym: null
+    aliases: ["LIQUIDITY_DRIVEN_REACTION (classification value)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Liquidity-driven reaction: Participant B reacts to the observable change in market liquidity --- tighter spread, deeper book, or aggressive price --- created by participant A's anonymous quoting activity. B does not know A created the change; B simply responds to the market signal.\" A.3.1, L112; default rule at L118"
+    first_use: "A.3 (L96, 'Liquidity-driven reaction is the default interpretation'); table definition A.3.1 L112"
+    used_before_defined: true
+    sections_used: ["A.3", "A.3.1"]
+    notes: "Default classification for sequential quote behaviour in anonymous markets."
+
+  - term: identity-driven coordination
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Identity-driven coordination: Participant B deliberately tracks participant A's specific order activity --- using order IDs, sizes, timing patterns, or pre-arranged signals --- and responds to A's specific orders rather than to the anonymous market condition.\" A.3.1, L114"
+    first_use: "A.3 (L96); defined A.3.1 L114"
+    used_before_defined: true
+    sections_used: ["A.3", "A.3.1"]
+    notes: "If confirmed maps to MAR Art. 12(2)(b)/(c). Burden of proof placed on the detection framework."
+
+  - term: Quote-Based Inter-Participant Signalling
+    acronym: null
+    aliases: ["quote signalling", "inter-participant signalling", "Quote Signalling (SB-12)", "full signal cycle detection"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.3, L94 (also Section overview D row L25 'inter-participant signalling')"
+    used_before_defined: false
+    sections_used: ["Section overview table (Section D)", "A.3", "A.6 archetype table (SB-12, §D.5 reference)"]
+    notes: "Full specification is in §D.5, which is absent from the shortened file."
+
+  - term: CCT
+    acronym: CCT
+    aliases: ["CCT=EXPLICIT", "CCT=IMPLICIT"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.3, L98"
+    used_before_defined: false
+    sections_used: ["A.3", "A.6 archetype table (SB-12)"]
+    notes: "Never expanded (coordination classification type implied). Rule: defaults to IMPLICIT for quote-domain signalling under anonymous attribution."
+
+  - term: DQS
+    acronym: DQS
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.3, L100 ('data quality dimensions (DQS, UEEO completeness)')"
+    used_before_defined: false
+    sections_used: ["A.3"]
+    notes: "Data Quality Score implied; never expanded here (UCE term)."
+
+  - term: UEEO
+    acronym: UEEO
+    aliases: ["UEEO completeness", "cross-venue episode_id in the UEEO"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.3, L100"
+    used_before_defined: false
+    sections_used: ["A.3", "A.4.2 ('The cross-venue episode_id in the UEEO links electronic and OTC events...', L176)"]
+    notes: "Never expanded; the event/episode data object of the UCE. Carries episode_id linking cross-venue events."
+
+  - term: explanation_trace
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.3, L102"
+    used_before_defined: false
+    sections_used: ["A.3"]
+    notes: "Case-record structure into which anonymity_attribution_basis is written."
+
+  - term: anonymity_attribution_basis
+    acronym: null
+    aliases: ["order_id_post_session", "market_pattern_probabilistic", "trade_execution_confirmed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Every interaction-based quote signal must include an anonymity_attribution_basis field in the explanation_trace: 'order_id_post_session' (confirmed), 'market_pattern_probabilistic' (unconfirmed), or 'trade_execution_confirmed' (strongest).\" A.3, L102"
+    first_use: "A.3, L102"
+    used_before_defined: false
+    sections_used: ["A.3", "A.6 archetype table (SB-12 'anonymity attribution framework')"]
+    notes: null
+
+  - term: quote behaviour without trade execution
+    acronym: null
+    aliases: ["standalone quote manipulation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"manipulative behaviour may occur entirely through displayed quote behaviour --- liquidity withdrawal, spread conditioning, order book influence, depth removal --- without requiring or producing any executed transactions.\" A.3.2, L124"
+    first_use: "A.3.2 heading, L122"
+    used_before_defined: false
+    sections_used: ["A.3.2"]
+    notes: "Doctrine: quote behaviour is a primary, not secondary, detection pathway."
+
+  - term: OTC bilateral trading
+    acronym: OTC
+    aliases: ["OTC bilateral activity", "OTC bilateral trade data", "bilateral OTC component"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "Front-matter abstract, L12 ('traded on electronic venues and OTC'); analytically framed in A.4 L130"
+    used_before_defined: false
+    sections_used: ["A.4", "A.4.2", "A.4.3.2"]
+    notes: "Generic term given project-specific dual status: both a capability limitation (partial data, EOD timestamps) AND an active manipulation vector — the doc explicitly reframes it (L130)."
+
+  - term: cross-venue manipulation
+    acronym: null
+    aliases: ["cross-venue behavioural inconsistency", "cross-venue divergence", "cross-venue fragmentation detection"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"a participant conditions the anonymous electronic order book through quote behaviour ... and then executes the profitable side of the strategy bilaterally in the OTC market --- outside the electronic venue's detection perimeter. ... Cross-venue behavioural inconsistency between electronic MTS activity and OTC bilateral activity is therefore an independent behavioural indicator requiring explicit analytical treatment.\" A.4, L133"
+    first_use: "A.4, L130-L133"
+    used_before_defined: false
+    sections_used: ["A.4", "A.4.1", "A.4.2", "A.4.3"]
+    notes: "Divergence contributes to Repetition indicator and Dependency Filter (DS=1); flag cross_venue_divergence_confirmed=TRUE (L180)."
+
+  - term: Liquidity Migration
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Participant reduces electronic quoting presence (quote withdrawal, widening spreads, depth removal from MTS order book) ... Participant increases bilateral OTC execution volume in the same instrument during the same session.\" A.4 cross-venue pattern table, L140"
+    first_use: "A.4, L140"
+    used_before_defined: false
+    sections_used: ["A.4"]
+    notes: "One of four named cross-venue manipulation patterns."
+
+  - term: Off-Platform Price Conditioning
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Participant quotes aggressively on one side of the MTS order book --- not to execute electronically but to condition the price expectation of bilateral counterparties ... Participant executes bilaterally at prices close to or better than the electronic book levels they just conditioned.\" A.4 cross-venue pattern table, L142"
+    first_use: "A.4, L142"
+    used_before_defined: false
+    sections_used: ["A.4"]
+    notes: null
+
+  - term: Bilateral Execution Following Anonymous Quote Pressure
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Participant applies anonymous quote pressure on MTS ... causing other participants to adjust their bilateral OTC pricing expectations in response to the electronic book signal.\" A.4 cross-venue pattern table, L144"
+    first_use: "A.4, L144"
+    used_before_defined: false
+    sections_used: ["A.4"]
+    notes: null
+
+  - term: Venue Arbitrage
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Participant identifies a price discrepancy between the electronic MTS market and bilateral OTC pricing --- a discrepancy that the participant may have manufactured through electronic quote conditioning --- and exploits the spread.\" A.4 cross-venue pattern table, L146"
+    first_use: "A.4, L146"
+    used_before_defined: false
+    sections_used: ["A.4"]
+    notes: "Cross-venue spread test: |MTS_mid − OTC_execution_price| vs historical distribution."
+
+  - term: Four-Level Observability Framework
+    acronym: null
+    aliases: ["Level 1 — MTS-Only Cross-Instrument Intelligence", "Level 2 — MTS + Public Market Context", "Level 3 — Behavioural Cross-Venue Hypothesis", "Level 4 — True Cross-Venue Surveillance"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The analytical question is not 'can we detect cross-venue manipulation?' but 'what can we reliably observe, and what is the correct epistemological status of each observation?' The Four-Level Observability Framework provides a structured answer.\" A.4.1, L151, with the four levels defined in the table L154-L163"
+    first_use: "A.4.1 heading, L149"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.3 (CICI positioned against Levels 2/4)"]
+    notes: "Collision risk: CICI has its own separate 'Three-Level Framework' (Levels 1-3, §A.4.3.1) — same 'Level N' vocabulary, different taxonomy."
+
+  - term: ISGO
+    acronym: ISGO
+    aliases: ["ISGO language", "ISGO narrative", "ISGO mandatory language"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1, L151 ('the ISGO language should reflect which level applies')"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.2", "A.4.3.1", "A.4.3.2", "§A.6.1"]
+    notes: "Never expanded; clearly the model's structured narrative/output object with per-finding mandatory language templates."
+
+  - term: SD01 Intraday Spread Widening
+    acronym: SD01
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-09), L263"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "SD-family (spread detection) alert; body spec absent from shortened file."
+
+  - term: SD02 cross-instrument spread dislocation
+    acronym: SD02
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-07, '5Y/10Y, 10Y/30Y')"]
+    notes: null
+
+  - term: SD03 Spread Reversion
+    acronym: SD03
+    aliases: ["SD03_REVERSION_WINDOW_SECONDS (parameter)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 (as parameter SD03_REVERSION_WINDOW_SECONDS), L142; named 'SD03 Spread Reversion' at L263"
+    used_before_defined: false
+    sections_used: ["A.4", "A.6 archetype table (SB-09)"]
+    notes: "Parameter used before the alert itself is named."
+
+  - term: SIGNAL_TRANSMISSION_WINDOW_SECONDS
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 cross-venue pattern table, L144"
+    used_before_defined: false
+    sections_used: ["A.4"]
+    notes: "Named calibration parameter; value not given here."
+
+  - term: ECIL
+    acronym: ECIL
+    aliases: ["ECIL integration", "ECIL event calendar", "ECIL Economic Calendar", "ECIL context enrichment", "external context enrichment"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 cross-venue pattern table, L144 ('Cross-venue ECIL integration')"
+    used_before_defined: false
+    sections_used: ["A.4", "A.4.1 (Level 2)", "A.4.3 and all subsections", "A.6 archetype table (SB-05)"]
+    notes: "Never expanded (External Context Intelligence Layer implied). Carries event calendars (ECB, ADA, Economic Calendar), event types (FUTURES_ACTIVITY_ELEVATED), CRS scoring, and relationship labels AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION (L158)."
+
+  - term: ECIL CRS
+    acronym: CRS
+    aliases: ["ECIL CRS scoring", "ECIL CRS ≥ HIGH"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 1 row), L203"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs"]
+    notes: "Never expanded; an ECIL context relevance/criticality score."
+
+  - term: ECIL amplification
+    acronym: null
+    aliases: ["ibe.ecil_amplification"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The ECIL amplification value (ibe.ecil_amplification) participates directly in Automatic Validation as Condition 3 (§VI-A.5.3 UCE v30). The threshold of 0.20 was selected to exclude signals where macro or event context has materially amplified the analytical result.\" §A.4.3.1 ECIL Context Thresholds, L192"
+    first_use: "§A.4.3.1 ECIL Context Thresholds, L192"
+    used_before_defined: false
+    sections_used: ["§A.4.3.1 ECIL Context Thresholds"]
+    notes: "Amendment SBSP-AMD-BVR-001; threshold 0.20 for auto-validation exclusion."
+
+  - term: MDCS
+    acronym: MDCS
+    aliases: ["MDCS conditioning vector"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 2 examples, L158"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-01, SB-05)"]
+    notes: "Never expanded; multi-day/directional conditioning score with a 'conditioning vector toward known events'."
+
+  - term: IPI
+    acronym: IPI
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-06 'IPI on benchmark OLOs')"]
+    notes: "Never expanded."
+
+  - term: CROSS_WINDOW campaign
+    acronym: null
+    aliases: ["CROSS_WINDOW campaign type"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-07)"]
+    notes: "One of the named campaign types (see 'campaign')."
+
+  - term: campaign
+    acronym: null
+    aliases: ["campaign type", "BENCHMARK_SHAPING campaign", "LIQUIDITY_CONDITIONING campaign", "CROSS_WINDOW campaign"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1, L156 ('CROSS_WINDOW campaign type')"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-02, SB-06, SB-08, SB-10)"]
+    notes: "Multi-session coordinated-behaviour construct with enumerated named types; definition presumably in UCE Document 1."
+
+  - term: SB risk archetype
+    acronym: SB
+    aliases: ["SB-01 … SB-35", "risk archetype", "35 Archetype Reference Table", "Belgian Sovereign Bond Risk Universe"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The table below enumerates all 35 risk archetypes identified as realistically plausible in an anonymous, quote-driven, sovereign bond interdealer market with a limited number of professional participants.\" A.6, L232"
+    first_use: "A.4.1 Level 1 examples, L156 (SB-07, SB-27)"
+    used_before_defined: true
+    sections_used: ["A.4.1", "A.4.3 (SB-25, SB-26 hypotheses)", "A.6 archetype table"]
+    notes: "Table promises 35 archetypes across domains (Price, Benchmark, Liquidity, Quote, Block, ...) but the shortened file truncates at SB-20; SB-21..SB-35 rows are missing while SB-25..SB-30 are referenced elsewhere (see individual entries)."
+
+  - term: Momentum Ignition
+    acronym: SB-01
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L239"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Downgraded from Tier 1 to Tier 3 ('investigative hypothesis, not primary detection pillar'); references §A.4.0 which does not exist in this file."
+
+  - term: Price Support
+    acronym: SB-02
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L241"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Price Suppression
+    acronym: SB-03
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L243"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Marking the Close
+    acronym: SB-04
+    aliases: ["Marking-the-Close"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table L29 (Marking-the-Close Triad); archetype row A.6 L245"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.6 archetype table"]
+    notes: "Detection via RD03 (quote), RD04 (execution), CWPS_intra CLOSE_WINDOW, D.6 Open-Close Framing."
+
+  - term: Auction Conditioning
+    acronym: SB-05
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 2 examples, L158; archetype row A.6 L251"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table"]
+    notes: null
+
+  - term: Benchmark Conditioning
+    acronym: SB-06
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 2 examples, L158; Tier 1 archetype list L165; archetype row A.6 L253"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table"]
+    notes: null
+
+  - term: Yield Curve Distortion
+    acronym: SB-07
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156; archetype row A.6 L255"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table"]
+    notes: "Row says 'Named framework added §A.6.1' but §A.6.1 in this file is the BVR mandatory-language section — internal cross-reference conflict."
+
+  - term: Liquidity Withdrawal
+    acronym: SB-08
+    aliases: ["QUOTE_WITHDRAWAL primitive", "quote withdrawal", "withdrawal cycling", "anticipatory withdrawal"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table L25 ('withdrawal cycling'); Tier 1 archetype 'Quote Withdrawal' L165; archetype row A.6 L261"
+    used_before_defined: false
+    sections_used: ["Section overview table (Section D)", "A.4.1", "A.6 archetype table"]
+    notes: "Near-synonym cluster: 'Quote Withdrawal' (Tier 1 archetype, L165), 'Liquidity Withdrawal' (SB-08), 'anticipatory withdrawal', 'withdrawal cycling', 'D.3 Pre-Stress Withdrawal' — likely overlapping but not formally reconciled in this file."
+
+  - term: Artificial Spread Widening
+    acronym: SB-09
+    aliases: ["SPREAD_WIDENING primitive"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L263"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Liquidity Conditioning
+    acronym: SB-10
+    aliases: ["LIQUIDITY_CONDITIONING campaign"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Tier 1 archetype list, A.4.1 L165; archetype row A.6 L265"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table"]
+    notes: "Campaign definition: BDS + BPL_liquidity_drift + anticipatory withdrawal ≥3 sessions."
+
+  - term: Dominance Through Liquidity Control
+    acronym: SB-11
+    aliases: ["Dominance Behaviour (Tier 1 archetype)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L267"
+    used_before_defined: false
+    sections_used: ["A.4.1 (as 'Dominance Behaviour')", "A.6 archetype table"]
+    notes: null
+
+  - term: Quote Leadership
+    acronym: SB-13
+    aliases: ["Quote Market Leadership", "QML"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L284"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "QML expanded inline: '§D.5.5 QML (Quote Market Leadership): QML_lead_rate, QML_direction, QML_market_impact' — spec section D.5.5 absent from file."
+
+  - term: Quote Withdrawal Before Events
+    acronym: SB-14
+    aliases: ["PRE_SUSPENSION_WINDOW", "QBLI_SUSPENSION", "SUSPENSION context primitive"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L286"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Layering-like Quote Behaviour
+    acronym: SB-15
+    aliases: ["quote lifecycle detection framework"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L288"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "HQLD-dependent: 'operationalisation requires MTSAM-L08 HQLD data remediation'. References §A.6.2 which is absent from file."
+
+  - term: Repeated Block Trade Usage
+    acronym: SB-16
+    aliases: ["bt01_usage_rate"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L294"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Block Trade Dominance
+    acronym: SB-17
+    aliases: ["bt04_dominance_share"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L296"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Threshold: ≥30% block notional in instrument cluster over LOOKBACK_30D."
+
+  - term: Block Trade Conditioning
+    acronym: SB-18
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L298"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Block Trade Reversal Behaviour
+    acronym: SB-19
+    aliases: ["bt03_profitable", "bt03_adverse"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L300"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: null
+
+  - term: Block Trade Counterparty Concentration
+    acronym: SB-20
+    aliases: ["bt06_counterparty_hhi"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table, L302"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Uses HHI concentration measure against POFP baseline."
+
+  - term: SB-25 MTS conditioning / OTC exploitation hypothesis
+    acronym: SB-25
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 2/3 examples, L158-L160"
+    used_before_defined: false
+    sections_used: ["A.4.1"]
+    notes: "Referenced but its archetype table row is missing (table truncated at SB-20)."
+
+  - term: SB-26 cash bond / futures hypothesis
+    acronym: SB-26
+    aliases: ["sb26_hypothesis_supported"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1, L158-L160"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.3.1 CICI Data Inputs (CMCS supports SB-26)", "A.4.3.2"]
+    notes: "Main beneficiary of CICI/CMCS context; table row missing from truncated file."
+
+  - term: SB-27 Cross-Instrument Conditioning
+    acronym: SB-27
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156"
+    used_before_defined: false
+    sections_used: ["A.4.1"]
+    notes: "Table row missing from truncated file. SB-28 and SB-29 are also referenced (L158) without names or rows."
+
+  - term: SB-30 RFQ front-running footprint
+    acronym: SB-30
+    aliases: ["RFQ order flow (MTSAM-L11)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 3 examples, L160"
+    used_before_defined: false
+    sections_used: ["A.4.1"]
+    notes: "RFQ (request for quote) order flow is a Level 4 data gap (MTSAM-L11); table row missing."
+
+  - term: BOA
+    acronym: BOA
+    aliases: ["BOA label", "BOA archetype", "BOA=CROSS_VENUE_CONDITIONING", "BOA=MOMENTUM_IGNITION", "BOA=REFERENCE_PRICE_INFLUENCE", "BOA=LIQUIDITY_CONDITIONING"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 3 examples, L160"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.6 archetype table (SB-01, SB-03, SB-04, SB-10)", "embedded §D.4 (BOA archetype to explanation type mapping)"]
+    notes: "Never expanded (behavioural outcome archetype implied). Its enumerated values mirror archetype names — potential concept overlap between BOA values and SB archetypes."
+
+  - term: Adverse Outcome Behaviour
+    acronym: AOB
+    aliases: ["AOB pathway", "economic irrationality (AOB)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "Quasi-definition: \"Where the AOB pathway applies (OLO activity is systematically unprofitable in isolation --- OS=0 while conditioning confirmed) ...\" A.4.3.2, L221; listed as Tier 1 archetype 'Adverse Outcome Behaviour' A.4.1, L165"
+    first_use: "A.4.1, L160 ('economic irrationality (AOB)')"
+    used_before_defined: true
+    sections_used: ["A.4.1", "A.4.3.2", "A.6 archetype table (SB-02 'AOB (cost accepted)')"]
+    notes: "Expansion inferred by joining L160 acronym with L165 archetype name; never explicitly paired."
+
+  - term: Repetition indicator
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.2, L180"
+    used_before_defined: false
+    sections_used: ["A.4.2"]
+    notes: "One of the UCE behavioural indicators; cross-venue divergence feeds it."
+
+  - term: Dependency Filter
+    acronym: null
+    aliases: ["DS", "DS=1"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.2, L180"
+    used_before_defined: false
+    sections_used: ["A.4.2"]
+    notes: "Marks non-independent signals (DS=1 where same participant connects MTS conditioning and OTC execution)."
+
+  - term: MTSAM-L data limitation register
+    acronym: null
+    aliases: ["MTSAM-L01", "MTSAM-L02", "MTSAM-L03", "MTSAM-L08", "MTSAM-L10", "MTSAM-L11"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 cross-venue pattern table, L140 ('MTSAM-L01 remediation required for full detection')"
+    used_before_defined: false
+    sections_used: ["A.4", "A.4.1 (Level 4)", "A.4.2", "A.4.3.2", "A.6 archetype table (SB-15)"]
+    notes: "Coded data-gap/remediation register (Document 3). Gaps glossed inline: L01 OTC EOD timestamps only, L02 no OTC order book, L03 cross-venue participant ID mismatch (CRITICAL), L08 HQLD absent, L10 cross-asset futures/repo data absent, L11 RFQ order flow absent."
+
+  - term: HQLD
+    acronym: HQLD
+    aliases: ["HQLD data remediation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-15), L288"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded (high-quality/historical quote lifecycle data implied); gates layering detection."
+
+  - term: Cross-Instrument Context Intelligence
+    acronym: CICI
+    aliases: ["CICI layer", "CICI Level 1/2/3", "CICI Three-Level Framework"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The Cross-Instrument Context Intelligence (CICI) layer operationalises this distinction by adding Bund futures public market data to the ECIL context enrichment, enabling a Cross-Market Convergence Score (CMCS) that provides contextual amplification of OLO manipulation hypotheses without asserting participant-level futures positions.\" A.4.3, L194"
+    first_use: "A.4.3 heading, L188"
+    used_before_defined: false
+    sections_used: ["A.4.3", "A.4.3.1 CICI Data Inputs", "A.4.3.2"]
+    notes: "Epistemological rule: 'CICI produces a Cross-Market Hypothesis, not a Cross-Market Proof' (L196). Its internal Levels 1-3 clash terminologically with the Four-Level Observability Framework's Levels 1-4."
+
+  - term: Cross-Market Convergence Score
+    acronym: CMCS
+    aliases: ["cmcs_confirmed", "cmcs_high_confidence", "cmcs_event_amplified", "cmcs_s1_olo_dominance … cmcs_s6_sovereign_spread", "cmcs_l1_abnormal_futures_activity", "cmcs_l2_basis_shift", "cmcs_l2_alignment"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"CMCS (Cross-Market Convergence Score): composite score combining six signals within a configurable window ... CMCS = weighted sum: (0.25 × s1) + (0.20 × s2) + (0.15 × s3) + (0.15 × s4) + (0.15 × s5) + (0.10 × s6). ... CMCS ≥ 0.55: cmcs_confirmed = TRUE. CMCS ≥ 0.70: cmcs_high_confidence = TRUE.\" A.4.3.1 CICI Data Inputs (Level 3 row), L207; first glossed at A.4.3, L194"
+    first_use: "A.4.3, L194"
+    used_before_defined: false
+    sections_used: ["A.4.3", "A.4.3.1 CICI Data Inputs", "A.4.3.2"]
+    notes: "Doc notes 'The original four-component formula (s1--s4) is a subset' — evidence of definition drift across versions. Event co-occurrence lowers confirmed threshold 0.55→0.45."
+
+  - term: CQS
+    acronym: CQS
+    aliases: ["+0.50 CQS", "CQS contribution"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 2 row), L205"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs", "A.4.3.2"]
+    notes: "Never expanded; an additive contextual score that CMCS findings amplify (+0.50 / +0.75 / +1.00)."
+
+  - term: CMCS calibration parameter set
+    acronym: null
+    aliases: ["FUT_VOLUME_THRESHOLD", "FUT_OI_THRESHOLD", "FUT_INTRADAY_THRESHOLD", "CMCS_BASIS_THRESHOLD", "CMCS_SOV_SPREAD_THRESHOLD", "CMCS_ALIGNMENT_SESSIONS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "e.g. \"Bund futures volume on date D exceeds FUT_VOLUME_THRESHOLD (reference: 1.5× the 20-day rolling average for the same contract)\" A.4.3.1 CICI Data Inputs, L203; CMCS_BASIS_THRESHOLD (reference: 2bp), CMCS_SOV_SPREAD_THRESHOLD (reference: 3bp), CMCS_ALIGNMENT_SESSIONS (reference: 3) L205-L207"
+    first_use: "A.4.3.1 CICI Data Inputs, L203"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs"]
+    notes: "Named thresholds with reference values; grouped here for review convenience — each could be its own concept entry."
+
+  - term: LOOKBACK_30D
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 2 row), L205"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs", "A.6 archetype table (SB-16, SB-17)"]
+    notes: "Named 30-day rolling lookback window parameter."
+
+  - term: cash-futures basis
+    acronym: null
+    aliases: ["basis_change", "OLO/Bund cash-futures basis"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"Cash-futures basis = OLO implied yield − Bund futures implied yield (carry + CTD adjusted).\" A.4.3.1 CICI Data Inputs (Level 2 row), L205"
+    first_use: "A.4.3, L194"
+    used_before_defined: true
+    sections_used: ["A.4.3", "A.4.3.1 CICI Data Inputs"]
+    notes: "Standard fixed-income concept given an operational formula here; CTD (cheapest-to-deliver) used without expansion."
+
+  - term: FUTURES_ACTIVITY_ELEVATED
+    acronym: null
+    aliases: ["ecil_event_type = FUTURES_ACTIVITY_ELEVATED"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"CICI Level 1 becomes a named ECIL event type (ecil_event_type = FUTURES_ACTIVITY_ELEVATED) contributing to ECIL CRS scoring for SB-26 hypothesis support.\" A.4.3.1 CICI Data Inputs, L203"
+    first_use: "A.4.3.1 CICI Data Inputs, L203"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs"]
+    notes: null
+
+  - term: CWPS
+    acronym: CWPS
+    aliases: ["CWPS_cross", "CWPS_intra"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 3 row), L207 ('CWPS_cross ≥ 0.55')"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs", "A.6 archetype table (SB-04 CWPS_intra CLOSE_WINDOW, SB-06 CWPS_cross)"]
+    notes: "Never expanded (closing-window participation share implied); two variants _cross and _intra."
+
+  - term: Three-Position Data Types
+    acronym: null
+    aliases: ["participant OTC positions", "participant futures positions", "participant repo positions"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The CICI framework specifically addresses the frequent question of whether MTSAM can incorporate three participant-level position data types.\" A.4.3.2, L212, with per-type table L214-L222"
+    first_use: "A.4.3.2 heading, L210"
+    used_before_defined: false
+    sections_used: ["A.4.3.2"]
+    notes: "All three are 'FORMALLY REMOVED from operational model' per Document 3 Removal Register."
+
+  - term: Removal Register
+    acronym: null
+    aliases: ["Document 3 §1.0.1 Removal Register", "FORMALLY REMOVED"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.2, L217"
+    used_before_defined: false
+    sections_used: ["A.4.3.2"]
+    notes: "Document 3 artifact recording capabilities formally removed from the operational model."
+
+  - term: SCS
+    acronym: SCS
+    aliases: ["SCS_bpl", "SCS_buyside", "SCS_sellside", "scs_direction_confirmed"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.2, L217 ('persistent directional patterns (SCS_bpl, scs_direction_confirmed)')"
+    used_before_defined: false
+    sections_used: ["A.4.3.2", "A.6 archetype table (SB-01, SB-02, SB-03)"]
+    notes: "Never expanded (session conditioning score implied); directional variants buyside/sellside plus _bpl variant linking to BPL."
+
+  - term: CVCE
+    acronym: CVCE
+    aliases: ["CVCE detection"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.2, L217 ('The OTC bilateral trade direction (available T+1) feeds the CVCE detection in §A.4.2.')"
+    used_before_defined: false
+    sections_used: ["A.4.3.2"]
+    notes: "Never expanded; presumably Cross-Venue Conditioning/Exploitation detection — §A.4.2 itself never uses the acronym, so the cross-reference is one-directional."
+
+  - term: BVR
+    acronym: BVR
+    aliases: ["BVR closure", "BVR Auto-Validation", "BVR Event Validation", "BVR grouping", "BVR validation basis", "Batch/Thematic/Event/Participant validation"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Every BVR closure (Automatic Validation, Batch, Thematic, Event, or Participant) must include a validation basis statement in the L5 audit record.\" §A.6.1, L230"
+    first_use: "§A.4.3.1 heading, L190 ('BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)')"
+    used_before_defined: true
+    sections_used: ["§A.4.3.1 ECIL Context Thresholds", "§A.6.1", "embedded §D.4 BVR Grouping Dimension Mapping"]
+    notes: "Never expanded (bulk validation review implied). Five closure modes enumerated. Introduced by amendment SBSP-AMD-BVR-001."
+
+  - term: SBSP-AMD-BVR-001
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.4.3.1 heading, L190"
+    used_before_defined: false
+    sections_used: ["§A.4.3.1", "§A.6.1", "embedded §D.4 (marked 'NEW SECTION')"]
+    notes: "Amendment identifier stamped on three sections — evidence the document is a post-amendment merge; explains the duplicated 'A.4.3.1' numbering and the §D.4 text embedded inside the SB-12 table row."
+
+  - term: Automatic Validation
+    acronym: null
+    aliases: ["auto-validation", "seven auto-validation conditions", "Condition 3", "Condition 5"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.4.3.1 ECIL Context Thresholds, L192"
+    used_before_defined: false
+    sections_used: ["§A.4.3.1", "§A.6.1 (one of five BVR closure modes)", "embedded §D.4 ('Condition 5 of the seven auto-validation conditions, §VI-A.5.3 UCE v30')"]
+    notes: "The seven conditions are defined in UCE v30 §VI-A.5.3, not here; this doc contributes Condition 3 (ECIL amplification ≤ 0.20) and Condition 5 ('safe' explanation types)."
+
+  - term: MediumReviewEngine
+    acronym: null
+    aliases: ["MediumReviewGroup", "medium_review._derive_explanation_type()"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.6.1, L230"
+    used_before_defined: false
+    sections_used: ["§A.6.1", "embedded §D.4 (groups MEDIUM signals by explanation_type; reads event_context_map)"]
+    notes: "Software component; MediumReviewGroup appears to be its grouping record. Implementation function name given (medium_review._derive_explanation_type)."
+
+  - term: OAIC audit trail
+    acronym: OAIC
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.6.1, L230"
+    used_before_defined: false
+    sections_used: ["§A.6.1"]
+    notes: "Never expanded; the audit store receiving BVR validation basis statements."
+
+  - term: L5 audit record
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.6.1, L230"
+    used_before_defined: false
+    sections_used: ["§A.6.1"]
+    notes: "Implies a numbered audit-level scheme (L1-L5?) defined elsewhere (UCE)."
+
+  - term: explanation_type
+    acronym: null
+    aliases: ["safe explanation types", "explanation type"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"MediumReviewEngine groups MEDIUM signals by explanation_type, which is derived from BOA label and suppressor codes.\" embedded §D.4.1 (inside SB-12 row), L277"
+    first_use: "embedded §D.4.1, L277"
+    used_before_defined: false
+    sections_used: ["embedded §D.4 (in A.6 archetype table)"]
+    notes: "'Safe' explanation types are accepted as automatic validation basis (Condition 5) without meaning confirmed non-manipulative (L279)."
+
+  - term: suppressor code
+    acronym: null
+    aliases: ["suppressor codes"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "embedded §D.4.1, L277"
+    used_before_defined: false
+    sections_used: ["embedded §D.4 (in A.6 archetype table)"]
+    notes: "UCE concept; input to explanation_type derivation."
+
+  - term: DataEnrichmentOrchestrator
+    acronym: null
+    aliases: ["Silver enrichment step"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "embedded §D.4.2, L281"
+    used_before_defined: false
+    sections_used: ["embedded §D.4 (in A.6 archetype table)"]
+    notes: "Software component. 'Silver' implies a medallion (Bronze/Silver/Gold) data-layer architecture nowhere else described in this file."
+
+  - term: event_context
+    acronym: null
+    aliases: ["IBE.metadata['event_context']", "event_context_map"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"The event context label is provided by the Silver enrichment step (DataEnrichmentOrchestrator) from the API enrichment connectors and written to IBE.metadata['event_context']. MediumReviewEngine reads this field as the event_context_map input.\" embedded §D.4.2, L281"
+    first_use: "embedded §D.4.2, L281"
+    used_before_defined: false
+    sections_used: ["embedded §D.4 (in A.6 archetype table)"]
+    notes: null
+
+  - term: four-pass grouping cascade
+    acronym: null
+    aliases: ["Priority 2 in the four-pass grouping cascade"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "embedded §D.4.2, L281"
+    used_before_defined: false
+    sections_used: ["embedded §D.4 (in A.6 archetype table)"]
+    notes: "BVR grouping fallback order; only Priority 2 (BOA archetype grouping) is visible in this file."
+
+  - term: IBE
+    acronym: IBE
+    aliases: ["ibe.ecil_amplification", "IBE.metadata", "the OLO activity IBE"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§A.4.3.1 ECIL Context Thresholds, L192 (as ibe.ecil_amplification)"
+    used_before_defined: false
+    sections_used: ["§A.4.3.1", "A.4.3.1 CICI Data Inputs (L207 'window centred on the OLO activity IBE')", "embedded §D.4.2"]
+    notes: "Never expanded; the per-behaviour event/signal object (UCE term). Note near-miss with 'IBEB' used in other project documents — verify whether IBE and IBEB are the same object."
+
+  - term: BT block trade alert family
+    acronym: BT
+    aliases: ["BT-01 … BT-08", "bt01_usage_rate", "bt03_profitable", "bt03_adverse", "bt04_dominance_share", "bt06_counterparty_hhi"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (BT-03 in SB-01 row), L239"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table (Domains 1, 2, 5)"]
+    notes: "Block-trade detector codes BT-01 usage, BT-02 directional dominance, BT-03 reversal, BT-04 block dominance, BT-05 event clustering, BT-06 counterparty HHI, BT-07/BT-08 alert convergence; family spec absent from shortened file."
+
+  - term: POFP baseline
+    acronym: POFP
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-16), L294"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table (SB-16, SB-20)"]
+    notes: "Never expanded; a participant-level historical baseline used for block-trade regime-change comparison."
+
+  - term: BPL
+    acronym: BPL
+    aliases: ["BPL_liquidity_drift", "BPL_liquidity_drift_confirmed", "SCS_bpl"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-08), L261"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table (SB-08, SB-10, SB-14)", "A.4.3.2 (via SCS_bpl)"]
+    notes: "Never expanded (behavioural persistence layer / baseline implied); liquidity drift flag is its key derived signal."
+
+  - term: BDS
+    acronym: BDS
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-10), L265"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded; component of LIQUIDITY_CONDITIONING campaign definition."
+
+  - term: PLCS
+    acronym: PLCS
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-11), L267"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded; liquidity-control/dominance metric."
+
+  - term: SRI
+    acronym: SRI
+    aliases: ["SRI spread crossing"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-09), L263"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded; spread-related indicator."
+
+  - term: QBBE
+    acronym: QBBE
+    aliases: ["QBBE baseline"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-09), L263"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded; quote behaviour baseline engine implied, used as SD01's baseline."
+
+  - term: ORS
+    acronym: ORS
+    aliases: ["ORS_outcome_type"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-01), L239"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Never expanded; outcome/result scoring object with outcome_type field."
+
+  - term: AUCTION_WINDOW
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-05), L251"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table (SB-05, SB-18)"]
+    notes: "Named detection window around sovereign auctions; pairs with CLOSE_WINDOW and PRE_SUSPENSION_WINDOW."
+
+  - term: D.3 Pre-Stress Withdrawal
+    acronym: null
+    aliases: ["RT08 pre-stress signal"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4 (as 'potential RT08 pre-stress signal'), L140; named 'D.3 Pre-Stress Withdrawal' at L261"
+    used_before_defined: false
+    sections_used: ["A.4", "A.6 archetype table (SB-08)"]
+    notes: "Section D.3 spec absent from shortened file."
+
+  - term: D.6 Open-Close Framing
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.6 archetype table (SB-04), L245"
+    used_before_defined: false
+    sections_used: ["A.6 archetype table"]
+    notes: "Section D.6 spec absent from shortened file."
+
+  - term: quote stuffing
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section D row), L25"
+    used_before_defined: false
+    sections_used: ["Section overview table"]
+    notes: "Industry market-abuse pattern name; listed in Section D scope but Section D body is absent from shortened file. Same for 'pre-trade conditioning' and 'auction manipulation' (L25)."
+
+  - term: Sovereign Bond Surveillance Doctrine
+    acronym: null
+    aliases: ["sovereign bond market doctrine", "analytical doctrine"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Sovereign bond market doctrine: manipulation is often subtle, liquidity-driven, and cumulative across the trading day. No single intraday event is typically decisive.\" A.1, L48 (Section I in overview, L35)"
+    first_use: "Section overview table (Section I row), L35"
+    used_before_defined: false
+    sections_used: ["Section overview table", "A.1"]
+    notes: "Section I body absent from shortened file; the doctrine statement in A.1 is the only substantive articulation."
+
+  - term: Explanation Framework
+    acronym: null
+    aliases: ["explanation category constraints", "market making obligations", "auto-hedging intragroup standard"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "Section overview table (Section J row), L37"
+    used_before_defined: false
+    sections_used: ["Section overview table", "embedded §D.4 (explanation_type derivation)"]
+    notes: "Section J body absent. 'Auto-hedging intragroup standard' appears only in the L37 scope line — a named standard with no further specification in this file."
+
+  - term: Document 1 / Document 2 / Document 3
+    acronym: null
+    aliases: ["Document 2 of 3", "three-document set"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"...extend the Universal Core Engine (Document 1)... Institution-specific calibration for the MTSAM interdealer market is provided in Document 3.\" Front-matter abstract, L12; 'Document 2 of 3' L9"
+    first_use: "Title block, L9"
+    used_before_defined: false
+    sections_used: ["Title block", "Front-matter abstract", "A.4.3.2 (Document 3 §1.0.1, §1.0 API stack)"]
+    notes: "Doc 1 = UCE spec, Doc 2 = this SBSP pack, Doc 3 = MTSAM institution calibration (contains Removal Register and API stack/Layer 2 feeds)."
+
+  - term: Layer 2 feed
+    acronym: null
+    aliases: ["API stack Layer 2", "Layer 2 (ECIL calendars)"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3, L194 ('already in scope as Layer 2')"
+    used_before_defined: false
+    sections_used: ["A.4.3", "A.4.3.2 (Document 3 §1.0 API stack)"]
+    notes: "Data-feed layering scheme from Document 3's API stack; yet another overloaded use of 'Layer/Level' vocabulary."
+
+  - term: instrument cluster
+    acronym: null
+    aliases: []
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 3 row), L207 ('same instrument cluster')"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs", "A.6 archetype table (SB-06, SB-17)"]
+    notes: "Grouping of related instruments (e.g. OLO benchmark cluster) used as aggregation unit for dominance shares; never formally defined here."
+
+  - term: MEDIUM-INVESTIGATE
+    acronym: null
+    aliases: ["HIGH/MEDIUM-INVESTIGATE sessions", "MEDIUM signals"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.3.1 CICI Data Inputs (Level 2 row), L205"
+    used_before_defined: false
+    sections_used: ["A.4.3.1 CICI Data Inputs", "embedded §D.4 ('MEDIUM signals')"]
+    notes: "Signal classification band (HIGH / MEDIUM-INVESTIGATE / MEDIUM ...) from the UCE triage scale; full scale not defined in this file."
+
+  - term: economic irrationality
+    acronym: null
+    aliases: ["systematically unprofitable in isolation"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 3 row, L160 ('pattern + timing + influence capability + economic irrationality (AOB)')"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.3.2"]
+    notes: "Analytical test tied to AOB: activity that loses money in isolation implies an unobserved cross-position; near-synonym drift between 'economic irrationality', 'AOB', and 'cost accepted' (SB-02 row)."
+
+  - term: information request
+    acronym: null
+    aliases: ["information request regarding the participant's positions"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 3 row, L160"
+    used_before_defined: false
+    sections_used: ["A.4.1", "A.4.3 (CICI justifies information request)", "A.4.3.1 (ISGO mandatory language)"]
+    notes: "Generic supervisory phrase given a specific role: the designated supervisory action produced by Level 3 / CICI hypothesis findings."
+
+  - term: off-the-run
+    acronym: null
+    aliases: ["benchmark vs off-the-run"]
+    category: generic-with-local-meaning
+    defined_here: false
+    definition_quote: null
+    first_use: "A.4.1 Level 1 examples, L156"
+    used_before_defined: false
+    sections_used: ["A.4.1"]
+    notes: "Standard bond-market term (non-benchmark issue); included because benchmark/off-the-run pairing is a Level 1 cross-instrument detection axis."
+
+# Reviewer note (meta, not a term): document structural anomalies observed
+# during extraction —
+# (1) two different sections are both numbered 'A.4.3.1' (ECIL Context
+#     Thresholds L190 and CICI Data Inputs L198);
+# (2) A.5 is missing (A.4 jumps to A.6);
+# (3) SECTION B header (L184) appears before A.4.3 content;
+# (4) §D.4 BVR text is embedded inside the SB-12 table row (L275-L281);
+# (5) archetype table titled '35 archetypes' truncates at SB-20;
+# (6) TOC promises Sections B-J whose bodies are absent;
+# (7) UTF-8 mojibake (â, Â, Ã) throughout A.4.3;
+# (8) terms UCE/QBRS/QBLI/QBCCL/ECIL/ISGO/BOA/MDCS/EMT/PFNE/CQS/etc. are used
+#     but never expanded — their definitions live in Document 1 (UCE v30).
