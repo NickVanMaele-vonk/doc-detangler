@@ -1,10 +1,13 @@
 # Definition of Done — Restructured Documents
 
-**Status:** **Approved** by Nick, 2026-07-21 (v3)
-**Phase:** 1.1 — complete
-**Last updated:** 2026-07-21
+**Status:** **Approved** by Nick, 2026-07-21 (v3). **v4, 2026-07-23:**
+criterion 9 (continuous-change coherence) and its supporting scope,
+parameter, and criteria amendments added per decision D10, at Nick's
+direction; new parameter values remain proposals until set.
+**Phase:** 1.1 — complete; extended by D10
+**Last updated:** 2026-07-23
 
-A restructured document is "done" when it satisfies all eight criteria below,
+A restructured document is "done" when it satisfies all nine criteria below,
 subject to the phase-dependent applicability rules in
 [Interim done by phase](#interim-done-by-phase).
 
@@ -34,8 +37,9 @@ subject to the phase-dependent applicability rules in
     or before its first use;
   - no term is defined in two places.
 - **The glossary is subject to this rubric.** As the first document of the
-  set it must satisfy all eight criteria itself, with the modifications
-  noted per criterion.
+  set it must satisfy all eight content criteria (1–8) itself, with the
+  modifications noted per criterion; criterion 9 applies to the set's
+  evolution, not to any single document.
 - **The index is generated, and is held to a reduced subset.** It is derived
   mechanically from the other four documents and is never hand-edited, so it
   is exempt from criteria 1, 4, and 7 and subject to 2 (a lead sentence
@@ -48,6 +52,17 @@ subject to the phase-dependent applicability rules in
   `glossary.md` records the version of every source it draws on. When any
   source version changes, every output document depending on it is **not
   done** until re-verified.
+- **Set version binding (D10):** a generated `manifest.yaml` binds the whole
+  set — per-document version, record-set revision, dependency-graph hash,
+  derived-artifact hashes, generation timestamp. Each concept record carries
+  the source version its provenance span was verified against
+  (`verified_against`), making version skew machine-checkable.
+- **"Done" is a recurring state, not a one-time event (D10).** The set keeps
+  evolving after delivery (glossary completed over time; bodies edited and
+  reordered by humans and AI agents). The rubric therefore applies in two
+  modes: in full to detangle-run output, and incrementally — via the
+  steady-state drift lint (criterion 9) — to every ordinary docs PR
+  afterwards.
 - **What is assessed:** the output set plus its run artifacts (verification
   report, move-map) — not the diff alone.
 
@@ -66,6 +81,7 @@ the rubric can be signed off without silently pre-committing to numbers.
 | `param-manual-reviewer` | Nick, optionally Ivo for domain accuracy | Adjudicator for the manual criteria. |
 | `param-low-confidence-threshold` | to be set from Phase 5 | This dial, and contradiction frequency, are the only unbounded contributors to comment volume. |
 | `param-glossary-order` | **topological** (set) | `glossary.md` is ordered by topological sort throughout. Alphabetical lookup lives in `index.md`, not in the glossary. |
+| `param-full-verify-cadence` | every release tag | How often the full C1/C2/C7 harness runs in steady state (the per-PR drift lint always runs). Proposal; set for real from steady-state experience (D10). |
 
 ---
 
@@ -174,7 +190,22 @@ rule — and exactly one index entry pointing at it.
 - **Promotion and demotion:** if a later revision introduces a second use of
   a document-local term, that term is **promoted** to the glossary; if a
   term falls to a single document, it may be **demoted**. Both count as
-  changed terms under 8b and are listed in the move-map.
+  changed terms under 8b and are listed in the move-map. In steady state,
+  the drift lint (criterion 9) detects the boundary crossing and raises it;
+  the promotion/demotion itself still lands as a concept-scoped PR.
+- **Term lifecycle (D10):** every concept record carries a `status`
+  (`candidate → approved → published → deprecated`). A renamed term records
+  its successor in `superseded_by`; the old spelling becomes a deprecated
+  alias, and body text using it is flagged as deprecated usage, not as an
+  unknown term.
+- **Known-orphan waivers (D10):** "no term left undefined" is an
+  **end-state invariant**. During incremental glossary completion, a
+  **waiver register** records each known, ticketed orphan or conflict with
+  an owner and a disposition deadline — extending the documented-exception
+  pattern already used for cycles (ISO 704 §6.5.2). The lint distinguishes
+  waived debt (does not re-fire) from new regressions (always flag). A
+  waiver is a deferral, not an approval: the set is not fully done while
+  waivers are open.
 - **Acronyms:** every acronym is expanded at first use in each section,
   matching the citation rule in criterion 1. The definition is keyed on the
   expansion, with the acronym as an alias.
@@ -324,6 +355,17 @@ Restructuring must not break addressing, into or out of the set
   generated, any failure here is a tool bug rather than a review finding,
   and it is fixed rather than dispositioned — it must not consume comment
   budget.
+- **Provenance anchors are hash-stable and staleness is visible (D10).**
+  Record source spans are anchored by stable section ID + content hash of
+  the span text, never by raw line numbers. A span whose hash no longer
+  matches flips the record to `provenance: stale` — a visible state
+  requiring re-verification, never silent rot. A stale record's definition
+  remains published but its losslessness evidence is no longer current.
+- **Manifest coherence (D10):** `manifest.yaml` matches the actual set —
+  every derived artifact regenerates byte-identical from the current bodies
+  and records. A mismatch means a derived artifact was hand-edited or a
+  regeneration was skipped; like an index failure, it is a tool/process bug,
+  fixed rather than dispositioned.
 - The metadata/front-matter block of each document is preserved verbatim
   (see criterion 5).
 - **Source contradictions are surfaced, never silently resolved.** Where the
@@ -566,6 +608,46 @@ reviewer's request.
   reviewer's approval is the pass signal.
 - **Status:** specifiable now; produced from Phase 6.
 
+## 9. Continuous-change coherence (steady-state)
+
+The document set remains coherent while it evolves after delivery
+(constraint C12, decision D10). Bodies stay directly editable — by humans
+and by AI agents — and every such edit is guarded, not forbidden.
+
+- **Drift lint on every docs PR.** Branch policy runs an incremental check
+  on the changed sections only: terms are re-extracted and diffed against
+  the record set. It raises PR comments (per cluster, 8d; blocking via C3)
+  for:
+  1. a new term with no definition site (orphan regression);
+  2. an inline (re)definition of an existing term (single-definition-site
+     violation);
+  3. a term used before the position its topological order assumes
+     (criterion-1 regression);
+  4. a usage count crossing the placement boundary (promotion/demotion
+     trigger, criterion 3);
+  5. a candidate contradiction with the current glossary definition
+     (LLM-assisted, dispositioned by `param-manual-reviewer`);
+  6. provenance staleness introduced by the edit (criterion 6);
+  7. use of a deprecated alias (criterion 3 lifecycle).
+- **Derived artifacts are regenerated, never hand-maintained:** usage edges,
+  first-use links, `index.md`, `concept-graph.mmd`, `manifest.yaml`. The
+  regenerate-and-compare guard covers all of them; a hand-edit to any of
+  them fails CI.
+- **The edit contract:** the guard checks and comments; it never auto-fixes
+  a body and never merges (C4). Resolving its comments is the whole price of
+  a direct edit. The moved/derived/added provenance marking of criterion 7
+  applies to tool restructuring runs, not to ordinary steady-state body
+  edits — those are governed by this criterion.
+- **Tiered cadence:** this lint runs on every PR; the full losslessness
+  harness (criterion 4) runs at `param-full-verify-cadence`. A release is
+  not done until the full harness has passed on the current set.
+- **Waivers:** findings covered by an open waiver-register entry do not
+  re-fire (criterion 3); anything not waived flags every time.
+- **Verification method:** automatic (the lint and regeneration checks are
+  themselves CI); contradiction candidates and waiver dispositions go to
+  `param-manual-reviewer`.
+- **Status:** schema fields from Phase 3; delivered in Phase 10.
+
 ---
 
 ## Non-goals — what the tool must never do
@@ -589,6 +671,9 @@ A violation here is blocking regardless of any other criterion passing.
   them is not a renumbering.
 - Define the same term in two places, or leave a term defined nowhere.
 - Merge a PR, resolve a PR comment, or approve its own omissions.
+- Hand-edit a generated artifact (`index.md`, usage edges, first-use links,
+  `concept-graph.mmd`, `manifest.yaml`) — or auto-"fix" a document body in
+  steady state: the guard comments, humans decide.
 
 ## Adjudication and severity
 
@@ -602,6 +687,7 @@ A violation here is blocking regardless of any other criterion passing.
 | 6 Reference/metadata integrity | Blocking | Automatic; contradictions and conflicting definitions → reviewer |
 | 7 Provenance marking | Blocking | Automatic; orphan-term definitions → reviewer |
 | 8 Reviewability | Blocking | Automatic (both budgets); PR coherence → reviewer |
+| 9 Continuous-change coherence | Blocking | Automatic; contradiction candidates and waivers → reviewer |
 | Non-goals | Blocking | Automatic where checkable, else reviewer |
 
 "Reviewer" is `param-manual-reviewer`. Every automatic flag needs a
@@ -618,10 +704,11 @@ reduced subset gates each deliverable.
 | Phase | Deliverable | Criteria in force |
 |-------|-------------|-------------------|
 | 1–2 | this rubric, research memo | none — the rubric is the deliverable |
-| 3 | glossary, index, concept graph | 1, 2, 3, and 6 — the glossary is a reader-facing document, so its overview and topological ordering are in force, not just the graph; the index must be complete and resolving |
-| 5 | golden restructured output | all eight, verified **manually** — the golden output is the reference standard, so it must satisfy the full rubric even though no harness exists yet |
+| 3 | glossary, index, concept graph | 1, 2, 3, and 6 — the glossary is a reader-facing document, so its overview and topological ordering are in force, not just the graph; the index must be complete and resolving. Records carry the criterion-9 schema fields (`status`, `superseded_by`, hash-anchored spans) from the start |
+| 5 | golden restructured output | all eight content criteria, verified **manually** — the golden output is the reference standard, so it must satisfy the full rubric even though no harness exists yet |
 | 6 | prototype output | 1, 2, 5, 6, 7, 8 automatic where buildable; 4 manual |
-| 7+ | tool output | all eight, automatic where specified |
+| 7+ | tool output | criteria 1–8, automatic where specified |
+| 10 | steady-state guard | 9 in full — and via it, incremental enforcement of 1, 3, and 6 on every subsequent docs PR |
 
 ## Summary — verifiability by phase
 
@@ -635,6 +722,7 @@ reduced subset gates each deliverable.
 | 6 | Reference/metadata integrity | Phase 6 |
 | 7 | Provenance marking | Conventions fixed now; automatic check from Phase 7 |
 | 8 | Reviewability | Phase 6 |
+| 9 | Continuous-change coherence | Phase 10 (schema fields from Phase 3) |
 
 **Done when:** Nick signs off on this document, including the parameter
 values.

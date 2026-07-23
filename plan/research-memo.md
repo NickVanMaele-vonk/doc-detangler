@@ -2,8 +2,10 @@
 
 **Status:** Rounds 1–3 complete. D1–D9 all decided — D7 (runtime) and D9
 (ontology-first) signed off by Nick 2026-07-22. Phase 2 closed.
+D10 (continuous change / steady-state operation) added 2026-07-23 from
+Nick's post-delivery use case — see §D10.
 **Phase:** 2.1 / 2.2
-**Last updated:** 2026-07-22
+**Last updated:** 2026-07-23
 **Method:** fan-out web research with adversarial verification (2 of 3
 refutations kill a claim).
 - **Round 1:** 21 sources, 100 candidate claims, 25 verified → 21 confirmed,
@@ -586,6 +588,7 @@ actually implemented.
 | D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
 | D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9 |
+| D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10 |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
 
@@ -716,6 +719,117 @@ and cannot be regenerated from an ontology without the ontology becoming a
 verbatim copy of the document. "Never rewrite" applies to definitions, not
 bodies.
 
+### D10 — continuous change / steady-state operation (adopted 2026-07-23)
+
+**The use case (Nick, 2026-07-23).** After delivery the document set does not
+freeze: (1) the glossary is completed over time; (2) users and AI agents may
+reorder the three core documents or add clarifying paragraphs. Different
+versions of the documents will coexist. The tool must keep the evolving
+bodies in sync with each other and with the evolving glossary — continuous
+change is a requirement, not an edge case.
+
+**Assessment that motivated this decision.** D9 makes the *record-set →
+views* direction evolution-proof by construction (regeneration, `gen:`
+anchors, CI regenerate-and-compare). The exposed flank is the *bodies →
+record-set* direction: nothing in D1–D9 detects drift when a body is edited
+directly, and the record-to-source provenance is raw line numbers, which the
+first reorder silently invalidates. Six gaps were identified; the six design
+elements below close them.
+
+**1. Two operating modes.** The **detangle run** (Phases 5–9) is a campaign:
+full restructure, full verification. The **steady-state guard** is the
+permanent mode afterwards: an incremental check that runs on every ordinary
+docs PR via branch policy. Both modes are deliverables; a tool that only
+detangles once solves half the problem.
+
+**2. Hash-stable provenance anchors.** Every body section carries a stable
+section ID. Record source spans are anchored by **section ID + content hash
+of the span text** (plus the source-doc version the span was verified
+against) — never by raw line numbers. A CI check re-hashes each record's
+span; a mismatch flips the record to a visible `provenance: stale` state
+requiring re-verification. Staleness is a first-class state, never silent
+rot — Phase 7's losslessness proof is only as durable as its weakest anchor.
+
+**3. Incremental drift lint (the per-PR check).** On every PR that touches a
+body: re-extract terms from the changed sections only and diff against the
+record set. It flags, as PR comments under the existing C3
+resolve-before-merge policy:
+
+- a new term with no definition site (orphan regression);
+- an inline (re)definition of an existing term (single-definition-site
+  violation, C9);
+- a term used before the position its topological order assumes
+  (concept-before-use regression, criterion 1);
+- a usage count crossing the placement boundary (promotion/demotion trigger,
+  criterion 3);
+- a candidate contradiction with the current glossary definition
+  (LLM-assisted, same machinery as criterion 6 contradiction detection);
+- provenance staleness introduced by the edit (element 2).
+
+Deterministic checks are code, not LLM calls; only contradiction candidacy
+needs a model. This is deliberately cheap — cost tiers are element 6.
+
+**4. Canonical vs derived edges — usage is derived.** Definition dependency
+edges (`depends_on`, "definition of X uses term Y") are **canonical data** in
+the concept records. Usage edges ("section S uses term X"), first-use links
+in the bodies, `index.md`, `concept-graph.mmd`, and the manifest (element 5)
+are **derived artifacts**: regenerated from the bodies and records on every
+change, never hand-maintained, and covered by the regenerate-and-compare
+guard. Anything order- or location-sensitive rots if authored; the reorder
+scenario makes first-use positions and usage locations exactly that. This
+reframes Phase 3 step 3.7: usage edges are *extracted output that stays
+regenerable*, not a hand-kept register.
+
+**5. Set-level version manifest.** A generated `manifest.yaml` binds the
+set: per-document version, record-set revision, dependency-graph hash,
+derived-artifact hashes, generation timestamp. It answers "is this doc set
+coherent?" mechanically. The failure mode is already live in the corpus (MCL
+applies to UCE v28 while SBSP cites v30; MCL's title says v21, its changelog
+v22) — under continuous change it multiplies. Records carry the source-doc
+version their span was verified against (element 2), so version skew becomes
+machine-checkable state instead of archaeology.
+
+**6. Term lifecycle and verification cadence.** The record schema carries a
+`status` field (`candidate → approved → published → deprecated`) and
+`superseded_by` for renames — old spellings in body text are then flagged as
+deprecated aliases, not unknown terms. During incremental glossary
+completion, C9's "no term left undefined" is an **end-state invariant**: a
+**waiver register** (extending the ISO 704 §6.5.2 documented-exception
+pattern already used for cycles) records known, ticketed orphans and
+conflicts with an owner, so the lint distinguishes accepted debt from new
+regressions — new violations always flag; waived ones don't re-fire.
+Verification runs in two tiers: the cheap structural lint on every PR
+(element 3); the full C1/C2/C7 harness at release cadence
+(`param-full-verify-cadence`), not on every edit.
+
+**The edit contract.** Humans and AI agents may edit bodies directly — bodies
+are prose, not generated (D9 scope guard unchanged). The price of a direct
+edit is the drift lint: branch policy runs it, and its comments block merge
+until resolved, which makes AI agents first-class citizens (they receive
+machine-readable PR feedback exactly as humans do). Direct edits to
+*generated* artifacts remain forbidden (D9). The moved/derived/added
+provenance model applies to tool restructuring runs; ordinary steady-state
+body edits are governed by the lint, not by provenance marking.
+
+**Consequences for the plan.**
+
+- **Phase 3 must carry the schema fields from the start** — `status`,
+  `superseded_by`, hash-anchored source spans with `verified_against`
+  version — because hundreds of records are populated in 3.3+ and schema
+  retrofits multiply. Step 3.7 is reframed per element 4.
+- **New Phase 10 (steady-state operation)** delivers the guard: anchors and
+  staleness check, drift lint as branch policy, derived-artifact
+  regeneration, manifest, lifecycle and waiver register, tiered cadence. It
+  reuses Phase 8's PR plumbing.
+- **New constraint C12** and **rubric criterion 9** state the invariant:
+  coherence survives continuous change.
+- **New parameter** `param-full-verify-cadence` (DoD parameters table;
+  value a proposal until set from steady-state experience).
+
+**Scope guard:** the guard checks and comments; it never auto-fixes bodies
+and never merges (C4 unchanged). Regeneration applies only to the derived
+artifacts enumerated in element 4.
+
 ### What is now settled for Phase 4 / build
 
 Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
@@ -727,5 +841,8 @@ No `language_tool_python` (D6). Runtime is **Python** (D7, signed off
 2026-07-22). Definition layer is **ontology-first** — structured plain-text
 concept records as the source of truth, `glossary.md`/`index.md`/`.mmd`
 generated as anchored views, comment→edit round-trip per §D9 (D9, signed off
-2026-07-22). Phase 4's architecture-gate decisions are closed; Phase 3 is
-unblocked.
+2026-07-22). The set is a **living document set**: two operating modes, with
+a steady-state guard on every subsequent docs PR, hash-stable provenance
+anchors, derived artifacts regenerated, a version manifest, and a term
+lifecycle per §D10 (D10, adopted 2026-07-23). Phase 4's architecture-gate
+decisions are closed; Phase 3 is unblocked.
