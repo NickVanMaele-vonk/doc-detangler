@@ -742,13 +742,58 @@ permanent mode afterwards: an incremental check that runs on every ordinary
 docs PR via branch policy. Both modes are deliverables; a tool that only
 detangles once solves half the problem.
 
-**2. Hash-stable provenance anchors.** Every body section carries a stable
-section ID. Record source spans are anchored by **section ID + content hash
-of the span text** (plus the source-doc version the span was verified
-against) — never by raw line numbers. A CI check re-hashes each record's
-span; a mismatch flips the record to a visible `provenance: stale` state
-requiring re-verification. Staleness is a first-class state, never silent
-rot — Phase 7's losslessness proof is only as durable as its weakest anchor.
+**2. Two-layer addressing — stamped IDs for identity, hashes for change
+detection (scheme agreed with Nick 2026-07-23).** Line numbers appear
+nowhere. A hash cannot be an address — it self-destructs on the first edit
+(the tool would see "paragraph deleted + unrelated paragraph added" and
+every pointer would dangle) — so each layer does the one job it is good at:
+
+- **Identity layer — stamped section IDs.** Every body section carries one
+  invisible marker under its heading, `<!-- sec:UCE-7f3a -->`: a short
+  random slug, **not** derived from the heading text (heading renames must
+  not change it — the failure mode of GitHub-style slug anchors) and
+  **not** ordinal (reordering must not renumber it). The section is the
+  addressing unit: C11 defines usage per section and criterion 1's
+  first-use rule is per section. Paragraphs get no IDs — a marker per
+  paragraph is comment noise authors would break — they get hashes.
+- **Change-detection layer — content hashes in a generated snapshot.**
+  `state/section-map.yaml` (derived, committed) records, per document, the
+  ordered section IDs, each with a section hash and per-paragraph hashes.
+  Hashes are computed over the **normalised pandoc-AST rendering** of each
+  block, so a hard-wrap reflow or whitespace change is not an edit. Hashes
+  are tripwires, never pointers.
+- **Sync on a PR is a three-way match** of the new parse against the
+  snapshot — ID first, hash second: same ID + same hash + new position →
+  **moved** (re-run order-sensitive checks only: concept-before-use,
+  first-use links); same ID + changed hash → **edited** (re-extract that
+  section only; paragraph hashes localise the change; affected provenance
+  spans go stale); no ID → **new** (full extraction + stamping); ID
+  vanished → **deleted** (orphaned-usage-edge and lost-claim checks). A
+  pure reorder therefore costs ~zero — every hash matches — and an added
+  paragraph costs one section's re-extraction. Git's file diff is only the
+  *trigger*; the section map is the identity layer git does not have
+  (analogous to git's own rename detection, which is a similarity pass
+  layered over content hashes).
+- **Usage edges and links store IDs only** — `(term, doc, sec-ID)`, no
+  offsets, ever. First-use positions are recomputed from the parsed AST at
+  generation time and never persisted, and an unrelated reorder leaves the
+  regenerated usage file near-diff-free. Record provenance spans become
+  `(doc, section-ID, paragraph-hash, verified_against)`; a CI re-hash
+  mismatch flips the record to a visible `provenance: stale` state
+  requiring re-verification. Staleness is a first-class state, never
+  silent rot — Phase 7's losslessness proof is only as durable as its
+  weakest anchor.
+- **Authors never create IDs (Nick, 2026-07-23).** Stamping is the tool's
+  job, and asking a human or AI author to mint markers is a non-goal. For
+  unstamped new sections the guard pushes a **stamping commit** onto the PR
+  branch, machine-verified to change nothing but `<!-- sec: -->` markers
+  (the content multiset is otherwise unchanged — same verification trick as
+  the moves-only commit). This is the one permitted mechanical write to a
+  body. **ID hygiene** is a lint class of its own: duplicate IDs (copy-paste
+  carries the marker along, giving two sections one identity — the classic
+  failure), missing IDs, malformed markers. Section splits resolve as
+  edited + new, merges as deleted-with-survivor-found-by-paragraph-hash;
+  both are mandatory lint test cases.
 
 **3. Incremental drift lint (the per-PR check).** On every PR that touches a
 body: re-extract terms from the changed sections only and diff against the
@@ -764,15 +809,22 @@ resolve-before-merge policy:
   criterion 3);
 - a candidate contradiction with the current glossary definition
   (LLM-assisted, same machinery as criterion 6 contradiction detection);
-- provenance staleness introduced by the edit (element 2).
+- provenance staleness introduced by the edit (element 2);
+- an ID-hygiene violation: duplicate, missing, or malformed section
+  markers (element 2).
 
 Deterministic checks are code, not LLM calls; only contradiction candidacy
 needs a model. This is deliberately cheap — cost tiers are element 6.
+**The lint ships with its own seeded test suite** (Nick, 2026-07-23):
+mirroring the Phase 7 seeded-error pattern, one fixture scenario per flag
+type — plus a reorder-only fixture that must flag *nothing* — and the guard
+is not wired into branch policy until all of them pass. See Phase 10.7.
 
 **4. Canonical vs derived edges — usage is derived.** Definition dependency
 edges (`depends_on`, "definition of X uses term Y") are **canonical data** in
 the concept records. Usage edges ("section S uses term X"), first-use links
-in the bodies, `index.md`, `concept-graph.mmd`, and the manifest (element 5)
+in the bodies, `index.md`, `concept-graph.mmd`, the section map
+`state/section-map.yaml` (element 2), and the manifest (element 5)
 are **derived artifacts**: regenerated from the bodies and records on every
 change, never hand-maintained, and covered by the regenerate-and-compare
 guard. Anything order- or location-sensitive rots if authored; the reorder
@@ -817,10 +869,12 @@ body edits are governed by the lint, not by provenance marking.
   `superseded_by`, hash-anchored source spans with `verified_against`
   version — because hundreds of records are populated in 3.3+ and schema
   retrofits multiply. Step 3.7 is reframed per element 4.
-- **New Phase 10 (steady-state operation)** delivers the guard: anchors and
-  staleness check, drift lint as branch policy, derived-artifact
-  regeneration, manifest, lifecycle and waiver register, tiered cadence. It
-  reuses Phase 8's PR plumbing.
+- **New Phase 10 (steady-state operation)** delivers the guard: two-layer
+  addressing and staleness check, drift lint as branch policy,
+  derived-artifact regeneration, manifest, lifecycle and waiver register,
+  tiered cadence, and the seeded lint test suite (10.7) — the tests are part
+  of the deliverable, and the guard is not wired into branch policy until
+  they pass. It reuses Phase 8's PR plumbing.
 - **New constraint C12** and **rubric criterion 9** state the invariant:
   coherence survives continuous change.
 - **New parameter** `param-full-verify-cadence` (DoD parameters table;

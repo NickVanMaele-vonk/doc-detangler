@@ -356,11 +356,14 @@ Restructuring must not break addressing, into or out of the set
   and it is fixed rather than dispositioned — it must not consume comment
   budget.
 - **Provenance anchors are hash-stable and staleness is visible (D10).**
-  Record source spans are anchored by stable section ID + content hash of
-  the span text, never by raw line numbers. A span whose hash no longer
-  matches flips the record to `provenance: stale` — a visible state
-  requiring re-verification, never silent rot. A stale record's definition
-  remains published but its losslessness evidence is no longer current.
+  Record source spans are `(document, section ID, paragraph hash,
+  verified_against)` — the tool-stamped section ID carries identity, the
+  content hash (computed over the normalised pandoc AST, so reflow is not
+  a change) detects edits, and raw line numbers are used nowhere. A span
+  whose hash no longer matches flips the record to `provenance: stale` — a
+  visible state requiring re-verification, never silent rot. A stale
+  record's definition remains published but its losslessness evidence is no
+  longer current.
 - **Manifest coherence (D10):** `manifest.yaml` matches the actual set —
   every derived artifact regenerates byte-identical from the current bodies
   and records. A mismatch means a derived artifact was hand-edited or a
@@ -628,11 +631,29 @@ and by AI agents — and every such edit is guarded, not forbidden.
   5. a candidate contradiction with the current glossary definition
      (LLM-assisted, dispositioned by `param-manual-reviewer`);
   6. provenance staleness introduced by the edit (criterion 6);
-  7. use of a deprecated alias (criterion 3 lifecycle).
+  7. use of a deprecated alias (criterion 3 lifecycle);
+  8. an ID-hygiene violation — duplicate section-ID markers (copy-paste
+     carries the marker along), missing markers, or malformed markers.
+- **Section IDs are stamped by the tool, never by authors.** Addressing is
+  two-layer (research-memo §D10 element 2): tool-stamped `<!-- sec:… -->`
+  markers are the identity layer; content hashes in the generated
+  `state/section-map.yaml` are the change-detection layer; line numbers are
+  used nowhere. A PR adding unstamped sections receives a **stamping
+  commit** from the guard, machine-verified to change nothing but `sec:`
+  markers. Asking a human or AI author to mint or maintain IDs is a
+  non-goal.
 - **Derived artifacts are regenerated, never hand-maintained:** usage edges,
-  first-use links, `index.md`, `concept-graph.mmd`, `manifest.yaml`. The
+  first-use links, `index.md`, `concept-graph.mmd`,
+  `state/section-map.yaml`, `manifest.yaml`. The
   regenerate-and-compare guard covers all of them; a hand-edit to any of
   them fails CI.
+- **The lint ships with its test suite — part of the deliverable.** One
+  seeded fixture per flag type above, plus the negative case (a
+  reorder-only PR must flag nothing) and the structural edge cases (section
+  split; section merge; deleted section with live usage edges), per the
+  Phase 7 seeded-error pattern. This criterion is not satisfiable by a lint
+  whose checks have never caught a seeded error: the guard is not wired
+  into branch policy until every fixture passes (Phase 10.7).
 - **The edit contract:** the guard checks and comments; it never auto-fixes
   a body and never merges (C4). Resolving its comments is the whole price of
   a direct edit. The moved/derived/added provenance marking of criterion 7
@@ -672,8 +693,11 @@ A violation here is blocking regardless of any other criterion passing.
 - Define the same term in two places, or leave a term defined nowhere.
 - Merge a PR, resolve a PR comment, or approve its own omissions.
 - Hand-edit a generated artifact (`index.md`, usage edges, first-use links,
-  `concept-graph.mmd`, `manifest.yaml`) — or auto-"fix" a document body in
-  steady state: the guard comments, humans decide.
+  `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`) — or
+  auto-"fix" a document body in steady state: the guard comments, humans
+  decide. (The stamping commit is the sole exception, and it is
+  machine-verified to touch only `sec:` markers.)
+- Ask an author — human or AI — to create or maintain a section ID.
 
 ## Adjudication and severity
 
