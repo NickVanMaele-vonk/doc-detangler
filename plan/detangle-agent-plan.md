@@ -2,8 +2,8 @@
 
 **Repo:** MTSAM-docs
 **Owner:** Nick Van Maele
-**Status:** Phases 1–2 complete; all Phase 4 gate decisions (D1–D9) signed off. Phase 3 unblocked, not yet started.
-**Last updated:** 2026-07-22
+**Status:** Phases 1–2 complete; all Phase 4 gate decisions (D1–D9) signed off; D10 (continuous change) adopted 2026-07-23. Phase 3 in progress — 3.1 candidate extraction complete, merged candidate list under business review.
+**Last updated:** 2026-07-23
 
 ---
 
@@ -20,6 +20,14 @@ markdown documents that:
 Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 `blueprint-SBSP-shortened.md`, `blueprint-MCL-shortened.md`.
 
+**The output is a living document set, and the tool has two operating
+modes.** After delivery the set keeps evolving: the glossary is completed
+over time, and users or AI agents may reorder the core documents or add
+clarifying paragraphs. The **detangle run** (Phases 5–9) restructures once;
+the **steady-state guard** (Phase 10) then keeps the evolving bodies in sync
+with each other and with the evolving glossary on every subsequent docs PR.
+Decision D10 (research-memo §D10) records the design.
+
 ## 2. Constraints (non-negotiable)
 
 | # | Constraint | Enforcement |
@@ -34,7 +42,8 @@ Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
 | C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document. No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
 | C10 | **Reading order and lookup order are separated.** `glossary.md` is ordered topologically so it can be read start to finish; `index.md` is alphabetical and covers every term across the other four documents. The index is generated, contains no definitions, and is verified by regeneration rather than by review. | Phase 3 + rubric criteria 3 and 6 |
-| C11 | **Links run forward only; usage data lives in the graph.** Each section links its first use of a glossary term to that term's entry. No document links back to where its terms are used: a glossary defines terms, it does not record usage. Usage locations are graph edges in `concept-graph.yaml`. | Phase 3 + rubric criteria 1 and 6 |
+| C11 | **Links run forward only; usage data lives in the graph.** Each section links its first use of a glossary term to that term's entry. No document links back to where its terms are used: a glossary defines terms, it does not record usage. Usage locations are graph edges in `concept-graph.yaml`, **derived** from the bodies and regenerated on every change (D10) — dependency edges in the concept records are the only canonical edge data. | Phase 3 + rubric criteria 1 and 6 |
+| C12 | **Coherence survives continuous change.** Bodies remain directly editable by humans and AI agents; the price of an edit is an incremental **drift lint** run by branch policy on every docs PR (new orphans, inline redefinitions, use-before-definition, placement-boundary crossings, contradiction candidates, provenance staleness). Provenance anchors are section-ID + content-hash based, never line numbers; staleness is flagged, never silent. Derived artifacts (usage edges, first-use links, `index.md`, `concept-graph.mmd`, `manifest.yaml`) are regenerated, never hand-maintained. A generated `manifest.yaml` binds the versions of every artifact in the set. | Phase 10 (schema fields land in Phase 3) + rubric criterion 9 |
 
 ## 3. Scope
 
@@ -72,6 +81,11 @@ The concept dependency graph is not a side feature; it drives the pipeline:
 - **Cycle detection** = genuinely circular definitions that no reordering fixes
   → mandatory human decision. Glossary-first shrinks this problem: cross-document
   cycles collapse into intra-glossary cycles, which reordering *can* fix.
+- **Canonical vs derived edges (D10):** dependency edges ("definition of X
+  uses term Y", held in the concept records) are canonical data. Usage edges
+  ("section S uses term X") are location-sensitive and therefore **derived**:
+  regenerated from the bodies on every change, same status as `index.md`.
+  Authored usage data would rot on the first reorder.
 - **Orphan detection** (terms used but never defined) = a direct convolutedness
   measure of the source.
 - **Concept model:** SKOS (concepts, and our project-local "definition of X
@@ -147,6 +161,12 @@ Also fixed in 1.1: a non-goals list (blocking prohibitions), per-criterion
 severity and adjudicator, and an interim-done subset per phase — the full
 rubric only applies to tool output from Phase 6 onward.
 
+**Added 2026-07-23 (v4, per D10):** a ninth criterion,
+**continuous-change coherence** — the drift lint on every docs PR, derived
+artifacts verified by regeneration, hash-stable provenance anchors with
+visible staleness, manifest coherence, term lifecycle and waiver register.
+See `definition-of-done.md` §9.
+
 **Output:** `definition-of-done.md`
 **Done when:** Nick signs off, including the parameter values listed in it.
 **Status: complete.** Approved 2026-07-21. All parameters set except
@@ -191,6 +211,15 @@ input to any architecture and de-risks everything downstream.
 > research-memo §D9 for the full decision, including the comment→edit
 > round-trip.
 
+> **D10 (2026-07-23) reaches into Phase 3.** The record schema must carry the
+> continuous-change fields from the first populated record — `status`
+> (lifecycle: candidate → approved → published → deprecated),
+> `superseded_by` (renames/deprecated aliases), and source spans anchored by
+> **stable section ID + content hash** with the source-doc version they were
+> verified against (`verified_against`) — never raw line numbers. Hundreds of
+> records are populated in 3.3+; schema retrofits multiply. See research-memo
+> §D10.
+
 | Step | Description |
 |------|-------------|
 | 3.1 | Extract candidate terms from the three shortened files + full Analytical Layer blueprint (UCE, SBSP, MCL, IBEB, CQS, BOA, …). LLM-assisted, human-reviewed. |
@@ -199,7 +228,7 @@ input to any architecture and de-risks everything downstream.
 | 3.4 | Build the dependency edge list (`concept-graph.yaml`, source of truth); generate the Mermaid render (`concept-graph.mmd`); run topological sort and cycle detection. ISO 704 §6.5.2 defines the cycle policy (inner/outer circle), §6.4.4 the substitution-principle diagnostic; the self-loop check needs a documented-exception path per §6.5.2's graded prohibition. |
 | 3.5 | Assemble `glossary.md`: an overview, then the definitions in **topological order** (`param-glossary-order`), so the glossary reads start to finish without ever meeting an undefined term. No alphabetical section — lookup lives in the index. The glossary is reader-facing and must pass criteria 1, 2, and 3 itself. |
 | 3.6 | Generate `index.md`: an alphabetical list of **every** term defined anywhere in the set — glossary or document — each with the location of its definition, plus alias and acronym entries pointing at the same location. Terms only, no definitions. Generated and verified by regeneration, never hand-maintained. |
-| 3.7 | Record term **usage locations as graph edges** in `concept-graph.yaml` — which document and section uses which term. Usage data lives in the graph only; the glossary defines terms and does not list where they are used. Forward reachability over these edges is what makes impact analysis possible when a definition changes. Also flag **dead entries**: glossary terms with no use anywhere in the set. |
+| 3.7 | Record term **usage locations as graph edges** in `concept-graph.yaml` — which document and section uses which term. Usage data lives in the graph only; the glossary defines terms and does not list where they are used. Forward reachability over these edges is what makes impact analysis possible when a definition changes. Also flag **dead entries**: glossary terms with no use anywhere in the set. **Usage edges are derived data (D10):** extracted from the bodies and regenerable at any time, never hand-maintained — the extraction that produces them here is the same one the steady-state guard re-runs incrementally on every later body edit. |
 | 3.8 | Review via PR (Nick, optionally Ivo), within `param-max-terms-changed-per-PR` — the initial glossary will exceed 25 terms, so this lands as a sequence of concept-scoped PRs, not one. |
 
 **Outputs:** `glossary.md`, `index.md`, `concept-graph.yaml` (edge-list
@@ -215,7 +244,8 @@ Model/effort recommendation: Opus/high
 |------|-------------|
 | 4.1 | **D9 — canonical home of a definition: DECIDED ontology-first (signed off 2026-07-22).** Structured concept records (one file per concept) are the source of truth; `glossary.md`/`index.md`/`concept-graph.mmd` are generated views with source-map anchors enabling a deterministic comment→edit round-trip; document bodies stay on the moved/derived/added model. Vector/graph DBs rejected as the truth store; NetworkX supplies the algorithms. Fold the C9/C10 framing into the rubric when Phase 3 starts. See research-memo §D9. |
 | 4.2 | **D7 — runtime: DECIDED Python (signed off 2026-07-22).** Python-first ecosystem (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK); Node would need ONNX conversion for the verifier. Did not gate Phase 3. See research-memo D7. |
-| 4.3 | Present form-factor options with trade-offs (candidates below). |
+| 4.2a | **D10 — continuous change: ADOPTED (2026-07-23, at Nick's direction).** The set is a living document set; the tool ships two operating modes — the one-shot detangle run and a steady-state guard on every subsequent docs PR. Hash-stable provenance anchors, incremental drift lint, derived-artifact regeneration, `manifest.yaml`, term lifecycle + waiver register, tiered verification cadence. Delivered as Phase 10; schema fields land in Phase 3. See research-memo §D10. |
+| 4.3 | Present form-factor options with trade-offs (candidates below). The form factor must serve **both operating modes** (D10): the steady-state guard runs headless from branch policy, which weighs against a pure Claude-skill form. |
 | 4.4 | Nick chooses; decision recorded with rationale. |
 
 **Candidate architectures:**
@@ -298,6 +328,31 @@ Model/effort recommendation: Opus/high
 
 **Done when:** all three shortened files pass the rubric via the packaged tool.
 
+## Phase 10 — Steady-state operation (living document set)
+Model/effort recommendation: Opus/high
+
+The permanent mode after delivery (D10, C12). The detangle run happens once;
+this guard runs forever. It reuses Phase 8's PR plumbing (comment posting,
+branch policy, budgets) and Phase 3's extraction.
+
+| Step | Description |
+|------|-------------|
+| 10.1 | **Stable anchors + staleness check.** Every body section carries a stable section ID; record source spans are anchored by section ID + content hash + `verified_against` source version (schema fields from Phase 3). CI re-hashes every record's span; a mismatch flips the record to a visible `provenance: stale` state requiring re-verification. Staleness is a state, never silent rot. |
+| 10.2 | **Incremental drift lint as branch policy.** On every PR touching a body: re-extract terms from changed sections only; diff against the record set; comment (per cluster, DoD 8d) on new orphans, inline redefinitions, use-before-definition regressions, placement-boundary crossings (promotion/demotion triggers), contradiction candidates, and introduced staleness. Deterministic checks are code; only contradiction candidacy uses a model. Comments block merge via the existing C3 policy — this is the edit contract for humans and AI agents alike. |
+| 10.3 | **Derived-artifact regeneration on merge.** Usage edges, first-use links, `index.md`, `concept-graph.mmd`, and `manifest.yaml` regenerate whenever bodies or records change; the regenerate-and-compare guard (D9) extends to all of them. Direct edits to derived artifacts remain forbidden. |
+| 10.4 | **Version manifest.** Generated `manifest.yaml`: per-document version, record-set revision, dependency-graph hash, derived-artifact hashes, generation timestamp. The coherence check — "do these five documents + record set belong together?" — becomes mechanical. Version skew (already live: UCE v28 vs v30 citations; MCL v21/v22) becomes machine-checkable state. |
+| 10.5 | **Term lifecycle + waiver register.** `status` transitions (candidate → approved → published → deprecated) and `superseded_by` renames; deprecated aliases in body text are flagged as such, not as unknown terms. The waiver register (extending the ISO 704 §6.5.2 documented-exception path) records ticketed orphans/conflicts with an owner, so during incremental glossary completion the lint separates accepted debt from new regressions. |
+| 10.6 | **Tiered verification cadence.** Cheap structural lint on every PR (10.2); full C1/C2/C7 harness (Phase 7) at `param-full-verify-cadence` — release tags, not every edit. |
+
+**Output:** the guard wired into branch policy; `manifest.yaml`; waiver
+register; steady-state usage documentation.
+**Done when:** an ordinary body-edit PR (authored by a human or an AI agent)
+that introduces an undefined term, redefines a term inline, or reorders
+sections is flagged by the lint before merge; a merge regenerates all derived
+artifacts and the manifest; an edit that invalidates a record's source span
+produces a visible `provenance: stale` flag; and a release-cadence run passes
+the full harness.
+
 ---
 
 ## Sequencing rationale
@@ -311,6 +366,12 @@ Model/effort recommendation: Opus/high
    meaning would propagate into the tool. (The specs are not FSMA-facing; only
    the resulting tool and its later documentation are.) The harness is the item
    most tempting to defer and the one to hold firm on.
+3. **Steady-state is designed in from Phase 3, delivered last:** the
+   continuous-change schema fields (status, `superseded_by`, hash-anchored
+   spans) must exist before hundreds of records are populated — retrofits
+   multiply — but the guard itself (Phase 10) lands after the detangle run,
+   reusing Phase 8's plumbing. A tool that detangles once and then lets the
+   set drift solves half the problem (D10).
 
 ## Working agreements (applies to all phases)
 
