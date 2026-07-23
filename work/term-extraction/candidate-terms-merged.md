@@ -15,8 +15,8 @@ Nothing here is a concept record yet; this is the review artifact that step 3.1
 **Raw per-document extractions** (definition quotes, line spans, aliases, full
 notes): `blueprint-*.terms.yaml` in this directory. File `candidate-terms-merged.md` is the merge: one row per candidate concept, with per-document presence and computed placement.
 
-**Placement rule (C9):** used in ≥2 of {U, S, M} → `glossary.md`; used in
-exactly 1 → defined locally in that document. Document `A` never counts toward
+**Placement rule (C9):** term used in ≥2 of {U, S, M} → `glossary.md`; term used in
+exactly 1 document → defined locally in that document. Document `A` never counts toward
 placement; an `(A)` flag is informational only.
 
 Raw record counts before merging: U ≈ 135, S ≈ 120, M ≈ 130, A ≈ 100.
@@ -32,134 +32,134 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 
 ### 1a. Product, documents, institutions
 
-| Term | Acronym | Used in | Def? | Notes |
-|---|---|---|---|---|
-| Universal Core Engine | UCE | U,S,M (A) | U (A) | M also calls it "Veridict Core Engine"; version skew: M applies to v28, S cites v30 |
-| Sovereign Bond Sector Pack | SBSP | U,S,M (A) | U,S (A) | Alternatively also "Sector Intelligence Pack" or "Sovereign Government Bond Sector Intelligence Pack" - goal is replace these alternatives by "SBSP" / "Sovereign Bond Sector Pack" |
-| MTSAM Calibration Layer | MCL | U,M (A) | U (A) | Acronym MCL only in filename; alternatively also "Institution Calibration Layer" - a layer of the solution that contains any company-specific definitions and rules, with `MTSAM` being one company |
-| Veridict MAR Intelligence Platform | — | U,S,M | ⊘ | Vendor/product family; never described |
-| Document set (Doc 1/2/3 + Doc 6, Doc 7, ECIL Suppl.) | — | U,S,M | ⊘ | "3 of 3" claimed, but Docs 6 & 7 cited — set-extent conflict |
-| MTSAM (MTS Associated Markets) | MTSAM | U,S,M (A) | M (A) | real definition: legal entity in Belgium; its meaning drifts: venue vs surveilling institution; (A) uses both "Associated" and "Associate" spellings |
-| MTS S.p.A. | MTS | S,M (A) | A | real definition: legal entity in Italy, sister company of MTSAM; financial markets platform operator; high confusion risk with MTSAM |
+| Term | Acronym | Used in | Def? | Notes | Human review decision |
+|---|---|---|---|---|---|
+| Universal Core Engine | UCE | U,S,M (A) | U (A) | M also calls it "Veridict Core Engine"; version skew: M applies to v28, S cites v30 | Decision: keep |
+| Sovereign Bond Sector Pack | SBSP | U,S,M (A) | U,S (A) | Alternatively also "Sector Intelligence Pack" or "Sovereign Government Bond Sector Intelligence Pack" - goal is replace these alternatives by "SBSP" / "Sovereign Bond Sector Pack" | Decision: keep |
+| MTSAM Calibration Layer | MCL | U,M (A) | U (A) | Acronym MCL only in filename; alternatively also "Institution Calibration Layer" - a layer of the solution that contains any company-specific definitions and rules, with `MTSAM` being one company |  Decision: keep |
+| Veridict MAR Intelligence Platform | — | U,S,M | ⊘ | Vendor/product family; never described |  Decision: `MTSAM Analytical Layer` is master term, `Veridict MAR Intelligence Platform` is only a synonym |
+| Document set (Doc 1/2/3 + Doc 6, Doc 7, ECIL Suppl.) | — | U,S,M | ⊘ | "3 of 3" claimed, but Docs 6 & 7 cited — set-extent conflict |  Decision: cull - no business term |
+| MTS Associated Markets | MTSAM | U,S,M (A) | M (A) | real definition: legal entity in Belgium; its meaning drifts: venue vs surveilling institution; (A) uses both "Associated" and "Associate" spellings | Decision: keep and use "Associated" spelling as master |
+| MTS S.p.A. | MTS | S,M (A) | A | real definition: legal entity in Italy, sister company of MTSAM; financial markets platform operator; high confusion risk with MTSAM |  Decision: keep |
 
 ### 1b. Pipeline objects and units of analysis
 
-| Term | Acronym | Used in | Def? | Notes |
-|---|---|---|---|---|
-| Intraday Behavioural Event | IBE | U,S (A) | U (A) | S never expands IBE; verify IBE≡the object SBSP means (S notes "IBEB near-miss") |
-| Behavioural Episode Consolidation / episode | BEP_E | U,M | U | Episode = analyst review unit; BEP_E never letter-expanded |
-| signal (vs alert) | — | U,M | ⊘ | Doctrinal three-way distinction alert → IBE/signal → episode; never explicitly defined |
-| alert / RT alert | RT | U,S,M (A) | ⊘ | RT/RD never expanded anywhere in the set (real-time / end-of-day inferred) |
-| campaign | — | S,M | ⊘ (partial S) | BPL-owned cross-session construct; named campaign types in S |
-| behavioural primitive | — | S,M (U rel.) | ⊘ | Named instances: QUOTE_WITHDRAWAL, SPREAD_WIDENING, LIQUIDITY_REMOVAL, BLOCK_TRADE, AGGRESSIVE_BUY/SELL, SUSPENSION |
-| QUOTE_WITHDRAWAL | — | S,M | ⊘ | |
-| SPREAD_WIDENING | — | S,M | ⊘ | |
-| LIQUIDITY_REMOVAL | — | S,M | ⊘ | |
-| instrument cluster | — | S,M (A) | ⊘ | Aggregation unit for IBE and dominance shares; rule never given |
-| explanation_trace | — | U,S,M | ⊘ | Canonical explainability artifact; holds anonymity_attribution_basis |
-| classification (NONE/LOW/MEDIUM/HIGH/VERY HIGH) | — | U,S,M (A) | U (A) | U's four-level scale vs A/M five-level (NONE) — reconcile |
-| MEDIUM-INVESTIGATE | — | U,S,M | ⊘ | Sub-band; U also has MEDIUM-STRUCTURED REVIEW — same? |
+| Term | Acronym | Used in | Def? | Notes | Human review decision |
+|---|---|---|---|---|---|
+| Intraday Behavioural Event | IBE | U,S (A) | U (A) | S never expands IBE; verify IBE≡the object SBSP means (S notes "IBEB near-miss") | Decision: keep |
+| Behavioural Episode Consolidation / episode | BEP_E | U,M | U | Episode = analyst review unit; BEP_E never letter-expanded | Decision: keep |
+| signal (vs alert) | — | U,M | ⊘ | Doctrinal three-way distinction alert → IBE/signal → episode; never explicitly defined | Decision: keep |
+| alert / RT alert | RT | U,S,M (A) | ⊘ | RT/RD never expanded anywhere in the set (real-time / end-of-day inferred) | Decision: keep |
+| campaign | — | S,M | ⊘ (partial S) | BPL-owned cross-session construct; named campaign types in S | Decision: keep |
+| behavioural primitive | — | S,M (U rel.) | ⊘ | Named instances: QUOTE_WITHDRAWAL, SPREAD_WIDENING, LIQUIDITY_REMOVAL, BLOCK_TRADE, AGGRESSIVE_BUY/SELL, SUSPENSION | Decision: keep |
+| QUOTE_WITHDRAWAL | — | S,M | ⊘ | | Decision: keep |
+| SPREAD_WIDENING | — | S,M | ⊘ | | Decision: keep |
+| LIQUIDITY_REMOVAL | — | S,M | ⊘ | | Decision: keep |
+| instrument cluster | — | S,M (A) | ⊘ | Aggregation unit for IBE and dominance shares; rule never given | Decision: keep |
+| explanation_trace | — | U,S,M | ⊘ | Canonical explainability artifact; holds anonymity_attribution_basis | Decision: keep |
+| classification (NONE/LOW/MEDIUM/HIGH/VERY HIGH) | — | U,S,M (A) | U (A) | U's four-level scale vs A/M five-level (NONE) — reconcile | Decision: keep - use five-level scale as leading |
+| MEDIUM-INVESTIGATE | — | U,S,M | ⊘ | Sub-band; U also has MEDIUM-STRUCTURED REVIEW — same? | Decision: keep |
 
 ### 1c. Scores, gates, engine components
 
-| Term | Acronym | Used in | Def? | Notes |
-|---|---|---|---|---|
-| Convergence Quality Score | CQS | U,S,M (A) | ⊘ | Expansion inferred; **unit conflict**: integer bands (U Step 5) vs fractional ≥0.85 (U Step 21) vs additive +0.50 amplifier (S,M) |
-| Outcome Score / Outcome Severity | OS | U,S | U | **Expansion conflict**: U implies "Outcome Score", S implies "Outcome Severity" |
-| Intent Score | IS | U,M | U | Surface form "IS" dangerously ambiguous |
-| IScore | — | U,S | ⊘ | Distinct from IS — easy to conflate |
-| PriorityScore | — | U,M | U | |
-| Causality Confidence Layer | CCL | U,M | U | QBCCL looks like a quote-domain variant — relationship unstated |
-| Regulatory Risk Factor | RRF | U,M | M (expansion) | U only says "Regulatory Context (RRF)" |
-| EscalationReadiness | — | U,M (A rel.) | U | A has lowercase "escalation readiness" — same concept? |
-| Market-Wide Behavioural Reference | MWBR | U,M | U | M never expands |
-| Reasonable Suspicion Assessment | RSA | U,M | U | M never expands |
-| MM_SAFEHARBOUR | — | U,M | M | **Conflict: twelve-criteria (U) vs seven-criteria (M) test** |
-| Dependency Score / Dependency Filter | DS | U,S | U | U also has DAF vs DependencyFactor — verify same construct |
-| Structural Relationship Score | SRS | U,M | U | |
-| SCS (and SCS_bpl) | SCS | U,S | ⊘ | Two distinct SCS constructs flagged in U; S has SCS_buyside/sellside family |
-| ModelConfidence | — | S,M | M (cap rule only) | Relationship to U/M "EvidenceConfidence" unstated |
-| SCL (supervisory confidence tier) | SCL | U,M | M (partial) | COMPELLING / PRECAUTIONARY tiers |
-| CCT (coordination classification) | CCT | U,S,M | ⊘ | Values EXPLICIT/IMPLICIT; expansion never given |
-| evidence hierarchy | — | U,M | ⊘ | Levels 1–5; collides with many other Level scales |
-| UEEO | UEEO | S,M | ⊘ | Event/episode data object; never expanded |
-| CRS | CRS | U,S,M | ⊘ | **Expansion conflict**: U "Context Reliability Score" vs S/M usage as relevance/surprise score (CRS_VERY_HIGH) |
-| ECIL event relationship states (AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION / FULLY_EXPLAINED) | — | U,S,M | ⊘ | Membership varies per doc |
+| Term | Acronym | Used in | Def? | Notes | Human review decision |
+|---|---|---|---|---|---|
+| Convergence Quality Score | CQS | U,S,M (A) | ⊘ | Expansion inferred; **unit conflict**: integer bands (U Step 5) vs fractional ≥0.85 (U Step 21) vs additive +0.50 amplifier (S,M) | Decision: keep |
+| Outcome Score / Outcome Severity | OS | U,S | U | **Expansion conflict**: U implies "Outcome Score", S implies "Outcome Severity" | Decision: keep |
+| Intent Score | IS | U,M | U | Surface form "IS" dangerously ambiguous | Decision: keep |
+| IScore | — | U,S | ⊘ | Distinct from IS — easy to conflate | Decision: keep |
+| PriorityScore | — | U,M | U | | Decision: keep |
+| Causality Confidence Layer | CCL | U,M | U | QBCCL looks like a quote-domain variant — relationship unstated | Decision: keep |
+| Regulatory Risk Factor | RRF | U,M | M (expansion) | U only says "Regulatory Context (RRF)" | Decision: keep |
+| EscalationReadiness | — | U,M (A rel.) | U | A has lowercase "escalation readiness" — same concept? | Decision: keep - "escalation readiness" is the human-readable term, "EscalationReadiness" is a software variable name to denote the same |
+| Market-Wide Behavioural Reference | MWBR | U,M | U | M never expands | Decision: keep |
+| Reasonable Suspicion Assessment | RSA | U,M | U | M never expands | Decision: keep |
+| MM_SAFEHARBOUR | — | U,M | M | **Conflict: twelve-criteria (U) vs seven-criteria (M) test** | Decision: keep |
+| Dependency Score / Dependency Filter | DS | U,S | U | U also has DAF vs DependencyFactor — verify same construct | Decision: keep - disambiguate later |
+| Structural Relationship Score | SRS | U,M | U | | Decision: keep |
+| SCS (and SCS_bpl) | SCS | U,S | ⊘ | Two distinct SCS constructs flagged in U; S has SCS_buyside/sellside family | Decision: keep - disambiguate later |
+| ModelConfidence | — | S,M | M (cap rule only) | Relationship to U/M "EvidenceConfidence" unstated | Decision: keep |
+| SCL (supervisory confidence tier) | SCL | U,M | M (partial) | COMPELLING / PRECAUTIONARY tiers | Decision: keep |
+| CCT (coordination classification) | CCT | U,S,M | ⊘ | Values EXPLICIT/IMPLICIT; expansion never given | Decision: keep |
+| evidence hierarchy | — | U,M | ⊘ | Levels 1–5; collides with many other Level scales | Decision: keep |
+| UEEO | UEEO | S,M | ⊘ | Event/episode data object; never expanded | Decision: keep |
+| CRS | CRS | U,S,M | ⊘ | **Expansion conflict**: U "Context Reliability Score" vs S/M usage as relevance/surprise score (CRS_VERY_HIGH) | Decision: keep |
+| ECIL event relationship states (AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION / FULLY_EXPLAINED) | — | U,S,M | ⊘ | Membership varies per doc | Decision: keep only `ECIL event` in glossary or definition section (if in one document only) - its possible states are defined in its definition |
 
 ### 1d. Layers and frameworks
 
-| Term | Acronym | Used in | Def? | Notes |
-|---|---|---|---|---|
-| Behavioural Persistence Layer | BPL | U,S,M | M (expansion) | Components BDS, SCS_bpl, MDCS, CWPS, EDT (U) |
-| External Context Intelligence Layer | ECIL | U,S,M | M (expansion) | Only M expands it |
-| Cross-Instrument Context Intelligence | CICI | S,M | S | Internal Levels 1–3 clash with Four-Level Observability Framework |
-| Cross-Market Convergence Score | CMCS | S,M | S,M | Same formula both docs, but component names differ slightly; drift note in S ("original four-component formula") |
-| Four-Level Observability Framework | — | S,M | S | |
-| quote intelligence architecture (QBRS/QBLI/QBCCL) | — | S,M | M (partial) | "Single most important strategic enhancement dependency" (M) |
-| QBRS | QBRS | S,M | ⊘ | Never expanded anywhere |
-| QBLI | QBLI | S,M | ⊘ | Never expanded anywhere |
-| QBCCL | QBCCL | S,M | ⊘ | Never expanded anywhere |
-| QBBE | QBBE | U,S,M | M (functional) | Never letter-expanded |
-| POFP | POFP | S,M | ⊘ | Participant-own-baseline engine; never expanded |
-| RDCS (RT–RD cross-pass scoring) | RDCS | S,M | M | S never expands |
-| MDCS | MDCS | U,S,M | ⊘ | Never expanded anywhere |
-| CWPS | CWPS | U,S,M | ⊘ | Never expanded; _cross/_intra variants |
-| QDSP | QDSP | S,M | ⊘ | Never expanded anywhere |
-| PLCS | PLCS | S,M | ⊘ | Never expanded anywhere |
-| SRI | SRI | S,M | ⊘ | Never expanded anywhere |
-| QML (Quote Market Leadership) | QML | S,M | S (inline expansion) | |
-| IPI | IPI | S,M | ⊘ | Never expanded anywhere |
-| HQLD | HQLD | U,S,M | ⊘ | Gate for quote intelligence & BCI D1/D2; never expanded |
-| BDS | BDS | U,S | ⊘ | BPL component; also near-collision with BDRS (U) |
-| ISGO | ISGO | U,S,M | ⊘ | **Role conflict**: S = narrative/output object with mandatory language; M = gap-finding register (ISGO-02) |
+| Term | Acronym | Used in | Def? | Notes | Human review decision | 
+|---|---|---|---|---|---|
+| Behavioural Persistence Layer | BPL | U,S,M | M (expansion) | Components BDS, SCS_bpl, MDCS, CWPS, EDT (U) | Decision: keep |
+| External Context Intelligence Layer | ECIL | U,S,M | M (expansion) | Only M expands it | Decision: keep |
+| Cross-Instrument Context Intelligence | CICI | S,M | S | Internal Levels 1–3 clash with Four-Level Observability Framework | Decision: keep |
+| Cross-Market Convergence Score | CMCS | S,M | S,M | Same formula both docs, but component names differ slightly; drift note in S ("original four-component formula") | Decision: keep |
+| Four-Level Observability Framework | — | S,M | S | | Decision: keep |
+| quote intelligence architecture (QBRS/QBLI/QBCCL) | — | S,M | M (partial) | "Single most important strategic enhancement dependency" (M) | Decision: keep |
+| QBRS | QBRS | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| QBLI | QBLI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| QBCCL | QBCCL | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| QBBE | QBBE | U,S,M | M (functional) | Never letter-expanded | Decision: keep - define later |
+| POFP | POFP | S,M | ⊘ | Participant-own-baseline engine; never expanded | Decision: keep - define later |
+| RDCS (RT–RD cross-pass scoring) | RDCS | S,M | M | S never expands | Decision: keep - define later |
+| MDCS | MDCS | U,S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| CWPS | CWPS | U,S,M | ⊘ | Never expanded; _cross/_intra variants | Decision: keep - define later |
+| QDSP | QDSP | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| PLCS | PLCS | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| SRI | SRI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| QML (Quote Market Leadership) | QML | S,M | S (inline expansion) | | Decision: keep |
+| IPI | IPI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| HQLD | HQLD | U,S,M | ⊘ | Gate for quote intelligence & BCI D1/D2; never expanded | Decision: keep - define later |
+| BDS | BDS | U,S | ⊘ | BPL component; also near-collision with BDRS (U) | Decision: keep - define later |
+| ISGO | ISGO | U,S,M | ⊘ | **Role conflict**: S = narrative/output object with mandatory language; M = gap-finding register (ISGO-02) | Decision: keep - define later |
 
 ### 1e. Alert codes and windows
 
-| Term | Used in | Def? | Notes |
-|---|---|---|---|
-| RT/RD alert taxonomies | S,M (A) | S (counts), M (list) | S: 25 RT + 15 RD codes; M: 9 implemented of ~30 — count conflict to disposition |
-| RT01 Momentum ignition | S,M | M | Collides with SB-01 "Momentum Ignition" archetype (S) — alert vs archetype |
-| RT04 Price deviation | S,M | M | |
-| RT08 Liquidity stress proximity | S,M | M | Compensates for absent RT22 |
-| RD02 / RD03 / RD04 | S,M | M | RD-03 vs RD03 surface-form inconsistency in S |
-| RD05, RD06 | S,M | ⊘ | Not yet implemented (M) |
-| SD02 cross-instrument spread dislocation | S,M | ⊘ | Pairs OLO/Bund, OLO/OAT |
-| CLOSE_WINDOW | S,M | M (parameterisation) | |
-| PRE_SUSPENSION_WINDOW | S,M | ⊘ | |
-| AUCTION_WINDOW | S,M | ⊘ | |
-| LOOKBACK_30D | S,M | ⊘ | |
-| Marking-the-Close Triad | S,M | M | **Membership conflict**: M = RD01+RD02+RD04 (omits RD03); S SB-04 row detects via RD03+RD04 |
-| DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT | S,M | M (formula) | Verify same parameter under two names |
-| SB risk archetypes (SB-01…SB-35) | S,M | S (table, truncated) | **Count conflict**: 35 (S) vs 45 (U "Risk Archetype Taxonomy"); SB-21..35 rows missing from S |
-| SB-26 cash bond/futures | S,M | M | |
-| SB-30 | S,M | M | **Characterisation conflict**: "RFQ front-running footprint" (S) vs "misuse of confidential order information" (M) |
-| SB-05, SB-28/SB-29 | S,M | ⊘ | Pre-event positioning |
-| BT block-trade code family | S,M | ⊘ | BT-01…BT-08 (S), BT-06 (M) |
-| FUTURES_ACTIVITY_ELEVATED | S,M | S | |
+| Term | Used in | Def? | Notes | Human review decision |
+|---|---|---|---|---|
+| RT/RD alert taxonomies | S,M (A) | S (counts), M (list) | S: 25 RT + 15 RD codes; M: 9 implemented of ~30 — count conflict to disposition | Decision: keep - refine later |
+| RT01 Momentum ignition | S,M | M | Collides with SB-01 "Momentum Ignition" archetype (S) — alert vs archetype | Decision: keep |
+| RT04 Price deviation | S,M | M | | Decision: keep |
+| RT08 Liquidity stress proximity | S,M | M | Compensates for absent RT22 | Decision: keep |
+| RD02 / RD03 / RD04 | S,M | M | RD-03 vs RD03 surface-form inconsistency in S | Decision: keep - disambiguate to separate terms `RD02`, `RD03`, `RD04` |
+| RD05, RD06 | S,M | ⊘ | Not yet implemented (M) | Decision: keep - disambiguate to separate terms `RD05`, `RD06` |
+| SD02 cross-instrument spread dislocation | S,M | ⊘ | Pairs OLO/Bund, OLO/OAT | Decision: keep - refine definition |
+| CLOSE_WINDOW | S,M | M (parameterisation) | | Decision: keep |
+| PRE_SUSPENSION_WINDOW | S,M | ⊘ | | Decision: keep |
+| AUCTION_WINDOW | S,M | ⊘ | | Decision: keep |
+| LOOKBACK_30D | S,M | ⊘ | | Decision: keep |
+| Marking-the-Close Triad | S,M | M | **Membership conflict**: M = RD01+RD02+RD04 (omits RD03); S SB-04 row detects via RD03+RD04 | Decision: keep |
+| DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT | S,M | M (formula) | Verify same parameter under two names | Decision: keep - disambiguate into 2 separate terms |
+| SB risk archetypes (SB-01…SB-35) | S,M | S (table, truncated) | **Count conflict**: 35 (S) vs 45 (U "Risk Archetype Taxonomy"); SB-21..35 rows missing from S | Decision: keep - master term is `risk archetype`, possible values (SB-01...SB-35 or other IDs) to be listed separately in term definition section |
+| SB-26 cash bond/futures | S,M | M | | Decision: keep |
+| SB-30 | S,M | M | **Characterisation conflict**: "RFQ front-running footprint" (S) vs "misuse of confidential order information" (M) | Decision: keep |
+| SB-05, SB-28/SB-29 | S,M | ⊘ | Pre-event positioning | Decision: keep - disambiguate into separate terms |
+| BT block-trade code family | S,M | ⊘ | BT-01…BT-08 (S), BT-06 (M) | Decision: keep |
+| FUTURES_ACTIVITY_ELEVATED | S,M | S | | Decision: keep |
 
 ### 1f. Market structure and instruments
 
-| Term | Used in | Def? | Notes |
-|---|---|---|---|
-| anonymous quote-driven market structure | S,M | S,M | Both define; wording differs — candidate for single glossary definition |
-| liquidity-driven reaction / LIQUIDITY_DRIVEN_REACTION | S,M | S,M | Default classification |
-| identity-driven coordination | S,M | S | |
-| anonymity_attribution_basis | S,M | S,M | Same three enumerated values in both |
-| pre-stress liquidity withdrawal | S,M | M | S has it as "D.3 Pre-Stress Withdrawal" |
-| quote-driven manipulation vectors (spread conditioning, withdrawal cycling, depth manipulation…) | S,M | ⊘ | Family membership varies between enumerations |
-| OTC bilateral trading/component | S,M (A rel.) | M | Dual status: data limitation AND manipulation vector |
-| primary dealer | S,M | M | **Population conflict: 10–20 (S) vs 12–18 (M)** |
-| OLO | S,M (A rel.) | ⊘ | Never expanded (Obligation Linéaire) |
-| OAT | S,M | ⊘ | |
-| Bund | S,M | ⊘ | Bund futures = CICI context instrument |
-| Eurex | S,M (A) | ⊘ | |
-| downstream exposure / os_downstream_exposure | S,M | S (functional) | Field form in M |
-| MTSAM-L data limitation register | S,M (A: L01,L03) | M (partial) | Register extent inconsistent (L01–L07 stated, L08/L10/L11 exist) |
-| Removal Register / explicit exclusion register | S,M | M | **Same artifact, two names** (S: "Removal Register", M: "Formally Removed Data Categories") |
-| Supervisory Challenge Pack | U,M | ⊘ | |
-| supervisory-defensible escalation package | M (S rel.) | ⊘ | S has "ISGO narrative" role; A has "supervisory-defensible evidence package" — cluster to reconcile |
-| CCO (Chief Compliance Officer) | U,M (A) | ⊘ | Expansion only inferable; escalation-authority conflict in A (CCO vs analyst) |
-| Methodology Lead | U,M | ⊘ | Named governance role |
+| Term | Used in | Def? | Notes | Human review decision |
+|---|---|---|---|---|
+| anonymous quote-driven market structure | S,M | S,M | Both define; wording differs — candidate for single glossary definition | Decision: keep, put in glossary, refine definition |
+| liquidity-driven reaction / LIQUIDITY_DRIVEN_REACTION | S,M | S,M | Default classification | Decision: keep master term `liquidity-driven reaction`; the other term is its representation as variable in software code |
+| identity-driven coordination | S,M | S | | Decision: keep |
+| anonymity_attribution_basis | S,M | S,M | Same three enumerated values in both | Decision: keep |
+| pre-stress liquidity withdrawal | S,M | M | S has it as "D.3 Pre-Stress Withdrawal" | Decision: keep |
+| quote-driven manipulation vectors (spread conditioning, withdrawal cycling, depth manipulation…) | S,M | ⊘ | Family membership varies between enumerations | Decision: keep |
+| OTC bilateral trading/component | S,M (A rel.) | M | Dual status: data limitation AND manipulation vector | Decision: keep |
+| primary dealer | S,M | M | **Population conflict: 10–20 (S) vs 12–18 (M)** | Decision: keep |
+| OLO | S,M (A rel.) | ⊘ | Never expanded (Obligation Linéaire) | Decision: keep |
+| OAT | S,M | ⊘ | | Decision: keep |
+| Bund | S,M | ⊘ | Bund futures = CICI context instrument | Decision: keep |
+| Eurex | S,M (A) | ⊘ | | Decision: keep |
+| downstream exposure / os_downstream_exposure | S,M | S (functional) | Field form in M | Decision: keep `downstream exposure` as master term; the latter term is a software variable representing the former |
+| MTSAM-L data limitation register | S,M (A: L01,L03) | M (partial) | Register extent inconsistent (L01–L07 stated, L08/L10/L11 exist) | Decision: keep |
+| Removal Register / explicit exclusion register | S,M | M | **Same artifact, two names** (S: "Removal Register", M: "Formally Removed Data Categories") | Decision: keep |
+| Supervisory Challenge Pack | U,M | ⊘ | | Decision: keep |
+| supervisory-defensible escalation package | M (S rel.) | ⊘ | S has "ISGO narrative" role; A has "supervisory-defensible evidence package" — cluster to reconcile | Decision: keep |
+| CCO (Chief Compliance Officer) | U,M (A) | ⊘ | Expansion only inferable; escalation-authority conflict in A (CCO vs analyst) | Decision: keep |
+| Methodology Lead | U,M | ⊘ | Named governance role | Decision: keep |
 
 ## 2. Regulator-owned terms → references list (rubric criterion 3)
 
@@ -172,6 +172,8 @@ Certificate, ISIN, quote stuffing (industry term).
 Per the rubric these get a references-list entry, not a glossary definition.
 Borderline: STOR and ADA carry heavy project-specific rules on top of the
 regulator meaning — likely need both a reference entry and a project-usage note.
+
+Human review decision: keep all for now - revisit usefullness as design specifications evolve.
 
 ## 3. Single-document terms (define locally — summary)
 
@@ -196,6 +198,8 @@ Full lists in the per-document YAML files. Headline counts:
   ISGO-02, anonymity_attribution_narrative, three-output model
   (BehaviouralConcern / EvidenceConfidence / EscalationReadiness), RT22, …
 
+Human review decision: keep all for now - revisit usefullness as design specifications evolve. 
+
 ## 4. Decision register — conflicts and dispositions needed (C8: surface, never harmonise)
 
 Definition conflicts (two docs disagree):
@@ -216,20 +220,21 @@ Definition conflicts (two docs disagree):
 15. **Alert provenance** (informational, A vs M): A attributes RT/RD alerts to Eagle/ATS; M to "MTS S.p.A. surveillance system".
 
 Identity questions (same concept, different names? — resolve before records):
-
-16. IBE (S usage) ≡ IBE (U/A definition)? and IBEB as separate concept.
-17. DAF ≡ DependencyFactor (U)?
-18. Removal Register ≡ explicit exclusion register ≡ Formally Removed Data Categories.
-19. EvidenceConfidence (M/U) vs ModelConfidence (S/M).
-20. escalation readiness (A, lowercase) vs EscalationReadiness (U/M output).
-21. DOMINANCE_THRESHOLD (S) vs DOMINANCE_THRESHOLD_PCT (M).
-22. "Quote Withdrawal" (S Tier-1 archetype) vs SB-08 Liquidity Withdrawal vs QUOTE_WITHDRAWAL primitive vs pre-stress withdrawal — a four-way near-synonym cluster.
-23. Momentum Ignition: RT01 alert (M) vs SB-01 archetype (S) vs BOA=MOMENTUM_IGNITION value (S).
-24. MEDIUM-INVESTIGATE vs MEDIUM-STRUCTURED REVIEW (U).
-25. Behaviour Categories vs Behavioural Categories (A naming drift; U has a 17-category taxonomy).
-26. UCE ≡ Veridict Core Engine (M surface form).
-27. BDRS acronym does not match its expansion (U note).
-28. SCS vs SCS_bpl — two constructs sharing a name.
+| Question | Human review response |
+|---|---|
+| 16. IBE (S usage) ≡ IBE (U/A definition)? and IBEB as separate concept. | `IBE` is `Intraday Behavioural Event` and all documents apply this definition; `IBEB` is `IBE Builder`, a software component that implements IBEs |
+| 17. DAF ≡ DependencyFactor (U)? | `DAF` = Dependency Adjustment Factor, defined in (U) as a number that is determined based on another term `DS`. Other documents follow the definition in (U) |
+| 18. Removal Register ≡ explicit exclusion register ≡ Formally Removed Data Categories. | `removal register` and `exclusion register` are synonyms denoting the list of excluded data sources - prefer the former as master term; the `formally removed data categories` are four entries (rows) in the `removal register` |
+| 19. EvidenceConfidence (M/U) vs ModelConfidence (S/M). | `ModelConfidence` is a lower-level data-quality flag per data signal; `EvidenceConfidence` is an MTSAM-specific higher-level assessment that relies on `ModelConfidence` and other factors to indicate how the solution can substantiate its assessment based on available data vs MTSAM criteria |
+| 20. escalation readiness (A, lowercase) vs EscalationReadiness (U/M output). | `escalation readiness` is the business term, `EscalationReadiness` its modellisation in software; the definition of either term has contradictions in the source documents: (U) has 6 conditions, (M) has 5 conditions in one place and contradicts itself by also listing 6 conditions elsewhere that are different from (U) - to be solved by business experts |
+| 21. DOMINANCE_THRESHOLD (S) vs DOMINANCE_THRESHOLD_PCT (M). | `DOMINANCE_THRESHOLD` is just shorthand for `DOMINANCE_THRESHOLD_PCT`, one term that is defined in three different inconsistent ways - needs to be one definition, to be resolved by business |
+| 22. "Quote Withdrawal" (S Tier-1 archetype) vs SB-08 Liquidity Withdrawal vs QUOTE_WITHDRAWAL primitive vs pre-stress withdrawal — a four-way near-synonym cluster. | `Quote withdrawal` (S) Tier-1 archetype is a single event (the removal of a quote by a market participant) - same concept as `QUOTE_WITHDRAWAL`; `SB-08 Liquidity Withdrawal` and its synomym `SB-08 Liquity Stress Pre-positioning` bundles `quote withdrawal` and other factors to create a scored and filed archetype; `Liquidity withdrawal` = `liquidity removal` is a more aggregate term indicating the overall reduction in liquidity by a market participant; `pre-stress withdrawal` is a shorter version of `Deliberate Pre-Stress Liquidity Withdrawal`: the detection pathway based on RT08 to compensate for the lack of RT22 input data |
+| 23. Momentum Ignition: RT01 alert (M) vs SB-01 archetype (S) vs BOA=MOMENTUM_IGNITION value (S). | `RT01 alert` is defined as an alert primitive in (U) and calibrated for MTSAM usage in (M); `BOA=MOMENTUM_IGNITION` is defined in (U) as a deterministic BOA ("Behavioural Objective Assessment" - the objective most consistent with an observed behaviour) that requires `RT01` and other data; `SB-01 archetype` is defined in (S): it consumes `RT01` and `BOA=MOMENTUM_IGNITION` to define an archetype, which a different level concept from alert or BOA - note: there is a dangling document reference: SB-01's definition row cites "§A.4.0" in (S) but that paragraph does not exist |
+| 24. MEDIUM-INVESTIGATE vs MEDIUM-STRUCTURED REVIEW (U). | `MEDIUM-INVESTIGATE` and `MEDIUM-STRUCTURED REVIEW` and `MEDIUM-BATCH` describe different investigation paths that the human analyst can take for a transaction with a `MEDIUM` label: `MEDIUM-BATCH` allows automatic closure of the investigation whereas `MEDIUM-INVESTIGATE` and its synonym `MEDIUM-STRUCTURED REVIEW` mandate a human investigation | 
+| 25. Behaviour Categories vs Behavioural Categories (A naming drift; U has a 17-category taxonomy). | `Behaviour Categories` and `Behavioural Categories` are synonyms - prefer the latter as master term |
+| 26. UCE ≡ Veridict Core Engine (M surface form). | `UCE` stands for "Universal Core Engine" - "Veridict Core Engine" is a less preferred term to be phased out |
+| 27. BDRS acronym does not match its expansion (U note). | `BDRS` = "Behavioural Distinctiveness Score", defined in (U) as measuring if a participant's behaviour is materially different from peers in the same session - not to be confused with `BDS` = "Behavioural Drift Score" which measures cross-session drift over a LOOKBACK window; no document explains what the "R" in "BDRS" stands for; (M) calibrates `BDRS` for use at MTSAM but also contains a misinterpretation: it lists BDRS as a component of "pipeline Step 11" which contradicts the definition in (U) where BDRS is part of pipeline step 21b - in a part of the document that also contains the `EscalationReadiness` contradiction. |
+| 28. SCS vs SCS_bpl — two constructs sharing a name. | `SCS` = "Signal Confidence Score" as defined in (U), operating on a single signal but occurring only twice in the document corpus; `SCS_bpl` = "Session Consistency Score" measures if a suspicious pattern or behaviour or bias is consistent across trading sessions. |
 
 Word-overload cluster (glossary must disambiguate, criterion 1):
 
@@ -239,6 +244,7 @@ Word-overload cluster (glossary must disambiguate, criterion 1):
 32. **"IS"**: Intent Score vs the English verb — extraction hazard; also IS vs IScore vs ISS.
 
 Set-level orphans (used somewhere, letter-expanded nowhere): 
+
 33. CQS
 34. CCT
 35. MDCS
@@ -272,6 +278,8 @@ Set-level orphans (used somewhere, letter-expanded nowhere):
 63. RT/RD
 These become the step 3.3 orphan/flag list.
 
+Human review decision: keep all - definitions will be refined and conflicts will be resolved in a later stage. 
+
 ## 5. Source-document structural anomalies (feed into C8 reference checks)
 
 - S: 
@@ -292,6 +300,10 @@ These become the step 3.3 orphan/flag list.
   - "Associated" vs "Associate" Markets; 
   - Phase 1 vs Phase 2 assignment of the five must-have external sources contradicts itself across §4.1/§8.2/§9.3; 
   - broken cross-reference (T+1 "as mentioned in 4.1 and 5.1" — absent).
+
+  Human review decision: keep all - to be refined and corrected later
+  - for A: "MTS Associated Markets" is the master term - "MTS Associate Markets" is a typo 
+
 
 ## 6. Next steps (per plan §Phase 3)
 
