@@ -4,14 +4,14 @@
 Nothing here is a concept record yet; this is the review artifact that step 3.1
 ("LLM-assisted, human-reviewed") requires before records are created.
 
-**Sources:** the three component blueprints 
+**Sources:** the three component blueprints plus two additional documents with terminology
 | Source doc | Abbreviation | Notes |
 |---|---|---|
 | `blueprint-UCE-shortened.md` | (U) | | 
 | `blueprint-SBSP-shortened.md` | (S) | |
 | `blueprint-MCL-shortened.md` | (M) | |
-| `blueprint-analytical-layer.md` | (A) | read-only reference, **excluded from the C9 placement test** per Nick's ruling 2026-07-22 | 
-| `prototype-BC17.md` | (P) | prototype **output** document, not source material; **excluded from the C9 placement test** per Nick's ruling 2026-07-26 |
+| `blueprint-analytical-layer.md` | (A) | read-only reference that may contain explanation of terms, **excluded from the C9 placement test** per Nick's ruling 2026-07-22 | 
+| `prototype-BC17.md` | (P) | read-only reference that may contain explanation of terms, not source material; **excluded from the C9 placement test** per Nick's ruling 2026-07-26 |
 
 **Raw per-document extractions** (definition quotes, line spans, aliases, full
 notes): `blueprint-*.terms.yaml` and `prototype-BC17.terms.yaml` in this directory. File `candidate-terms-merged.md` is the merge: one row per candidate concept, with per-document presence and computed placement.
@@ -20,22 +20,17 @@ notes): `blueprint-*.terms.yaml` and `prototype-BC17.terms.yaml` in this directo
 exactly 1 document → defined locally in that document. Documents `A` and `P` never count
 toward placement; an `(A)` or `(P)` flag is informational only.
 
-**Why `(P)` is excluded.** `prototype-BC17.md` is a worked example of the target
-state, assembled *from* the blueprints (its own source note cites UCE v30, SBSP,
-and MCL §12.2 plus a reference implementation). It is not part of the detangler
-output set, so counting it would promote terms to the glossary on the strength of
-a document no reader of the set will ever see. It is read for **term discovery and
-definitional evidence only**. Two further cautions apply to anything sourced from
-it: several of its definitions are its own *proposed corrections* to values the
-blueprints leave undefined (it says so explicitly — "Correction basis (was
-undefined `T-095`)"), and its own §0.1 glossary is alphabetical, so it does not
+**Why `(P)` is excluded.** `prototype-BC17.md` is a specification of a prototype tool different from the one we're building, but based on the same three core documents (U), (S), (M). It is not part of the detangler output set, so counting it would promote terms to the glossary on the strength of a document no reader of the set will ever see. It is read for **term discovery and definitional evidence only**. Two further cautions apply to anything sourced from it: several of its definitions are its own *proposed corrections* to values the blueprints leave undefined (it says so explicitly — "Correction basis (was undefined `T-095`)"), and its own §0.1 glossary is alphabetical, so it does not
 model the ordering criterion 1 requires.
 
 Raw record counts before merging: U ≈ 135, S ≈ 120, M ≈ 130, A ≈ 100, P = 125.
 After cross-document identity merging: ~95 glossary candidates, ~150
-single-document terms, ~35 regulator-owned terms. **The `(P)` extraction is not
-yet merged into the tables below** — its delta is held separately in §7 pending
-Nick's review, so the review decisions already recorded in §1–§5 stay untouched.
+single-document terms, ~35 regulator-owned terms. **The `(P)` extraction is
+partially merged**: Nick reviewed §7a on 2026-07-28 and ruled keep — its 20
+expansions are promoted into §1 (and §3a for the four single-document terms),
+marked with `(P)` flags. §7b–§7d remain held separately pending Nick's review.
+A `(P)` in a "Def?" cell is informational only (like `(A)`): the expansion is
+sourced from `prototype-BC17.md`, which never counts toward C9 placement.
 
 ---
 
@@ -54,7 +49,7 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 | Veridict MAR Intelligence Platform | — | U,S,M | ⊘ | Vendor/product family; never described |  Decision: `MTSAM Analytical Layer` is master term, `Veridict MAR Intelligence Platform` is only a synonym |
 | Document set (Doc 1/2/3 + Doc 6, Doc 7, ECIL Suppl.) | — | U,S,M | ⊘ | "3 of 3" claimed, but Docs 6 & 7 cited — set-extent conflict |  Decision: cull - no business term |
 | MTS Associated Markets | MTSAM | U,S,M (A) | M (A) | real definition: legal entity in Belgium; its meaning drifts: venue vs surveilling institution; (A) uses both "Associated" and "Associate" spellings | Decision: keep and use "Associated" spelling as master |
-| MTS S.p.A. | MTS | S,M (A) | A | real definition: legal entity in Italy, sister company of MTSAM; financial markets platform operator; high confusion risk with MTSAM |  Decision: keep |
+| MTS S.p.A. | MTS | S,M (A) | A | real definition: legal entity in Italy, "Mercato dei Titoli di Stato", sister company of MTSAM; financial markets platform operator; high confusion risk with MTSAM |  Decision: keep |
 
 ### 1b. Pipeline objects and units of analysis
 
@@ -63,7 +58,7 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 | Intraday Behavioural Event | IBE | U,S (A) | U (A) | S never expands IBE; verify IBE≡the object SBSP means (S notes "IBEB near-miss") | Decision: keep |
 | Behavioural Episode Consolidation / episode | BEP_E | U,M | U | Episode = analyst review unit; BEP_E never letter-expanded | Decision: keep |
 | signal (vs alert) | — | U,M | ⊘ | Doctrinal three-way distinction alert → IBE/signal → episode; never explicitly defined | Decision: keep |
-| alert / RT alert | RT | U,S,M (A) | ⊘ | RT/RD never expanded anywhere in the set (real-time / end-of-day inferred) | Decision: keep |
+| alert / RT alert | RT | U,S,M (A,P) | ⊘ (P) | RT = **Real-Time** alert, RD = **Reporting-Day** alert per (P) §0.1 — supersedes the earlier "real-time / end-of-day" inference for RD; (P)'s RT set is non-contiguous (RT01, RT02, RT04, RT05, RT08 — RT03/06/07 absent, unimplemented-vs-unmapped unstated) | Decision: keep (2026-07-28: §7a expansion promoted) |
 | campaign | — | S,M | ⊘ (partial S) | BPL-owned cross-session construct; named campaign types in S | Decision: keep |
 | behavioural primitive | — | S,M (U rel.) | ⊘ | Named instances: QUOTE_WITHDRAWAL, SPREAD_WIDENING, LIQUIDITY_REMOVAL, BLOCK_TRADE, AGGRESSIVE_BUY/SELL, SUSPENSION | Decision: keep |
 | QUOTE_WITHDRAWAL | — | S,M | ⊘ | | Decision: keep |
@@ -78,7 +73,7 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 
 | Term | Acronym | Used in | Def? | Notes | Human review decision |
 |---|---|---|---|---|---|
-| Convergence Quality Score | CQS | U,S,M (A) | ⊘ | Expansion inferred; **unit conflict**: integer bands (U Step 5) vs fractional ≥0.85 (U Step 21) vs additive +0.50 amplifier (S,M) | Decision: keep |
+| Convergence Quality Score | CQS | U,S,M (A,P) | ⊘ (P) | Expansion confirmed by (P) §0.1 (role: summed confirmed evidence across five domains); **unit conflict**: integer bands (U Step 5) vs fractional ≥0.85 (U Step 21) vs additive +0.50 amplifier (S,M) | Decision: keep (2026-07-28: §7a expansion promoted) |
 | Outcome Score / Outcome Severity | OS | U,S | U | **Expansion conflict**: U implies "Outcome Score", S implies "Outcome Severity" | Decision: keep |
 | Intent Score | IS | U,M | U | Surface form "IS" dangerously ambiguous | Decision: keep |
 | IScore | — | U,S | ⊘ | Distinct from IS — easy to conflate | Decision: keep |
@@ -94,9 +89,10 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 | SCS (and SCS_bpl) | SCS | U,S | ⊘ | Two distinct SCS constructs flagged in U; S has SCS_buyside/sellside family | Decision: keep - disambiguate later |
 | ModelConfidence | — | S,M | M (cap rule only) | Relationship to U/M "EvidenceConfidence" unstated | Decision: keep |
 | SCL (supervisory confidence tier) | SCL | U,M | M (partial) | COMPELLING / PRECAUTIONARY tiers | Decision: keep |
-| CCT (coordination classification) | CCT | U,S,M | ⊘ | Values EXPLICIT/IMPLICIT; expansion never given | Decision: keep |
+| Coordination Classification Tier | CCT | U,S,M (P) | ⊘ (P) | Expansion from (P) §0.1; blueprints give values EXPLICIT/IMPLICIT, (P) adds a third value STRUCTURAL — value-set difference to disposition | Decision: keep (2026-07-28: §7a expansion promoted) |
 | evidence hierarchy | — | U,M | ⊘ | Levels 1–5; collides with many other Level scales | Decision: keep |
-| UEEO | UEEO | S,M | ⊘ | Event/episode data object; never expanded | Decision: keep |
+| Unified Enriched Event Object | UEEO | S,M (P) | ⊘ (P) | Event/episode data object; expansion + role from (P) §0.1: five-stream fused event record | Decision: keep (2026-07-28: §7a expansion promoted) |
+| Behavioural Objective Assessment | BOA | U,S (A,P) | ⊘ (P) | Expansion + role from (P) §0.1: deterministic risk-objective scoring for HIGH/VERY HIGH. Never expanded in U/S; S notes its enumerated values (BOA=MOMENTUM_IGNITION, …) mirror SB archetype names — potential concept overlap. See §4 item 23 (Nick's ruling already used this expansion) | Decision: keep (Nick 2026-07-28, promoted from §7a — new row) |
 | CRS | CRS | U,S,M | ⊘ | **Expansion conflict**: U "Context Reliability Score" vs S/M usage as relevance/surprise score (CRS_VERY_HIGH) | Decision: keep |
 | ECIL event relationship states (AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION / FULLY_EXPLAINED) | — | U,S,M | ⊘ | Membership varies per doc | Decision: keep only `ECIL event` in glossary or definition section (if in one document only) - its possible states are defined in its definition |
 
@@ -110,21 +106,21 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 | Cross-Market Convergence Score | CMCS | S,M | S,M | Same formula both docs, but component names differ slightly; drift note in S ("original four-component formula") | Decision: keep |
 | Four-Level Observability Framework | — | S,M | S | | Decision: keep |
 | quote intelligence architecture (QBRS/QBLI/QBCCL) | — | S,M | M (partial) | "Single most important strategic enhancement dependency" (M) | Decision: keep |
-| QBRS | QBRS | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| Quote Behaviour Risk Score | QBRS | S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: composite quote-domain risk score | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
 | QBLI | QBLI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| QBCCL | QBCCL | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| QBBE | QBBE | U,S,M | M (functional) | Never letter-expanded | Decision: keep - define later |
-| POFP | POFP | S,M | ⊘ | Participant-own-baseline engine; never expanded | Decision: keep - define later |
+| Quote Behaviour Contextual Confidence Layer | QBCCL | S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: contextual sensitivity multiplier | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Quote Behaviour Baseline Engine | QBBE | U,S,M (P) | M (functional), (P) | Letter-expansion + role from (P) §0.1: participant quote baselines | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Participant Order Flow Profile | POFP | S,M (P) | ⊘ (P) | Participant-own-baseline engine; expansion + role from (P) §0.1: per-participant behavioural baseline (mean + σ). Note (P) lookback discrepancy in §7e (90 days / 15 sessions code vs 45 days / 10 sessions methodology) | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
 | RDCS (RT–RD cross-pass scoring) | RDCS | S,M | M | S never expands | Decision: keep - define later |
-| MDCS | MDCS | U,S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| CWPS | CWPS | U,S,M | ⊘ | Never expanded; _cross/_intra variants | Decision: keep - define later |
-| QDSP | QDSP | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| PLCS | PLCS | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| SRI | SRI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
+| Multi-Day Conditioning Score | MDCS | U,S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: pre-positioning across sessions | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Cross-Window Persistence Score | CWPS | U,S,M (P) | ⊘ (P) | _cross/_intra variants; expansion + role from (P) §0.1: same pattern across OPEN/CLOSE windows or sessions | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Quote Depth Share Position | QDSP | S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: share of visible book depth | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Participant Liquidity Contribution Score | PLCS | S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: net liquidity provided vs removed | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Spread Rationality Indicator | SRI | S,M (P) | ⊘ (P) | Expansion + role from (P) §0.1: economic rationality of spread crossing; see conflict P-12 (§7c: SRI both unavailable under gap MTSAM-L07 and consumed by (P)'s RSA rubric) | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
 | QML (Quote Market Leadership) | QML | S,M | S (inline expansion) | | Decision: keep |
 | IPI | IPI | S,M | ⊘ | Never expanded anywhere | Decision: keep - define later |
-| HQLD | HQLD | U,S,M | ⊘ | Gate for quote intelligence & BCI D1/D2; never expanded | Decision: keep - define later |
-| BDS | BDS | U,S | ⊘ | BPL component; also near-collision with BDRS (U) | Decision: keep - define later |
+| Historical Quote Lifecycle Dataset | HQLD | U,S,M (P) | ⊘ (P) | Gate for quote intelligence & BCI D1/D2; expansion + role from (P) §0.1: quote-level history | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
+| Behavioural Drift Score | BDS | U,S (P) | ⊘ (P) | BPL component; also near-collision with BDRS (U); expansion + role from (P) §0.1 (slow drift of behaviour from own baseline) — consistent with §4 item 27 ruling | Decision: keep - define later (2026-07-28: §7a expansion promoted) |
 | ISGO | ISGO | U,S,M | ⊘ | **Role conflict**: S = narrative/output object with mandatory language; M = gap-finding register (ISGO-02) | Decision: keep - define later |
 
 ### 1e. Alert codes and windows
@@ -177,11 +173,31 @@ Grouped thematically. "Def?" = which doc(s) contain an explicit definition
 
 ## 2. Regulator-owned terms → references list (rubric criterion 3)
 
-MAR (+Art. 12, Art. 16), FSMA (expanded only in M), ESMA, ECB (+APP/PEPP/TLTRO),
-Belgian Debt Agency (ADA), EMIR, LEI, STOR, MiFID II concepts (LIS, SSTI,
-transparency regime), RTS23, RTS24, ESMA FIRDS, ESMA FITRS, GDPR, EU AI Act,
-UBO, DMO, NCA (+CONSOB, AMF, BaFin, FCA), Eurex (exchange), Belgian Treasury
-Certificate, ISIN, quote stuffing (industry term).
+- MAR
+- FSMA (expanded only in M)
+- ESMA
+  - FIRDS
+  - FITRS
+- ECB (+APP/PEPP/TLTRO),
+- Belgian Debt Agency (ADA), 
+- EMIR, 
+- LEI, 
+- STOR, 
+- MiFID II concepts 
+  - LIS
+  - SSTI
+  transparency regime
+- RTS23
+- RTS24
+- GDPR
+- EU AI Act
+- UBO
+- DMO
+- NCA (+CONSOB, AMF, BaFin, FCA)
+- Eurex (exchange), 
+- Belgian Treasury Certificate
+- ISIN
+- quote stuffing (industry term)
 
 Per the rubric these get a references-list entry, not a glossary definition.
 Borderline: STOR and ADA carry heavy project-specific rules on top of the
@@ -213,6 +229,20 @@ Full lists in the per-document YAML files. Headline counts:
   (BehaviouralConcern / EvidenceConfidence / EscalationReadiness), RT22, …
 
 Human review decision: keep all for now - revisit usefullness as design specifications evolve. 
+
+### 3a. Orphan expansions promoted from §7a — single-document terms (2026-07-28)
+
+Four of the §7a expansions Nick ruled keep belong to terms used in exactly
+**one** component blueprint (per the `*.terms.yaml` extractions), so they are
+recorded here rather than in §1: C9 places their definitions locally in their
+document, not in the glossary.
+
+| Term | Acronym | Used in | Notes | Human review decision |
+|---|---|---|---|---|
+| Volume Materiality Index | VMI | U (P) | Expansion + role from (P) §0.1: volume-context amplifier; U uses it only in the Version History v25 row ("VMI LOW", Price Impact Gate) | Decision: keep (Nick 2026-07-28, promoted from §7a) |
+| Historical STOR Linkage | HSL | M (P) | Expansion + role from (P) §0.1: amplifier for prior supervisory record; M extraction notes it as a participant history field proxied from enforcement data | Decision: keep (Nick 2026-07-28, promoted from §7a) |
+| Outcome Persistence Layer | OPL | U (P) | Role from (P) §0.1: whether an outcome persisted. **Expansion discrepancy to disposition**: U glosses OPL only as "persistence" (Step 16) and its extraction inferred "likely Outcome Persistence Level" — Level (U, inferred) vs Layer ((P), sourced) | Decision: keep (Nick 2026-07-28, promoted from §7a) |
+| Escalating Dominance Trend | EDT | U (P) | Expansion + role from (P) §0.1: upward trend in market control; BPL persistence component (U Step 5b) | Decision: keep (Nick 2026-07-28, promoted from §7a) |
 
 ## 4. Decision register — conflicts and dispositions needed (C8: surface, never harmonise)
 
@@ -292,6 +322,13 @@ Set-level orphans (used somewhere, letter-expanded nowhere):
 63. RT/RD
 These become the step 3.3 orphan/flag list.
 
+> **Update 2026-07-28:** items 33–39, 41–44, 49, 51, 55, 56, 59 and 63 are now
+> letter-expanded via the promoted §7a expansions (see §1b–§1d and §3a); they
+> remain definition-orphans within the three blueprints (Def? = ⊘, expansion
+> sourced from (P) only). Still unexpanded: 40 (IPI), 45 (EMT), 46 (PFNE),
+> 47 (DQS), 48 (BIVM), 50 (OAIC), 52 (RSN), 53 (SSF/DF), 54 (CF), 57 (ISGO),
+> 58 (BEP_E), 60 (SDAIL), 61 (RAAF), 62 (NFIL) — plus QBLI from §1d.
+
 Human review decision: keep all - definitions will be refined and conflicts will be resolved in a later stage. 
 
 ## 5. Source-document structural anomalies (feed into C8 reference checks)
@@ -324,7 +361,8 @@ Human review decision: keep all - definitions will be refined and conflicts will
 1. **Nick reviews this list**: cull false positives, rule on the identity
    questions (§4 items 16–28), and confirm the regulator-owned set (§2).
 2. **Nick reviews the `(P)` delta in §7** and rules on each proposed expansion
-   before it is folded into §1–§4.
+   before it is folded into §1–§4. *(§7a reviewed 2026-07-28: all 20 expansions
+   ruled keep and promoted into §1b–§1d and §3a. §7b–§7d still pending.)*
 3. Step 3.2 placement is then mechanical (the "Used in" column already encodes it).
 4. Step 3.3 drafts one-sentence definitions per surviving term — the ⊘ marks
    and the conflict register become the orphan and conflict flags that C8
@@ -349,28 +387,32 @@ master glossary, with a one-line role. This is the single biggest contribution:
 **17 of the 31 listed orphans, plus 3 of the 4 never-expanded quote-intelligence
 acronyms.**
 
+> **Reviewed by Nick 2026-07-28: all 20 expansions ruled keep and promoted** —
+> into the matching §1 rows (with `(P)` flags), a new §1c row for BOA, and §3a
+> for the four single-document terms (VMI, HSL, OPL, EDT).
+
 | # | Acronym | Expansion from (P) §0.1 | One-line role given | Human review decision |
 |---|---|---|---|---|
-| 33 | CQS | Convergence Quality Score | summed confirmed evidence across five domains | |
-| 34 | CCT | Coordination Classification Tier | EXPLICIT / IMPLICIT / STRUCTURAL coordination | |
-| 35 | MDCS | Multi-Day Conditioning Score | pre-positioning across sessions | |
-| 36 | CWPS | Cross-Window Persistence Score | same pattern across OPEN/CLOSE windows or sessions | |
-| 37 | QDSP | Quote Depth Share Position | share of visible book depth | |
-| 38 | PLCS | Participant Liquidity Contribution Score | net liquidity provided vs removed | |
-| 39 | SRI | Spread Rationality Indicator | economic rationality of spread crossing | |
-| 41 | POFP | Participant Order Flow Profile | per-participant behavioural baseline (mean + σ) | |
-| 42 | HQLD | Historical Quote Lifecycle Dataset | quote-level history | |
-| 43 | UEEO | Unified Enriched Event Object | five-stream fused event record | |
-| 44 | BOA | Behavioural Objective Assessment | deterministic risk-objective scoring for HIGH/VERY HIGH | |
-| 49 | VMI | Volume Materiality Index | volume-context amplifier | |
-| 51 | HSL | Historical STOR Linkage | amplifier for prior supervisory record | |
-| 55 | OPL | Outcome Persistence Layer | whether an outcome persisted | |
-| 56 | EDT | Escalating Dominance Trend | upward trend in market control | |
-| 59 | BDS | Behavioural Drift Score | slow drift of behaviour from own baseline | |
-| 63 | RT / RD | **Real-Time** alert / **Reporting-Day** alert | intraday primitive (RT01, RT02, RT04, RT05, RT08) / end-of-day primitive (RD01–RD04) | |
-| 1d | QBRS | Quote Behaviour Risk Score | composite quote-domain risk score | |
-| 1d | QBCCL | Quote Behaviour Contextual Confidence Layer | contextual sensitivity multiplier | |
-| 1d | QBBE | Quote Behaviour Baseline Engine | participant quote baselines | |
+| 33 | CQS | Convergence Quality Score | summed confirmed evidence across five domains | Keep — promoted to §1c (Nick, 2026-07-28) |
+| 34 | CCT | Coordination Classification Tier | EXPLICIT / IMPLICIT / STRUCTURAL coordination | Keep — promoted to §1c (Nick, 2026-07-28) |
+| 35 | MDCS | Multi-Day Conditioning Score | pre-positioning across sessions | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 36 | CWPS | Cross-Window Persistence Score | same pattern across OPEN/CLOSE windows or sessions | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 37 | QDSP | Quote Depth Share Position | share of visible book depth | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 38 | PLCS | Participant Liquidity Contribution Score | net liquidity provided vs removed | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 39 | SRI | Spread Rationality Indicator | economic rationality of spread crossing | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 41 | POFP | Participant Order Flow Profile | per-participant behavioural baseline (mean + σ) | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 42 | HQLD | Historical Quote Lifecycle Dataset | quote-level history | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 43 | UEEO | Unified Enriched Event Object | five-stream fused event record | Keep — promoted to §1c (Nick, 2026-07-28) |
+| 44 | BOA | Behavioural Objective Assessment | deterministic risk-objective scoring for HIGH/VERY HIGH | Keep — promoted to §1c as new row, used in U,S (Nick, 2026-07-28) |
+| 49 | VMI | Volume Materiality Index | volume-context amplifier | Keep — single-document (U); promoted to §3a (Nick, 2026-07-28) |
+| 51 | HSL | Historical STOR Linkage | amplifier for prior supervisory record | Keep — single-document (M); promoted to §3a (Nick, 2026-07-28) |
+| 55 | OPL | Outcome Persistence Layer | whether an outcome persisted | Keep — single-document (U); promoted to §3a; Level-vs-Layer expansion discrepancy noted there (Nick, 2026-07-28) |
+| 56 | EDT | Escalating Dominance Trend | upward trend in market control | Keep — single-document (U); promoted to §3a (Nick, 2026-07-28) |
+| 59 | BDS | Behavioural Drift Score | slow drift of behaviour from own baseline | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 63 | RT / RD | **Real-Time** alert / **Reporting-Day** alert | intraday primitive (RT01, RT02, RT04, RT05, RT08) / end-of-day primitive (RD01–RD04) | Keep — promoted to §1b; sourced "Reporting-Day" supersedes the "end-of-day" inference (Nick, 2026-07-28) |
+| 1d | QBRS | Quote Behaviour Risk Score | composite quote-domain risk score | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 1d | QBCCL | Quote Behaviour Contextual Confidence Layer | contextual sensitivity multiplier | Keep — promoted to §1d (Nick, 2026-07-28) |
+| 1d | QBBE | Quote Behaviour Baseline Engine | participant quote baselines | Keep — promoted to §1d (Nick, 2026-07-28) |
 
 Two notes on this table. **RD expands to "Reporting-Day", not "end-of-day"** —
 §1b currently records the inference "(real-time / end-of-day inferred)", which was
