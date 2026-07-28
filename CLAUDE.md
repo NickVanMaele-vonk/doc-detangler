@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Style
+
+Answer factually and concisely. 
+
 ## What this repository is
 
 Detangle — a planned agent/pipeline that turns convoluted markdown
