@@ -8,7 +8,7 @@ Layer 1: Raw Data Ingestion → Layer 2: Scoring Objects → Layer 3: Detection 
 
 Every value is linked back to the layer it is computed from, so the chain is traceable in both directions. **Translation tables** (value → computation → raw field) and **theoretical-framework tables** (the `T-###` term definitions) are retained. **Every abbreviation is spelled out** — in prose, in the glossary (§0.1), and inside the tables themselves.
 
-**Sources.** `MTSAM-ref-1` → `blueprint-UCE.md` (Document 1, Universal Core Engine v30), `blueprint-SBSP.md` (Document 2, Sovereign Bond Sector Pack), `blueprint-MCL.md` (Document 3, Market Configuration Layer §12.2); the reference implementation `source_code/veridict_uce_v6_doc_updated/`; and [MTSAM_Scoring_Objects.md](../Scoring%20Objects/MTSAM_Scoring_Objects.md). MAR/ESMA basis and calibration constants are in [Appendix A](#appendix-a--regulatory-basis-and-global-constants).
+**Sources.** `MTSAM-ref-1` → `blueprint-UCE.md` (Document 1, Universal Core Engine v30), `blueprint-SBSP.md` (Document 2, Sovereign Bond Sector Pack), `blueprint-MCL.md` (Document 3, Market Configuration Layer §12.2); the reference implementation `source_code/veridict_uce_v6_doc_updated/`; and `MTSAM_Scoring_Objects.md`. MAR/ESMA basis and calibration constants are in [Appendix A](#appendix-a--regulatory-basis-and-global-constants).
 
 ---
 
