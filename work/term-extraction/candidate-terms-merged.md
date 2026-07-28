@@ -11,17 +11,31 @@ Nothing here is a concept record yet; this is the review artifact that step 3.1
 | `blueprint-SBSP-shortened.md` | (S) | |
 | `blueprint-MCL-shortened.md` | (M) | |
 | `blueprint-analytical-layer.md` | (A) | read-only reference, **excluded from the C9 placement test** per Nick's ruling 2026-07-22 | 
+| `prototype-BC17.md` | (P) | prototype **output** document, not source material; **excluded from the C9 placement test** per Nick's ruling 2026-07-26 |
 
 **Raw per-document extractions** (definition quotes, line spans, aliases, full
-notes): `blueprint-*.terms.yaml` in this directory. File `candidate-terms-merged.md` is the merge: one row per candidate concept, with per-document presence and computed placement.
+notes): `blueprint-*.terms.yaml` and `prototype-BC17.terms.yaml` in this directory. File `candidate-terms-merged.md` is the merge: one row per candidate concept, with per-document presence and computed placement.
 
 **Placement rule (C9):** term used in ≥2 of {U, S, M} → `glossary.md`; term used in
-exactly 1 document → defined locally in that document. Document `A` never counts toward
-placement; an `(A)` flag is informational only.
+exactly 1 document → defined locally in that document. Documents `A` and `P` never count
+toward placement; an `(A)` or `(P)` flag is informational only.
 
-Raw record counts before merging: U ≈ 135, S ≈ 120, M ≈ 130, A ≈ 100.
+**Why `(P)` is excluded.** `prototype-BC17.md` is a worked example of the target
+state, assembled *from* the blueprints (its own source note cites UCE v30, SBSP,
+and MCL §12.2 plus a reference implementation). It is not part of the detangler
+output set, so counting it would promote terms to the glossary on the strength of
+a document no reader of the set will ever see. It is read for **term discovery and
+definitional evidence only**. Two further cautions apply to anything sourced from
+it: several of its definitions are its own *proposed corrections* to values the
+blueprints leave undefined (it says so explicitly — "Correction basis (was
+undefined `T-095`)"), and its own §0.1 glossary is alphabetical, so it does not
+model the ordering criterion 1 requires.
+
+Raw record counts before merging: U ≈ 135, S ≈ 120, M ≈ 130, A ≈ 100, P = 125.
 After cross-document identity merging: ~95 glossary candidates, ~150
-single-document terms, ~35 regulator-owned terms.
+single-document terms, ~35 regulator-owned terms. **The `(P)` extraction is not
+yet merged into the tables below** — its delta is held separately in §7 pending
+Nick's review, so the review decisions already recorded in §1–§5 stay untouched.
 
 ---
 
@@ -309,7 +323,152 @@ Human review decision: keep all - definitions will be refined and conflicts will
 
 1. **Nick reviews this list**: cull false positives, rule on the identity
    questions (§4 items 16–28), and confirm the regulator-owned set (§2).
-2. Step 3.2 placement is then mechanical (the "Used in" column already encodes it).
-3. Step 3.3 drafts one-sentence definitions per surviving term — the ⊘ marks
+2. **Nick reviews the `(P)` delta in §7** and rules on each proposed expansion
+   before it is folded into §1–§4.
+3. Step 3.2 placement is then mechanical (the "Used in" column already encodes it).
+4. Step 3.3 drafts one-sentence definitions per surviving term — the ⊘ marks
    and the conflict register become the orphan and conflict flags that C8
    requires humans to disposition.
+
+## 7. `(P)` delta — what `prototype-BC17.md` contributes
+
+Held separately from §1–§5 by design: nothing below has been merged into the
+tables above, and no existing review decision has been altered. Source for every
+row: `prototype-BC17.terms.yaml` (125 terms), which carries the verbatim
+definition quote and section reference for each.
+
+**Placement impact: none.** Per the exclusion above, no term is promoted,
+demoted, or moved on the strength of a `(P)` appearance. What follows changes
+only what we *know* about terms, not where they get defined.
+
+### 7a. Set-level orphans that `(P)` resolves
+
+These are entries from the §4 orphan list (items 33–63) and the "never expanded
+anywhere" rows in §1d. `prototype-BC17.md` expands each of them in its §0.1
+master glossary, with a one-line role. This is the single biggest contribution:
+**17 of the 31 listed orphans, plus 3 of the 4 never-expanded quote-intelligence
+acronyms.**
+
+| # | Acronym | Expansion from (P) §0.1 | One-line role given | Human review decision |
+|---|---|---|---|---|
+| 33 | CQS | Convergence Quality Score | summed confirmed evidence across five domains | |
+| 34 | CCT | Coordination Classification Tier | EXPLICIT / IMPLICIT / STRUCTURAL coordination | |
+| 35 | MDCS | Multi-Day Conditioning Score | pre-positioning across sessions | |
+| 36 | CWPS | Cross-Window Persistence Score | same pattern across OPEN/CLOSE windows or sessions | |
+| 37 | QDSP | Quote Depth Share Position | share of visible book depth | |
+| 38 | PLCS | Participant Liquidity Contribution Score | net liquidity provided vs removed | |
+| 39 | SRI | Spread Rationality Indicator | economic rationality of spread crossing | |
+| 41 | POFP | Participant Order Flow Profile | per-participant behavioural baseline (mean + σ) | |
+| 42 | HQLD | Historical Quote Lifecycle Dataset | quote-level history | |
+| 43 | UEEO | Unified Enriched Event Object | five-stream fused event record | |
+| 44 | BOA | Behavioural Objective Assessment | deterministic risk-objective scoring for HIGH/VERY HIGH | |
+| 49 | VMI | Volume Materiality Index | volume-context amplifier | |
+| 51 | HSL | Historical STOR Linkage | amplifier for prior supervisory record | |
+| 55 | OPL | Outcome Persistence Layer | whether an outcome persisted | |
+| 56 | EDT | Escalating Dominance Trend | upward trend in market control | |
+| 59 | BDS | Behavioural Drift Score | slow drift of behaviour from own baseline | |
+| 63 | RT / RD | **Real-Time** alert / **Reporting-Day** alert | intraday primitive (RT01, RT02, RT04, RT05, RT08) / end-of-day primitive (RD01–RD04) | |
+| 1d | QBRS | Quote Behaviour Risk Score | composite quote-domain risk score | |
+| 1d | QBCCL | Quote Behaviour Contextual Confidence Layer | contextual sensitivity multiplier | |
+| 1d | QBBE | Quote Behaviour Baseline Engine | participant quote baselines | |
+
+Two notes on this table. **RD expands to "Reporting-Day", not "end-of-day"** —
+§1b currently records the inference "(real-time / end-of-day inferred)", which was
+close but not exact; prefer the sourced expansion. And the RT set is **not
+contiguous** — RT01, RT02, RT04, RT05, RT08, with RT03/RT06/RT07 absent and no
+statement of whether they are unimplemented or unmapped.
+
+Still unresolved after `(P)`: IPI (40), EMT (45), PFNE (46), DQS (47), BIVM (48),
+OAIC (50), RSN (52), SSF/DF (53), CF (54), ISGO (57), BEP_E (58), SDAIL (60),
+RAAF (61), NFIL (62), and QBLI from §1d.
+
+### 7b. Candidate terms `(P)` introduces that are not on this list
+
+Not glossary candidates — every one is `(P)`-only and so fails the placement
+test on the three component blueprints. Recorded because they name constructs
+the blueprints refer to obliquely, and because the next blueprint we extract may
+promote them.
+
+| Term | Acronym | Note | Human review decision |
+|---|---|---|---|
+| Aggressor-on-Book / Adverse Outcome Behaviour | AOB | Carries **two competing expansions in the same glossary cell** — unresolved even in (P) | |
+| Participant-Day Risk Profile | PDRP | Consolidated daily participant object; central to (P)'s own gap C-1 | |
+| Participant Session Profile | PSP | Role text is near-identical to PDRP's — possible synonym, or an undocumented distinction | |
+| Network Centrality Score | NCS | Level set LOW/MEDIUM/HIGH/**EXCEPTIONAL** — a fourth enumerated scale, not a variant of the five-level classification | |
+| Temporal Correlation Engine | TCE | Owns the ECIL event/behaviour timeline mapping | |
+| Temporal Correlation Score | TCS | The one fully-written formula in (P) | |
+| Timing Precision Score | TPS | Banded in the RSA rubric | |
+| Outcome Recurrence Score | ORS | | |
+| Outcome Sensitivity Score | OSS | Instrument-sensitivity multiplier | |
+| Block Trade Intelligence Score | BTI | "composite of **nine** block-trade patterns" | |
+| Quote Cancellation Ratio | QCR | One of the few (P) glossary rows carrying a formula | |
+| Quote Lifetime Score | QLS | Unavailable in this deployment (gap MTSAM-L02) | |
+| Herfindahl–Hirschman Index | HHI | Externally owned → **references list**, not glossary | |
+| RT02 Excessive activity | RT02 | Abnormal trade count → Volume indicator | |
+| RT05 Opposite interaction | RT05 | Wash-trade indicator → IDS | |
+| RA-28 Insider Dealing Indicator — Sensitive Timing | RA-28 | See conflict P-4 below | |
+| RA-29 Front-Running Indicator | RA-29 | See conflict P-4 below | |
+| Follower Rule | — | Named normative rule: BCI < 3 caps concern at MEDIUM; BCI ≥ 7 opens VERY HIGH | |
+| data-availability contract | — | Binds capability flags to which scores are computable | |
+| benchmark tier | — | Ordered set OFF_THE_RUN / ACTIVE_SECONDARY / BENCHMARK / BENCHMARK_ANCHOR | |
+| notional | — | Defined by explicit contrast: "the euro nominal (face) value of a single fill — not a price, not a quantity" | |
+| aggressor | — | "TRUE if this participant took liquidity (crossed the spread)"; venue-tagged | |
+| session / participant | — | session = one trading day; participant = the dealer being assessed | |
+
+### 7c. New conflicts and collisions `(P)` raises
+
+Per C8 these are surfaced, never harmonised. Numbered `P-#` to keep them distinct
+from the §4 register until Nick folds them in.
+
+| # | Conflict | Human review decision |
+|---|---|---|
+| P-1 | **MTSAM expansion — three-way.** §1a records "MTS Associated Markets" (legal entity, Belgium) with the "Associated" spelling ruled master. (P) §0.1 gives a *third* expansion, "**MTS Analytical Market surveillance**", and uses it to mean the deployment/system rather than the institution. | |
+| P-2 | **MTS sense conflict.** §1a records MTS S.p.A. as a legal entity (Italy). (P) uses MTS for the **trading venue** — "Mercato dei Titoli di Stato" — and supplies that expansion, which the blueprints may not. Same acronym, institution vs venue. | |
+| P-3 | **MCL fourth naming variant.** (P) calls Document 3 the "**Market Configuration Layer**", alongside "MTSAM Calibration Layer", "Institution Calibration Layer", and MCL. | |
+| P-4 | **Third risk-archetype identifier scheme.** §1e/§4.2 record SB-01…SB-35 with a 45-vs-35 count conflict. (P) uses **RA-##** (RA-28, RA-29). Separate taxonomy, or a renumbering? RA-29 "Front-Running Indicator" may also overlap SB-30 (§4 conflict #8). | |
+| P-5 | **"BC" overloaded inside one table.** (P) §0.1 defines BC = Behaviour Category, then uses "BC Behavioural-Conditioning impact" for a different concept in the Outcome Score row of the same glossary. | |
+| P-6 | **"D1/D2" overloaded three ways.** BCI *dimensions* D1/D2 (Quote/Liquidity Leadership) vs signal *domains* D1/D2 (Volume and Participation / Timing) vs the plan's own decision register D1–D10. | |
+| P-7 | **Outcome Score sub-acronyms undefined.** The OS row introduces PI / LI / I / BC with no rows of their own, breaking (P)'s stated "every abbreviation is spelled out" rule. | |
+| P-8 | **Four-vs-five classification scale, again.** (P)'s Final Concern bands are LOW/MEDIUM/HIGH/VERY HIGH — no NONE — against the five-level scale ruled leading in §1b. Consistent with §4 conflict #14, now with a third witness. | |
+| P-9 | **Block-trade pattern count.** BTI is "composite of **nine** block-trade patterns"; §1e records the family as BT-01…BT-08 (**eight**). | |
+| P-10 | **Two unrelated "primitive" vocabularies.** (P)'s "nine implemented **alert** primitives" (RT/RD codes) vs §1b's "**behavioural** primitive" (QUOTE_WITHDRAWAL, SPREAD_WIDENING, …). Do not conflate. | |
+| P-11 | **MWBR band count.** (P) §0.1 lists three bands (NORMAL/ELEVATED/ANOMALOUS); its own §1.8 formula yields four, adding BELOW_NORMAL. | |
+| P-12 | **SRI both unavailable and in use.** (P) marks SRI undetermined under gap MTSAM-L07, yet its RSA rubric still consumes "Spread Rationality ≥2σ". | |
+| P-13 | **Test-identifier collision.** Validation footprint cites test cases **T287–T295** while the methodology register uses **T-###** codes (T-002, T-108, …). Similar shape, different namespace. | |
+| P-14 | **Gap-code collision with the project's own numbering.** (P) Appendix C uses **C-1…C-6** for implementation gaps; the plan uses C1–C12 for constraints. Disambiguate on any quotation. | |
+
+### 7d. Orphans `(P)` confirms rather than resolves
+
+Useful negative evidence — these were flagged ⊘ in §1b and remain undefined even
+in a document written specifically to spell everything out.
+
+- **instrument cluster** — (P) states its *role* ("defines the population over
+  which dominance/market-share are measured") but still never gives the
+  clustering rule.
+- **episode** — used as BC-17's co-occurrence scope ("all three detection signals
+  co-occur on the same episode") and as a 14-day constant, never defined.
+- **signal (vs alert)** — (P) offers "Detection signals are observations, not
+  conclusions", the closest thing to a definition found so far, but it still does
+  not distinguish signal from alert.
+
+### 7e. Material worth reusing beyond term extraction
+
+Not term rows; flagged because they bear on later phases.
+
+- **(P) §1.7 explains *why* the mean and σ do different jobs in a z-score** — two
+  paragraphs of genuine plain-language exposition. It is the best model of
+  criterion 2 (abstraction pyramid) anywhere in the corpus, and worth holding as
+  a style exemplar for Phase 5's golden output.
+- **(P) Appendix F is a hand-built topological ordering** — 22 calculation steps
+  from raw trade row to archetype. It is an independent cross-check on the
+  concept graph's topological sort for this slice of the domain (step 3.4).
+- **(P) Appendices C and D are a working waiver register in the wild** — six
+  ticketed implementation gaps and three code-vs-methodology discrepancies, each
+  recorded with its effect and left unresolved. Direct prior art for the DoD's
+  waiver register (criterion 3) and evidence the client already documents
+  contradictions rather than silently fixing them.
+- **Two live discrepancies inherited from (P)**, both criterion 5 material if any
+  of this text is reused: POFP lookback **90 days / 15 sessions** (code) vs
+  **45 days / 10 sessions** (methodology `T-003`); RSA bands **LOW ≤40 / MEDIUM
+  41–70 / HIGH 71–85 / VERY HIGH ≥86** (code) vs **"≥72 HIGH / 41–71 MEDIUM"**
+  (methodology `T-117`).
