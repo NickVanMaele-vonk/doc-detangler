@@ -1,0 +1,1332 @@
+# Step 3.1 raw extraction — LLM-assisted, NOT yet human-reviewed.
+# Source: samples/prototype-BC17.md — PROTOTYPE OUTPUT document, flag (P).
+# NOT one of the three component blueprints and NOT part of the detangler
+# output set; excluded from the C9 placement test (Nick's ruling 2026-07-26,
+# same basis as the (A) reference doc). Kept for term discovery, definitional
+# evidence, and as a worked example of criterion-3 acronym expansion.
+# Line numbers are approximate; verify before citing as provenance.
+document: prototype-BC17.md
+document_note: >-
+  530 lines. A prototype/target-state document, not source material: it is an
+  explanatory specification of one Behaviour Category assembled FROM the three
+  blueprints (its own Sources note at L11 cites blueprint-UCE.md v30,
+  blueprint-SBSP.md, blueprint-MCL.md §12.2, plus a reference implementation
+  and MTSAM_Scoring_Objects.md). Three properties make it valuable for Phase 3
+  despite the (P) exclusion. (1) It carries an explicit master glossary at §0.1
+  expanding 71 abbreviations, and states as a design goal that "Every
+  abbreviation is spelled out --- in prose, in the glossary (§0.1), and inside
+  the tables themselves" (L9) — a direct precedent for rubric criterion 3.
+  (2) It supplies expansions and one-line roles for many acronyms the three
+  blueprints use but never expand (RT02, RT05, BTI, QCR, QLS, NCS, ORS, OSS,
+  PDRP, PSP, TCE, TCS, TPS, AOB, HHI). (3) It resolves several
+  set-level orphans with usable definitions. Three cautions, all recorded per
+  term below. (a) §0.1 is ordered ALPHABETICALLY, not topologically, so it
+  violates criterion 1 within itself — the ADA row (L19) cites ECIL before
+  ECIL's own row (L35), the HQLD row (L39) cites gap MTSAM-L08 before its row
+  (L52), and the AOB row (L20) cites the Aggressor Dominance signal defined
+  only at §3.1. It is a lookup table, not a readable glossary. (b) It
+  introduces expansions that CONFLICT with the three blueprints — most
+  seriously MTSAM as "MTS Analytical Market surveillance" (L51) against the
+  merged list's "MTS Associated Markets", and MCL as "Market Configuration
+  Layer" (L11), a fourth naming variant. (c) It contains proposed calibrations
+  and corrections of its own ("Correction basis (was undefined T-095)",
+  Appendix C gap register, Appendix D code-vs-methodology discrepancies) which
+  are this document's inventions, not blueprint content — they must never be
+  back-propagated into a glossary definition as though sourced.
+terms:
+
+  # ---------------------------------------------------------------------
+  # Document identity, structure, and the layer model
+  # ---------------------------------------------------------------------
+
+  - term: Behaviour Category 17
+    acronym: BC-17
+    aliases: ["BC-17", "Category 17", "Event-Driven Information Behaviour", "BC-17 (2)", "BC-17 (3)"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"One end-to-end explanatory document for the whole of **Behaviour Category 17 (BC-17) — Event-Driven Information Behaviour**\" (title paragraph, L3); operative definition at §4.1, L368-L375: \"BC-17 fires only when **all three** detection signals co-occur on the same episode\" --- \"an information event happened (ECIL), the participant's trading concentrated in that event's window (Sensitive Timing), and in that window the participant was the dominant aggressor (AOB / BCI dimension 3).\""
+    first_use: "Title, L1"
+    used_before_defined: false
+    sections_used: ["Title", "§0.1", "Layer 1 intro", "§2.x throughout", "Layer 3 intro", "§4.1", "§4.2", "§4.3", "§4.4", "Layer 5", "§5.1", "Appendices A-F"]
+    notes: "The document's subject. Attributed to Document 1 §VI.1a.2 row 17. Validation footprint given at §4.4: scenarios S61-S63, test cases T287-T295."
+  - term: Behaviour Category
+    acronym: BC
+    aliases: ["BC", "Behavioural Category", "behavioural-category classification"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BC** | Behaviour Category | the classification unit; BC-17 is one of seventeen\" (§0.1, L21)"
+    first_use: "L3 (as part of 'Behaviour Category 17')"
+    used_before_defined: true
+    sections_used: ["§0.1", "Layer 4 heading", "§4.1", "§4.2", "§2.8c"]
+    notes: "CONFLICT (intra-document): the acronym BC is overloaded. §0.1 L21 defines BC as Behaviour Category, but the OS row at L58 uses 'BC Behavioural-Conditioning impact' for a different concept in the same table. Also fixes the set size at seventeen categories --- a countable fact worth checking against the blueprints."
+  - term: Behaviour Category 9
+    acronym: BC-9
+    aliases: ["Category 9", "Auction Conditioning"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Category 9** — scheduled, recurring **market-structure** events (auctions, benchmark fixings) → optimisation of market structure.\" (§4.2, L379)"
+    first_use: "§4.2 heading, L377"
+    used_before_defined: false
+    sections_used: ["§4.2"]
+    notes: "Present only as the contrast case that disambiguates BC-17 (information events vs market-structure events). Useful evidence that the category set needs a distinguishing rule per pair."
+  - term: Risk Archetype
+    acronym: RA
+    aliases: ["RA", "risk archetype", "archetype"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RA** | Risk Archetype | the narrative explaining potential abuse\" (§0.1, L71); elaborated at Layer 5, L398: \"Risk Archetypes provide the explanatory narrative once a signal has qualified — they do not drive scoring.\""
+    first_use: "L6 (flowchart, 'Layer 5: Risk Archetypes')"
+    used_before_defined: true
+    sections_used: ["§0.1", "flowchart L6", "§3.1", "Layer 5", "§5.1", "Appendix F"]
+    notes: "The 'do not drive scoring' clause is a strong doctrinal statement not found in the shortened blueprints; verify against the full UCE before treating as canonical."
+  - term: "RA-28 Insider Dealing Indicator — Sensitive Timing"
+    acronym: RA-28
+    aliases: ["RA-28", "Insider Dealing Indicator"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RA-28** | Insider Dealing Indicator — Sensitive Timing | Sensitive Timing + Event Proximity + Aggressor Dominance convergence | `IBE_sensitive_timing_flag = TRUE` + ECIL event proximity confirmed\" (Layer 5 table, L402); §0.1 L72: \"primary archetype of BC-17\""
+    first_use: "§0.1, L72"
+    used_before_defined: false
+    sections_used: ["§0.1", "Layer 5 table", "§5.1", "Appendix F step 22"]
+    notes: "Attributed to Document 1 §VI.1a.3. NEW IDENTIFIER SCHEME: the merged list records risk archetypes only under the SB-## prefix (SB-01..SB-35, with a 45-vs-35 count conflict against U). RA-## is a third scheme. Either RA-## and SB-## are separate taxonomies or one is a renumbering of the other --- this bears directly on merged-list conflict #2 and needs a disposition."
+  - term: "RA-29 Front-Running Indicator"
+    acronym: RA-29
+    aliases: ["RA-29", "Front-Running Indicator"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RA-29** | Front-Running Indicator | Event Proximity + Aggressor Dominance, ECIL event = information-type | ECIL proximity confirmed + aggressor dominance (AOB + SCS_direction) confirmed\" (Layer 5 table, L403); §0.1 L73: \"primary archetype of BC-17\""
+    first_use: "§0.1, L73"
+    used_before_defined: false
+    sections_used: ["§0.1", "§3.1", "Layer 5 table", "§5.1", "Appendix F step 22"]
+    notes: "Same RA-## scheme question as RA-28. Note also a possible overlap with merged-list SB-30, characterised in S as 'RFQ front-running footprint' --- front-running under two identifiers in two schemes. Feeds merged-list conflict #8."
+  - term: five-layer pipeline model
+    acronym: null
+    aliases: ["Layer 1", "Layer 2", "Layer 3", "Layer 4", "Layer 5", "the flowchart"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Layer 1: Raw Data Ingestion → Layer 2: Scoring Objects → Layer 3: Detection Signals → Layer 4: Behavioural Category (BC-17) → Layer 5: Risk Archetypes\" (L6)"
+    first_use: "L6"
+    used_before_defined: false
+    sections_used: ["L3-L9", "all Layer headings", "§5.1", "Appendix F"]
+    notes: "The document's organising spine and a candidate structural frame for the detangled set. Note it is a PROTOTYPE'S structure, not a blueprint assertion --- check whether the UCE pipeline (II.1) uses the same layering before adopting the term."
+  - term: translation table
+    acronym: null
+    aliases: ["Translation tables"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Translation tables** (value → computation → raw field) and **theoretical-framework tables** (the `T-###` term definitions) are retained.\" (L9)"
+    first_use: "L9"
+    used_before_defined: false
+    sections_used: ["L9", "§2.1", "§2.2", "§2.3"]
+    notes: "A documentation device of this prototype (every derived value traced to raw fields), not a domain concept. Relevant to the detangler as a provenance pattern; likely cull as a business term."
+  - term: theoretical-framework term code
+    acronym: "T-###"
+    aliases: ["T-002", "T-003", "T-004", "T-011", "T-013", "T-081", "T-095", "T-108", "T-113", "T-114", "T-115", "T-117"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**theoretical-framework tables** (the `T-###` term definitions)\" (L9); enumerated with definitions in Appendix E, L487-L501"
+    first_use: "L9"
+    used_before_defined: false
+    sections_used: ["L9", "§1.7", "§2.1", "§2.2", "§2.3", "§3.2", "§3.3", "Appendix B", "Appendix D", "Appendix E"]
+    notes: "An external identifier scheme for methodology terms, referenced but never located --- the T-### register itself is outside this document set. Two T-codes are declared UNDEFINED in the source and 'corrected' here (T-095, T-114) and two DEFERRED (T-013, T-108); see the individual entries below. Strong orphan evidence."
+
+  # ---------------------------------------------------------------------
+  # §0.1 Master glossary — institutions, regulators, external identifiers
+  # ---------------------------------------------------------------------
+
+  - term: Agence de la Dette
+    acronym: ADA
+    aliases: ["ADA", "Belgian Debt Agency", "ADA auction"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**ADA** | Agence de la Dette (Belgian Debt Agency) | issuer of OLO bonds; auction calendar feeds ECIL\" (§0.1, L19)"
+    first_use: "§0.1, L19"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.4 (has_ada_auction)", "§2.3"]
+    notes: "Externally owned (Belgian sovereign issuer) -> references list, not the glossary, per criterion 3. Its §0.1 row cites ECIL and OLO, both defined later in the alphabetical table --- criterion-1 evidence."
+  - term: European Central Bank
+    acronym: ECB
+    aliases: ["ECB", "central-bank decisions"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**ECB** | European Central Bank | primary information-event source for OLO prices\" (§0.1, L34)"
+    first_use: "§0.1, L34"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.4 (has_ecb_event)", "§2.3", "§4.2"]
+    notes: "Externally owned -> references list."
+  - term: European Securities and Markets Authority
+    acronym: ESMA
+    aliases: ["ESMA"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**ESMA** | European Securities and Markets Authority | EU markets regulator; MAR guidance\" (§0.1, L37)"
+    first_use: "§0.1, L37"
+    used_before_defined: false
+    sections_used: ["§0.1", "L11", "Appendix A"]
+    notes: "Already regulator-owned in the merged list. This document does supply the expansion, which the blueprints may not."
+  - term: Market Abuse Regulation
+    acronym: MAR
+    aliases: ["MAR", "Regulation (EU) No 596/2014"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**MAR** | Market Abuse Regulation — Regulation (EU) No 596/2014 | the governing regulation\" (§0.1, L48)"
+    first_use: "L11 ('MAR/ESMA basis')"
+    used_before_defined: true
+    sections_used: ["§0.1", "L11", "§2.1", "§2.4", "§2.6", "§2.7", "§2.7b", "§2.8c", "§2.9", "§4.2", "Appendix A"]
+    notes: "Supplies the full citation Regulation (EU) No 596/2014, which the UCE extraction records as never expanded. Articles cited across the document: 3(1)(26), 8, 12(1)(a), 12(1)(a)(ii), 14, 16."
+  - term: MAR Article 8
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "Appendix A table, L429"
+    used_before_defined: false
+    sections_used: ["Appendix A"]
+    notes: "Cited as the insider-dealing basis for BC-17's purpose. New relative to the merged list, which carries Articles 12 and 16 only."
+  - term: MAR Article 12
+    acronym: null
+    aliases: ["MAR Article 12(1)(a)", "MAR Article 12(1)(a)(ii)"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.1 correction basis, L269"
+    used_before_defined: false
+    sections_used: ["§2.1", "§2.4", "§2.7", "Appendix A"]
+    notes: "Sub-paragraph granularity: 12(1)(a) 'false signals / price securing' -> AOB and Aggressor Dominance; 12(1)(a)(ii) 'acting in collaboration' -> IDS, ISS, CCT."
+  - term: MAR Article 14
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§4.2, L380"
+    used_before_defined: false
+    sections_used: ["§4.2", "Appendix A"]
+    notes: "Named as the insider-dealing intersection that distinguishes BC-17 from BC-9. New relative to the merged list."
+  - term: MAR Article 16
+    acronym: null
+    aliases: []
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.6, L317"
+    used_before_defined: false
+    sections_used: ["§2.6", "§2.9", "Appendix A", "§0.1 (STOR row)"]
+    notes: "Basis for RSA and the IQ effect gate; also the STOR filing obligation."
+  - term: MAR Article 3(1)(26)
+    acronym: null
+    aliases: ["persons closely associated"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.7b, L321"
+    used_before_defined: false
+    sections_used: ["§2.7b", "Appendix A"]
+    notes: "Basis for the SRS relationship tiers. New relative to the merged list."
+  - term: "Delegated Regulation (EU) 2016/522"
+    acronym: null
+    aliases: ["Delegated Regulation (EU) 2016/522, Annex II", "Annex II"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.1 correction basis, L269"
+    used_before_defined: false
+    sections_used: ["§2.1", "Appendix A"]
+    notes: "Annex II = indicators of manipulation (momentum ignition, reversals). New relative to the merged list."
+  - term: "Delegated Regulation (EU) 2016/957"
+    acronym: null
+    aliases: ["STOR regulatory technical standards", "STOR technical standards"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.7, L319"
+    used_before_defined: false
+    sections_used: ["§2.7", "Appendix A"]
+    notes: "New relative to the merged list."
+  - term: European Commission Horizontal Merger Guidelines
+    acronym: null
+    aliases: ["European Commission Herfindahl-Hirschman Index concentration tiers"]
+    category: regulator-owned
+    defined_here: false
+    definition_quote: null
+    first_use: "§2.5, L315"
+    used_before_defined: false
+    sections_used: ["§2.5", "Appendix A"]
+    notes: "Source of the 1,500 / 2,500 / 5,000 HHI tier boundaries used by ISS, NCS and CCT."
+  - term: Suspicious Transaction and Order Report
+    acronym: STOR
+    aliases: ["STOR", "STOR register", "prior STOR"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**STOR** | Suspicious Transaction and Order Report | the MAR Article 16 filing\" (§0.1, L80)"
+    first_use: "§0.1, L80"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.8b", "§2.9", "Appendix A"]
+    notes: "Consistent with the UCE extraction. §2.8b adds a 3-year lookback on the STOR register."
+  - term: Herfindahl–Hirschman Index
+    acronym: HHI
+    aliases: ["HHI", "iss_hhi"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**HHI** | Herfindahl–Hirschman Index | concentration measure, 0–10,000 scale\" (§0.1, L38)"
+    first_use: "§0.1, L38"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.5", "§2.8", "Appendix A"]
+    notes: "NOT in the merged candidate list. Externally defined (economics/competition standard) -> references list rather than glossary, per criterion 3."
+  - term: International Securities Identification Number
+    acronym: ISIN
+    aliases: ["ISIN", "instrument_id"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**ISIN** | International Securities Identification Number | the bond identifier (`instrument_id`)\" (§0.1, L45)"
+    first_use: "§0.1, L45"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.1", "§1.2", "§1.3"]
+    notes: "ISO 6166 identifier, externally owned -> references list. The mapping ISIN == instrument_id is a local data-contract fact and belongs with the MTSTrade record, not with ISIN."
+  - term: Legal Entity Identifier
+    acronym: LEI
+    aliases: ["LEI", "participant_id"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**LEI** | Legal Entity Identifier | the participant identifier\" (§0.1, L47)"
+    first_use: "§0.1, L47"
+    used_before_defined: false
+    sections_used: ["§0.1", "§0.2", "§1.1", "§1.2"]
+    notes: "ISO 17442 identifier, externally owned -> references list. Local fact: 'MTS member identifier maps to the LEI' (§1.1, L116)."
+  - term: Ultimate Beneficial Owner
+    acronym: UBO
+    aliases: ["UBO", "ubo_id"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"**UBO** | Ultimate Beneficial Owner | ownership link (feeds SRS)\" (§0.1, L84)"
+    first_use: "§0.1, L84"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.7b"]
+    notes: "Externally defined (AML/company-law concept) -> references list. Already on the merged list's regulator-owned set (§2); this row supplies the expansion."
+  - term: Obligation Linéaire / Lineaire Obligatie
+    acronym: OLO
+    aliases: ["OLO", "OLO bonds", "Belgian linear government bond"]
+    category: regulator-owned
+    defined_here: true
+    definition_quote: "\"| **OLO** | Obligation Linéaire / Lineaire Obligatie | Belgian linear government bond (the instrument) |\" (§0.1, L55)"
+    first_use: "§0.1, L55"
+    used_before_defined: false
+    sections_used: ["§0.1", "§0.1 (ADA, ECB rows)", "Appendix A"]
+    notes: "Already regulator-owned per the DoD criterion-3 example list. Supplies the bilingual expansion."
+  - term: Mercato dei Titoli di Stato
+    acronym: MTS
+    aliases: ["MTS", "the electronic trading venue", "MTS Trades feed", "MTS member"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**MTS** | Mercato dei Titoli di Stato | the electronic trading venue\" (§0.1, L50); restated §0.2, L94: \"one row of the MTS (Mercato dei Titoli di Stato) Trades feed = one execution\""
+    first_use: "L11 (source list)"
+    used_before_defined: true
+    sections_used: ["§0.1", "§0.2", "§1.1", "§1.2", "§1.3", "§1.6"]
+    notes: "SENSE CONFLICT with the merged list, which records 'MTS S.p.A. | MTS | legal entity in Italy, sister company of MTSAM; financial markets platform operator'. Here MTS is the VENUE / trading platform, not the legal entity. Same acronym, two referents already flagged as high confusion risk --- this is a third data point. Needs a disposition."
+  - term: MTS S.p.A.
+    acronym: null
+    aliases: []
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§1.2 heading, L133"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "Named once, as the origin of the surveillance alert export ('MTS S.p.A. surveillance export'). Consistent with the merged list's legal-entity reading and therefore with the MTS conflict noted above."
+  - term: MTS Analytical Market surveillance
+    acronym: MTSAM
+    aliases: ["MTSAM", "MTS Analytical Market", "this deployment"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**MTSAM** | MTS Analytical Market surveillance | this deployment\" (§0.1, L51); restated §1.1, L128: \"In the MTSAM (MTS Analytical Market) data contract\""
+    first_use: "L11 ('MTSAM-ref-1')"
+    used_before_defined: true
+    sections_used: ["§0.1", "L11", "§1.1", "§1.5", "§1.6", "§1.7"]
+    notes: "DEFINITION CONFLICT --- flag prominently. The merged list records MTSAM as 'MTS Associated Markets', a legal entity in Belgium, with Nick's ruling to use the 'Associated' spelling as master. This document gives a THIRD expansion, 'MTS Analytical Market surveillance', and uses it to mean the deployment/system rather than the institution. Two competing readings already existed (venue vs surveilling institution); this adds a third. Do not merge silently --- criterion 6 requires both be preserved and the conflict raised."
+  - term: MTSAM Calibration Layer
+    acronym: MCL
+    aliases: ["Market Configuration Layer", "Institution Calibration Layer", "Document 3", "blueprint-MCL.md"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "L11 (Sources note)"
+    used_before_defined: false
+    sections_used: ["L11", "§2.2"]
+    notes: "NEW ALIAS, worth adding to the merged row: this document calls Document 3 the 'Market Configuration Layer' (L11: 'blueprint-MCL.md (Document 3, Market Configuration Layer §12.2)'), a fourth variant alongside 'MTSAM Calibration Layer', 'Institution Calibration Layer', and the MCL acronym. §2.2 cites 'Document 3 §12.2' as the source of the BCI dimension-3 formula."
+  - term: Universal Core Engine
+    acronym: UCE
+    aliases: ["Document 1", "blueprint-UCE.md", "the engine"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "L11 (Sources note)"
+    used_before_defined: false
+    sections_used: ["L11", "§4.1", "§4.4", "Layer 5"]
+    notes: "Cited as Document 1 at v30 --- consistent with SBSP's v30 citation and against MCL's v28, the version skew already on the merged list. Sections cited: §VI.1a.2 row 17 (BC-17 combination), §VI.1a.3 (archetypes), §XV.5 (validation)."
+  - term: Sovereign Bond Sector Pack
+    acronym: SBSP
+    aliases: ["Document 2", "blueprint-SBSP.md"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "L11 (Sources note)"
+    used_before_defined: false
+    sections_used: ["L11"]
+    notes: "Referenced only in the Sources note."
+
+  # ---------------------------------------------------------------------
+  # §0.1 Master glossary — engine layers and repositories
+  # ---------------------------------------------------------------------
+
+  - term: Behavioural Persistence Layer
+    acronym: BPL
+    aliases: ["BPL", "SCS_bpl", "Behavioural Persistence Layer campaign score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BPL** | Behavioural Persistence Layer | cross-session persistence engine\" (§0.1, L25)"
+    first_use: "§0.1, L25"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.2", "§2.9"]
+    notes: "The merged list carries 'campaign' as a BPL-owned cross-session construct with no definition (orphan). This row supplies BPL's expansion and role but still does not define 'campaign'."
+  - term: Causality Confidence Layer
+    acronym: CCL
+    aliases: ["CCL", "Causality Confidence"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**CCL** | Causality Confidence Layer | validates behaviour caused the outcome\" (§0.1, L28)"
+    first_use: "§0.1, L28"
+    used_before_defined: false
+    sections_used: ["§0.1", "Appendix A (RSA rubric)"]
+    notes: "Referenced in the RSA Price Impact rubric as 'Causality Confidence >=1'."
+  - term: External Context Intelligence Layer
+    acronym: ECIL
+    aliases: ["ECIL", "ECIL Suppl.", "ecil_crs", "ecil_amplification"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**ECIL** | External Context Intelligence Layer | scored external-event context; drives both timing signals\" (§0.1, L35); fuller at §2.3, L298: \"Structured, scored, provenance-chained external-event context with explicit directionality.\""
+    first_use: "§0.1, L19 (inside the ADA row, before its own row at L35)"
+    used_before_defined: true
+    sections_used: ["§0.1", "§1.4", "§1.6", "§2.3", "§3.2", "§3.3", "§4.1", "§4.2", "§4.3", "§5.1", "Appendix B", "Appendix F"]
+    notes: "One of the three required inputs to BC-17. The §2.3 definition is the fullest in the corpus so far and is a strong glossary candidate --- but note the materiality rubric behind it (T-108) is explicitly DEFERRED, so the definition is complete while its calibration is not."
+  - term: Outcome Persistence Layer
+    acronym: OPL
+    aliases: ["OPL", "Outcome Persistence"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**OPL** | Outcome Persistence Layer | whether an outcome persisted\" (§0.1, L56)"
+    first_use: "§0.1, L56"
+    used_before_defined: false
+    sections_used: ["§0.1", "Appendix A (RSA rubric)"]
+    notes: "RESOLVES set-level orphan #55 on the merged list, where OPL is recorded as letter-expanded nowhere."
+  - term: Participant Intelligence Repository
+    acronym: PIR
+    aliases: ["PIR", "PIR_recurrence_count", "PIR_history", "behaviour_categories_history"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**PIR** | Participant Intelligence Repository | the engine's behavioural memory (amplifier-only)\" (§0.1, L61); §2.8c adds \"amplifier-only capping gate (never sole-drives MEDIUM/HIGH — MAR proportionality)\" (L327)"
+    first_use: "§0.1, L61"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.8c", "§2.9", "§4.3"]
+    notes: "The 'never sole-drives' constraint is a normative rule (modality: never) --- criterion 5 material if this text is ever reused."
+  - term: Quote Behaviour Baseline Engine
+    acronym: QBBE
+    aliases: ["QBBE"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QBBE** | Quote Behaviour Baseline Engine | participant quote baselines\" (§0.1, L65)"
+    first_use: "§0.1, L65"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Listed in the glossary but used nowhere else in this document --- a dead entry by criterion 3's test, within this document. It is in the merged list via the blueprints, so the expansion is still useful."
+  - term: Temporal Correlation Engine
+    acronym: TCE
+    aliases: ["TCE"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**TCE** | Temporal Correlation Engine | maps events vs behaviour on a timeline\" (§0.1, L81)"
+    first_use: "§0.1, L81"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.3", "§3.3", "§4.1"]
+    notes: "NOT in the merged candidate list. Owns the ECIL context_effect classification and the Event Proximity formula."
+  - term: Market-Wide Behavioural Reference
+    acronym: MWBR
+    aliases: ["MWBR", "peer baseline", "MWBR bands"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**MWBR** | Market-Wide Behavioural Reference | peer normalisation (NORMAL/ELEVATED/ANOMALOUS)\" (§0.1, L53); computation at §1.8, L228-L234"
+    first_use: "§0.1, L53"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.8", "§2.1", "§2.2", "Appendix A", "Appendix E (T-004)"]
+    notes: "§1.8 gives the full formula and a FIVE-value band set --- ANOMALOUS >=2.0, ELEVATED >=1.0, BELOW_NORMAL <0, else NORMAL --- against §0.1's three-value listing. Minor intra-document inconsistency; also note MWBR_ANOMALOUS appears in the DoD criterion-5 examples. Requires >= 3 peer sessions and excludes the target from its own peer set."
+
+  # ---------------------------------------------------------------------
+  # §0.1 Master glossary — scoring objects and scores
+  # ---------------------------------------------------------------------
+
+  - term: Aggressor-on-Book / Adverse Outcome Behaviour
+    acronym: AOB
+    aliases: ["AOB", "AOB_level", "AOB_reversal_rate", "Aggressor-on-Book", "Adverse Outcome Behaviour"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**AOB** | Aggressor-on-Book / Adverse Outcome Behaviour | scoring object behind the Aggressor Dominance signal\" (§0.1, L20); §2.1, L244: \"**Definition.** Repeated economic irrationality — loss-making reversals and persistent aggressor dominance.\""
+    first_use: "§0.1, L20"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.1", "§1.2", "§2.1", "§2.2", "§2.9", "§3.1", "§4.1", "§5.1", "Appendix A", "Appendix C", "Appendix E"]
+    notes: "NOT in the merged candidate list, and the acronym carries TWO expansions in the same cell ('Aggressor-on-Book / Adverse Outcome Behaviour') --- unresolved even here. §2.1 marks its level bands as PROPOSED calibrations correcting an undefined T-095, so the formula is this prototype's invention, not blueprint content."
+  - term: Behavioural Causality Indicator
+    acronym: BCI
+    aliases: ["BCI", "BCI-D3", "BCI dimension 3", "D1", "D2", "D3", "D4"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BCI** | Behavioural Causality Indicator | leader-vs-follower score; four dimensions D1–D4\" (§0.1, L22); §2.2, L275: \"**Definition.** The participant's causal role — leader vs follower — across four dimensions. **Formula:** `BCI = D1 + D2 + D3 + D4` (each 0–3; composite 0–12).\""
+    first_use: "§0.1, L22"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.1", "§2.2", "§3.1", "§4.3", "§5.1", "Appendix C", "Appendix E", "Appendix F"]
+    notes: "Named dimensions: D1 Quote Leadership, D2 Liquidity Leadership, D3 Aggressor Dominance, D4 Market Dominance. Two normative gates stated at §4.3: 'BCI < 3 caps concern at MEDIUM' (the Follower Rule) and 'BCI >= 7 opens VERY HIGH'. Level names partially given at Appendix F step 14 ('Follower...Primary Driver')."
+  - term: Behavioural Drift Score
+    acronym: BDS
+    aliases: ["BDS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BDS** | Behavioural Drift Score | slow drift of behaviour from own baseline\" (§0.1, L23)"
+    first_use: "§0.1, L23"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document --- glossed but never used."
+  - term: Behavioural Objective Assessment
+    acronym: BOA
+    aliases: ["BOA"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BOA** | Behavioural Objective Assessment | deterministic risk-objective scoring for HIGH/VERY HIGH\" (§0.1, L24)"
+    first_use: "§0.1, L24"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document, but BOA is on the merged list from the blueprints --- so this row is a useful expansion for an otherwise thin term."
+  - term: Block Trade pattern 2
+    acronym: BT-02
+    aliases: ["BT-02", "systematic directional", "Block Trade pattern 6"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BT-02** | Block Trade pattern 2 (systematic directional) | block-trade directional confirmation\" (§0.1, L26); §2.2 table, L289: \"`BT-02` (Block Trade pattern 2) | systematic same-direction block pattern\""
+    first_use: "§0.1, L26"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.1", "§2.2", "Appendix C"]
+    notes: "Covered on the merged list only by the family row 'BT block-trade code family | BT-01...BT-08 (S), BT-06 (M)'; this document names pattern 2 specifically and glosses it. COUNT CONFLICT: BTI is 'composite of nine block-trade patterns' (§0.1 L27) but the merged list records the family as BT-01..BT-08, i.e. eight. Needs a disposition."
+  - term: Block Trade Intelligence Score
+    acronym: BTI
+    aliases: ["BTI"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BTI** | Block Trade Intelligence Score | composite of nine block-trade patterns\" (§0.1, L27)"
+    first_use: "§0.1, L27"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.1"]
+    notes: "NOT in the merged list. Fixes the block-trade pattern count at nine."
+  - term: Coordination Classification Tier
+    acronym: CCT
+    aliases: ["CCT", "cct_specificity", "EXPLICIT", "IMPLICIT", "STRUCTURAL"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**CCT** | Coordination Classification Tier | EXPLICIT / IMPLICIT / STRUCTURAL coordination\" (§0.1, L29); §2.7, L319: \"`cct_specificity = (observed − expected clustering) ÷ σ_expected`; STRUCTURAL (<2σ but SRS≥2) / IMPLICIT (2σ–<3σ) / EXPLICIT (≥3σ, order-ID). **Capped at IMPLICIT** in Standard mode (gap MTSAM-L07).\""
+    first_use: "§0.1, L29"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.5", "§2.7", "§2.9", "Appendix A", "Appendix C"]
+    notes: "Enumerated tier set with an order --- criterion 5 material. The IMPLICIT cap is a live data-limitation consequence (gap MTSAM-L07 / C-4)."
+  - term: Counterfactual Strength Score
+    acronym: CFS
+    aliases: ["CFS", "Counterfactual Strength"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"| **CFS** | Counterfactual Strength Score | the \"but-for\" causal argument |\" (§0.1, L30)"
+    first_use: "§0.1, L30"
+    used_before_defined: false
+    sections_used: ["§0.1", "Appendix A (RSA rubric)"]
+    notes: "Used in the RSA Price Impact rubric as 'Counterfactual Strength >=1'."
+  - term: Convergence Quality Score
+    acronym: CQS
+    aliases: ["CQS", "CQS_uplift", "Domain-A Convergence Quality Score contribution"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**CQS** | Convergence Quality Score | summed confirmed evidence across five domains\" (§0.1, L31)"
+    first_use: "§0.1, L31"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.2", "§2.8b", "Appendix A"]
+    notes: "Already on the merged list. This row adds the 'five domains' structure and §1.2 gives a contribution formula: 'Σ(confirmed primitive × 0.50)', cap 4.0."
+  - term: Convergence Quality Tier
+    acronym: CQT
+    aliases: ["CQT", "CQT1", "CQT2", "CQT3"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**CQT** | Convergence Quality Tier | banded CQS (CQT1 MEDIUM, CQT2 HIGH, CQT3 VERY HIGH)\" (§0.1, L32)"
+    first_use: "§0.1, L32"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document. Tier-to-classification mapping is criterion 5 material."
+  - term: Cross-Window Persistence Score
+    acronym: CWPS
+    aliases: ["CWPS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**CWPS** | Cross-Window Persistence Score | same pattern across OPEN/CLOSE windows or sessions\" (§0.1, L33)"
+    first_use: "§0.1, L33"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document. Names an OPEN window, which the sensitive-window list (§1.6) does not include --- possible gap."
+  - term: Escalating Dominance Trend
+    acronym: EDT
+    aliases: ["EDT"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**EDT** | Escalating Dominance Trend | upward trend in market control\" (§0.1, L36)"
+    first_use: "§0.1, L36"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.2", "Appendix A"]
+    notes: "Feeds BCI dimension 4; governed by the LOOKBACK_30D constant."
+  - term: Historical Quote Lifecycle Dataset
+    acronym: HQLD
+    aliases: ["HQLD", "has_hqld"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**HQLD** | Historical Quote Lifecycle Dataset | quote-level history (absent = gap MTSAM-L08)\" (§0.1, L39)"
+    first_use: "§0.1, L39"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.5", "§2.2", "§2.8", "Appendix C"]
+    notes: "Its §0.1 row cites gap MTSAM-L08, whose own row sits later at L52 --- criterion-1 evidence inside the glossary. Absence of HQLD is the single most consequential data gap here: it zeroes BCI D1/D2, NCS quote-leadership, QLS and QDSP."
+  - term: Historical STOR Linkage
+    acronym: HSL
+    aliases: ["HSL"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**HSL** | Historical STOR Linkage | amplifier for prior supervisory record\" (§0.1, L40); §2.8b, L325: \"`CQS_uplift = 0.50·[prior_STOR] + 0.50·[pattern_match] + 0.25·[prior_escalation]`\""
+    first_use: "§0.1, L40"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.8b", "§2.9", "§4.3", "Appendix A"]
+    notes: "Declared 'Fully specified' in source (§2.8b) --- i.e. this document claims no correction was needed, unlike AOB and BCI."
+  - term: Interaction Detection Score
+    acronym: IDS
+    aliases: ["IDS", "z_ids", "ids_response_rate"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**IDS** | Interaction Detection Score | whether cross-participant interaction exists\" (§0.1, L43); §2.4, L313: \"`z_ids = (ids_response_rate − peer_baseline_rate) ÷ peer_baseline_σ`; levels 0 (≤1σ) / 1 (>1σ, p<0.05) / 2 (≥2σ, ≥3 sessions) / 3 (≥3σ, recurring pair).\""
+    first_use: "§0.1, L43"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.2", "§2.4", "§2.9", "Appendix A"]
+    notes: "Marked *Partial* --- quote responses need gap MTSAM-L07. Carries a statistical significance threshold (p<0.05), the only one in the document."
+  - term: Interaction Quality
+    acronym: IQ
+    aliases: ["IQ", "Interaction Quality (gate)", "interaction_outcome_score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**IQ** | Interaction Quality (gate) | suppresses interaction evidence with no outcome effect\" (§0.1, L44); §2.6, L317: \"`interaction_outcome_score = max over clusters(Outcome Score attributable to cluster)`; if `= 0` → suppress the interaction dimension.\""
+    first_use: "§0.1, L44"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.6", "Appendix A"]
+    notes: "A gate/suppressor rather than a score. Basis: MAR Article 16 proportionality."
+  - term: Interaction Strength Score
+    acronym: ISS
+    aliases: ["ISS", "iss_hhi", "pair_interaction_share"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**ISS** | Interaction Strength Score | strength/concentration of detected interaction\" (§0.1, L46); §2.5, L315: \"`iss_hhi = Σ(pair_interaction_share)²` (0–10,000); 0 (<1,500) / 1 (1,500–2,499) / 2 (2,500–4,999) / 3 (≥5,000).\""
+    first_use: "§0.1, L46"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.5", "§2.9", "Appendix A", "Appendix C"]
+    notes: "Band boundaries traced to the European Commission HHI tiers. Partial per gap C-6 (counterparty_id often null)."
+  - term: Multi-Day Conditioning Score
+    acronym: MDCS
+    aliases: ["MDCS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**MDCS** | Multi-Day Conditioning Score | pre-positioning across sessions\" (§0.1, L49)"
+    first_use: "§0.1, L49"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document."
+  - term: Network Centrality Score
+    acronym: NCS
+    aliases: ["NCS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**NCS** | Network Centrality Score | leader-vs-follower centrality in the network\" (§0.1, L54); §2.8, L323: \"`NCS = 0.35·followership_peer_rank + 0.25·reinforcement + 0.25·quote_leadership + 0.15·block_network`; levels LOW <0.25 / MEDIUM 0.25–0.50 / HIGH 0.50–0.75 / EXCEPTIONAL ≥0.75.\""
+    first_use: "§0.1, L54"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.8", "Appendix A", "Appendix C"]
+    notes: "NOT in the merged list. Note its level set (LOW/MEDIUM/HIGH/EXCEPTIONAL) does NOT match the five-level classification scale (NONE/LOW/MEDIUM/HIGH/VERY HIGH) Nick ruled as leading --- a distinct enumerated set, not a variant. Declared 'Already fully specified in source'."
+  - term: Outcome Recurrence Score
+    acronym: ORS
+    aliases: ["ORS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**ORS** | Outcome Recurrence Score | cross-session causal consistency\" (§0.1, L57)"
+    first_use: "§0.1, L57"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "NOT in the merged list. Dead entry within this document."
+  - term: Outcome Score
+    acronym: OS
+    aliases: ["OS", "Outcome Score", "PI", "LI", "Price Impact", "Liquidity impact", "Information impact", "Behavioural-Conditioning impact"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**OS** | Outcome Score | PI Price / LI Liquidity / I Information / BC Behavioural-Conditioning impact\" (§0.1, L58)"
+    first_use: "§0.1, L58"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.6", "§2.9", "Appendix A"]
+    notes: "Introduces four unexplained sub-acronyms (PI, LI, I, BC) that are NOT themselves rows in §0.1 --- so the 'every abbreviation is spelled out' claim at L9 fails here. BC collides with Behaviour Category (L21). All four need dispositions."
+  - term: Outcome Sensitivity Score
+    acronym: OSS
+    aliases: ["OSS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**OSS** | Outcome Sensitivity Score | instrument-sensitivity multiplier\" (§0.1, L59)"
+    first_use: "§0.1, L59"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.3"]
+    notes: "NOT in the merged list. §1.3 records that benchmark_tier feeds it."
+  - term: Participant-Day Risk Profile
+    acronym: PDRP
+    aliases: ["PDRP", "pdrp_aggressor_share_sigma", "Participant-Day-Risk-Profile proxy"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**PDRP** | Participant-Day Risk Profile | consolidated daily participant assessment object\" (§0.1, L60); §1.6, L198: \"**PDRP (Participant-Day Risk Profile)** consolidates a participant's day\""
+    first_use: "§0.1, L60"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.6", "§2.1", "Appendix C"]
+    notes: "NOT in the merged list. Central to gap C-1: PDRP is where the missing aggressor-share sigma would live."
+  - term: Participant Liquidity Contribution Score
+    acronym: PLCS
+    aliases: ["PLCS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**PLCS** | Participant Liquidity Contribution Score | net liquidity provided vs removed\" (§0.1, L62)"
+    first_use: "§0.1, L62"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document."
+  - term: Participant Order Flow Profile
+    acronym: POFP
+    aliases: ["POFP", "POFPSession", "POFP baseline", "POFP_aggr_mean", "POFP_aggr_σ", "the σ factory"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**POFP** | Participant Order Flow Profile | per-participant behavioural baseline (mean + σ)\" (§0.1, L63); full computation at §1.7, L200-L223"
+    first_use: "§0.1, L63"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.1", "§1.6", "§1.7", "§2.1", "§3.1", "§5.1", "Appendix D", "Appendix E", "Appendix F"]
+    notes: "The document's most fully specified object: named inputs, exact computation (sample stdev n-1, zero/empty sessions excluded), and an explicit rationale for why mean and σ are used differently (§1.7 'the z-score logic', L216-L221) --- a rare piece of genuine explanatory prose in the corpus and a good model for criterion-2 abstraction. Carries a live CALIBRATION DISCREPANCY: code 90 days / 15 sessions vs methodology (T-003) 45 days / 10 sessions."
+  - term: Participant Session Profile
+    acronym: PSP
+    aliases: ["PSP"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**PSP** | Participant Session Profile | daily per-participant behavioural object\" (§0.1, L64)"
+    first_use: "§0.1, L64"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "NOT in the merged list. Dead entry within this document, and its one-line role is near-identical to PDRP's ('consolidated daily participant assessment object') --- possible synonym or an undocumented distinction. Needs a disposition."
+  - term: Quote Behaviour Contextual Confidence Layer
+    acronym: QBCCL
+    aliases: ["QBCCL"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QBCCL** | Quote Behaviour Contextual Confidence Layer | contextual sensitivity multiplier\" (§0.1, L66)"
+    first_use: "§0.1, L66"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document, but QBCCL is on the merged list and named in the DoD's worked PR example --- so this expansion is directly useful."
+  - term: Quote Behaviour Risk Score
+    acronym: QBRS
+    aliases: ["QBRS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QBRS** | Quote Behaviour Risk Score | composite quote-domain risk score\" (§0.1, L67)"
+    first_use: "§0.1, L67"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document; on the merged list from the blueprints."
+  - term: Quote Cancellation Ratio
+    acronym: QCR
+    aliases: ["QCR", "peer_median_qcr", "peer_std_qcr", "quote_cancellation_rate"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QCR** | Quote Cancellation Ratio | cancelled ÷ (executed+cancelled+expired)\" (§0.1, L68)"
+    first_use: "§0.1, L68"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.4", "§1.7"]
+    notes: "NOT in the merged list. One of the few §0.1 rows carrying an actual formula."
+  - term: Quote Depth Share Position
+    acronym: QDSP
+    aliases: ["QDSP"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QDSP** | Quote Depth Share Position | share of visible book depth\" (§0.1, L69)"
+    first_use: "§0.1, L69"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.5", "Appendix C"]
+    notes: "On the merged list (and in the DoD criterion-5 examples). Undetermined in this deployment per gaps MTSAM-L07 / C-5."
+  - term: Quote Lifetime Score
+    acronym: QLS
+    aliases: ["QLS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**QLS** | Quote Lifetime Score | short-cancel vs long-survive ratio\" (§0.1, L70)"
+    first_use: "§0.1, L70"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.5", "Appendix C"]
+    notes: "NOT in the merged list. Unavailable in this deployment per gaps MTSAM-L02 / C-5."
+  - term: Reasonable Suspicion Assessment
+    acronym: RSA
+    aliases: ["RSA", "RSA_net", "rsa_scaled"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RSA** | Reasonable Suspicion Assessment | six-indicator MAR Article 16 score\" (§0.1, L75); §2.9, L329: \"`RSA_net = Σ(indicator_score × weight)`; `rsa_scaled = min(100, round(RSA_net ÷ 18 × 100))`.\""
+    first_use: "§0.1, L75"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.9", "§4.3", "Appendix A", "Appendix D", "Appendix E"]
+    notes: "On the merged list. Six weighted indicators (Price Impact 0.20, Economic Irrationality 0.20, Repetition 0.15, Participant Intelligence 0.20, Timing 0.15, Coordination 0.10 --- sums to 1.00) with a full 0-3 rubric in Appendix A. Carries a live BAND DISCREPANCY: code LOW <=40 / MEDIUM 41-70 / HIGH 71-85 / VERY HIGH >=86 vs methodology (T-117) '>=72 HIGH / 41-71 MEDIUM'."
+  - term: Session Consistency Score
+    acronym: SCS_bpl
+    aliases: ["SCS_bpl", "SCS_direction", "SCS_direction_confirmed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**SCS_bpl** | Session Consistency Score (Behavioural Persistence Layer) | recurrence of a pattern across sessions\" (§0.1, L77); the directional variant at §2.2, L290: \"`SCS_direction_confirmed` | one-sided persistence, `max(buy,sell) ÷ min ≥ 3.0`\""
+    first_use: "§0.1, L77"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.1", "§2.2", "§2.9", "§3.1", "Appendix A"]
+    notes: "The suffix _bpl is a layer qualifier inside the acronym, not a separate term. SCS_direction / SCS_direction_confirmed is used in three places but glossed only obliquely --- treat as a distinct term needing its own entry."
+  - term: Spread Rationality Indicator
+    acronym: SRI
+    aliases: ["SRI", "Spread Rationality"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**SRI** | Spread Rationality Indicator | economic rationality of spread crossing\" (§0.1, L78)"
+    first_use: "§0.1, L78"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.5", "Appendix A", "Appendix C"]
+    notes: "Undetermined in this deployment per gaps MTSAM-L07 / C-5, yet still referenced as a live input in the RSA rubric ('Spread Rationality >=2σ') --- an internal inconsistency worth flagging."
+  - term: Structural Relationship Score
+    acronym: SRS
+    aliases: ["SRS"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**SRS** | Structural Relationship Score | reference-data relationship level\" (§0.1, L79); §2.7b, L321: \"0 (none) / 1 (indirect) / 2 (same group or UBO, net group position changed) / 3 (same legal entity → internal-abuse pathway).\""
+    first_use: "§0.1, L79"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.7", "§2.7b", "Appendix A"]
+    notes: "Basis: MAR Article 3(1)(26) 'persons closely associated'."
+  - term: Temporal Correlation Score
+    acronym: TCS
+    aliases: ["TCS", "event_materiality_weight", "co_occurrence_weight", "direction_alignment_score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**TCS** | Temporal Correlation Score | the Event Proximity signal's formula output\" (§0.1, L82); §3.3, L354-L357: \"TCS (Temporal Correlation Score) = event_materiality_weight × co_occurrence_weight × direction_alignment_score   (∈ [0,1])\""
+    first_use: "§0.1, L82"
+    used_before_defined: false
+    sections_used: ["§0.1", "§3.3", "§4.1", "§5.1", "Appendix F"]
+    notes: "NOT in the merged list. Described at §3.3 as 'The one signal with a fully written formula'. All three weight tables are enumerated with values --- criterion 5 material."
+  - term: Timing Precision Score
+    acronym: TPS
+    aliases: ["TPS", "PRECISE"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**TPS** | Timing Precision Score | cross-session timing precision\" (§0.1, L83)"
+    first_use: "§0.1, L83"
+    used_before_defined: false
+    sections_used: ["§0.1", "§2.9", "Appendix A"]
+    notes: "NOT in the merged list. Banded in the RSA Timing rubric: <0.30 / 0.30-0.55 / 0.55-0.75 / >=0.75 (PRECISE)."
+  - term: Volume Materiality Index
+    acronym: VMI
+    aliases: ["VMI"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**VMI** | Volume Materiality Index | volume-context amplifier\" (§0.1, L86)"
+    first_use: "§0.1, L86"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.1"]
+    notes: "§1.1 records MTSTrade as feeding it."
+  - term: Unified Enriched Event Object
+    acronym: UEEO
+    aliases: ["UEEO"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**UEEO** | Unified Enriched Event Object | five-stream fused event record\" (§0.1, L85)"
+    first_use: "§0.1, L85"
+    used_before_defined: false
+    sections_used: ["§0.1"]
+    notes: "Dead entry within this document. 'Five-stream' is a countable claim worth checking against the blueprints' pipeline description."
+
+  # ---------------------------------------------------------------------
+  # §0.1 Master glossary — events, alerts, and data limitations
+  # ---------------------------------------------------------------------
+
+  - term: Intraday Behavioural Event
+    acronym: IBE
+    aliases: ["IBE", "IBE window", "IBE objects", "ibe_event_type"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**IBE** | Intraday Behavioural Event | clustered trade/quote/alert activity in a time window\" (§0.1, L41)"
+    first_use: "§0.1, L41"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.2", "§1.6", "§3.2", "§4.1", "Appendix B", "Appendix E", "Appendix F"]
+    notes: "On the merged list. This document supplies both the expansion and the concrete windowing rule (20 minutes), which the SBSP extraction records as never expanded there."
+  - term: Intraday Behavioural Event Builder
+    acronym: IBEB
+    aliases: ["IBEB", "IBEB windowing", "build_ibes()", "IBEB_WINDOW_MINUTES"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**IBEB** | Intraday Behavioural Event Builder | assembles IBEs from raw alerts + trades\" (§0.1, L42); §1.6, L196: \"intraday timestamps are sorted; activity within `IBEB_WINDOW_MINUTES = 20` minutes is merged into one **IBE (Intraday Behavioural Event)** window.\""
+    first_use: "§0.1, L42"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.6", "Appendix A", "Appendix F"]
+    notes: "On the merged list (flagged there as 'IBEB near-miss' against IBE). This document confirms IBE and IBEB are DISTINCT --- the event object vs the component that builds it --- which resolves that near-miss."
+  - term: Real-Time alert
+    acronym: RT
+    aliases: ["RT", "RT01", "RT02", "RT04", "RT05", "RT08", "RT alert", "had_rt_alert"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT** | Real-Time alert | intraday alert primitive (RT01, RT02, RT04, RT05, RT08)\" (§0.1, L76)"
+    first_use: "§0.1, L76"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.2", "§1.4", "§2.1", "§2.2", "§3.1", "§5.1", "Appendix F"]
+    notes: "RESOLVES A SET-LEVEL ORPHAN. The merged list records 'RT/RD never expanded anywhere in the set (real-time / end-of-day inferred)' --- this document expands both and enumerates the members. Note the RT set is NOT contiguous: RT01, RT02, RT04, RT05, RT08, with RT03, RT06, RT07 absent (unimplemented or unmapped --- unstated which)."
+  - term: Reporting-Day alert
+    acronym: RD
+    aliases: ["RD", "RD01", "RD02", "RD03", "RD04", "RD01-RD04", "had_rd_alert", "end-of-day alert"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RD** | Reporting-Day alert | end-of-day alert primitive (RD01–RD04)\" (§0.1, L74)"
+    first_use: "§0.1, L74"
+    used_before_defined: false
+    sections_used: ["§0.1", "§1.2", "§1.4", "§2.2"]
+    notes: "RESOLVES A SET-LEVEL ORPHAN alongside RT --- and note the expansion is 'Reporting-Day', NOT the 'end-of-day' the merged list inferred. The inference was close but not exact; use the sourced expansion."
+  - term: "RT01 momentum ignition alert"
+    acronym: RT01
+    aliases: ["RT01", "Real-Time 01", "momentum ignition"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT01** (Real-Time 01) | Momentum ignition | A (execution) | **AOB / BCI-D3 confirmation** → Aggressor Dominance\" (§1.2 alert table, L150)"
+    first_use: "§1.2, L137"
+    used_before_defined: false
+    sections_used: ["§1.2", "§2.1", "§2.2", "§3.1", "§5.1", "Appendix F"]
+    notes: "On the merged list. The only alert primitive BC-17 depends on: 'For BC-17 the single relevant alert is **RT01**, which gates Aggressor Dominance' (L157)."
+  - term: "RT02 excessive activity alert"
+    acronym: RT02
+    aliases: ["RT02", "Real-Time 02", "abnormal trade count"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT02** (Real-Time 02) | Excessive activity (abnormal trade count) | A | Volume indicator\" (§1.2 alert table, L151)"
+    first_use: "§1.2, L137"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "NOT in the merged list."
+  - term: "RT04 price deviation alert"
+    acronym: RT04
+    aliases: ["RT04", "Real-Time 04", "price deviation from reference"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT04** (Real-Time 04) | Price deviation from reference | A | Reference-price influence\" (§1.2 alert table, L152)"
+    first_use: "§1.2, L137"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "On the merged list as 'RT04 Price deviation' (defined in M). This row adds the domain (A, execution) and the downstream role (Reference-price influence)."
+  - term: "RT05 opposite interaction alert"
+    acronym: RT05
+    aliases: ["RT05", "Real-Time 05", "wash-trade indicator", "opposite interaction"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT05** (Real-Time 05) | Opposite interaction (wash-trade indicator) | C (interaction) | IDS (Interaction Detection Score)\" (§1.2 alert table, L153)"
+    first_use: "§1.2, L137"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "NOT in the merged list."
+  - term: "RT08 liquidity stress proximity alert"
+    acronym: RT08
+    aliases: ["RT08", "Real-Time 08", "liquidity stress proximity"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**RT08** (Real-Time 08) | Liquidity stress proximity | A | Liquidity conditioning\" (§1.2 alert table, L154)"
+    first_use: "§1.2, L137"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "On the merged list as 'RT08 Liquidity stress proximity' (defined in M, noted there as compensating for absent RT22). This row adds the domain and role."
+  - term: alert domain
+    acronym: null
+    aliases: ["Domain A", "Domain B", "Domain C", "A (execution)", "B (cross-session)", "C (interaction)", "Domain D1", "Domain D2"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§1.2 alert table, L148"
+    used_before_defined: false
+    sections_used: ["§1.2", "Layer 3 intro", "§3.1", "§3.2", "§3.3"]
+    notes: "ORPHAN AND COLLISION. Two unrelated domain schemes are used without either being defined: alert domains A (execution) / B (cross-session) / C (interaction) at §1.2, and signal domains D1 (Volume and Participation) / D2 (Timing) in Layer 3. The 'five domains' of CQS (§0.1) is presumably a third. Worse, D1/D2 as signal domains collide with D1/D2 as BCI dimensions. Needs disposition."
+  - term: alert primitive
+    acronym: null
+    aliases: ["the nine implemented alert primitives", "confirmed primitive"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§1.2, L146"
+    used_before_defined: false
+    sections_used: ["§1.2"]
+    notes: "\"The nine implemented alert primitives and their mapping\" (L146) --- five RT plus four RD. Distinct from 'behavioural primitive' on the merged list (QUOTE_WITHDRAWAL, SPREAD_WIDENING, ...). Two different primitive vocabularies; do not conflate."
+  - term: data-limitation code
+    acronym: "MTSAM-L##"
+    aliases: ["MTSAM-L02", "MTSAM-L07", "MTSAM-L08", "gap MTSAM-L08"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**MTSAM-L02/L07/L08** | data-limitation codes | order-cancel events / order-level attribution / HQLD absent\" (§0.1, L52); consequences tabulated at §1.5, L178-L186"
+    first_use: "§0.1, L39 (inside the HQLD row, before its own row at L52)"
+    used_before_defined: true
+    sections_used: ["§0.1", "§1.1", "§1.5", "§2.2", "§2.4", "§2.7", "§2.8", "Appendix C"]
+    notes: "On the merged list as 'MTSAM-L data limitation register', where the register extent is already flagged as inconsistent (L01-L07 stated, L08/L10/L11 exist). This document uses L02, L07 and L08 and ties each to a named consequence --- useful evidence for that disposition. Directly relevant to the DoD waiver register: an existing, working example of ticketed accepted debt in the client's own documentation."
+  - term: data-availability contract
+    acronym: null
+    aliases: ["MTSAMConfig", "has_aggressor_flag", "has_hqld", "has_intraday_trade_timestamps", "has_participant_ids_quote", "has_order_cancel_events"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"## §1.5 Data-availability contract (what is and isn't computable)\" (L174) and \"This governs every \"requires…\" note in Layer 2.\" (L176)"
+    first_use: "§1.5 heading, L174"
+    used_before_defined: false
+    sections_used: ["§1.5", "§1.1", "Layer 2 throughout"]
+    notes: "A named construct binding boolean capability flags to which scores are computable. Not in the merged list; strong candidate concept."
+
+  # ---------------------------------------------------------------------
+  # Layer 1 record types and raw fields
+  # ---------------------------------------------------------------------
+
+  - term: MTSTrade
+    acronym: null
+    aliases: ["MTSTrade record", "MTS Trades feed", "Layer 1 Core Surveillance"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"## §1.1 `MTSTrade` — one executed trade (MTS Trades feed, \"Layer 1 Core Surveillance\")\" (L112), with the full field schema at L114-L125"
+    first_use: "§1.1 heading, L112"
+    used_before_defined: false
+    sections_used: ["§1.1", "§1.6", "§1.7", "§2.1", "§2.2", "§2.4", "§2.5", "§3.1", "§3.3", "§5.1", "Appendix F"]
+    notes: "The foundational record. Ten named fields. Note the document sources this from a reference implementation (mts_adapter.py), not from the blueprints --- so field-level names may be implementation detail rather than business terms. Recommend keeping the record type as a term and culling individual field names unless a blueprint uses them."
+  - term: RawMTSAlert
+    acronym: null
+    aliases: ["RawMTSAlert record", "MTS S.p.A. surveillance export", "MTS Alerts feed"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"## §1.2 `RawMTSAlert` — one surveillance alert (MTS S.p.A. surveillance export)\" (L133), with the field schema at L135-L144"
+    first_use: "§1.2 heading, L133"
+    used_before_defined: false
+    sections_used: ["§1.2", "§1.6", "§2.1", "§2.2", "Appendix F"]
+    notes: "Carries the doctrinally important statement at L157: \"The venue's **internal trigger logic is proprietary** --- the engine consumes only the fired record.\" That is a scope boundary for the whole platform and belongs in the glossary discussion of 'alert'."
+  - term: InstrumentRef
+    acronym: null
+    aliases: ["InstrumentRef record", "MTS Instrument Reference feed", "static master data"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"This is **static master data** — one row per bond, keyed by ISIN — joined to each trade via `instrument_id`.\" (§1.3, L163)"
+    first_use: "§1.3 heading, L161"
+    used_before_defined: false
+    sections_used: ["§1.3", "§2.2", "Appendix F"]
+    notes: "Carries block_trade_threshold_eur default EUR 25,000,000 and the benchmark_tier enumeration."
+  - term: SessionContext
+    acronym: null
+    aliases: ["SessionContext record"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`SessionContext` (`mts_adapter.py` 45–70): `total_session_volume_eur`, `peer_count`, `peer_median_qcr`, `peer_std_qcr`, External Context Intelligence Layer flags (`has_ecb_event`, `has_ada_auction`, `has_suspension`, `ecil_crs`), and the sensitive windows (`close_window_start/end`, `auction_window_start/end`, `suspension_time`).\" (§1.4, L169)"
+    first_use: "§1.4 heading, L167"
+    used_before_defined: false
+    sections_used: ["§1.4", "§2.3", "§3.2", "Appendix F"]
+    notes: "Origin of the sensitive-window definitions that drive the Sensitive Timing signal."
+  - term: PeerSession
+    acronym: null
+    aliases: ["PeerSession record"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`PeerSession` (`mwbr.py` 8–17), one per active dealer: `participant_id`, `volume_eur`, `market_share`, `quote_withdrawal_rate` (−1 = not available), `spread_contribution`, `block_trade_share`, `had_rt_alert`, `had_rd_alert`.\" (§1.4, L170)"
+    first_use: "§1.4 heading, L167"
+    used_before_defined: false
+    sections_used: ["§1.4", "§1.8", "Appendix F"]
+    notes: "Supplies the MWBR peer set. The sentinel convention '-1 = not available' is a data-contract fact."
+  - term: benchmark tier
+    acronym: null
+    aliases: ["benchmark_tier", "OFF_THE_RUN", "ACTIVE_SECONDARY", "BENCHMARK", "BENCHMARK_ANCHOR", "is_benchmark", "benchmark-window event"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`benchmark_tier ∈ {OFF_THE_RUN, ACTIVE_SECONDARY, BENCHMARK, BENCHMARK_ANCHOR}`\" (§1.3, L163); role at L165: \"`benchmark_tier` defines what a \"benchmark-window event\" is\""
+    first_use: "§1.3, L163"
+    used_before_defined: false
+    sections_used: ["§1.3", "§2.2"]
+    notes: "An ordered enumerated set --- criterion 5 material. Not in the merged list."
+  - term: block trade
+    acronym: null
+    aliases: ["is_block_trade", "block_trade_threshold_eur", "block trade"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`is_block_trade` | bool | TRUE if `notional_eur ≥ block_trade_threshold_eur`\" (§1.1, L124); threshold at §1.3, L163: \"`block_trade_threshold_eur` (default **€25,000,000**)\""
+    first_use: "§1.1, L124"
+    used_before_defined: false
+    sections_used: ["§1.1", "§1.3", "§2.2", "Appendix A"]
+    notes: "Generic market term with a locally configured threshold. The EUR 25,000,000 default is criterion 5 material."
+  - term: aggressor
+    acronym: null
+    aliases: ["is_aggressor", "aggressor flag", "liquidity-taking side", "primary aggressor", "aggressor round-trip"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`is_aggressor` | bool | **TRUE if this participant took liquidity (crossed the spread)**\" (§1.1, L123); mechanism at L129: \"on MTS every trade is an incoming order matching a *resting* quote; the venue tags the incoming (liquidity-taking) side as aggressor and exports this boolean.\""
+    first_use: "§1.1, L123"
+    used_before_defined: false
+    sections_used: ["§1.1", "§2.1", "§2.2", "§3.1", "§5.1", "Appendix F"]
+    notes: "The single most load-bearing concept in the document ('The two fields the whole of Aggressor Dominance rests on', L127). Definition is venue-mechanical and clear; a strong glossary candidate."
+  - term: notional
+    acronym: null
+    aliases: ["notional_eur", "euro nominal value", "face value", "cash consideration"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`notional` / `notional_eur` | *euro size of a trade* | the euro nominal (face) value of a single fill — not a price, not a quantity\" (§0.2, L96); §1.1, L128 adds: \"cash consideration `= dirty_price ÷ 100 × nominal`\""
+    first_use: "§0.2, L96"
+    used_before_defined: false
+    sections_used: ["§0.2", "§1.1", "§1.2", "§2.1", "Appendix F"]
+    notes: "Defined by explicit contrast with price and quantity --- unusually careful, and a good model for a glossary entry. Not in the merged list."
+  - term: aggressor share
+    acronym: null
+    aliases: ["aggressor_share_s", "agg_notional_p_s", "agg_notional_market_s"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`aggressor_share_s` | `agg_notional_p_s ÷ agg_notional_market_s`\" (§2.1 translation table, L262)"
+    first_use: "§2.1, L247"
+    used_before_defined: false
+    sections_used: ["§2.1", "§2.2", "§5.1", "Appendix C", "Appendix D", "Appendix F"]
+    notes: "The quantity at the centre of gap C-1: specified (T-113) but absent from POFPSession in the reference implementation."
+  - term: aggressor deviation
+    acronym: null
+    aliases: ["aggr_dev", "aggr_dev_s"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`aggr_dev_s` | `(aggressor_share_s − POFP_aggr_mean) ÷ POFP_aggr_σ`\" (§2.1 translation table, L264)"
+    first_use: "§2.1, L247"
+    used_before_defined: false
+    sections_used: ["§2.1", "§2.2", "§3.1", "§5.1", "Appendix F"]
+    notes: "An instance of the generic T-002 POFP deviation. Its 1σ / 2σ thresholds are proposed calibrations, not sourced."
+  - term: adverse aggressor reversal
+    acronym: null
+    aliases: ["adverse_aggressor_reversal", "adverse_aggressor_reversals", "AOB_reversal_rate", "REVERSAL_FRACTION", "REVERSAL_MATERIALITY"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"`adverse_aggressor_reversal` | aggressor round-trip with realised P&L `< 0`, ≥ `REVERSAL_FRACTION` (0.50) unwound within same session, notional ≥ `REVERSAL_MATERIALITY` (≥25% session volume or ≥€25m)\" (§2.1 translation table, L265)"
+    first_use: "§2.1, L248"
+    used_before_defined: false
+    sections_used: ["§2.1", "Appendix A", "Appendix F"]
+    notes: "Explicitly a PROPOSED calibration correcting undefined T-095, grounded in Delegated Regulation (EU) 2016/522 Annex II. Do not treat the numbers as sourced blueprint content."
+  - term: episode
+    acronym: null
+    aliases: ["EPISODE_SESSION_WINDOW", "EPISODE_SESSION_WINDOW_DAYS", "the same episode", "benchmark-window episode"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§0.2, L95 ('one benchmark-window episode')"
+    used_before_defined: false
+    sections_used: ["§0.2", "§2.1", "§4.1", "Appendix A"]
+    notes: "On the merged list (as the analyst review unit, BEP_E). Used here as the co-occurrence scope for BC-17 ('all three detection signals co-occur on the same episode') and as a 14-day window constant, but never defined. Orphan confirmed across documents."
+  - term: instrument cluster
+    acronym: null
+    aliases: ["instrument_cluster_id", "cluster"]
+    category: domain-term
+    defined_here: false
+    definition_quote: null
+    first_use: "§1.3, L163"
+    used_before_defined: false
+    sections_used: ["§1.3", "§2.6"]
+    notes: "On the merged list as an orphan ('Aggregation unit for IBE and dominance shares; rule never given'). This document confirms the orphan: it states the ROLE at L165 ('defines the population over which dominance/market-share are measured') but still never gives the clustering rule."
+
+  # ---------------------------------------------------------------------
+  # §0.2 Notation, and the statistical vocabulary
+  # ---------------------------------------------------------------------
+
+  - term: participant
+    acronym: null
+    aliases: ["p", "participant_id", "the dealer being assessed", "active dealer", "peer"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`p` | *participant* | the dealer being assessed (`MTSTrade.participant_id`, maps to the Legal Entity Identifier)\" (§0.2, L92)"
+    first_use: "§0.2, L92"
+    used_before_defined: false
+    sections_used: ["§0.2", "throughout"]
+    notes: "Equated with 'dealer' here. §1.8 and T-004 give the population size as '12-18 active dealers' --- a concrete scale fact."
+  - term: session
+    acronym: null
+    aliases: ["s", "session_date", "trading day", "one trading day"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`s` | *session* | one trading day (`MTSTrade.session_date`)\" (§0.2, L93)"
+    first_use: "§0.2, L93"
+    used_before_defined: false
+    sections_used: ["§0.2", "throughout"]
+    notes: "Session == trading day is used everywhere and is worth an explicit glossary entry; the blueprints appear to assume it."
+  - term: subscript convention
+    acronym: null
+    aliases: ["_p", "_s", "X_p_s"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**A subscript is a filter, not a new quantity.** `X_p_s` is `X` computed on the rows where `participant_id = p` **and** `session_date = s`.\" (§0.2, L103)"
+    first_use: "§0.2, L101"
+    used_before_defined: false
+    sections_used: ["§0.2", "§2.1"]
+    notes: "A notation rule, not a business term --- likely cull, but it is exactly the kind of reading aid criterion 2 wants and worth noting as a precedent."
+  - term: deviation
+    acronym: null
+    aliases: ["dev", "z-score", "σ units", "POFP deviation", "T-002"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"| `dev` / z-score | *deviation* | `(value − mean) ÷ σ` — \"how many standard deviations from normal\" |\" (§0.2, L100); T-002 (Appendix E, L491): \"`(current_session_value − POFP_baseline_mean) ÷ POFP_baseline_σ`, in σ units\""
+    first_use: "§0.2, L100"
+    used_before_defined: false
+    sections_used: ["§0.2", "§1.7", "§1.8", "§2.1", "§2.2", "§2.4", "Appendix E"]
+    notes: "The unit in which nearly every threshold in the corpus is expressed. §1.7 L216-L221 explains WHY mean and σ do different jobs --- the clearest piece of explanatory writing in the corpus and a model for criterion 2."
+  - term: standard deviation
+    acronym: "σ"
+    aliases: ["σ", "sigma", "std", "sample stdev"]
+    category: generic-with-local-meaning
+    defined_here: true
+    definition_quote: "\"`σ` (sigma) | *standard deviation* | how much a series typically wanders around its mean\" (§0.2, L99)"
+    first_use: "§0.2, L99"
+    used_before_defined: false
+    sections_used: ["§0.2", "§1.7", "§1.8", "throughout"]
+    notes: "§1.7 specifies SAMPLE stdev (n-1) and returns 0.0 when fewer than two values --- a silent-zero behaviour that also collapses any deviation built on it. Plain-language gloss is unusually good."
+
+  # ---------------------------------------------------------------------
+  # Layer 3 detection signals and Layer 4 concern calculus
+  # ---------------------------------------------------------------------
+
+  - term: detection signal
+    acronym: null
+    aliases: ["Detection Signals", "the three detection signals", "constituent signals"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Detection signals are observations, not conclusions.\" (Layer 3 intro, L335)"
+    first_use: "L6 (flowchart)"
+    used_before_defined: true
+    sections_used: ["L6", "Layer 3", "§3.1", "§3.2", "§3.3", "§4.1", "Appendix F"]
+    notes: "Directly relevant to the merged list's 'signal (vs alert)' orphan, which records a 'doctrinal three-way distinction alert -> IBE/signal -> episode; never explicitly defined'. This one-line gloss is the closest thing to a definition found so far, but it still does not distinguish signal from alert."
+  - term: Aggressor Dominance
+    acronym: null
+    aliases: ["AggressorDominance_level", "Aggressor Dominance signal"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Formula:** `AggressorDominance_level = max(AOB_level, BCI_D3_level)` → **fires where ≥ 2**.\" (§3.1, L340)"
+    first_use: "§0.1, L20 (inside the AOB row, before §3.1)"
+    used_before_defined: true
+    sections_used: ["§0.1", "§1.2", "§2.1", "§2.2", "§3.1", "§4.1", "§5.1", "Appendix C", "Appendix F"]
+    notes: "One of BC-17's three required signals; Domain D1 (Volume and Participation). Subject to gap C-1, which would collapse it to 0."
+  - term: Sensitive Timing
+    acronym: null
+    aliases: ["IBE_sensitive_timing_flag", "_is_sensitive_timing", "sensitive-timing flag", "sensitive window", "T-011"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Sensitive-timing flag** (`_is_sensitive_timing`, 367–379): the IBE window overlaps a `close_window`, `auction_window`, or is within **600 seconds** of `suspension_time`.\" (§1.6, L197); T-011 (Appendix E, L494) adds \"(or, for BC-17, the information-event window)\""
+    first_use: "§0.1, L72 (inside the RA-28 row)"
+    used_before_defined: true
+    sections_used: ["§0.1", "§1.4", "§1.6", "§3.2", "§4.1", "Layer 5", "§5.1", "Appendix B", "Appendix E", "Appendix F"]
+    notes: "Domain D2 (Timing). The 600-second constant is criterion 5 material. Several supporting variables are explicitly DEFERRED (INFORMATION_EVENT subtype crosswalk, per-event event_window_minutes, T-013 weights, PRE_EVENT_CONDITIONING_WINDOW), so the signal is defined but not fully calibrated."
+  - term: Event Proximity
+    acronym: null
+    aliases: ["Event Proximity signal", "ECIL_PROXIMITY_WINDOW_MINUTES", "POST_EVENT_EXPLOITATION_WINDOW_MINUTES"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"TCS (Temporal Correlation Score) = event_materiality_weight × co_occurrence_weight × direction_alignment_score   (∈ [0,1])\" (§3.3, L354), with all three weight tables enumerated at L355-L357"
+    first_use: "§0.1, L35 (inside the ECIL row, 'drives both timing signals')"
+    used_before_defined: true
+    sections_used: ["§0.1", "§2.3", "§3.3", "§4.1", "Layer 5", "§5.1", "Appendix B", "Appendix F"]
+    notes: "Domain D2 (Timing). Described as 'The one signal with a fully written formula' (L351). Its materiality rubric (T-108), window sizes, SURPRISE_THRESHOLD and historical_std_dev basis are all DEFERRED."
+  - term: information event
+    acronym: null
+    aliases: ["INFORMATION_EVENT", "ibe_event_type", "information-event window", "information advantage"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Category 17** — **information** events (central-bank decisions, rating actions, issuer/regulatory announcements) where concentration suggests **information advantage**.\" (§4.2, L380)"
+    first_use: "L3 ('Event-Driven Information Behaviour')"
+    used_before_defined: true
+    sections_used: ["§3.2", "§4.1", "§4.2", "Layer 5", "Appendix B", "Appendix F"]
+    notes: "Defined only by enumeration of examples and by contrast with market-structure events. The INFORMATION_EVENT subtype crosswalk is explicitly deferred, so the boundary is not operationally defined."
+  - term: context effect
+    acronym: null
+    aliases: ["context_effect", "SUPPORTS_EXPLANATION", "AMPLIFIES_SUSPICION", "CONTRADICTS_PATTERN", "INSUFFICIENT_CONTEXT"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**Formula:** `context_effect = classify(event, behaviour_window) → {SUPPORTS_EXPLANATION | AMPLIFIES_SUSPICION | CONTRADICTS_PATTERN | INSUFFICIENT_CONTEXT}`.\" (§2.3, L299)"
+    first_use: "§2.3, L299"
+    used_before_defined: false
+    sections_used: ["§2.3", "§4.3", "Appendix F"]
+    notes: "Enumerated set --- criterion 5 material. Doctrinally notable: CONTRADICTS_PATTERN can DOWNGRADE a finding (§4.3), i.e. context is exculpatory as well as inculpatory."
+  - term: concern calculus
+    acronym: null
+    aliases: ["Base Concern + Amplifiers - Suppressors = Final Concern", "Final Concern", "Base Concern", "amplifier", "suppressor"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"## §4.3 Amplifier / suppressor overlay (`Base Concern + Amplifiers − Suppressors = Final Concern`)\" (L382)"
+    first_use: "§4.3 heading, L382"
+    used_before_defined: false
+    sections_used: ["§4.3", "Appendix F"]
+    notes: "Output banded LOW / MEDIUM / HIGH / VERY HIGH at Appendix F step 21 --- FOUR levels, omitting NONE, against the five-level scale Nick ruled as leading. Another instance of the four-vs-five classification conflict already on the merged list."
+  - term: Follower Rule
+    acronym: null
+    aliases: ["Follower Rule", "VERY HIGH gate"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"**BCI level** — Follower Rule: BCI < 3 caps concern at MEDIUM; BCI ≥ 7 opens VERY HIGH.\" (§4.3, L386)"
+    first_use: "§2.2, L294"
+    used_before_defined: true
+    sections_used: ["§2.2", "§4.3"]
+    notes: "A named normative rule with hard thresholds --- criterion 5 material. Not in the merged list."
+  - term: validation footprint
+    acronym: null
+    aliases: ["S61-S63", "T287-T295", "scenarios", "test cases"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Document 1 §XV.5: BC-17 is exercised by scenarios **S61–S63** and test cases **T287–T295**.\" (§4.4, L392)"
+    first_use: "§4.4 heading, L390"
+    used_before_defined: false
+    sections_used: ["§4.4"]
+    notes: "Two more external identifier schemes (S## scenarios, T### test cases) with no register in this document set. Note T### test cases COLLIDE with T-### theoretical-framework codes --- similar shape, different namespace. Flag for disposition."
+
+  # ---------------------------------------------------------------------
+  # Gap register, discrepancies, and deferred items (this document's own
+  # findings — NOT blueprint content)
+  # ---------------------------------------------------------------------
+
+  - term: implementation-grounding gap
+    acronym: "C-#"
+    aliases: ["C-1", "C-2", "C-3", "C-4", "C-5", "C-6", "gap register"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"# Appendix C — Implementation-grounding gap register\" (L470), tabulated as \"# | Value | Nature of gap | Effect\" (L472)"
+    first_use: "§2.1, L270"
+    used_before_defined: true
+    sections_used: ["§2.1", "§2.2", "§2.7", "§2.8", "Appendix C"]
+    notes: "THIS DOCUMENT'S OWN ANALYSIS, not blueprint content --- six gaps where the specification cannot be computed from the available implementation. Do not source a glossary definition from these. Directly relevant as prior art for the DoD waiver register. Note the C-# identifier collides with the plan's own C1-C12 constraint numbering; if this scheme is ever quoted, disambiguate."
+  - term: calibration discrepancy
+    acronym: null
+    aliases: ["Constants and discrepancies", "code vs methodology"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"# Appendix D — Constants and discrepancies (code vs methodology)\" (L481): POFP lookback \"code **90 days / 15 sessions** (`pofp.py`) vs methodology **45 days / 10 sessions** (`T-003`)\"; RSA bands \"code LOW ≤40 / MEDIUM 41–70 / HIGH 71–85 / VERY HIGH ≥86 vs methodology \"≥72 HIGH / 41–71 MEDIUM\" (`T-117`)\""
+    first_use: "§1.7, L223"
+    used_before_defined: true
+    sections_used: ["§1.7", "Appendix D"]
+    notes: "THIS DOCUMENT'S OWN ANALYSIS. Three recorded code-vs-methodology conflicts. Exactly the class of contradiction criterion 6 says must be surfaced and never harmonised --- and useful evidence that the client already documents contradictions rather than fixing them."
+  - term: deferred variable
+    acronym: null
+    aliases: ["Deferred (D2)", "still-open variable", "SURPRISE_THRESHOLD", "PRE_EVENT_CONDITIONING_WINDOW", "historical_std_dev", "surprise_score"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"# Appendix B — Deferred (Domain D2 — Timing)\" (L463), tabulated as \"Signal / object | Still-open variable\" (L465)"
+    first_use: "§2.3, L305"
+    used_before_defined: true
+    sections_used: ["§2.3", "§3.2", "§3.3", "Appendix B"]
+    notes: "THIS DOCUMENT'S OWN ANALYSIS. NAMING COLLISION: 'D2' here means Domain D2 (Timing), but D2 elsewhere in the same document means BCI dimension 2 (Liquidity Leadership) --- and D1-D10 in the project plan mean decisions. Three namespaces, one token. Flag."
+  - term: chronological calculation sequence
+    acronym: null
+    aliases: ["Appendix F", "the full pipeline"]
+    category: domain-term
+    defined_here: true
+    definition_quote: "\"Every calculation in the BC-17 chain, in the order it is executed, with its output. Read top-to-bottom, this is the full pipeline from a raw trade row to the final risk archetype.\" (Appendix F, L505)"
+    first_use: "Appendix F heading, L503"
+    used_before_defined: false
+    sections_used: ["Appendix F"]
+    notes: "A 22-step ordered table. Not a business term, but structurally the single most useful artifact in the document: it is a hand-built topological ordering of the computation, and therefore a natural cross-check on the concept graph's topological sort for this slice of the domain."
