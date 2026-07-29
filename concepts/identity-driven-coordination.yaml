@@ -31,6 +31,10 @@ flags: []
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
 notes: >-
+  ACCEPTED CYCLE (Nick, 2026-07-29, ISO 704 §6.5.2 outer circle): this
+  record and [[liquidity-driven-reaction]] are deliberately defined by
+  mutual contrast; both edges kept — see the counterpart record for the
+  full disposition note.
   Defined in S (A.3.1); M uses it as the reclassification target requiring
   post-session order attribution. Counterpart of
   [[liquidity-driven-reaction]]; the identical-observable-pattern point is
