@@ -1,0 +1,34 @@
+id: historical-stor-linkage
+term: Historical STOR Linkage
+aliases: [HSL, HSL_prior_stor]
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:77a0c82da2aa8e257d62625db0d715d84339b90979e96165feb434188a943164
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §3a)"
+notes: >-
+  Single-document term: C9 places its definition locally in MCL (§3a,
+  2026-07-28). Orphan there (definition: null — not invented, C2): M's
+  Layer 3 row carries the field form "HSL_prior_stor proxy where formal
+  enforcement action is in the database" — a participant history field
+  proxied from enforcement data. Expansion and role from (P) §0.1:
+  "amplifier for prior supervisory record". STOR itself is
+  regulator-owned — see reference-terms.md. The M span is a grid table;
+  the hash covers the whole table block.

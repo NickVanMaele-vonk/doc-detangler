@@ -1,0 +1,35 @@
+id: outcome-persistence-layer
+term: Outcome Persistence Layer
+aliases: [OPL]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:873d1527f21032be9f25777bec20ca2a5db8f52a3c8f53e4f5a368cb432b2f32
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §3a)"
+notes: >-
+  Single-document term: C9 places its definition locally in UCE (§3a,
+  2026-07-28). Orphan there (definition: null — not invented, C2): U's
+  Step 16 row glosses only "OPL (0–2): persistence"; OPL also appears in
+  the domain taxonomy (Outcome domain), Step 10 ("Outcome materiality (OS,
+  OPL)"), and the ELS formula ("OS×OPL×15%"). Expansion discrepancy to
+  disposition, carried from §3a: the term "Outcome Persistence Layer" is
+  (P)-sourced ((P) §0.1: "whether an outcome persisted"), while the U
+  extraction inferred "likely Outcome Persistence Level" — Level (U,
+  inferred) vs Layer ((P), sourced); surfaced, not resolved.
