@@ -21,6 +21,6 @@ review: "Decision: keep all for now - revisit usefullness as design specificatio
 notes: >-
   Single-document term (§3 bulk). Step 16 (shared row with OPL). First use
   is the Step 5b domain D list ("(D) Outcome — OS, CCL, CFS, OPL"). A
-  conjunct of [[escalationreadiness]] and a weight in [[escalation-
-  likelihood-score]]; on the step 3.4 dangling-reference list — this
-  record resolves it.
+  conjunct of [[escalationreadiness]] and a weight in
+  [[escalation-likelihood-score]]; on the step 3.4 dangling-reference list
+  — this record resolves it.

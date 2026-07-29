@@ -25,6 +25,6 @@ review: "Decision: keep all for now - revisit usefullness as design specificatio
 notes: >-
   Single-document term (§3 bulk). Principle 11. Its five enforcement
   mechanisms are enumerated as [[domain-independence-filter]],
-  [[persistence-gate]], [[contextual-suppression-gate]], [[early-disposal-
-  layer]] and [[market-wide-behavioural-reference]]. The extraction also
-  records the gloss "cost-aware design".
+  [[persistence-gate]], [[contextual-suppression-gate]],
+  [[early-disposal-layer]] and [[market-wide-behavioural-reference]]. The
+  extraction also records the gloss "cost-aware design".
