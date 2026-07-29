@@ -1,0 +1,40 @@
+id: mtsam-calibration-layer
+term: MTSAM Calibration Layer
+aliases:
+  - MCL
+  - Institution Calibration Layer
+  - MTSAM Institution Calibration Layer
+  - Calibration Layer
+  - Document 3
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  The layer (Document 3 of 3) that provides institutional configuration for
+  the Universal Core Engine; the MTSAM Calibration Layer is MTSAM's
+  institution-specific instance.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:f0767104d9d9254f299cb80699dd52e53fb9b766645447239465ee0f5c91ec6f
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "Front matter"
+    para_hash: sha256:3f51d8df8121c048c35e7e281f181f2dd84cf40bd16ab8114f5c5bf277844017
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [A]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1a)"
+notes: >-
+  Acronym MCL appears only in the filename, never in the document body.
+  Nick's gloss (review, not source): a layer of the solution containing any
+  company-specific definitions and rules, MTSAM being one company. UCE Part
+  XX asserts Calibration Layers may operationalise but never vary universal
+  doctrine. MCL's title says v21 but it contains a "what is new in v22"
+  block — live contradiction, surfaced not harmonised (criterion 6).

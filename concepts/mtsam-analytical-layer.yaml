@@ -1,0 +1,38 @@
+id: mtsam-analytical-layer
+term: MTSAM Analytical Layer
+aliases:
+  - Veridict MAR Intelligence Platform
+  - Veridict Intelligence
+  - MAR Intelligence
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:2d88e3e22d86912a98438dc1de2894dfd020843b2d9590d1dbaf01c5417929b3
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:aff478d7e01ac1786b7c19115a23e7a1b735702fbae92909edcc81c21d24b980
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: "MTSAM Analytical Layer" is master term, "Veridict MAR
+  Intelligence Platform" is only a synonym (Nick, candidate-terms-merged.md
+  §1a)
+notes: >-
+  Set-level orphan: the vendor/product family is used in all three component
+  blueprints but never described (definition: null — not invented, C2). The
+  master name "MTSAM Analytical Layer" is Nick's ruling of 2026-07-28, not a
+  name found in the corpus; the sources say only "Veridict MAR Intelligence
+  Platform" / "Veridict MAR Intelligence deployments". Both source spans are
+  usage evidence, not definitions.

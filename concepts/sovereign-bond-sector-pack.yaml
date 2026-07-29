@@ -1,0 +1,44 @@
+id: sovereign-bond-sector-pack
+term: Sovereign Bond Sector Pack
+aliases:
+  - SBSP
+  - Sovereign Government Bond Sector Intelligence Pack
+  - Sector Intelligence Pack
+  - Sector Pack
+  - the Pack
+  - Document 2
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The pattern taxonomy, alert architecture, scoring calibration, and
+  analytical doctrine that extend the Universal Core Engine (Document 1) for
+  sovereign bond market surveillance.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:6ecce907784d8bfd2eb2739f578767dbd42ca45b69cc4688991cc9439279f5f5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:f0767104d9d9254f299cb80699dd52e53fb9b766645447239465ee0f5c91ec6f
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [A]
+conflict: null
+review: >-
+  Decision: keep — goal is to replace the alternatives ("Sector Intelligence
+  Pack", "Sovereign Government Bond Sector Intelligence Pack") by "SBSP" /
+  "Sovereign Bond Sector Pack" (Nick, candidate-terms-merged.md §1a)
+notes: >-
+  The shortened SBSP source states no version of its own; it cites "UCE v30"
+  (skew vs MCL's "applies to v28" — data, not a bug, criterion 6). Acronym
+  SBSP appears in the source only inside the amendment identifier
+  SBSP-AMD-BVR-001; body text says "Pack". OCR-mangled fragments
+  "refi S ector Pack ( Doc 2)" in UCE are corrupted marginal callouts of
+  this term.
