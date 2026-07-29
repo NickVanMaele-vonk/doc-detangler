@@ -1,0 +1,34 @@
+id: gate
+term: gate
+aliases: [structural gate, gate architecture]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  A step condition in the non-compensatory architecture: no dimension in a
+  later step can compensate for a failed gate in an earlier step, and
+  classification is determined by the highest structural gate cleared.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:bceef3d967f697fbec3cc11860c7144b3de3143a3127e45f156cc74610816ae6
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Generic word with load-bearing local meaning (extraction category).
+  Every II.1 step row is typed GATE / SCORED OUTPUT / etc.; M's Pillar 2
+  names the "Non-compensatory gate architecture" and 0.3 approves the
+  formulation "non-compensatory gate methodology". See
+  [[non-compensatory-architecture]].

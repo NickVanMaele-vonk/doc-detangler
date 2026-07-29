@@ -1,0 +1,34 @@
+id: quote-domain-signal
+term: quote-domain signal
+aliases: [quote-domain signals, quote-domain interaction signal]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  A signal where ADS/QBRS is the primary scoring dimension.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f22a48f4de51b08afc6567e39c97cfb06403ad408eb4128d4932a10e984eb58e
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+    para_hash: sha256:99ea73702e040cec47e0f36dbef0d0ff977c716983c84c13a05e1855ca85de92
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Defined parenthetically at U Step 11c. ADS and QBRS are never expanded
+  in the corpus (extraction flag) — presumably quote-behaviour scoring
+  dimensions specified in Doc 2 / Part XVII. M's surface form is "quote-
+  domain interaction signal" (1.2: anonymity_attribution_basis mandatory
+  in explanation_trace; ModelConfidence capped at MEDIUM on
+  market_pattern_probabilistic attribution). Part of the [[signal]] sense
+  family flagged at step 3.4.

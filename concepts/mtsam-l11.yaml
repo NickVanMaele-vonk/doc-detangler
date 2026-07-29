@@ -1,0 +1,33 @@
+id: mtsam-l11
+term: MTSAM-L11
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  MTSAM-L data limitation register entry L11: RFQ order flow absent.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:b1a92d61e944b47588d3cd10c641d3204ddcec515aec1bc2c2a21379ca149e74
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Entry of [[mtsam-l-data-limitation-register]]. M 1.0.1: "MTSAM has no
+  access to dealer client books or pending RFQ flows" — the SB-30 misuse-
+  of-confidential-flow archetype is affected; see [[sb-30]]. S A.4.1 lists
+  MTSAM-L11 (RFQ order flow) among Level 4 items outside the surveillance
+  perimeter, "not addressable through data remediation". RFQ itself is on
+  the step 3.4 dangling-reference list.

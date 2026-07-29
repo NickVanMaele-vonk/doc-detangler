@@ -1,0 +1,42 @@
+id: sovereign-bond-dealer-market
+term: sovereign bond dealer market
+aliases: [bond dealer markets, stressed sovereign bond sessions]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3.2 Quote Behaviour Without Trade Execution --- Standalone Manipulation in Anonymous Markets"
+    para_hash: sha256:b3ae34bc5e81f71b11f197cdad2e0553db321eb3e5015e1cd85a8fba91695907
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:0745d53ca948ecdb4cf17397286d15fb2384655b481173996cb6243f56094c49
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): the market type
+  is characterised, never defined. The U span (Step 21b rationale) is OCR-
+  corrupted — "sovereign bondfi S ector Pack ( dealer markets" interleaves
+  a marginal callout; damage is data (criterion 5). The extraction flags
+  this U usage as Sector Pack (Doc 2) example content leaked into the
+  universal spec — evidence the sector-agnostic claim is imperfect;
+  surfaced, not judged. S: "the most important manipulation vectors in
+  anonymous sovereign bond dealer markets" (A.3.2); M: "Pre-stress
+  liquidity withdrawal (RT22) is the most important manipulation vector in
+  sovereign bond dealer markets" (0.2).

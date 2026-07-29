@@ -1,0 +1,35 @@
+id: mwbr-anomalous
+term: MWBR_ANOMALOUS
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  MWBR_score level ANOMALOUS: >2σ from peer median.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:da20b9107bac24b84736c12f001e8276cbbfd3e3e89c28b23004dd492b4d67b4
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "Front matter"
+    para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Value of the UCE-local scale [[mwbr-score-levels]]; carried as its own
+  glossary record because the value token itself is used in both U and M
+  (C9 ≥2-doc count; Nick's leftover ruling 2026-07-29) — the alias was
+  removed from mwbr-score-levels in the same PR to keep one definition
+  site. M usage is the v5/v22 correction: "MWBR_ANOMALOUS downward
+  adjustment now correctly scoped to non-LOW classifications only"
+  (Section 11.5); the underlying scale is not restated in M. See
+  [[market-wide-behavioural-reference]].

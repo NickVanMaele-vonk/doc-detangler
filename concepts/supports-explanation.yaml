@@ -1,0 +1,34 @@
+id: supports-explanation
+term: SUPPORTS_EXPLANATION
+aliases: [ECIL SUPPORTS_EXPLANATION]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  ECIL assessment outcome code set where participant behaviour coincides
+  with a high-CRS macro release and MWBR confirms population-wide
+  reaction.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:0a47ac35d06734555a59818f1c02f17eba2249a35a45f3a31102e229707a7ac9
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:6fd9b9d54d216ad86c12e6b2ef3bc449a71e980b90ade8b8c8c310c146de5dad
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Definition assembled from M's economic-calendar row (1.0). One of the
+  three ECIL outcome codes listed in S A.4.1: AMPLIFIES_SUSPICION /
+  CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION. CRS is not expanded at the M
+  span. See [[external-context-intelligence-layer]],
+  [[contradicts-pattern]], [[market-wide-behavioural-reference]].

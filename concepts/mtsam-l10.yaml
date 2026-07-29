@@ -1,0 +1,56 @@
+id: mtsam-l10
+term: MTSAM-L10
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  MTSAM-L data limitation register entry L10: cross-asset futures data
+  absent.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:5dd021e704cc10f244ef075c84487de5612c93cd0c12b0136263d9628e903636
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [conflict]
+conflict:
+  summary: >-
+    S assigns MTSAM-L10 to two different removals in consecutive A.4.3.2
+    position types: cross-asset futures data and repo intelligence; M
+    1.0.1 carries only the cross-asset futures sense. Same register code,
+    two contents — surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.3.2 CICI and the Three-Position Data Types"
+      quote: >-
+        MTSAM-L10: cross-asset futures data absent.
+      para_hash: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.3.2 CICI and the Three-Position Data Types"
+      quote: >-
+        MTSAM-L10: repo intelligence absent.
+      para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "1.0.1 Formally Removed Data Categories"
+      quote: >-
+        MTSAM-L10: cross-asset futures data absent.
+      para_hash: sha256:5dd021e704cc10f244ef075c84487de5612c93cd0c12b0136263d9628e903636
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Entry of [[mtsam-l-data-limitation-register]]. The definition follows
+  the sense shared by M 1.0.1 and S position type 2 (Bund futures, OAT
+  futures, derivative overlay — no Eurex position data, no EMIR-reported
+  derivatives positions, no FCM records); the conflicting repo-
+  intelligence assignment is in the conflict block. Consequence recorded
+  in both docs: the SB-26 cash bond / futures interaction archetype is
+  retained as a Tier 3 investigative hypothesis only — see [[sb-26]].
