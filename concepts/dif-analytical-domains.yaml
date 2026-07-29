@@ -25,6 +25,6 @@ review: "Decision: keep all for now - revisit usefullness as design specificatio
 notes: >-
   Single-document term (§3 bulk). The term name is the extraction's label
   for a taxonomy the corpus states but does not name; the domain letters
-  A–E and their contents are corpus text. Used by [[domain-independence-
-  filter]] at Step 5b and echoed in the U domain taxonomy note on
-  [[behavioural-persistence-layer]].
+  A–E and their contents are corpus text. Used by
+  [[domain-independence-filter]] at Step 5b and echoed in the U domain
+  taxonomy note on [[behavioural-persistence-layer]].
