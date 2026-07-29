@@ -29,7 +29,8 @@ source:
     verified_against:
       git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
       stated_version: "0.1 — Draft for Review"
-depends_on: []
+depends_on:
+  - mts-spa
 flags: [A]
 conflict: null
 review: >-

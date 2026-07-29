@@ -28,7 +28,8 @@ source:
     verified_against:
       git_blob: 36ad20437886a1883a547599a368c28c794b179a
       stated_version: null
-depends_on: []
+depends_on:
+  - mts-associated-markets
 flags: [A, P]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
