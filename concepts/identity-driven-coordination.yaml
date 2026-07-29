@@ -1,0 +1,35 @@
+id: identity-driven-coordination
+term: identity-driven coordination
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  Quote behaviour in which participant B deliberately tracks participant
+  A's specific order activity — using order IDs, sizes, timing patterns, or
+  pre-arranged signals — and responds to A's specific orders rather than to
+  the anonymous market condition, producing an observable pattern identical
+  to liquidity-driven reaction.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3.1 Identity-Driven Coordination vs Liquidity-Driven Reaction"
+    para_hash: sha256:9af06ebd0163625391e9344287d50c42be1952d1e95e9bf43899f13912c27ec0
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+    para_hash: sha256:99ea73702e040cec47e0f36dbef0d0ff977c716983c84c13a05e1855ca85de92
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Defined in S (A.3.1); M uses it as the reclassification target requiring
+  post-session order attribution. Counterpart of
+  [[liquidity-driven-reaction]]; the identical-observable-pattern point is
+  the load-bearing analytical difficulty of the anonymous market.

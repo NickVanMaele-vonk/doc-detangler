@@ -1,0 +1,40 @@
+id: anonymous-quote-driven-market-structure
+term: anonymous quote-driven market structure
+aliases: [anonymous quoting, anonymous interdealer electronic order book]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The market structure in which quote activity is visible to all
+  participants but is not immediately attributable — MTSAM operating as an
+  anonymous interdealer electronic order book — which determines how
+  quote-based manipulation is detected rather than preventing its
+  detection.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
+    para_hash: sha256:88bc6ac0df9a7e6273942e25989b65da58686f2d04d2d712ebd7ae4afc3f1057
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:00f75cd151913d35231f3c14a25b11dd5d513389fc80921f53612050ec7d8575
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: >-
+  Decision: keep, put in glossary, refine definition (Nick,
+  candidate-terms-merged.md §1f)
+notes: >-
+  Both S and M define this with differing wording — the candidate list
+  marks it "candidate for single glossary definition"; the definition here
+  is assembled from S's A.3 "Critical market structure characteristic"
+  paragraph and M's 1.1 "Anonymous quote-driven structure" row, pending
+  Nick's refinement. M's 1.2 additionally calls the anonymous quoting
+  structure "the single most important market structure characteristic for
+  analytical calibration".

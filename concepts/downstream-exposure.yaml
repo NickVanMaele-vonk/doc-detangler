@@ -1,0 +1,39 @@
+id: downstream-exposure
+term: downstream exposure
+aliases: [os_downstream_exposure]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The propagation of a manipulated price into downstream consequences —
+  repo market margins, ECB collateral haircuts, covered bond pool
+  valuations, NAV — assessed mandatorily for RD03, RD04, RD07, RD12
+  signals; confirmed downstream exposure makes OS=2 automatic.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:104538add1bf447473617b7bb9d258ea3ba3b6bcb09a935fdfe0ca6205e4d9a7
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:00f75cd151913d35231f3c14a25b11dd5d513389fc80921f53612050ec7d8575
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: >-
+  Decision: keep `downstream exposure` as master term; the latter term is a
+  software variable representing the former (Nick,
+  candidate-terms-merged.md §1f)
+notes: >-
+  Master-term/variable pairing per Nick's ruling (the EscalationReadiness
+  precedent): os_downstream_exposure is the field form, used in M ("ECB
+  collateral downstream exposure: os_downstream_exposure=TRUE systematic
+  for OLO benchmark tenors") and in S's RDCS uplift rule. Definition
+  drafted from S's functional description ("S (functional)" per the
+  candidate list).
