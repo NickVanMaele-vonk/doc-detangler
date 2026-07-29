@@ -1,0 +1,37 @@
+id: persistence-gate
+term: Persistence Gate
+aliases: [PG, Step 11b]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Persistence Gate (PG) requires behavioural repetition before HIGH absent
+  explicit structures. At Step 11b, for signals reaching CQT2 that have
+  not been blocked by DIF: where no BPL component is confirmed
+  (bpl_drift_flag=FALSE AND session_consistency_confirmed=FALSE AND
+  multi_day_conditioning_detected=FALSE AND cwps_intra < 0.50 AND
+  escalating_dominance_trend=FALSE) AND no participant interaction is
+  active (IDS=0, ISS=0): classification capped at MEDIUM-INVESTIGATE.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:58b71947a6187be26d0637a0e64943ae6fbe33065f0ce51f19fd5d48cfa96a05
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The Step 11b rationale text is severely
+  OCR-garbled (interleaved characters) — damage is data, criterion 5.
+  Exceptions: Collusion Override Path; confirmed EscalationReadiness. One
+  of the five enforcement mechanisms of [[minimum-necessary-escalation]].

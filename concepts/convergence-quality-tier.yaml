@@ -1,0 +1,34 @@
+id: convergence-quality-tier
+term: Convergence Quality Tier
+aliases: [CQT, CQT1, CQT2, CQT3, CQT gate]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  CQT1 (CQS 3–5) = MEDIUM minimum; CQT2 (CQS 6–8) = HIGH minimum; CQT3
+  (CQS ≥9) = VERY HIGH eligible. CQT gate: CQT2 required for HIGH; CQT3
+  for VERY HIGH.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:7191cd539673ee9333a6cb850f3ec841fdd1d4a972132c4fce78f67d9222e38c
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:dd8c2d6d81b3209d4cd5d983d469474dcbd7a889456494e6c9bbb47153e24f2e
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The expansion "Convergence Quality Tier"
+  is never given in the corpus — it is the extraction's inference carried
+  through the candidate list (same pattern as OPL). Definition assembled
+  from the Step 5 gate row and Principle 3. CQT3 is a conjunct of
+  [[escalationreadiness]].

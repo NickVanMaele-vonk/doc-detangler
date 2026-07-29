@@ -1,0 +1,28 @@
+id: intraday-behavioural-event-builder
+term: Intraday Behavioural Event Builder
+aliases: [IBEB]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Stage 0 (pre-pipeline): the Intraday Behavioural Event Builder (IBEB,
+  §XVII.10) groups raw data streams — trades, quotes, alerts, ECIL
+  context, and participant history — into Intraday Behavioural Events
+  (IBEs) for each participant-instrument pair within a configurable
+  temporal window. Each IBE is the primary input to Stage 1.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). §XVII.10 is referenced but not present
+  in the shortened UCE. Its output unit is [[intraday-behavioural-event]],
+  a glossary term.
