@@ -1,0 +1,34 @@
+id: volume-materiality-index
+term: Volume Materiality Index
+aliases: [VMI]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §3a)"
+notes: >-
+  Single-document term: used in exactly one component blueprint, so C9
+  places its definition locally in UCE, not in the glossary (§3a,
+  2026-07-28). Orphan there (definition: null — not invented, C2): U uses
+  VMI only in the version-history v25 row's XI.2 Price Impact Gate rule
+  ("If Price Impact is confirmed ABSENT (VMI LOW, no outcome score), the
+  preliminary assessment is capped at LOW"). Expansion and role from (P)
+  §0.1: "volume-context amplifier". The U span is the version-history grid
+  table; the hash covers the whole table block.
