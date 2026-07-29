@@ -90,23 +90,78 @@ a section ID.
 ## Current state
 
 Phases 1, 2 and the Phase 4 gate decisions are closed. **Phase 3 is in
-progress**: step 3.1 candidate extraction is complete and the merged list is
-under business review.
+progress**: steps 3.1–3.2 are done and step 3.3 record authoring is well
+under way. `concepts/` holds 155 canonical records plus
+`concepts/reference-terms.md` (the hand-authored criterion-3 references
+list). Merged so far: all reviewed §1 sections, the §3a promotions, the
+step 3.4 `depends_on` pass (89 edges), the cycle dispositions (see below),
+the first §3 bulk batch (25 UCE-local records), and the 21 multi-document
+leftovers.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
-  numbers are approximate and explicitly not citable as provenance.
-- `work/term-extraction/candidate-terms-merged.md` — the merge Nick is
-  reviewing, carrying a "Human review decision" column per term. This column
-  is Nick's; do not fill it in.
+  numbers are approximate and explicitly not citable as provenance; its
+  quotes paraphrase — **always re-verify wording against `samples/`**.
+- `work/term-extraction/candidate-terms-merged.md` — the reviewed merge,
+  carrying a "Human review decision" column per term. This column is Nick's;
+  do not fill it in.
 
-Nothing in `work/` is a concept record yet. Records begin at step 3.3 and must
-carry the D10 schema fields (`status`, `superseded_by`, hash-anchored spans
-with `verified_against`) **from the first record** — retrofitting hundreds of
-records is the failure mode this guards against.
+Remaining Phase 3 queue: the §3 single-document bulk (~74 U, ~64 S, ~72 M
+terms, Nick's author-as-is ruling 2026-07-29, batches of ≤25 per PR), then
+one closing `depends_on` edge pass over the whole bulk, then the §4
+decision-register dispositions (Nick's). Nick builds the D9 view-generator
+himself; the assistant delivers ontology content (records, edges) directly.
 
-Division of labour for Phase 3: Nick builds the D9 view-generator himself;
-the assistant delivers ontology content (records, edges) directly.
+## Record-authoring conventions (learned in practice, steps 3.3–3.4)
+
+Established across PRs #17–#35; follow them so records stay uniform.
+
+- **Span anchoring.** Split the source into blank-line blocks;
+  `para_hash` = sha256 over the block's pandoc plain rendering
+  (`pandoc -f markdown -t plain --wrap=none`, whitespace collapsed to
+  single spaces, trimmed). `section` = nearest preceding numbered heading,
+  else "Front matter". `verified_against.git_blob` =
+  `git rev-parse HEAD:samples/<file>`. Grid-table rows may be OCR-split
+  across blocks — anchor the block carrying the operative sentence; a
+  whole-table block shares one hash across every record citing it.
+- **Definitions are assembled, never invented (C2).** Only corpus wording,
+  lightly stitched; pandoc-normalized punctuation (en-dashes, ≥, σ) is the
+  house form. A term that is used but never defined gets
+  `definition: null` + `flags: [orphan]` — do not promote extraction
+  glosses or (P)-only expansions into definitions.
+- **Verify wording against the source, not the extraction.** The extraction
+  paraphrases ("cleared" became "passed" once — a criterion-5 defect that
+  reached main). Validation for every batch: YAML parse + required keys,
+  blob match, every `para_hash` present in the recomputed block-hash set,
+  a long verbatim run of each definition inside its anchored block, conflict
+  quotes verbatim substrings, `[[links]]` resolve, edge targets exist.
+- **One definition site per term (C9).** If a value token gets promoted to
+  its own record, remove it from the other record's aliases in the same PR
+  (MWBR_ANOMALOUS precedent). A measure and the archetype that uses it stay
+  separate records without shared aliases (QML / SB-13 precedent).
+- **Placement is computed, and ownership beats count.** Regulator- and
+  industry-owned terms go to `concepts/reference-terms.md` rows, never
+  records, even when used in ≥2 docs (criterion 3; MAR Article 12/16, ADA,
+  quote stuffing, Eurex, OLO, HHI). (P)-only terms are held as candidate
+  rows until a U/S/M usage appears (ruling on PR #18).
+- **Code families get records per code.** SB-xx archetype rows and
+  MTSAM-Lxx register entries used in ≥2 docs are records in their own
+  right, as values of their master term (sb-26 precedent).
+- **Cycle policy (applied 2026-07-29, ISO 704 §6.5.2).** A circular edge
+  whose source clause is consequence/elaboration is resolved by narrowing
+  the definition proper — the clause moves verbatim to `notes`, and the
+  edge is dropped. A genuinely contrastive pair is kept as a documented
+  outer circle (liquidity-driven-reaction ↔ identity-driven-coordination is
+  the only accepted cycle); the view generator must condense that SCC for
+  the topological sort.
+- **PR mechanics.** ≤ `param-max-terms-changed-per-PR` (25) files counting
+  new records, edited records, and edge changes together. Note the count in
+  every PR body. When wrapping notes programmatically, keep `[[...]]`
+  tokens atomic (`break_on_hyphens=False`) — split links reached main once.
+- **Edges** ("definition of X uses term Y") are extracted from definition
+  text only, live only on defined records, and are added in dedicated
+  passes; targets that don't exist yet are logged in the PR body and added
+  when they land.
 
 ## Working with the corpus
 
