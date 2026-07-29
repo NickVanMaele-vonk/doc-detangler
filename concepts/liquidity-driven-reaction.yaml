@@ -34,6 +34,12 @@ review: >-
   its representation as variable in software code (Nick,
   candidate-terms-merged.md §1f)
 notes: >-
+  ACCEPTED CYCLE (Nick, 2026-07-29, ISO 704 §6.5.2 outer circle): this
+  record and [[identity-driven-coordination]] are deliberately defined by
+  mutual contrast — the default-unless clause here and the
+  identical-observable-pattern clause there are each load-bearing, so both
+  edges are kept. The view generator must treat the two-node cycle as one
+  unit in the topological sort, placing the pair adjacently.
   Master-term/variable pairing per Nick's ruling, matching the
   EscalationReadiness precedent: LIQUIDITY_DRIVEN_REACTION is the software
   code value (casing verbatim in aliases, criterion 5). Counterpart

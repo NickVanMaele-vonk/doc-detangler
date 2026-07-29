@@ -7,8 +7,7 @@ placement: glossary
 used_in: [S, M]
 definition: >-
   Alert code RD03 (EOD price influence): marking the close, reference price
-  manipulation, NAV influence — with downstream exposure to repo, ECB
-  collateral, and covered bond valuations.
+  manipulation, NAV influence.
 source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "0.1 The Five-Pillar FSMA Argument"
@@ -24,13 +23,18 @@ source:
       stated_version: null
 depends_on:
   - alert
-  - downstream-exposure
 flags: []
 conflict: null
 review: >-
   Decision: keep - disambiguate to separate terms `RD02`, `RD03`, `RD04`
   (Nick, candidate-terms-merged.md §1e)
 notes: >-
+  Cycle disposition (Nick, 2026-07-29, ISO 704 §6.5.2): the source clause
+  "— with downstream exposure to repo, ECB collateral, and covered bond
+  valuations" is a consequence enumeration, not the definition proper; it
+  is preserved here verbatim and excluded from the definition, removing
+  the circular edge to [[downstream-exposure]] (whose own definitional
+  reference to RD03 remains).
   Split from the merged RD02/RD03/RD04 candidate row per Nick's decision.
   Surface-form inconsistency in S reproduced verbatim in aliases
   (criterion 5): the archetype table writes "RD-03 repeated liquidity
