@@ -1,0 +1,50 @@
+id: outcome-score
+term: Outcome Score
+aliases: [OS, Outcome Severity]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: >-
+  The outcome-materiality gate score, OS (0–2/U) = max(Price, Liquidity,
+  Information Impact); OS=0 zeroes PriorityScore and imposes a MEDIUM
+  classification ceiling.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:50020b55b40b1937d744f26b10d8afcd6774790dbccb2174aabdc2d6ddc19716
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:f7d220c9d090ebee403ac4b97a236ff976263bc6f80927c41f60824292aaee0c
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [conflict]
+conflict:
+  summary: >-
+    Expansion conflict per the candidate list: U implies "Outcome Score", S
+    implies "Outcome Severity". Neither expansion appears verbatim in the
+    shortened corpus, so only the U-side is anchorable; the S-side
+    implication is carried from candidate-terms-merged.md §1c, not from an
+    anchorable span. (P) §0.1 sides with "Outcome Score". Surfaced, not
+    reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "II.1 Pipeline Overview"
+      quote: >-
+        10 Outcome materiality (OS, OPL) GATE: OS for classification ceiling
+        OS (0–2/U) = max(Price, Liquidity, Information Impact). OS=0 →
+        PriorityScore=0; MEDIUM ceiling.
+      para_hash: sha256:50020b55b40b1937d744f26b10d8afcd6774790dbccb2174aabdc2d6ddc19716
+review: "Decision: keep, refine definition (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  S materially varies the doctrine as well as the name: "OS Liquidity Impact
+  and Information Impact dimensions are co-primary with Price Impact. OS=0 on
+  Price Impact alone does not cap classification where Liquidity or
+  Information Impact is present." (P) §0.1 also lists a fourth dimension ("PI
+  Price / LI Liquidity / I Information / BC Behavioural-Conditioning
+  impact") — dimension-set difference, informational only.

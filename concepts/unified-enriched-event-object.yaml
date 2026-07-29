@@ -1,0 +1,32 @@
+id: unified-enriched-event-object
+term: Unified Enriched Event Object
+aliases: [UEEO]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
+    para_hash: sha256:c50813de371a3d7e43bf1d72610f87766ae39c04ca14bfb93b6524d0f99729b0
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:c9acc9c22ee4ef7180f8002b13b6d28e3fab57602881f49fbd1a82ef8d77dfdd
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Expansion and role
+  come from (P) §0.1: "five-stream fused event record" — informational only.
+  S usage: "The cross-venue episode_id in the UEEO links electronic and OTC
+  events for the same participant on the same instrument on the same
+  session"; M usage: "UEEO primary trade stream" in the Layer 1 grid table
+  (hash covers the whole table block).

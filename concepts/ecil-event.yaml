@@ -1,0 +1,45 @@
+id: ecil-event
+term: ECIL event
+aliases: [ecil_event_type]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:6fd9b9d54d216ad86c12e6b2ef3bc449a71e980b90ade8b8c8c310c146de5dad
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:0a47ac35d06734555a59818f1c02f17eba2249a35a45f3a31102e229707a7ac9
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: keep only `ECIL event` in glossary or definition section (if in
+  one document only) - its possible states are defined in its definition
+  (Nick, candidate-terms-merged.md §1c)
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Per Nick's ruling,
+  this record subsumes the "ECIL event relationship states" candidate row:
+  when a definition is drafted, the states AMPLIFIES_SUSPICION /
+  CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION / FULLY_EXPLAINED belong inside
+  it, not as separate glossary entries. State-set membership varies per doc
+  (candidate-list note). Usage evidence: U "(E) Contextual — ECIL
+  AMPLIFIES_SUSPICION (only where context amplifies rather than explains)";
+  S "ECIL event calendar" and "named ECIL event type (ecil_event_type =
+  FUTURES_ACTIVITY_ELEVATED)"; M "ECIL SUPPORTS_EXPLANATION where
+  participant behaviour coincides with high-CRS macro release".

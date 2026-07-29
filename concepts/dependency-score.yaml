@@ -1,0 +1,37 @@
+id: dependency-score
+term: Dependency Score
+aliases: [DS, Dependency Filter]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: >-
+  The gate ensuring convergence is built on genuinely independent signals:
+  DS (0–2) is assessed and DAF applied; DS=2 invalidates convergence, DS=1
+  reduces weight by 30%.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:bc64cc32f3d2caf74943b0856b28609a467f805544406dfe7dd7fa568d4bb17e
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
+    para_hash: sha256:9f591e651c776f5e61e085f167d480d3a3d06d743a4c41b17cd66168f7f66800
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep - disambiguate later (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  "Dependency Score" is never spelled out verbatim in the shortened U (which
+  writes "Dependency filter" / "DS (0–2)"); the expansion is carried from
+  the candidate list. Open verification from the candidate list: U uses both
+  DAF and DependencyFactor (in the PriorityScore formula) — verify same
+  construct; see [[priorityscore]]. Score (DS) vs gate (Dependency Filter)
+  disambiguation deferred per Nick's decision. S usage: "DS=1 applied where
+  the same participant is connected to both" MTS conditioning and OTC
+  execution.
