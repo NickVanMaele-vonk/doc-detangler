@@ -1,0 +1,60 @@
+id: convergence-quality-score
+term: Convergence Quality Score
+aliases: [CQS]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:7191cd539673ee9333a6cb850f3ec841fdd1d4a972132c4fce78f67d9222e38c
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan, A, P, conflict]
+conflict:
+  summary: >-
+    Unit conflict: integer bands (U Step 5) vs fractional thresholds (U Step
+    21) vs additive fractional amplifier (S, M) — surfaced, not reconciled
+    (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "II.1 Pipeline Overview"
+      quote: >-
+        CQT1 (CQS 3–5) = MEDIUM minimum; CQT2 (CQS 6–8) = HIGH minimum; CQT3
+        (CQS ≥9) = VERY HIGH eligible.
+      para_hash: sha256:7191cd539673ee9333a6cb850f3ec841fdd1d4a972132c4fce78f67d9222e38c
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "II.1 Pipeline Overview"
+      quote: >-
+        IS≥3 and CQS≥0.90 are required in place of IS≥2 and CQS≥0.85
+      para_hash: sha256:001f3b76c6963d6de21218febc89250403d7746d069a745d7855253af4cc680b
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+      quote: >-
+        ECIL integration: cmcs_l2_alignment contributes +0.50 CQS as a
+        contextual amplifier for SB-26 hypothesis signals.
+      para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+review: "Decision: keep, refine definition (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Never
+  letter-expanded in U/S/M (U writes "Convergence validation (CQS/CQT)"); the
+  expansion and role come from (P) §0.1: "summed confirmed evidence across
+  five domains". (P) evidence is informational only, excluded from the
+  placement count. The M span ("CMCS Level 2 adds +0.50 CQS as contextual
+  amplifier") corroborates the S-side additive usage of the unit conflict.

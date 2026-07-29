@@ -1,0 +1,36 @@
+id: modelconfidence
+term: ModelConfidence
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The confidence output assessed purely on data quality dimensions (DQS,
+  UEEO completeness), additionally adjusted for attribution confidence and
+  capped at MEDIUM for any quote-domain interaction signal where attribution
+  relies on anonymous order book observation alone.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
+    para_hash: sha256:e1645c687b2734383dfbe8e44006e7f9160201e991ea89846fa2c249cb7bc163
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:d7ac0d414ae42cb03e957624fc4b1502c6aafa346a25a5a9ed4767c5e93a0498
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep, refine definition (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  The candidate list marks the defining content as "M (cap rule only)"; the
+  definition here is assembled from S's assignment basis plus the M/S cap
+  rule — no source states a full definition, so treat it as provisional
+  pending Nick's "refine definition". Open disposition carried from the
+  candidate list: relationship to U/M "EvidenceConfidence" (three-output
+  model) is unstated. Camel-case reproduced verbatim (criterion 5).

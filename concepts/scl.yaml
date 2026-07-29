@@ -1,0 +1,39 @@
+id: scl
+term: SCL
+aliases: [supervisory confidence tier, SCL tier]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  The supervisory confidence tier attached to an escalation:
+  SCL-COMPELLING — the convergent evidence across [n] dimensions constitutes
+  a strong basis for reasonable grounds; SCL-PRECAUTIONARY — reasonable
+  grounds exist notwithstanding specific gaps.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:9e5feda3c2e59ce4f863a9626b88cd4dde61c0e7f27d5e747f7efee976673a71
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:4b781b5287be0459fffa0b3911bb6fb28dba69d2a38fb98c9dcc8651ce5e6e77
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: >-
+  Decision: keep - disambiguate "tier" from "layer" (Nick,
+  candidate-terms-merged.md §1c)
+notes: >-
+  The candidate list marks the definition "M (partial)": the tier
+  formulations come from M's approved-language table and are the only
+  definitional content in the corpus. SCL is never letter-expanded anywhere
+  in the shortened corpus; U's sole usage is the Doc 7 front-matter row
+  ("SCL supervisory confidence tiers"). Nick's caveat: "tier" (COMPELLING /
+  PRECAUTIONARY values) must not be conflated with the architectural
+  "layer" sense used elsewhere (e.g. Causality Confidence Layer).
