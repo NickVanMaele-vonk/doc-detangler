@@ -28,6 +28,7 @@ depends_on:
   - behavioural-episode-consolidation
   - campaign
   - cross-window-persistence-score
+  - escalating-dominance-trend
   - multi-day-conditioning-score
   - scs
 flags: []
