@@ -21,11 +21,10 @@ review: >-
   candidate-terms-merged.md §1e)
 notes: >-
   Split from the merged DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT row
-  per Nick's decision. Open verification carried from the candidate list:
-  confirm whether this is the same parameter as
-  [[dominance-threshold-pct]] under two names — only the _PCT form carries
-  M's formula. The bare form is anchorable only in S in the shortened
-  corpus; used_in and placement follow the reviewed candidate row (S,M for
-  the merged pair) pending that verification — if the two names turn out
-  to be distinct parameters, the placement count for this record needs
-  recomputation.
+  per Nick's decision. Resolved (Nick's ruling, in-session 2026-07-29):
+  DOMINANCE_THRESHOLD and DOMINANCE_THRESHOLD_PCT are considered one
+  parameter for now — see [[dominance-threshold-pct]], which carries M's
+  formula. The bare form is anchorable only in S in the shortened corpus;
+  used_in and placement keep the reviewed candidate row's S,M, which the
+  one-parameter ruling makes consistent (the parameter is used in both
+  documents across its two surface forms).

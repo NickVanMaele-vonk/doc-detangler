@@ -1,0 +1,26 @@
+id: methodology-lead
+term: Methodology Lead
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+    para_hash: sha256:ed047bebe2d0443d5a2bd21a0a1d34aa6f3b915d1ccf2f65ee11eeabed5376a2
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Named governance
+  role: M requires "Methodology Lead sign-off … before CCT=EXPLICIT is
+  recorded on a quote-domain signal without order-level attribution". The
+  candidate list counts U usage, but no anchorable span exists in the
+  shortened U — same situation as [[supervisory-challenge-pack]]; worth a
+  check against the full U during review.

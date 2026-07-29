@@ -1,0 +1,34 @@
+id: supervisory-defensible-escalation-package
+term: supervisory-defensible escalation package
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:4dcade7ca9a7e8522579f2f351a1659310555e9e99515bb47e3ea36cc6d8761c
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:9c1c5d86045471183a9b80c03b4aa650453805724dae52341894e55705fa24a0
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). PLACEMENT
+  QUESTION for Nick, surfaced not judged: the usage column reads "M (S
+  rel.)" — one countable document, which under C9 computes placement in
+  MCL, not the glossary; yet the row sits in the §1 glossary-candidates
+  section. Recorded as glossary per the reviewed section pending Nick's
+  ruling. Related names to reconcile per the candidate list: S's "ISGO
+  narrative" role and (A)'s "supervisory-defensible evidence package" —
+  cluster to reconcile, not aliased here.

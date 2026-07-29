@@ -1,0 +1,51 @@
+id: removal-register
+term: Removal Register
+aliases: [explicit exclusion register, Formally Removed Data Categories]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The register of data categories formally removed from the operational
+  model, recording for each exclusion the nature of the absent data and the
+  detection approach that replaces it.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:41e222f9b780b055961960943f2598f59ddc4d8cc048d671a233d9630a71e59c
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [conflict]
+conflict:
+  summary: >-
+    Same artifact, two names (candidate-list finding): S cites it as the
+    "Removal Register", M titles it "Formally Removed Data Categories" —
+    surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.3.2 CICI and the Three-Position Data Types"
+      quote: >-
+        Document 3 Â§1.0.1 Removal Register.
+      para_hash: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "1.0.1 Formally Removed Data Categories"
+      quote: >-
+        1.0.1 Formally Removed Data Categories
+      para_hash: sha256:41e222f9b780b055961960943f2598f59ddc4d8cc048d671a233d9630a71e59c
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Term follows the candidate row's first-listed name; both other names are
+  aliases. The S conflict quote reproduces the source's OCR mojibake
+  ("Â§" for "§") verbatim per criterion 5 — the damage is data. The cross-reference is load-bearing: S points at "Document 3
+  §1.0.1" by name, so a rename in either document breaks the reference —
+  exactly the drift the steady-state guard (D10) exists to catch. The
+  second M span is a removed-category entry (client order flow → SB-30
+  footprint approach); see [[sb-30]].

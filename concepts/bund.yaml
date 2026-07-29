@@ -1,0 +1,31 @@
+id: bund
+term: Bund
+aliases: [Bund futures]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:9e752d5c38c8abcf9eb0029a95f0a5d9dd17e722d259bc6bb8c38cd8f9565b87
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): never defined in
+  the corpus. Role per the candidate list: Bund futures are the CICI
+  context instrument — public Eurex market data feeding ECIL enrichment
+  and the CMCS, and one leg of the OLO/Bund cash-futures basis. See
+  [[cross-instrument-context-intelligence]] and [[eurex]].

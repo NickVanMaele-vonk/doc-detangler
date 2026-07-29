@@ -27,7 +27,8 @@ notes: >-
   Split from the merged DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT row
   per Nick's decision; this record carries M's formula ("M (formula)" in
   the candidate list), operators and variable names reproduced verbatim
-  (criterion 5). Open verification: same parameter as
-  [[dominance-threshold]] under two names? The _PCT form is anchorable
-  only in M in the shortened corpus; used_in and placement follow the
-  reviewed candidate row pending that verification.
+  (criterion 5). Resolved (Nick's ruling, in-session 2026-07-29): this and
+  [[dominance-threshold]] are considered one parameter for now. The _PCT
+  form is anchorable only in M in the shortened corpus; used_in and
+  placement keep the reviewed candidate row's S,M, consistent under the
+  one-parameter ruling.

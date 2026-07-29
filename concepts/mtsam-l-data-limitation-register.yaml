@@ -1,0 +1,42 @@
+id: mtsam-l-data-limitation-register
+term: MTSAM-L data limitation register
+aliases: [MTSAM-L]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The register of numbered data-limitation codes (MTSAM-L01, MTSAM-L02, …)
+  recording which data absences constrain which analytical capabilities at
+  MTSAM.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:d7a708d30cf175f132c49c1b8f4d12d8a7de5570d90cbb3c4f6c21dfdc592ab2
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:f8b9f89015614cd23752fea545bf8d3c3d70caa26fab83101e61f72d368efe3d
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [A, P]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Definition marked "M (partial)" in the candidate list — drafted from M's
+  usage plus (P) §0.1's gloss "MTSAM-L02/L07/L08 | data-limitation codes".
+  Register-extent inconsistency carried from the candidate list, surfaced
+  not fixed: M's governance table says "MTSAM-L01 through MTSAM-L07", yet
+  MTSAM-L08 appears in U's amendment table and (P), and the candidate list
+  reports L10/L11 also exist. (A) uses L01 and L03. See
+  [[historical-quote-lifecycle-dataset]] (L08) and [[removal-register]].
