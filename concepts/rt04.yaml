@@ -1,0 +1,32 @@
+id: rt04
+term: RT04
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  Alert code RT04 (Price deviation): off-market pricing, fixing
+  manipulation, benchmark distortion, with deviation measured in basis
+  points.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:99f0a520e3122eebeac0682fecf02d00cc10855ffceb1bccf928c149bf0c6ff1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:cd33f7e5bdc577438b704d99e7cce68ea7b19584c943b0e74c93e4fda2d1354d
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
+notes: >-
+  Definition drafted from M's Pillar 1 alert row. (P) glosses RT04 as
+  "Real-Time 04 — Price deviation from reference" — informational only. S
+  usage sits in the A.4 Venue Arbitrage discussion.

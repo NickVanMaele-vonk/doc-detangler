@@ -1,0 +1,51 @@
+id: sb-30
+term: SB-30
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The archetype covering abuse of non-public order information, detected at
+  MTSAM through a market footprint approach based solely on MTS trade
+  timing (no access to dealer client books or pending RFQ flows).
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [conflict]
+conflict:
+  summary: >-
+    Characterisation conflict per the candidate list: S casts SB-30 as an
+    RFQ front-running footprint, M as misuse of confidential order
+    information — surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.1 Four-Level Observability Framework"
+      quote: >-
+        SB-30 RFQ front-running footprint
+      para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "1.0.1 Formally Removed Data Categories"
+      quote: >-
+        The SB-30 misuse of confidential order information archetype uses a
+        market footprint detection approach based solely on MTS trade
+        timing.
+      para_hash: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3
+review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
+notes: >-
+  Value of the master term [[risk-archetype]]. The definition is worded to
+  span both characterisations without harmonising them; the conflict field
+  carries each verbatim. Possible overlap with (P)'s RA-29 Front-Running
+  Indicator (candidate list §4 conflict #8; RA-29 held as a (P)-only row).
+  Both spans are grid tables; each hash covers the whole table block.
