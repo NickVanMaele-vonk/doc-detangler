@@ -25,7 +25,7 @@ conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
 notes: >-
   Set-level orphan (definition: null — not invented, C2). Placement ruled
-  by Nick 2026-07-30: keep as local to M — the usage column reads "M (S
+  by Nick 2026-07-29: keep as local to M — the usage column reads "M (S
   rel.)", one countable document, so C9 computes MCL despite the row
   sitting in the §1 glossary-candidates section. Related names to
   reconcile per the candidate list: S's "ISGO narrative" role and (A)'s
