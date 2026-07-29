@@ -3,7 +3,7 @@ term: supervisory-defensible escalation package
 aliases: []
 status: candidate
 superseded_by: null
-placement: glossary
+placement: MCL
 used_in: [M]
 definition: null
 source:
@@ -24,11 +24,10 @@ flags: [orphan]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
 notes: >-
-  Set-level orphan (definition: null — not invented, C2). PLACEMENT
-  QUESTION for Nick, surfaced not judged: the usage column reads "M (S
-  rel.)" — one countable document, which under C9 computes placement in
-  MCL, not the glossary; yet the row sits in the §1 glossary-candidates
-  section. Recorded as glossary per the reviewed section pending Nick's
-  ruling. Related names to reconcile per the candidate list: S's "ISGO
-  narrative" role and (A)'s "supervisory-defensible evidence package" —
-  cluster to reconcile, not aliased here.
+  Set-level orphan (definition: null — not invented, C2). Placement ruled
+  by Nick 2026-07-30: keep as local to M — the usage column reads "M (S
+  rel.)", one countable document, so C9 computes MCL despite the row
+  sitting in the §1 glossary-candidates section. Related names to
+  reconcile per the candidate list: S's "ISGO narrative" role and (A)'s
+  "supervisory-defensible evidence package" — cluster to reconcile, not
+  aliased here.
