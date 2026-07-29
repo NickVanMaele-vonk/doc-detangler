@@ -1,0 +1,35 @@
+id: bt-06
+term: BT-06
+aliases: [BT-06 counterparty concentration, bt06_counterparty_hhi]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  Block-trade indicator BT-06, counterparty concentration:
+  bt06_counterparty_hhi ≥ HHI threshold, with POFP baseline comparison for
+  regime change.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:3496d76872a5f0efa7b4829f324dd08d0c72cf36edea30cfbfd9f8c9c80ceb2a
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Definition assembled from S's SB-20 archetype row (grid-table span). The
+  BT-xx block-trade indicator family is not defined in M (extraction
+  flag). M usage: OpenCorporates counterparty relationship mapping "where
+  BT-06 counterparty concentration or PI09 block trade network is
+  confirmed" (1.0). HHI is externally owned and lives in reference-
+  terms.md; POFP is not expanded at the span.

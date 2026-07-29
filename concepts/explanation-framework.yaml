@@ -1,0 +1,35 @@
+id: explanation-framework
+term: Explanation Framework
+aliases: [explanation category constraints, legitimate explanation framework]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:dfba875ce0931df8753896416c2f95cbef053abeaa1e3b8d908e64863bde1e1c
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:9e124028b5956ea43be8df0fdf98793db6dffb81857567b863d9375167c2c7b7
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): S names Section
+  J "Explanation Framework Constraints" (scope line only — the body is
+  absent from the shortened file; the scope line names "market making
+  obligations" and an "auto-hedging intragroup standard" that is specified
+  nowhere in the file); U's surface form is "Legitimate explanation
+  framework", the Step 14 gate and Part X row. CLUSTER NOTE for the §3
+  bulk: the U-only extraction entry "Legitimate explanation framework" is
+  subsumed here as an alias — it will be skipped when the U batch reaches
+  it, per this record. See [[explanationfailure]], [[mm-safeharbour]].

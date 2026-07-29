@@ -1,0 +1,33 @@
+id: mts-mid
+term: MTS mid
+aliases: [prevailing MTS mid]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:99f0a520e3122eebeac0682fecf02d00cc10855ffceb1bccf928c149bf0c6ff1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:cd33f7e5bdc577438b704d99e7cce68ea7b19584c943b0e74c93e4fda2d1354d
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): the reference
+  price for RT04 deviation measurement (M Pillar 1: "deviation measured in
+  basis points from prevailing MTS mid"), never itself defined. S uses it
+  in the OTC exploitation hypothesis: "Where MTS mid was influenced by
+  participant's own electronic quoting (RT04 candidate), the OTC execution
+  at MTS-influenced prices is the exploitation leg" (A.4). See [[rt04]],
+  [[mts-associated-markets]].

@@ -1,6 +1,6 @@
 id: mwbr-score-levels
 term: MWBR score levels
-aliases: [MWBR_score, MWBR_NORMAL, MWBR_ANOMALOUS]
+aliases: [MWBR_score, MWBR_NORMAL]
 status: candidate
 superseded_by: null
 placement: UCE
@@ -23,7 +23,8 @@ notes: >-
   Single-document term (§3 bulk). The term name is the extraction's label
   for the Step 11c level scale; the level names and thresholds are corpus
   text. The bare level names (ANOMALOUS, ELEVATED, NORMAL, BELOW_NORMAL)
-  are not carried as aliases. CROSS-DOC CAVEAT: the value token
-  MWBR_ANOMALOUS also occurs in MCL — on the multi-document flag list for
-  Nick's disposition. The scale belongs to [[market-wide-behavioural-
-  reference]].
+  are not carried as aliases. The value token MWBR_ANOMALOUS also occurs
+  in MCL and is now its own glossary record per Nick's leftover ruling
+  2026-07-29 — see [[mwbr-anomalous]]; the alias was removed here to keep
+  one definition site per term (C9). The scale belongs to
+  [[market-wide-behavioural-reference]].

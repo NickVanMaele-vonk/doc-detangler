@@ -1,0 +1,37 @@
+id: mtsam-l01
+term: MTSAM-L01
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  MTSAM-L data limitation register entry L01: trade timestamps may be EOD
+  only for the OTC bilateral component; intraday OTC timestamps require
+  MTSAM-L01 remediation.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:c9acc9c22ee4ef7180f8002b13b6d28e3fab57602881f49fbd1a82ef8d77dfdd
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
+    para_hash: sha256:a5581fbe6787662948e04177a574a2270f5971b2d2f230ff24de134763ce65c9
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Entry of [[mtsam-l-data-limitation-register]] (sb-26 precedent: register
+  entries used across ≥2 docs get their own records). Definition assembled
+  from M 1.0 ("Trade timestamps may be EOD only for OTC bilateral
+  component (MTSAM-L01)") and S A.4.2 ("MTSAM-L01: EOD timestamps only";
+  "MTSAM-L01 remediation required for full detection"). M 1.0.1 also
+  groups MTSAM-L01 with L10/L11 under the removed participant-position
+  categories — a second facet (OTC book positions), surfaced not
+  reconciled. See [[otc-bilateral-trading]].

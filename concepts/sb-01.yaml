@@ -1,0 +1,37 @@
+id: sb-01
+term: SB-01
+aliases: [Momentum Ignition]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  Price-family risk archetype Momentum Ignition; detection basis RT01,
+  AGGRESSIVE_BUY/SELL primitives, SCS_bpl directional, MDCS, BT-03
+  reversal, BOA=MOMENTUM_IGNITION.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:987a9e8d1e1b19e7ff4b8c17d2fc6bead06fd21e5b17849f9d4746a51b5f55bb
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Value of the master term [[risk-archetype]], carried as its own record
+  (sb-26/sb-30 precedent). Definition assembled from the A.6 archetype
+  row; the S span is the whole archetype grid table (hash covers the
+  block). Downgraded from Tier 1 to Tier 3 ("investigative hypothesis, not
+  primary detection pillar") and references §A.4.0, which does not exist
+  in the shortened file — both surfaced. SENSE COLLISION (MCL extraction
+  note): M's "RT01 — Momentum ignition" names an alert, S's SB-01 a risk
+  archetype — same phrase, two object types; surfaced, not reconciled.

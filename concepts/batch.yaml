@@ -1,0 +1,32 @@
+id: batch
+term: BATCH
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:c637edc0dd9b1a22a9f4bcd7ce3f50867a9bc31a7ad23bf26689cec97343758e
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): a
+  disposition/processing state alongside AUTO_CLOSE (U Step 21b BDRS
+  eligibility clause). M's surface form is "MEDIUM-BATCH closure", one of
+  the three automated narrative templates. RECONCILIATION FLAG, surfaced
+  not judged: whether BATCH (U) and the MEDIUM-BATCH band (M) are the same
+  construct is not stated in either document.
