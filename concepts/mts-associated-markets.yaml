@@ -1,0 +1,46 @@
+id: mts-associated-markets
+term: MTS Associated Markets
+aliases:
+  - MTSAM
+  - MTS Associated Markets N.V.
+  - MTS Associate Markets N.V.
+  - MTS AM
+  - the MTSAM market
+  - MTS Belgium OLO sovereign bond market
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The Belgian legal entity — MTS Associated Markets N.V., a joint venture
+  between MTS and a consortium of banks, supervised by the FSMA and subject
+  to the EU Market Abuse Regulation (MAR) — operating the electronic
+  interdealer trading venue for Belgian OLO sovereign bonds.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:09edbbe49efb2d6d3da2e89def5e74b10ebd9a9b71319b915f03e7c523bdb963
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-analytical-layer.md
+    section: "0. Definitions"
+    para_hash: sha256:cc8d34cedb8feaf61199a1769a137c4e80c04f49a4622385b87631384c500699
+    verified_against:
+      git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
+      stated_version: "0.1 — Draft for Review"
+depends_on: []
+flags: [A]
+conflict: null
+review: >-
+  Decision: keep — it's a legal entity. Use "Associated" spelling as master
+  (Nick, candidate-terms-merged.md §1a)
+notes: >-
+  Meaning drifts in the sources: MTSAM denotes both the trading venue (the
+  market) and the surveilling institution ("MTSAM's surveillance framework",
+  "MTSAM considers…"). (A) uses both "Associated" and "Associate" spellings;
+  its §0 Definitions entry (second source span, joint-venture/FSMA sentence)
+  uses "Associate" — reproduced verbatim there, master spelling per Nick's
+  ruling. Distinct from MTS S.p.A. (the platform operator); (A) also embeds
+  "MTS AM" meaning MTSAM. The MCL 1.1 span is a grid table; the hash covers
+  the whole table block.

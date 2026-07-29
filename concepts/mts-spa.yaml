@@ -1,0 +1,35 @@
+id: mts-spa
+term: MTS S.p.A.
+aliases:
+  - MTS
+  - MTS platform
+  - MTS surveillance system
+  - MTS surveillance export
+  - MTS export
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  An Italian firm operating an electronic fixed income trading market for
+  European government bonds, corporate bonds, covered bonds and repo, with
+  average daily trading volume exceeding EUR 85 billion.
+source:
+  - doc: samples/blueprint-analytical-layer.md
+    section: "0. Definitions"
+    para_hash: sha256:5a3fd878422af50e0b87416dae8fbe2477636a6256a5d109b164a7c1a5f92786
+    verified_against:
+      git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
+      stated_version: "0.1 — Draft for Review"
+depends_on: []
+flags: [orphan, A]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1a)"
+notes: >-
+  Set-level orphan: used in S and M but defined only in (A) — the definition
+  above is sourced from (A) §0 Definitions, which is informational and never
+  counts toward C9 placement. "MTS" alone is used loosely in the sources for
+  the platform, the operator, and the surveillance export; high confusion
+  risk with MTS Associated Markets (MTSAM). Nick's review note (not source):
+  legal entity in Italy, "Mercato dei Titoli di Stato", sister company of
+  MTSAM.

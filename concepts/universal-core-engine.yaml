@@ -1,0 +1,34 @@
+id: universal-core-engine
+term: Universal Core Engine
+aliases: [UCE, the engine, Core Engine, Veridict Core Engine]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The sector-agnostic analytical architecture that underpins all Veridict MAR
+  Intelligence deployments, independent of market type, instrument class, or
+  institutional context.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:2d88e3e22d86912a98438dc1de2894dfd020843b2d9590d1dbaf01c5417929b3
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.1 The Analytical Question"
+    para_hash: sha256:6d714ffd440abcdf98cd6be3dffb844cdd89deb5fe3a88cf63323bc8dd2a3fb1
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [A]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1a)"
+notes: >-
+  MCL also calls it "Veridict Core Engine". Version skew is live data
+  (criterion 6): the shortened UCE source is v29, MCL applies to UCE v28,
+  SBSP cites UCE v30. Acronym UCE appears only inside amendment IDs
+  (UCE-AMD-BVR-001) and the code path veridict_uce/bci.py, never as
+  standalone prose.
