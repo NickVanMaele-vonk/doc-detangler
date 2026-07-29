@@ -43,16 +43,15 @@ authority's own terminology and are **not** corpus text.
 | Belgian Treasury Certificate | — | Kingdom of Belgium / ADA | M only | "Belgian Treasury Certificates (secondary)" in MCL 1.1 instrument scope. |
 | ISIN | International Securities Identification Number (corpus: (P) §1.2) | ISO 6166 | M, (A), (P) | |
 | quote stuffing | — (industry term) | market-abuse practitioner literature | S only | Industry-owned rather than regulator-owned; routed here per §2. |
+| Eurex | — (derivatives exchange) | Deutsche Börse Group | S, M, (A) | External industry term (Nick's ruling 2026-07-29; formerly a §1f glossary record, removed). Its published public market data (Bund futures settlement price, volume, open interest, intraday bars) feeds CICI/ECIL enrichment — see `cross-instrument-context-intelligence`. |
+| OLO | Obligation Linéaire / Lineaire Obligatie — Belgian linear government bond (corpus: (P) §0.1) | Kingdom of Belgium / ADA | S, M, (A rel.), (P) | External industry term (Nick's ruling 2026-07-29; formerly a §1f glossary record, removed) — consistent with criterion 3's own example list. Never expanded in U/S/M; the expansion is (P)-only. |
 | HHI | Herfindahl–Hirschman Index (corpus gloss: (P) §0.1 "concentration measure, 0–10,000 scale") | economics literature / antitrust practice | S (as `bt06_counterparty_hhi`), (P) | Sourced from §7b (P) per Nick's ruling 2026-07-28; externally owned, routed here rather than into §1. |
 
-## Tensions for disposition (surfaced, not resolved — C8)
+## Resolved tensions
 
-1. **Eurex** is listed in §2 as externally owned ("Eurex (exchange)") *and*
-   was kept as a §1f glossary candidate by Nick's review — it has a concept
-   record (`concepts/eurex.yaml`) since PR #22. Double placement: needs
-   Nick's ruling (glossary record, reference entry, or both).
-2. **OLO** is named as an externally-owned example in criterion 3
-   (`plan/definition-of-done.md`, "What does not") but was kept as a §1f
-   glossary candidate and has a concept record (`concepts/olo.yaml`).
-   Same-shaped tension as Eurex; needs Nick's ruling. (BTP, the other
-   instrument example in criterion 3, does not occur in the §1/§2 lists.)
+1. **Eurex** and **OLO** — each briefly held both a §1f glossary record and
+   external-ownership status. **Resolved by Nick's ruling 2026-07-29:
+   both are external industry terms, not project-specific** — reference
+   entries above; the concept records were removed in the same PR. (BTP,
+   the other instrument example in criterion 3, does not occur in the
+   §1/§2 lists.)

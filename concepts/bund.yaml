@@ -28,4 +28,5 @@ notes: >-
   the corpus. Role per the candidate list: Bund futures are the CICI
   context instrument — public Eurex market data feeding ECIL enrichment
   and the CMCS, and one leg of the OLO/Bund cash-futures basis. See
-  [[cross-instrument-context-intelligence]] and [[eurex]].
+  [[cross-instrument-context-intelligence]]; Eurex is externally owned and
+  lives in reference-terms.md (Nick's ruling 2026-07-29).
