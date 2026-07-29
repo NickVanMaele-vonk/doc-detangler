@@ -1,0 +1,34 @@
+id: medium-investigate
+term: MEDIUM-INVESTIGATE
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:c637edc0dd9b1a22a9f4bcd7ce3f50867a9bc31a7ad23bf26689cec97343758e
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Sub-band of MEDIUM:
+  U retains or caps signals "at MEDIUM-INVESTIGATE" pending additional
+  evidence; M's narrative templates pair "MEDIUM-INVESTIGATE reviewed" with
+  "MEDIUM-BATCH closure". Open question carried from the candidate list: U
+  also has "MEDIUM- STRUCTURED REVIEW" (I.2 principle 12, spacing as in
+  source) — same concept? Hyphenated casing reproduced verbatim
+  (criterion 5). The U span is a pipeline-steps grid table; the hash covers
+  the whole table block.

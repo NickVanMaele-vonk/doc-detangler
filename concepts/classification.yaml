@@ -1,0 +1,57 @@
+id: classification
+term: classification
+aliases: [classification band]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The analytical pipeline's primary output: a band on the five-level scale
+  NONE / LOW / MEDIUM / HIGH / VERY HIGH, determined by the highest
+  structural gate cleared; scoring orders signals within a band and does not
+  influence classification.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:08afa188d619b207ca15f42e5bd3cb49f3c27a95d1c4cbe3bfa8aecad721d184
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "Front matter"
+    para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [A, conflict]
+conflict:
+  summary: >-
+    Four-level scale (U) vs five-level scale with NONE (M, and A) — surfaced,
+    not reconciled (C8 / criterion 6). Nick's ruling: five-level scale is
+    leading.
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "II.1 Pipeline Overview"
+      quote: >-
+        12 Classification PRIMARY OUTPUT LOW/MEDIUM/HIGH/VERY HIGH determined
+        by structural gates. PriorityScore does not influence classification.
+      para_hash: sha256:08afa188d619b207ca15f42e5bd3cb49f3c27a95d1c4cbe3bfa8aecad721d184
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "Front matter"
+      quote: >-
+        Includes the updated five-level BehaviouralConcern axis (NONE / LOW /
+        MEDIUM / HIGH / VERY HIGH)
+      para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+review: >-
+  Decision: keep - use five-level scale as leading (Nick,
+  candidate-terms-merged.md §1b)
+notes: >-
+  The definition follows the five-level scale per Nick's ruling; the UCE
+  Step 12 span enumerates four levels (no NONE). The M span sits in the "What
+  is new in v22" block of a document titled v21 — that version skew is data,
+  not a bug (criterion 6). M frames the five-level scale as the
+  "BehaviouralConcern axis": possible concept overlap between classification
+  and BehaviouralConcern, left for disposition rather than aliased. Both
+  conflict quotes are pandoc-plain normalised renderings of grid-table cells;
+  wording, casing, and level names are verbatim (criterion 5).

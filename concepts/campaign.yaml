@@ -1,0 +1,33 @@
+id: campaign
+term: campaign
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:3d617c756b351d09a81ee907467166fa89088ed1e7d054c4c3ca8f9e99a66abe
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
+notes: >-
+  Set-level orphan with only a partial characterisation in S (definition:
+  null — not invented, C2). BPL-owned cross-session construct: MCL describes
+  "multi-session campaigns that remain below individual session thresholds"
+  and BPL converting "isolated alert episodes into structural campaign
+  evidence". Named campaign types appear in S: "CROSS_WINDOW campaign type",
+  "BENCHMARK_SHAPING campaign", "LIQUIDITY_CONDITIONING campaign". Both
+  source spans are grid tables; each hash covers the whole table block.

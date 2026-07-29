@@ -1,0 +1,33 @@
+id: behavioural-primitive
+term: behavioural primitive
+aliases: [primitive]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:318a86f811ed5792cb64ec9b45f7e3c47eadcf4c42e3d18e76fa03479ec68551
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Both sources
+  attribute the construct to the UCE ("the Universal Core Engine's
+  behavioural primitives", "translates MTS alert names to UCE behavioural
+  primitives" via the Alert Abstraction Layer, "Domain 3 primitive codes"),
+  yet the candidate list counts U as related only ("U rel."), not as usage.
+  Named instances per the candidate list: QUOTE_WITHDRAWAL, SPREAD_WIDENING,
+  LIQUIDITY_REMOVAL, BLOCK_TRADE, AGGRESSIVE_BUY/SELL, SUSPENSION.
