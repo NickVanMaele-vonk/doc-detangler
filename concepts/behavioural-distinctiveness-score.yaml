@@ -1,0 +1,31 @@
+id: behavioural-distinctiveness-score
+term: Behavioural Distinctiveness Score
+aliases: [BDRS, BDRS_THRESHOLD, BPL_distinctiveness_score]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  BDRS measures whether the participant's behaviour is materially
+  different from peer participants in the same session. BDRS =
+  max(MWBR_metric, BPL_distinctiveness_score). BDRS ≥ BDRS_THRESHOLD
+  (reference: 1.0σ above peer on at least one primary dimension) required
+  for HIGH classification that is not already eligible for AUTO_CLOSE or
+  BATCH.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 21b. RECONCILIATION FLAG, surfaced
+  not judged: the acronym BDRS does not match the expanded name (which
+  would yield BDS — already taken by the BPL component Behavioural Drift
+  Score); possibly "Behavioural Distinctiveness Relative Score". BATCH,
+  used in the eligibility clause, is on the multi-document flag list.

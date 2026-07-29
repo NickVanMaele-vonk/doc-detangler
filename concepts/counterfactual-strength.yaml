@@ -1,0 +1,26 @@
+id: counterfactual-strength
+term: Counterfactual Strength
+aliases: [CFS, but-for argument]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  CFS (0–2): but-for argument. CFS≥1 required where OS≥1.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:873d1527f21032be9f25777bec20ca2a5db8f52a3c8f53e4f5a368cb432b2f32
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 16 (shared row with OPL). First use
+  is the Step 5b domain D list ("(D) Outcome — OS, CCL, CFS, OPL"). A
+  conjunct of [[escalationreadiness]] and a weight in [[escalation-
+  likelihood-score]]; on the step 3.4 dangling-reference list — this
+  record resolves it.

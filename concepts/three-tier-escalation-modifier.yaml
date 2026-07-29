@@ -1,0 +1,28 @@
+id: three-tier-escalation-modifier
+term: Three-Tier Escalation modifier
+aliases: [Tier 1 single-session signals]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Three-Tier Escalation modifier applies: for Tier 1 single-session
+  signals (no BPL component confirmed, not in active episode), IS≥3 and
+  CQS≥0.90 are required in place of IS≥2 and CQS≥0.85.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:001f3b76c6963d6de21218febc89250403d7746d069a745d7855253af4cc680b
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 21; full specification at §VI.3.0,
+  not present in the shortened UCE. SENSE-COLLISION CAVEAT (candidate list
+  §4 item 29): "Tier 1" here (escalation tier) collides with the Step 2
+  pattern tiers 1/2/3 and the Principle 8 AI-governance Tier 1 controls —
+  three distinct Tier-1 meanings in this document.

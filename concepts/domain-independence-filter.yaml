@@ -1,0 +1,39 @@
+id: domain-independence-filter
+term: Domain Independence Filter
+aliases: [DIF, domain diversity check]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  The Domain Independence Filter (DIF) requires cross-domain evidence
+  before HIGH classification, reducing single-domain HIGH inflation; at
+  Step 5b it verifies that CQS is built from contributions in ≥2
+  independent analytical domains. Single-domain CQT2 (all CQS
+  contributions from domain A only) → HIGH blocked, retained at MEDIUM-
+  INVESTIGATE for structured review. Exception: Collusion Override Path
+  bypasses DIF.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:58b71947a6187be26d0637a0e64943ae6fbe33065f0ce51f19fd5d48cfa96a05
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The Step 5b row is OCR-interleaved
+  across two table blocks; the span anchored here carries the operative
+  sentence. Includes an anonymous-quoting attribution constraint: domain C
+  alone with attribution_confidence=LOW cannot satisfy DIF. The five-
+  domain taxonomy is [[dif-analytical-domains]]. One of the five
+  enforcement mechanisms of [[minimum-necessary-escalation]].
