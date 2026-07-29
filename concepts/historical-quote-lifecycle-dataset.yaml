@@ -1,0 +1,41 @@
+id: historical-quote-lifecycle-dataset
+term: Historical Quote Lifecycle Dataset
+aliases: [HQLD]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:f8b9f89015614cd23752fea545bf8d3c3d70caa26fab83101e61f72d368efe3d
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep - define later (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2; Nick: define
+  later). Expansion and role from (P) §0.1: "quote-level history (absent =
+  gap MTSAM-L08)". Gate for quote intelligence and BCI D1/D2: U's amendment
+  table states D1 (Quote Leadership) and D2 (Liquidity Leadership) require
+  HQLD, capping achievable BCI at 6 until obtained, and names "HQLD
+  remediation … the highest-priority MTSAM-L item"; M states "Quote
+  intelligence operates at session-level aggregate precision until HQLD is
+  obtained." Both blueprint spans are grid tables; each hash covers the
+  whole table block.

@@ -1,0 +1,41 @@
+id: participant-order-flow-profile
+term: Participant Order Flow Profile
+aliases: [POFP]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:0c924a6a9f7e5cf276585ff41e55b168067e7daa6b6a9fe901965f85e162bd67
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/prototype-BC17.md
+    section: "§0.1 Master glossary — every abbreviation spelled out"
+    para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    verified_against:
+      git_blob: 36ad20437886a1883a547599a368c28c794b179a
+      stated_version: null
+depends_on: []
+flags: [orphan, P]
+conflict: null
+review: "Decision: keep - define later (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2; Nick: define
+  later). Participant-own-baseline engine; expansion and role from (P)
+  §0.1: "per-participant behavioural baseline (mean + σ)". Carried caveat
+  from the candidate list: (P) has an internal lookback discrepancy (§7e) —
+  90 days / 15 sessions in code vs 45 days / 10 sessions in methodology
+  text. S usage sits in the archetype table's BT-01/BT-06 rows ("POFP
+  baseline + peer 90th percentile across LOOKBACK_30D"); hash covers the
+  whole table block. Counterpart quote-side engine:
+  [[quote-behaviour-baseline-engine]].

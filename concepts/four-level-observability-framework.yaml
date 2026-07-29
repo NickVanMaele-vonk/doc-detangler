@@ -1,0 +1,37 @@
+id: four-level-observability-framework
+term: Four-Level Observability Framework
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The framework assigning each cross-instrument or cross-venue analytical
+  finding to one of four observability levels — answering "what can we
+  reliably observe, and what is the correct epistemological status of each
+  observation?" — with the ISGO language required to reflect which level
+  applies to each finding.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:7c1c374aa1686c2293139d0a3bb3dd354f44bf70da19e49e6f89701b4bc2c721
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Defined in S only (both spans; the second is the four-level grid table —
+  hash covers the whole table block); M usage is asserted by the candidate
+  list but no shortened-M span was found to anchor it. Level-numbering
+  collisions: CICI's internal Levels 1–3 and the evidence hierarchy's
+  Levels 1–5 use unrelated scales — see
+  [[cross-instrument-context-intelligence]] and [[evidence-hierarchy]].

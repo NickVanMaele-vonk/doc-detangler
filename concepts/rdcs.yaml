@@ -1,0 +1,35 @@
+id: rdcs
+term: RDCS
+aliases: [RT–RD cross-pass scoring]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The RT–RD cross-pass score: intraday RT alerts combined with EOD RD
+  materiality confirmation, producing a composite risk score that reflects
+  both the behaviour and its market consequence.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:d680a9994174b8609cc753471fe5ae0771fda4732995cf8489dd42f1d107b5f1
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:5d85c1caf5159f8ca1f37cfd875ac6d43af889989d410d0d1d355e6d1046d880
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep - define later (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  S never expands RDCS (candidate-list note); its front-matter Part G row
+  glosses it as "Intraday × EOD materiality scoring (RDCS)". The
+  definition is drafted from M's Pillar 3 description and remains subject
+  to Nick's "define later". S also applies a named uplift: "RDCS receives
+  additional +0.10 systemic_consequence_uplift where downstream_exposure
+  includes repo margin calculations."
