@@ -24,7 +24,8 @@ source:
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
-depends_on: []
+depends_on:
+  - mts-associated-markets
 flags: []
 conflict: null
 review: >-
