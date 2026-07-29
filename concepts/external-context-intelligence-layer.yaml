@@ -1,0 +1,37 @@
+id: external-context-intelligence-layer
+term: External Context Intelligence Layer
+aliases: [ECIL]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The layer supplying structured contextual intelligence — event ingestion,
+  Event Object Schema, contextual directionality logic, event materiality
+  scoring, and scoring integration — for the analytical distinction between
+  market-driven and manipulative behaviour, which cannot be resolved from
+  alerts alone.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:362c09fd102fe07c9f86a27efd89ba584402b515b3c00610bbd7ef02c3dd0c20
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:c809be35805b7f08d1cd63adcf4bac284c156357995bc5044966b117af60e339
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Only M letter-expands ECIL ("External Context Intelligence Layer (ECIL) —
+  Document 1 Part XVIII", candidate-list note confirmed). The definition is
+  assembled from U's Part XVIII content list and M's Pillar rationale. The
+  ECIL Supplemental Specification (U front matter) extends Part XVIII —
+  regulator-owned and product terms inside it are handled per their own
+  records; see also [[ecil-event]] and [[crs]].
