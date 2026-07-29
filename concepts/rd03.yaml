@@ -1,0 +1,36 @@
+id: rd03
+term: RD03
+aliases: [RD-03]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  Alert code RD03 (EOD price influence): marking the close, reference price
+  manipulation, NAV influence — with downstream exposure to repo, ECB
+  collateral, and covered bond valuations.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:321c080e6860f153640827f0440d1f9910e7677434cdf75503e5493bbbb8f3fd
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: >-
+  Decision: keep - disambiguate to separate terms `RD02`, `RD03`, `RD04`
+  (Nick, candidate-terms-merged.md §1e)
+notes: >-
+  Split from the merged RD02/RD03/RD04 candidate row per Nick's decision.
+  Surface-form inconsistency in S reproduced verbatim in aliases
+  (criterion 5): the archetype table writes "RD-03 repeated liquidity
+  concentration" with a hyphen. Omitted from M's Marking-the-Close Triad
+  but used by S's SB-04 detection — see [[marking-the-close-triad]].

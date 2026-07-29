@@ -1,0 +1,36 @@
+id: sb-26
+term: SB-26
+aliases: [SB-26 cash bond / futures hypothesis]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The cash bond / futures cross-market hypothesis archetype: an
+  investigative hypothesis supported by CICI/CMCS contextual amplification
+  rather than participant-level futures position data.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
+notes: >-
+  Value of the master term [[risk-archetype]], carried as its own record
+  because the candidate list carries it as a row. The definition is
+  assembled from M's CICI/CMCS rows ("CMCS Level 2 adds +0.50 CQS as
+  contextual amplifier for SB-26 hypothesis") and S's characterisation
+  ("SB-26 cash bond / futures hypothesis … Investigative hypothesis
+  only"). Both spans are grid tables; each hash covers the whole table
+  block.

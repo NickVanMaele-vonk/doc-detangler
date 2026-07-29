@@ -1,0 +1,31 @@
+id: dominance-threshold
+term: DOMINANCE_THRESHOLD
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:7f9567d43084f13b1d3df844f549f450961399c1334baedc902c234d2547b3ea
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: keep - disambiguate into 2 separate terms (Nick,
+  candidate-terms-merged.md §1e)
+notes: >-
+  Split from the merged DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT row
+  per Nick's decision. Open verification carried from the candidate list:
+  confirm whether this is the same parameter as
+  [[dominance-threshold-pct]] under two names — only the _PCT form carries
+  M's formula. The bare form is anchorable only in S in the shortened
+  corpus; used_in and placement follow the reviewed candidate row (S,M for
+  the merged pair) pending that verification — if the two names turn out
+  to be distinct parameters, the placement count for this record needs
+  recomputation.

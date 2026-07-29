@@ -1,0 +1,33 @@
+id: sb-29
+term: SB-29
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:6fd9b9d54d216ad86c12e6b2ef3bc449a71e980b90ade8b8c8c310c146de5dad
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:5323b56b94bfcf5a962221d93adabb8ee05068a3c77334961b68584af5137721
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: keep - disambiguate into separate terms (Nick,
+  candidate-terms-merged.md §1e)
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Split from the
+  merged SB-05, SB-28/SB-29 candidate row per Nick's decision; pre-event
+  positioning archetype, same anchor spans as [[sb-05]] and [[sb-28]] —
+  the shortened corpus mentions the three only jointly. Value of the
+  master term [[risk-archetype]].
