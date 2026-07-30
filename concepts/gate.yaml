@@ -6,9 +6,9 @@ superseded_by: null
 placement: glossary
 used_in: [U, M]
 definition: >-
-  A step condition in the non-compensatory architecture: no dimension in a
-  later step can compensate for a failed gate in an earlier step, and
-  classification is determined by the highest structural gate cleared.
+  A step condition: no dimension in a later step can compensate for a
+  failed gate in an earlier step, and classification is determined by the
+  highest structural gate cleared.
 source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
@@ -24,7 +24,6 @@ source:
       stated_version: "v21"
 depends_on:
   - classification
-  - non-compensatory-architecture
 flags: []
 conflict: null
 review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
@@ -33,4 +32,9 @@ notes: >-
   Every II.1 step row is typed GATE / SCORED OUTPUT / etc.; M's Pillar 2
   names the "Non-compensatory gate architecture" and 0.3 approves the
   formulation "non-compensatory gate methodology". See
-  [[non-compensatory-architecture]].
+  [[non-compensatory-architecture]]. Cycle disposition (Nick, 2026-07-30):
+  the genus phrase "in the non-compensatory architecture" moved here
+  verbatim from the definition proper and the edge to
+  [[non-compensatory-architecture]] dropped, removing gate from that
+  cycle (ISO 704 §6.5.2). The gate ↔ classification circle remains open
+  pending disposition.

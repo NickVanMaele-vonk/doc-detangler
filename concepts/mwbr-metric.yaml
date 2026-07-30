@@ -1,0 +1,36 @@
+id: mwbr-metric
+term: MWBR_metric
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  MWBR_metric = (participant_behaviour_score − peer_median_score) /
+  peer_std_dev.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:da20b9107bac24b84736c12f001e8276cbbfd3e3e89c28b23004dd492b4d67b4
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling. Formula definition
+  reproduced verbatim from the step 11c MWBR body (criterion 5). Also used
+  in the step 21b BDRS formula: 'BDRS = max(MWBR_metric,
+  BPL_distinctiveness_score)' — see [[behavioural-distinctiveness-score]].
+  The operand variables participant_behaviour_score, peer_median_score and
+  peer_std_dev have no records (logged as dangling in the PR body).
+  Distinct from [[mwbr-score-levels]] (the banded MWBR_score projection of
+  this metric).

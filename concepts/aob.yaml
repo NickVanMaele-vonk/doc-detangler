@@ -1,0 +1,32 @@
+id: aob
+term: AOB
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling. Orphan: never
+  letter-expanded or defined in U/S/M; the (P) glossary expands it (not
+  promotable, C2). Usage: SB-02 row 'AOB (cost accepted)'; A.4.1 Level 3
+  'pattern + timing + influence capability + economic irrationality (AOB)
+  together support the hypothesis'; the A.5 repo row names 'the AOB
+  pathway' (OS=0 while conditioning confirmed).

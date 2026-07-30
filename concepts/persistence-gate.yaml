@@ -30,7 +30,7 @@ depends_on:
   - behavioural-persistence-layer
   - classification
   - convergence-quality-tier
-  - cross-window-persistence-score
+  - cwps-intra
   - domain-independence-filter
   - escalating-dominance-trend
   - medium-investigate
