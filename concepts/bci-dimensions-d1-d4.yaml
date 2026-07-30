@@ -1,0 +1,30 @@
+id: bci-dimensions-d1-d4
+term: BCI dimensions D1–D4
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  BCI composite range [0–12] = D1 + D2 + D3 + D4, each scored [0–3]. D1
+  (Quote Leadership) and D2 (Liquidity Leadership) require HQLD, which is
+  not currently available.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). D3 and D4 are never named or expanded in
+  the shortened corpus — only D1 (Quote Leadership) and D2 (Liquidity
+  Leadership) are named. In all MTSAM sessions until HQLD is obtained
+  ([[historical-quote-lifecycle-dataset]]): D1 = 0 (bci_d1_available =
+  FALSE), D2 = 0 (bci_d2_available = FALSE), bci_data_limitation = TRUE,
+  and maximum achievable BCI = D3 + D4 = 6 (Amplifier level maximum). See
+  [[behavioural-causality-indicator]].

@@ -1,0 +1,43 @@
+id: qa-validation
+term: QA Validation
+aliases: [Core Design Principle 12]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Every qualified signal at MEDIUM- STRUCTURED REVIEW or above must be
+  validated against the Behavioural Scenario Library. Consistency between
+  the engine's assessment and previously validated behavioural patterns is
+  a required analytical output — not an optional quality check. An
+  unvalidated signal is an analytically incomplete signal. QA Validation
+  (§XV.5.4): PASS / PASS WITH VARIANCE / FAIL result recorded per signal.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:27823ec049e31190172e5842ba37e998b680d7740addb474d03cd85748e38cdd
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:ed835a3e89cb0f841f8b1edd98f94dc68c27c1d2452f7371a3fa2ac229eb060e
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Core Design Principle 12, added in v24;
+  the 'New in Version 25' note formalises it as a first-class
+  architectural control, consistent with the elevation of the Behavioural
+  Concern Framework to Part VI-A. The OCR split 'MEDIUM- STRUCTURED
+  REVIEW' is reproduced verbatim (criterion 5) — see
+  [[medium-structured-review]]. Consequence clause excluded from the
+  definition and preserved verbatim: 'FAIL without documented root-cause
+  analysis is a governance failure equivalent to a classification without
+  explanation_trace.' qa_validation_result is an output field in the
+  Output Schema (§XIII.2), not an alias — see [[holistic-output-schema]];
+  the validation corpus is the [[behavioural-scenario-library]].

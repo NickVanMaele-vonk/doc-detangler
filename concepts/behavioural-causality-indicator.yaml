@@ -1,0 +1,36 @@
+id: behavioural-causality-indicator
+term: Behavioural Causality Indicator
+aliases: [BCI, BCI engine, BCI composite]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  The Behavioural Causality Indicator (BCI) engine is fully implemented
+  and operational in veridict_uce/bci.py. BCI composite range [0–12] = D1
+  + D2 + D3 + D4, each scored [0–3].
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). v29 row, §VI-A.3.7.1 (Amendment
+  UCE-AMD-BVR-001). Consequence/gate statements excluded from the
+  definition and preserved verbatim: 'Follower Rule: BCI < 3 →
+  BehaviouralConcern capped at MEDIUM (hard cap, not overridable). HIGH
+  gate: BCI ≥ 3 required. VERY HIGH gate: BCI ≥ 7 required in general
+  case. PRIMARY_DRIVER code: BCI ≥ 10 → bci_concern_driver_code =
+  BCI_PRIMARY_DRIVER.' Under the MTSAM-L08 data limitation (HQLD
+  unavailable) the maximum achievable BCI is D3 + D4 = 6. The §XIII.2a
+  output fields (bci_score, bci_level, bci_data_limitation, …) are not
+  carried as aliases — see [[holistic-output-schema]]. See
+  [[bci-dimensions-d1-d4]], [[bci-levels]], [[follower-rule]],
+  [[behavioural-causality-principle]],
+  [[historical-quote-lifecycle-dataset]].
