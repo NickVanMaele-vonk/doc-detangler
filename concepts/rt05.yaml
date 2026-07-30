@@ -3,7 +3,7 @@ term: RT05
 aliases: []
 status: candidate
 superseded_by: null
-placement: MCL
+placement: glossary
 used_in: [M]
 definition: >-
   Alert code RT05 (Opposite trades): Wash trading, economic neutrality
@@ -27,6 +27,8 @@ notes: >-
   [[otc-bilateral-trading]]. One of the nine implemented scenarios in the
   §0.2 Layer 1 row and the §1.0 MTS Alerts feed row
   ([[alert-abstraction-layer]]). Exact surface M-only under the C9 count;
+  placement glossary per Nick's ruling 2026-07-30 — RT02, RT05 and the
+  other RT* codes belong in the glossary (a human ruling, not a C9 pass).
   (P) §0.1 names it 'RT05 Opposite interaction' — that §7b row was
   promoted to §1e (Nick, 2026-07-28), but (P) is informational only and
   its expansion is not promoted into the definition (C2).

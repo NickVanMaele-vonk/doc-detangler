@@ -3,7 +3,7 @@ term: RT22
 aliases: []
 status: candidate
 superseded_by: null
-placement: MCL
+placement: glossary
 used_in: [M]
 definition: >-
   Alert code RT22: Pre-stress liquidity withdrawal.
@@ -35,4 +35,6 @@ notes: >-
   §0.3 row fixes the approved framing: 'RT08 provides compensating
   coverage for the absent RT22 alert' and 'RT08 detects stress events — it
   does not detect the anticipatory withdrawal that causes them' — see
-  [[language-governance]].
+  [[language-governance]]. Exact surface M-only under the C9 count;
+  placement glossary per Nick's ruling 2026-07-30 (RT* codes belong in the
+  glossary).
