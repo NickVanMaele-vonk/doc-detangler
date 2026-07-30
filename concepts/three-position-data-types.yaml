@@ -1,0 +1,60 @@
+id: three-position-data-types
+term: Three-Position Data Types
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  The three participant-level position data types the CICI framework
+  addresses: Participant OTC Positions (bilateral bond trades, repo
+  books, net OLO exposure), Participant Futures Positions (Bund
+  futures, OAT futures, derivative overlay), and Participant Repo
+  Positions (overnight and term repo, securities financing) — each
+  FORMALLY REMOVED from operational model.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:456e28fb58db33f0963669e53f9cbc9422a2e541caa1d383705f9acf6962afec
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The A.4.3.2 grid table is OCR-split
+  across blocks — the operative sentence block and the three type-row
+  blocks are all anchored; the three type names are values enumerated
+  in the definition, not aliases (C9 hygiene). Removal provenance is a
+  cross-document reference: 'Document 3 Â§1.0.1 Removal Register' (OCR
+  damage reproduced verbatim; Document 3 is the MCL). Per-type
+  treatment: OTC positions — Level 3 investigative hypothesis only; the
+  T+1 bilateral trade direction feeds the CVCE detection ([[cvce]]).
+  Futures positions — CICI public-data substitute produces the CMCS
+  contextual score; 'The CQS contribution (+0.50 at Level 2, +0.75 at
+  Level 3) is calibrated to reflect the contextual, not confirmatory,
+  nature of the finding.' Repo positions — 'No direct substitute
+  available.'; relevant to the SB-26 hypothesis ([[sb-26]],
+  [[repo-market-linkage]]). See
+  [[cross-instrument-context-intelligence]],
+  [[cross-market-convergence-score]], [[convergence-quality-score]].

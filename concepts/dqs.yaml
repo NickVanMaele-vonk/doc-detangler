@@ -1,0 +1,28 @@
+id: dqs
+term: DQS
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
+    para_hash: sha256:e1645c687b2734383dfbe8e44006e7f9160201e991ea89846fa2c249cb7bc163
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: single occurrence —
+  'ModelConfidence assessed purely on data quality dimensions (DQS,
+  UEEO completeness)' (A.3 grid row; the hash covers the row block) —
+  and the acronym is never expanded here; the extraction's 'Data
+  Quality Score' inference is not promoted (C2). Not used in the
+  shortened U (absence from the shortened blueprints is not evidence of
+  absence from the full set, §7b caution), so S-only under the C9
+  count. See [[modelconfidence]], [[unified-enriched-event-object]].

@@ -1,0 +1,43 @@
+id: cash-futures-basis
+term: cash-futures basis
+aliases: [OLO/Bund cash-futures basis]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cash-futures basis = OLO implied yield − Bund futures implied yield
+  (carry + CTD adjusted).
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
+    para_hash: sha256:415098bc8d39b35527902e83bb2313a9e9f8186cbf3062ff89754da582e59052
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); standard fixed-income concept given
+  an operational formula here (generic-with-local-meaning per the
+  extraction). Defined in the CICI Level 2 row (first hash covers the
+  grid-row block); CTD is used without expansion (surfaced, C2). CICI
+  Level 2 input 'from Eurex public data' (second span; Eurex is
+  externally owned and lives in reference-terms.md). Derived field:
+  'cmcs_l2_basis_shift = TRUE where: (a) basis_change on date D is in
+  the 90th percentile of historical basis changes for the same OLO/Bund
+  pair (instrument-specific baseline); AND (b) the direction of the
+  basis shift is consistent with the OLO activity pattern direction';
+  CMCS component (d) cmcs_s4_basis_move requires a basis change '≥
+  CMCS_BASIS_THRESHOLD (reference: 2bp)' — value tokens name-checked,
+  not aliased (C9 hygiene; CMCS calibration parameter disposition
+  pending, see PR body). See [[cross-instrument-context-intelligence]],
+  [[cross-market-convergence-score]], [[bund]].

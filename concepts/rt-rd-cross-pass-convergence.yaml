@@ -1,0 +1,32 @@
+id: rt-rd-cross-pass-convergence
+term: RT–RD Cross-Pass Convergence
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Intraday × EOD materiality scoring (RDCS), fifteen named RT–RD
+  combinations, and the five priority combinations for sovereign bond
+  markets.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:d680a9994174b8609cc753471fe5ae0771fda4732995cf8489dd42f1d107b5f1
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Defined only by the Section G row of
+  the section-overview table (the hash covers the row block); the
+  Section G body itself is absent from the shortened file — a
+  cross-reference to content not carried in the shortened corpus,
+  surfaced not fixed ([[sb-15]] §A.6.2 precedent). The framework (this
+  record) and the score are separate records without shared aliases
+  ([[qml]]/[[sb-13]] precedent): [[rdcs]] carries the corpus alias
+  'RT–RD cross-pass scoring' and both records anchor this same
+  overview-row block.
