@@ -23,6 +23,7 @@ source:
       stated_version: "v21"
 depends_on:
   - classification
+  - gate
 flags: []
 conflict: null
 review: "Decision: keep, refine definition (Nick, candidate-terms-merged.md §1c)"
