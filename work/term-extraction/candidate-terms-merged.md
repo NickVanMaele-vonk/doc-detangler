@@ -317,6 +317,26 @@ Word-overload cluster (glossary must disambiguate, criterion 1):
 31. **"Layer"**: Five-Layer FSMA architecture · four data layers (API stack) · six software layers (A) · three logical layers (A) · UCE/BPL/ECIL/CCL "layers" · Layer 2 feeds (Doc 3).
 32. **"IS"**: Intent Score vs the English verb — extraction hazard; also IS vs IScore vs ISS.
 
+> **Ruling 2026-07-30 (Nick), items 29–32: each sense gets a distinct record.**
+> No record is minted for the bare heads "Tier", "Level" or "Layer" — the
+> corpus defines none of them as standalone terms, so a head record would
+> invent a definition (C2). Disambiguation is carried by the qualified
+> record surfaces instead.
+>
+> Applied in the closing pass: most senses already had distinct records from
+> step 3.3, whose C9-hygiene notes had deliberately refused to alias a bare
+> "Tier 1" or "Layer 2" onto them. Two senses had no definition site and were
+> minted: `sovereign-auction-calendar` (item 29, the external-context feed
+> tier) and `level-0` (item 30, the signal-disposition level). The two records
+> that had explicitly deferred pending this ruling — `pattern-gate` and
+> `pattern-tier` — now resolve to those records. Item 31's remaining senses
+> (six software layers, three logical layers) are **(A)-only** and excluded
+> from the placement count per Nick's 2026-07-22 ruling, so they mint no
+> record. Item 32 needed no new record: `intent-score` (alias `IS`), `iscore`
+> and `ISS` on `participant-interaction` already separate the three, the
+> IS-vs-English-verb hazard being an extraction concern rather than an
+> ontology one.
+
 Set-level orphans (used somewhere, letter-expanded nowhere): 
 
 40. IPI, 

@@ -1,0 +1,37 @@
+id: sovereign-auction-calendar
+term: sovereign auction calendar
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:6e835a4f85710a9e5ef25a2f7b9cf78ce118fb833850cff662b89b625dc9bfd2
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: create distinct records per sense (Nick, 2026-07-30, ruling on the §4 word-overload cluster, items 29-32)"
+notes: >-
+  Minted under Nick's 2026-07-30 word-overload ruling
+  (candidate-terms-merged.md §4 item 29) to give the external-context
+  feed sense of "Tier" its own definition site. Orphan (definition: null
+  — not invented, C2): S names the feed and its priority without defining
+  either — "External context enrichment: sovereign auction calendar Tier
+  1 mandatory (not Tier 2 recommended)" (A.1, primary-market issuance
+  row). "Tier 1" / "Tier 2" here rank an external feed by how binding its
+  ingestion is; they are values of that ranking, not aliases of this term
+  (C9 hygiene), and no corpus wording states the ranking's own name or
+  its full extent. This is the third sense of "Tier" that
+  [[pattern-tier]] surfaced as a collision: distinct from the pattern
+  tiers of [[pattern-tier]], the supervisory tier of [[scl]], the
+  escalation tiers of [[three-tier-escalation-modifier]], the
+  AI-governance Tier 1 controls of [[ai-hard-controls]], and the Tier 3
+  investigative-hypothesis status of [[sb-26]]. The feed itself sits in
+  the same A.1 block as [[sf-issuance]]; see
+  [[external-context-intelligence-layer]].

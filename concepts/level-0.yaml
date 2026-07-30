@@ -1,0 +1,42 @@
+id: level-0
+term: Level 0
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:b4211898ac39aaa2e6d89eb80411b8bb30ef67327a131a82bfcfafa5aa87f8cc
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:065b497963ff66c5056b9a3beaf8b7f0dac9b4ee7470a64b380ce985377cac69
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: create distinct records per sense (Nick, 2026-07-30, ruling on the §4 word-overload cluster, items 29-32)"
+notes: >-
+  Minted under Nick's 2026-07-30 word-overload ruling
+  (candidate-terms-merged.md §4 item 30) to give the signal-disposition
+  sense of "Level" its own definition site. Orphan (definition: null —
+  not invented, C2): both spans use it, neither defines it. U states the
+  disposition twice in identical wording — "No pattern → signal closed at
+  Level 0" — once as the enforcement mechanism of Core Design Principle 1
+  ("Behaviour precedes suspicion", I.2) and once as the Step 2 gate rule
+  (II.1). The numeral is what disambiguates it: no other "Level" scale in
+  the corpus has a zero. Distinct from [[evidence-hierarchy]] Levels 1-5,
+  [[four-level-observability-framework]] Levels 1-4,
+  [[cross-instrument-context-intelligence]] Levels 1-3, [[bci-levels]],
+  [[l5-audit-record]], and the maturity levels of
+  [[six-level-progressive-deployment-model]]. Whether Level 0 is a
+  terminal closure state or the bottom of a wider disposition scale is
+  not stated anywhere in the shortened corpus — surfaced, not resolved
+  (criterion 6). See [[pattern-gate]].
