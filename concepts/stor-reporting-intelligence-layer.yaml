@@ -26,7 +26,7 @@ depends_on:
   - rcs-mar
   - scl
   - xs-mar
-flags: []
+flags: [conflict]
 conflict:
   summary: >-
     Cited as ‘Doc 7’ although the title block states ‘Document 1 of 3’ — the

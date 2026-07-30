@@ -46,4 +46,9 @@ notes: >-
   "MTS AM" meaning MTSAM. The MCL 1.1 grid table is OCR-split across
   blank-line blocks under the convention pipeline; the span anchors the
   table-header block carrying the operative "Market type" row (re-anchored
-  per Nick's ruling 2026-07-30).
+  per Nick's ruling 2026-07-30). Conflict P-1 (candidate list §7c) is
+  closed, not open: (P) §0.1 supplies a third expansion — "MTSAM MTS
+  Analytical Market surveillance this deployment" — and (P) §1.1 repeats
+  it as "the MTSAM (MTS Analytical Market) data contract"; Nick ruled
+  2026-07-30 that the (P) definition is incorrect. Not carried as an
+  alias and not surfaced as a conflict.

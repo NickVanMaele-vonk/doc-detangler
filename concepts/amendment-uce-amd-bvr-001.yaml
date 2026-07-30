@@ -14,7 +14,7 @@ source:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
 depends_on: []
-flags: [orphan]
+flags: [orphan, conflict]
 conflict:
   summary: >-
     Same amendment ID is attached to two different change sets — the v25 RSA

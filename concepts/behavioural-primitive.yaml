@@ -20,8 +20,32 @@ source:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
 depends_on: []
-flags: [orphan]
-conflict: null
+flags: [orphan, conflict]
+conflict:
+  summary: >-
+    Two unrelated "primitive" vocabularies (candidate list §7c, conflict
+    P-10): this term's named instances are behaviour tokens
+    (QUOTE_WITHDRAWAL, SPREAD_WIDENING, …), whereas (P) calls the nine
+    RT/RD alert codes "alert primitives". M's API-stack row sits between
+    the two senses, mapping the nine alerts onto "UCE behavioural
+    primitives" and "Domain 3 primitive codes" — which is what makes the
+    bare alias "primitive" ambiguous. Nick's ruling 2026-07-30: keep, flag
+    to humans for disambiguation; do not conflate. Surfaced, not
+    reconciled (C8 / criterion 6). See [[generic-alert-primitives]].
+  spans:
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+      quote: >-
+        Alert Abstraction Layer (Section 3.2): translates MTS alert names to
+        UCE behavioural primitives. All nine alerts mapped to Domain 3
+        primitive codes.
+      para_hash: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310
+    - doc: samples/prototype-BC17.md
+      section: "§1.2 `RawMTSAlert` — one surveillance alert (MTS S.p.A. surveillance export)"
+      quote: >-
+        The nine implemented alert primitives and their mapping (from
+        alert_map.py), with abbreviations spelled out:
+      para_hash: sha256:b67b0047741baf94c257c74dba3f5e29e6bf35de8df205ae03a9cc8bdb6e0c26
 review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
 notes: >-
   Set-level orphan (definition: null — not invented, C2). Both sources

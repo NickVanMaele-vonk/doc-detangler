@@ -112,6 +112,13 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
   do not fill it in.
 
 Remaining Phase 3 queue: the §4 decision-register dispositions (Nick's).
+The §7c `(P)` dispositions are closed (PR #63): P-1/P-2 ruled incorrect
+readings by `(P)` and recorded in `notes` without raising a conflict;
+P-3 – P-12 carried into the records as machine-readable `conflict:`
+entries. **P-13 and P-14 stay candidate-list rows only** (Nick,
+2026-07-30) — neither names a corpus term, and P-14 collides with the
+plan's own C1–C12 constraint IDs rather than with anything in `samples/`,
+so no record and no `reference-terms.md` row is minted for them.
 All cycles from the closing pass are dispositioned (Nick's rulings
 2026-07-30, applied in PR #62): the concept graph is acyclic except the
 one accepted contrastive pair (liquidity-driven-reaction ↔
@@ -138,7 +145,15 @@ Established across PRs #17–#35; follow them so records stay uniform.
   lightly stitched; pandoc-normalized punctuation (en-dashes, ≥, σ) is the
   house form. A term that is used but never defined gets
   `definition: null` + `flags: [orphan]` — do not promote extraction
-  glosses or (P)-only expansions into definitions.
+  glosses or (P)-only expansions into definitions. **"Lightly stitched"
+  means ordinary English is free** (Nick, 2026-07-30): connective and
+  descriptive words — *abuse*, *pattern*, *identified*, *catalogued* —
+  are standard English, not project terms; they need no corpus
+  provenance, no definition, and mint no `depends_on` edge. C2 constrains
+  the domain wording: terms, codes, thresholds, modality. A validation
+  check that tests every word against the anchored block is measuring the
+  wrong thing — restrict it to domain-shaped tokens (codes, snake_case
+  and CamelCase identifiers, and surfaces that have records).
 - **Verify wording against the source, not the extraction.** The extraction
   paraphrases ("cleared" became "passed" once — a criterion-5 defect that
   reached main). Validation for every batch: YAML parse + required keys,
