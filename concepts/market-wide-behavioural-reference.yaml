@@ -25,6 +25,9 @@ source:
 depends_on:
   - classification
   - convergence-quality-score
+  - mwbr-anomalous
+  - mwbr-score-levels
+  - quote-domain-signal
   - signal
 flags: []
 conflict: null

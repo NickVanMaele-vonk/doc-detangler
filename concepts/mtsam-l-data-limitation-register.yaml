@@ -30,6 +30,7 @@ source:
       stated_version: null
 depends_on:
   - mts-associated-markets
+  - mtsam-l01
 flags: [A, P]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"

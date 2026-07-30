@@ -31,6 +31,7 @@ source:
       stated_version: null
 depends_on:
   - mtsam-l-data-limitation-register
+  - mtsam-l01
 flags: [A]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
