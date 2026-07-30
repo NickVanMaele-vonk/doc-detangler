@@ -1,0 +1,27 @@
+id: calibration-change-register
+term: calibration change register
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:0389d02d0e8aafbb3902bcd1a2acae3bf1d3ba57b0337bd1ae95674a47a6dd6d
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: used, never defined (C2). Single
+  use in the §1.0 data-stack-governance paragraph: 'any addition of a new
+  data feed to the MTSAM API stack requires CCO approval and documentation
+  in the calibration change register' — see [[mtsam-api-stack]],
+  [[cco-assessment]], [[analytical-perimeter]]. Distinct from
+  [[calibration-target]] (the v22 changelog term) — separate records, no
+  shared aliases (C9).
