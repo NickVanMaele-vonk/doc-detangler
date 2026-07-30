@@ -90,13 +90,17 @@ a section ID.
 ## Current state
 
 Phases 1, 2 and the Phase 4 gate decisions are closed. **Phase 3 is in
-progress**: steps 3.1–3.2 are done and step 3.3 record authoring is well
-under way. `concepts/` holds 155 canonical records plus
+progress**: steps 3.1–3.2 are done and step 3.3 record authoring is nearly
+complete. `concepts/` holds 321 canonical records plus
 `concepts/reference-terms.md` (the hand-authored criterion-3 references
 list). Merged so far: all reviewed §1 sections, the §3a promotions, the
 step 3.4 `depends_on` pass (89 edges), the cycle dispositions (see below),
-the first §3 bulk batch (25 UCE-local records), and the 21 multi-document
-leftovers.
+the 21 multi-document leftovers, the full U bulk (3 batches, PRs #37–#40),
+the full S bulk (3 batches, PRs #41–#47), M batches 1–2 (PRs #48, #50),
+and Nick's 2026-07-30 RT*/RD* ruling (PR #51) re-placing `rt02`, `rt05`,
+`rt22`, `rd01` to the glossary — codes promoted via a §7b (P) ruling
+follow that ruling's placement even when the shortened corpus shows the
+surface in one doc only.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
@@ -106,9 +110,11 @@ leftovers.
   carrying a "Human review decision" column per term. This column is Nick's;
   do not fill it in.
 
-Remaining Phase 3 queue: the §3 single-document bulk (~74 U, ~64 S, ~72 M
-terms, Nick's author-as-is ruling 2026-07-29, batches of ≤25 per PR), then
-one closing `depends_on` edge pass over the whole bulk, then the §4
+Remaining Phase 3 queue: M batch 3 (11 records, the §1.1–1.3
+market-structure cluster: surveillance gap, Market Making explanation
+category, ISGO-02, Lite data mode, the five snake_case fields, correlated
+instrument pair, supervisory challenge pre-emption — closes the §3 bulk),
+then one closing `depends_on` edge pass over the whole bulk, then the §4
 decision-register dispositions (Nick's). Nick builds the D9 view-generator
 himself; the assistant delivers ontology content (records, edges) directly.
 
