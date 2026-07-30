@@ -5,12 +5,7 @@ status: candidate
 superseded_by: null
 placement: UCE
 used_in: [U]
-definition: >-
-  Stage 0 (pre-pipeline): the Intraday Behavioural Event Builder (IBEB,
-  §XVII.10) groups raw data streams — trades, quotes, alerts, ECIL
-  context, and participant history — into Intraday Behavioural Events
-  (IBEs) for each participant-instrument pair within a configurable
-  temporal window. Each IBE is the primary input to Stage 1.
+definition: null
 source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
@@ -18,16 +13,21 @@ source:
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
-depends_on:
-  - 22-step-analytical-pipeline
-  - alert
-  - external-context-intelligence-layer
-  - intraday-behavioural-event
-  - participant-history
+depends_on: []
 flags: []
 conflict: null
-review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+review: "Decision: the business term is the IBE; the Builder is software and is not defined (Nick, 2026-07-30, cycle disposition on IBE ↔ IBEB)"
 notes: >-
   Single-document term (§3 bulk). §XVII.10 is referenced but not present
   in the shortened UCE. Its output unit is [[intraday-behavioural-event]],
-  a glossary term.
+  a glossary term. Cycle disposition (Nick, 2026-07-30): only the IBE is
+  a business term; the Builder is a piece of software and its record
+  carries no definition, resolving the IBE ↔ IBEB cycle (its outgoing
+  edges are dropped — edges live only on defined records, D10 §4). Not
+  flagged orphan: the source does define it; the corpus wording is
+  preserved here verbatim: "Stage 0 (pre-pipeline): the Intraday
+  Behavioural Event Builder (IBEB, §XVII.10) groups raw data streams —
+  trades, quotes, alerts, ECIL context, and participant history — into
+  Intraday Behavioural Events (IBEs) for each participant-instrument pair
+  within a configurable temporal window. Each IBE is the primary input to
+  Stage 1."

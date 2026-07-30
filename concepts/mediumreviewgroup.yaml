@@ -1,0 +1,26 @@
+id: mediumreviewgroup
+term: MediumReviewGroup
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:67079ef86e4b55082f2927cba4e8e80dfbd18634302a0bbfd02fb8fd05a947d1
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling. Orphan: software
+  object, used once and never defined (C2) — cf. the IBE/IBEB ruling
+  2026-07-30. Sole usage, A.6.1: 'Fields in {braces} are populated by
+  MediumReviewEngine or MediumReviewGroup fields at closure time and
+  written to the OAIC audit trail.' See [[mediumreviewengine]],
+  [[oaic-audit-trail]].

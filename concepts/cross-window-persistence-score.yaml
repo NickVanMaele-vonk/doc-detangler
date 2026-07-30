@@ -1,6 +1,6 @@
 id: cross-window-persistence-score
 term: Cross-Window Persistence Score
-aliases: [CWPS, CWPS_cross, cwps_intra]
+aliases: [CWPS, CWPS_cross]
 status: candidate
 superseded_by: null
 placement: glossary

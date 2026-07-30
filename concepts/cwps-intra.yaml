@@ -1,0 +1,34 @@
+id: cwps-intra
+term: CWPS_intra
+aliases: [cwps_intra]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  One entry covering both corpus casings per Nick's ruling 2026-07-30;
+  each casing is reproduced verbatim where quoted (criterion 5). Orphan:
+  component score of [[cross-window-persistence-score]], never itself
+  defined (C2). Usage: U Persistence Gate step 11b 'cwps_intra < 0.50'
+  (lowercase); S SB-04 archetype row 'CWPS_intra CLOSE_WINDOW'
+  (uppercase). The lowercase form was previously an alias on
+  [[cross-window-persistence-score]]; moved here in the same PR
+  (MWBR_ANOMALOUS precedent, C9).

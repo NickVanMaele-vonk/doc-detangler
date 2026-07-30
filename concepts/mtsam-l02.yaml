@@ -1,0 +1,28 @@
+id: mtsam-l02
+term: MTSAM-L02
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  MTSAM-L data limitation register entry L02: no order book — part of the
+  absence of detailed OTC bilateral data.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
+    para_hash: sha256:a5581fbe6787662948e04177a574a2270f5971b2d2f230ff24de134763ce65c9
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on:
+  - mtsam-l-data-limitation-register
+flags: []
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling; register-entry form
+  per [[mtsam-l01]]. Sole U/S/M span is the A.4.2 no-data-cannot-confirm
+  row: '(MTSAM-L01: EOD timestamps only; MTSAM-L02: no order book)'. The
+  register's own definition cites L02 as an example; the (P) glossary also
+  expands it (informational only).
