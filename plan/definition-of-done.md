@@ -126,17 +126,31 @@ X, in the reading order of the set.
   neither compromises for the other.
 - **Cycles:** a genuine definitional cycle cannot be fixed by reordering.
   A cycle satisfies this criterion when all of the following hold:
-  1. the cycle is recorded in `concept-graph.yaml` with a human disposition;
-  2. one member is designated the entry point and defined first, using a
-     forward reference of the form "…see [Term] below", marked as bridging
-     text per criterion 7;
+  1. the cycle carries a human disposition in the **cycle register**,
+     `registers/cycles.yaml` — the canonical home for cycle dispositions,
+     which the generator rolls up into `concept-graph.yaml`. The register
+     is authored; `concept-graph.yaml` is derived and is never hand-edited
+     (C6, ADR-001 §5), so the disposition is read from the register and
+     written to the graph, not the reverse;
+  2. one member is designated the entry point **in that register entry**
+     and defined first, using a forward reference of the form "…see [Term]
+     below", marked as bridging text per criterion 7;
   3. the forward reference is listed in the verification report.
+
+  Register entries and live cycles are **1:1**. A cycle in the graph with
+  no register entry is a blocking finding — a new circular definition
+  awaiting disposition. A register entry with no corresponding cycle is a
+  stale ruling: a definition was narrowed and the exception is dead, so it
+  is flagged rather than silently dropped. A cycle resolved by narrowing
+  (ISO 704 §6.5.2 inner circle) gets no entry at all; its trace is the
+  clause moved verbatim to the record's `notes`.
 
   Because shared definitions now sit in one file that precedes the
   documents, cross-document cycles collapse into intra-glossary cycles,
   which are resolvable by reordering the glossary. This is a primary
   motivation for glossary-first.
-- **Verification method:** automatic, against `concept-graph.yaml`.
+- **Verification method:** automatic, against `concept-graph.yaml` and
+  `registers/cycles.yaml`.
 - **Status:** ⏸ Deferred to Phase 3 (the graph does not exist yet).
 - **Interim (Phases 1–2):** manual reviewer check, advisory only.
 

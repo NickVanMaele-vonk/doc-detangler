@@ -167,6 +167,52 @@ list, and research-memo §D2 and §2.4. Nick ruled that §D2 be **rewritten
 clean** rather than carrying an amendment note, so this ADR is the only
 record of why the canonicity claim changed.
 
+## Decision 6 — cycle dispositions get a canonical home (ruled 2026-07-30)
+
+Decision 5 left `definition-of-done.md` §1 requiring each cycle to be
+"recorded in `concept-graph.yaml` with a human disposition" — a hand-authored
+datum in a file that is now purely derived. **Nick's ruling: dispositions
+live in a canonical register, `registers/cycles.yaml`, which the generator
+rolls up into `concept-graph.yaml`.**
+
+**Not a record field.** A cycle is a property of a *set*, not of a concept.
+On both members it has two edit sites and will drift, defeating the
+single-edit-site guarantee D9 exists to provide; on one member the record
+carries data about another concept and deleting it orphans the ruling. The
+record schema is also corpus-anchored — every substantive field traces to a
+`source` span — and a disposition has no corpus wording to anchor to. `notes`
+cannot take it either: `concepts/README.md` declares that field "never
+machine-processed", and the generator must read this datum.
+
+**Not the waiver register.** `definition-of-done.md` §3 settles it: "A waiver
+is a deferral, not an approval: the set is not fully done while waivers are
+open." An accepted outer circle is an approval and permanent — filing it as a
+waiver would block done-ness forever and destroy the register's signal
+(accepted debt vs new regressions). The DoD has the direction right: waivers
+*extend* the documented-exception pattern already used for cycles, so cycles
+are the parent and waivers the sibling.
+
+**A separate top-level tree, not `concepts/registers/` (Nick).** `concepts/`
+then holds only corpus-derived business terms, one uniform schema, no
+exclusions — a rule the validator can enforce flatly instead of carrying a
+carve-out that rots. It also removes rather than fences the glob collision:
+`concepts/removal-register.yaml` is a real record for the corpus term
+"Removal Register". `concepts/reference-terms.md` moved to `registers/` under
+the same rule, being a list of terms deliberately *excluded* from the record
+set.
+
+**The invariant this buys:** register entries are 1:1 with live cycles. A
+cycle with no entry is a blocking finding; an entry with no cycle is a stale
+ruling, flagged rather than dropped; a cycle resolved by narrowing gets no
+entry, its trace being the clause moved verbatim to the record's `notes`.
+
+**Open — needs Nick.** Criterion 1 clause 2 requires a designated
+`entry_point` per cycle. The 2026-07-29 ruling accepted the
+liquidity-driven-reaction ↔ identity-driven-coordination cycle but never
+named one, so it is `null` and the generator cannot yet render the pair.
+Recommendation recorded in the register: `liquidity-driven-reaction`, as the
+corpus default classification that a reader should meet before the exception.
+
 ## Consequences
 
 **Already amended (Decision 5, ruled):** plan C6, plan §4 Storage, plan

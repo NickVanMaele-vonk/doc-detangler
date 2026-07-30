@@ -1,0 +1,48 @@
+# Cycle register — CANONICAL.
+#
+# Human dispositions for definitional cycles that remain in the concept
+# graph. Read by the view generator; rolled up into the generated
+# `concept-graph.yaml` so criterion 1's "recorded … with a human
+# disposition" (definition-of-done.md §1, Cycles) is satisfied without
+# anyone hand-editing a generated artifact.
+#
+# Scope — one entry per LIVE cycle, and only live cycles:
+#   - A cycle resolved by narrowing a definition (CLAUDE.md cycle policy,
+#     ISO 704 §6.5.2 inner circle) leaves no edge and gets NO entry here.
+#     Its trace is the clause moved verbatim to the record's `notes`.
+#   - Therefore register entries and cycles in the graph are 1:1. A cycle
+#     with no entry is a blocking finding; an entry with no cycle is a
+#     stale ruling and is flagged, never silently dropped.
+#
+# Dispositions are Nick's. The assistant never mints or changes one.
+
+cycles:
+  - id: liquidity-identity-contrast
+    members:
+      - liquidity-driven-reaction
+      - identity-driven-coordination
+    disposition: accepted-outer-circle
+    iso_704: "6.5.2"
+
+    # REQUIRED by definition-of-done.md §1 Cycles, clause 2 — not yet
+    # designated. Nick's ruling of 2026-07-29 accepted the cycle but did
+    # not name which member is defined first. The generator cannot render
+    # the pair until this is set.
+    #
+    # Recommendation (assistant, for Nick's ruling): liquidity-driven-reaction.
+    # It is the corpus default classification ("the default classification
+    # for sequential quote behaviour"), and S places the burden of
+    # establishing coordination on the identity-driven hypothesis, so a
+    # reader meets the default first and the exception second. The forward
+    # reference would sit in its trailing "unless … confirms identity-driven
+    # coordination" clause.
+    entry_point: null
+
+    rationale: >-
+      Genuinely contrastive pair, deliberately defined by mutual contrast:
+      the default-unless clause in liquidity-driven-reaction and the
+      identical-observable-pattern clause in identity-driven-coordination
+      are each load-bearing, so both edges are kept. The view generator
+      must treat the two-node cycle as one unit in the topological sort,
+      placing the pair adjacently.
+    authority: "Nick, 2026-07-29 (applied in PR #62)"
