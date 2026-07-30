@@ -28,6 +28,6 @@ notes: >-
   Single-document term (§3 bulk); one of the four named
   [[cross-venue-manipulation]] patterns (grid-table row; the hash covers
   the pattern table block). Detection logic: third-party OTC execution
-  response within SIGNAL_TRANSMISSION_WINDOW_SECONDS (§3 queue term, no
-  record yet), with cross-venue ECIL integration — 'where no macro event
+  response within [[signal-transmission-window-seconds]], with
+  cross-venue ECIL integration — 'where no macro event
   explains the price shift, the MTS conditioning is the candidate cause.'

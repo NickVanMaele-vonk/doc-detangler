@@ -40,6 +40,6 @@ notes: >-
   aliased on this one record — unlike [[qml]]/[[sb-13]], §D.5 names the
   same behaviour, not a separate measure. Spec section D.5 is absent from
   the shortened S. The embedded §D.4 BVR-grouping amendment text
-  (SBSP-AMD-BVR-001) sits inside the same table block; its terms
-  (MediumReviewEngine, explanation_type, event_context) are §3 queue terms
-  without records yet.
+  (SBSP-AMD-BVR-001) sits inside the same table block; its terms have §3
+  records: [[mediumreviewengine]], [[explanation-type]], [[event-context]]
+  (pointer updated after the S batch 2 merge, PR #43).
