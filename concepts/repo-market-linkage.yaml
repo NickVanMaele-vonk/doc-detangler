@@ -1,0 +1,43 @@
+id: repo-market-linkage
+term: Repo market linkage
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cash sovereign bond manipulation affecting the closing reference
+  price feeds into repo market margins, affecting collateral
+  availability across the financial system; repo market impact
+  classified as systemic consequence, OS=2 automatic.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:09ddf6ebde66c1524a71fa15fcb1278f922eacaa5c7901d65843d0565752c3bf
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); generic finance term with a project
+  rule (generic-with-local-meaning per the extraction). A.1
+  structural-characteristics grid row (first hash covers the row
+  block); definition assembled from the row's cells. Scoring
+  consequence: 'RDCS receives additional +0.10
+  systemic_consequence_uplift where downstream_exposure includes repo
+  margin calculations.' ([[systemic-consequence-uplift]], [[rdcs]],
+  [[downstream-exposure]], [[outcome-score]]). The adjacent High-value
+  reference prices row lists repo market margins among downstream
+  effects. Participant repo positions themselves are FORMALLY REMOVED
+  from the operational model and sit at observability Level 4 — 'Repo
+  books are bilateral OTC and are not reported to any MTSAM-accessible
+  data source.' (second span; [[three-position-data-types]]).

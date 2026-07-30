@@ -1,0 +1,47 @@
+id: automatic-validation
+term: Automatic Validation
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
+    para_hash: sha256:40620ed67d518a68c38bae94e62ab3567c5ea37badd4a1a7f3bbfe478b6f24a3
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:67079ef86e4b55082f2927cba4e8e80dfbd18634302a0bbfd02fb8fd05a947d1
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: never defined here — the
+  governing 'seven auto-validation conditions' live in '§VI-A.5.3 UCE
+  v30', a section absent from the shortened U (absence from the
+  shortened blueprints is not evidence of absence from the full set,
+  §7b caution), so the term stays S-only under the C9 count. One of the
+  five [[bvr]] closure modes. This document contributes two conditions:
+  Condition 3 — 'The ECIL amplification value (ibe.ecil_amplification)
+  participates directly in Automatic Validation as Condition 3'
+  ([[ecil-amplification]], threshold 0.20) — and Condition 5 —
+  'Explanation types listed as ‘safe’ are accepted as automatic
+  validation basis (Condition 5 of the seven auto-validation
+  conditions, §VI-A.5.3 UCE v30)' ([[explanation-type]]). Surface
+  variants in the corpus: 'Automatic Validation', 'auto-validation
+  conditions', 'automatic validation basis', and the §A.4.3.1 heading's
+  'BVR Auto-Validation Threshold'.

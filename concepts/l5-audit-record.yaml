@@ -1,0 +1,25 @@
+id: l5-audit-record
+term: L5 audit record
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:67079ef86e4b55082f2927cba4e8e80dfbd18634302a0bbfd02fb8fd05a947d1
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: single occurrence — 'Every
+  BVR closure (Automatic Validation, Batch, Thematic, Event, or
+  Participant) must include a validation basis statement in the L5
+  audit record.' The audit-level scheme behind 'L5' is not described in
+  this document. See [[bvr]], [[oaic-audit-trail]].

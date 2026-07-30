@@ -1,0 +1,34 @@
+id: emt-threshold
+term: EMT threshold
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:62ba0fd504911b9eb5d3d520c4f91d7fb1fd2b769504b23ee2429dd9bdb25e42
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:6bc0c17bf9c8e6dbe947aa0d46d2eb768fec4f7b7d1dc3e40abb33d0d63f5ab9
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: EMT is never expanded
+  anywhere in this document (no gloss promoted, C2). Usage: the 'EMT
+  Threshold Adjustment' column of the A.2 regime table (first anchored
+  row block carries the column heading) and the STRESSED row's 'All EMT
+  thresholds elevated 30%.' Not used in the shortened U (absence from
+  the shortened blueprints is not evidence of absence from the full
+  set, §7b caution), so S-only under the C9 count. See
+  [[liquid-regime-classification]].
