@@ -62,9 +62,11 @@ If one term appears in more than one input document, then:
 
 | File | Purpose |
 |------|---------|
-| `./plan/detangle-agent-plan.md` | Full project plan: 9 phases, constraints, rubric, sequencing rationale |
+| `./plan/detangle-agent-plan.md` | Full project plan: 10 phases, constraints, rubric, sequencing rationale |
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
-| `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated *(Phase 2 — draft, pending decisions)* |
+| `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
+| `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
+| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
@@ -75,14 +77,22 @@ If one term appears in more than one input document, then:
 
 ## Status
 
-Phases 1 and 2 complete (2026-07-21). Rubric approved
-(`plan/definition-of-done.md`); research memo delivered
-(`plan/research-memo.md`) across three rounds. Phase 4's gating architecture
-decisions signed off 2026-07-22: runtime is **Python** (D7), and the
-definition layer is **ontology-first** (D9) — structured concept records are
-the source of truth, with `glossary.md`/`index.md`/`concept-graph.mmd`
-generated as anchored views. Next: Phase 3 — build the concept records and
-view-generator (glossary, index, concept graph).
+Phases 1, 2 and 4 complete. Rubric approved (`plan/definition-of-done.md`);
+research memo delivered (`plan/research-memo.md`) across three rounds. The
+gating architecture decisions were signed off 2026-07-22: runtime is
+**Python** (D7), and the definition layer is **ontology-first** (D9) —
+structured concept records are the source of truth, with
+`glossary.md`/`index.md`/`concept-graph.mmd` generated as anchored views.
+Phase 4 closed 2026-07-30 with `plan/adr-001-form-factor.md`: the deliverable
+is a Python package **`detangle`** with a CLI, and the Claude-skill wrapper is
+deferred to Phase 9.2.
+
+Phase 3 data is essentially complete — **356 concept records** under
+`concepts/` with 303 `depends_on` edges, every cycle and definition conflict
+dispositioned, and the criterion-3 reference terms and cycle rulings in
+`registers/`. Next: build the toolchain in `src/detangle/` — `validate`, then
+`graph`, then `generate` — which closes Phase 3 steps 3.5–3.7 by producing the
+glossary, index and concept graph as generated views.
 
 ## Owner
 
