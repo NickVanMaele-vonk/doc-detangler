@@ -23,6 +23,7 @@ source:
       stated_version: null
 depends_on:
   - alert
+  - convergence
 flags: [conflict]
 conflict:
   summary: >-

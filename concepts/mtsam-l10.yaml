@@ -21,7 +21,8 @@ source:
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
-depends_on: []
+depends_on:
+  - mtsam-l-data-limitation-register
 flags: [conflict]
 conflict:
   summary: >-
