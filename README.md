@@ -67,8 +67,10 @@ If one term appears in more than one input document, then:
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated *(Phase 2 — draft, pending decisions)* |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
-| `concept-graph.yaml` | Concept dependency edge list — source of truth (SKOS concept model) *(Phase 3 — pending)* |
-| `concept-graph.mmd` | Mermaid render of the graph, generated from the source of truth; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
+| `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
+| `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1) and `reference-terms.md` (regulator- and industry-owned terms, criterion 3) *(Phase 3)* |
+| `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Generated from the concept records and registers, which are the source of truth *(Phase 3 — pending)* |
+| `concept-graph.mmd` | Mermaid render, generated from `concept-graph.yaml`; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
 
 ## Status

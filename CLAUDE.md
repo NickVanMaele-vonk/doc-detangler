@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Style
 
-Answer factually and concisely. 
+- Answer factually and concisely. 
+- Save tokens - avoid multiple hits against the same text, use scratchpads to avoid them. 
+
 
 ## What this repository is
 
@@ -65,12 +67,43 @@ added (criterion 7).
 
 **Canonical vs derived is the distinction that governs everything (D10 §4).**
 
-- Canonical: concept records, including `depends_on` dependency edges.
+- Canonical: concept records, including `depends_on` dependency edges, plus
+  the registers (see below).
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
-  usage edges, first-use links, `index.md`, `concept-graph.mmd`,
-  `state/section-map.yaml`, `manifest.yaml`.
+  usage edges, first-use links, `index.md`, `concept-graph.yaml`,
+  `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`.
+  (`concept-graph.yaml` was called the source of truth in plan C6 and the
+  README until Nick's 2026-07-30 ruling in ADR-001 — that wording predated
+  D9. Every edge in it is a copy of a record's `depends_on` or a derived
+  usage edge, so nothing canonical remained in it.)
 
 Anything location- or order-sensitive is derived, because a reorder rots it.
+
+**`concepts/` vs `registers/` — two canonical trees, one rule each (Nick,
+2026-07-30).** `concepts/` holds **only** corpus-derived business terms: one
+YAML record per concept, every one obeying the same schema and the same
+provenance contract (`source` span, `para_hash`, `verified_against`,
+definitions assembled from corpus wording per C2). That uniformity is
+enforceable — every file under `concepts/` is a record, with no exclusions —
+and a carve-out inside it would rot the first time a non-record file landed
+there.
+
+`registers/` holds canonical data that is **not** a corpus term: human
+rulings whose provenance is a PR thread and a standards clause, not a source
+span. Two registers exist, with `registers/waivers.yaml` to follow in Phase 10:
+
+- `registers/cycles.yaml` — cycle dispositions and entry points
+  (criterion 1). Entries are 1:1 with live cycles in the graph; a cycle
+  resolved by narrowing gets no entry.
+- `registers/reference-terms.md` — the criterion-3 list of regulator- and
+  industry-owned terms, which are deliberately *excluded* from the record
+  set. Moved out of `concepts/` under this rule.
+
+Registers are canonical inputs to generation, never generated. Do not put a
+register under `concepts/`: records are loaded as `concepts/*.yaml`, and a
+register file there is indistinguishable from a malformed record —
+`concepts/removal-register.yaml` is a genuine concept record for the corpus
+term "Removal Register", which is exactly the collision to avoid.
 
 **Five documents, one definition site (C9/C10).** Reading order is
 `glossary.md` → UCE → SBSP → MCL. `index.md` sits outside it. Placement is
@@ -95,7 +128,7 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
 across 116 records). `concepts/` holds 332 canonical records plus
-`concepts/reference-terms.md` (the hand-authored criterion-3 references
+`registers/reference-terms.md` (the hand-authored criterion-3 references
 list). Nick's 2026-07-30 rulings: RT*/RD* re-placement (PR #51 — codes
 promoted via a §7b (P) ruling follow that ruling's placement even when
 the shortened corpus shows the surface in one doc only); keep all
@@ -165,7 +198,7 @@ Established across PRs #17–#35; follow them so records stay uniform.
   (MWBR_ANOMALOUS precedent). A measure and the archetype that uses it stay
   separate records without shared aliases (QML / SB-13 precedent).
 - **Placement is computed, and ownership beats count.** Regulator- and
-  industry-owned terms go to `concepts/reference-terms.md` rows, never
+  industry-owned terms go to `registers/reference-terms.md` rows, never
   records, even when used in ≥2 docs (criterion 3; MAR Article 12/16, ADA,
   quote stuffing, Eurex, OLO, HHI). (P)-only terms are held as candidate
   rows until a U/S/M usage appears (ruling on PR #18).
@@ -178,7 +211,14 @@ Established across PRs #17–#35; follow them so records stay uniform.
   edge is dropped. A genuinely contrastive pair is kept as a documented
   outer circle (liquidity-driven-reaction ↔ identity-driven-coordination is
   the only accepted cycle); the view generator must condense that SCC for
-  the topological sort.
+  the topological sort. **Accepted cycles are recorded in
+  `registers/cycles.yaml`**, one entry per live cycle, and the generator
+  rolls them into `concept-graph.yaml` — a narrowed cycle gets no entry,
+  so entries and live cycles stay 1:1. Each entry also carries the
+  criterion-1 `entry_point`: the member defined first, whose cross-reference
+  becomes the marked forward reference. For the accepted pair that is
+  `liquidity-driven-reaction` (Nick, 2026-07-30) — default before exception,
+  so the identical-observable-pattern clause is never the deferred one.
 - **PR mechanics.** ≤ `param-max-terms-changed-per-PR` (25) files counting
   new records, edited records, and edge changes together. Note the count in
   every PR body. When wrapping notes programmatically, keep `[[...]]`
@@ -209,7 +249,7 @@ Established across PRs #17–#35; follow them so records stay uniform.
 - **External vendors are reference rows (2026-07-30 ruling, Eurex
   precedent).** OpenSanctions, OpenCorporates, Azure OpenAI / AWS
   Bedrock, Azure AI Search are criterion-3 rows in
-  `concepts/reference-terms.md`, not records — even when a ruling
+  `registers/reference-terms.md`, not records — even when a ruling
   loosely says "record", ownership beats it; flag the deviation.
 
 ## Working with the corpus

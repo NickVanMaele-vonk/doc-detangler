@@ -1,0 +1,50 @@
+# Cycle register — CANONICAL.
+#
+# Human dispositions for definitional cycles that remain in the concept
+# graph. Read by the view generator; rolled up into the generated
+# `concept-graph.yaml` so criterion 1's "recorded … with a human
+# disposition" (definition-of-done.md §1, Cycles) is satisfied without
+# anyone hand-editing a generated artifact.
+#
+# Scope — one entry per LIVE cycle, and only live cycles:
+#   - A cycle resolved by narrowing a definition (CLAUDE.md cycle policy,
+#     ISO 704 §6.5.2 inner circle) leaves no edge and gets NO entry here.
+#     Its trace is the clause moved verbatim to the record's `notes`.
+#   - Therefore register entries and cycles in the graph are 1:1. A cycle
+#     with no entry is a blocking finding; an entry with no cycle is a
+#     stale ruling and is flagged, never silently dropped.
+#
+# Dispositions are Nick's. The assistant never mints or changes one.
+
+cycles:
+  - id: liquidity-identity-contrast
+    members:
+      - liquidity-driven-reaction
+      - identity-driven-coordination
+    disposition: accepted-outer-circle
+    iso_704: "6.5.2"
+
+    # definition-of-done.md §1 Cycles, clause 2. Defined first, so its
+    # trailing "unless post-session order attribution or statistical
+    # specificity testing confirms identity-driven coordination" clause
+    # carries the forward reference ("…see [Term] below"), marked as
+    # bridging text per criterion 7. The counterpart's reference back to
+    # liquidity-driven reaction then resolves backwards and needs no mark.
+    #
+    # Rationale: default before exception, general before specific
+    # (criterion 2). Deferring a named, largely self-describing exception
+    # condition costs the reader less than deferring the
+    # identical-observable-pattern clause, which the records call the
+    # load-bearing analytical difficulty of the anonymous market.
+    entry_point: liquidity-driven-reaction
+
+    rationale: >-
+      Genuinely contrastive pair, deliberately defined by mutual contrast:
+      the default-unless clause in liquidity-driven-reaction and the
+      identical-observable-pattern clause in identity-driven-coordination
+      are each load-bearing, so both edges are kept. The view generator
+      must treat the two-node cycle as one unit in the topological sort,
+      placing the pair adjacently.
+    authority: >-
+      Cycle accepted by Nick 2026-07-29 (applied in PR #62); entry point
+      ruled by Nick 2026-07-30.

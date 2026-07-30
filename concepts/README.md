@@ -5,6 +5,22 @@ per concept. `glossary.md`, `index.md`, and `concept-graph.mmd` are
 **generated views** of these records — never hand-edit a generated artifact.
 Records change via PR only, within `param-max-terms-changed-per-PR` (25).
 
+**This directory holds only corpus-derived business terms** (Nick's ruling,
+2026-07-30). Every file here is a record obeying the schema below, with a
+`source` span anchored in `samples/` — no exclusions, so the rule is
+mechanically enforceable and records load as a flat `concepts/*.yaml`.
+
+Canonical data that is *not* a corpus term lives in **`registers/`**: human
+rulings whose provenance is a PR thread and a standards clause rather than a
+source span. Today `registers/cycles.yaml` (cycle dispositions and entry
+points, criterion 1) and `registers/reference-terms.md` (regulator- and
+industry-owned terms, criterion 3); `registers/waivers.yaml` follows in
+Phase 10. Registers are canonical *inputs* to generation, never generated.
+
+Do not put a register in here: `concepts/removal-register.yaml` is a genuine
+record for the corpus term "Removal Register", so a register file named the
+same way would be indistinguishable from a malformed record.
+
 Schema and anchoring rules below were approved by Nick on 2026-07-28
 (step 3.3 kickoff).
 
