@@ -2,8 +2,8 @@
 
 **Repo:** MTSAM-docs
 **Owner:** Nick Van Maele
-**Status:** Phases 1–2 complete; all Phase 4 gate decisions (D1–D9) signed off; D10 (continuous change) adopted 2026-07-23. Phase 3 in progress — 3.1 candidate extraction complete, merged candidate list under business review.
-**Last updated:** 2026-07-23
+**Status:** Phases 1–2 complete; **Phase 4 complete** — gate decisions (D1–D9) signed off, D10 (continuous change) adopted 2026-07-23, and 4.3/4.4 settled by `plan/adr-001-form-factor.md`, accepted 2026-07-30: the deliverable is a Python package `detangle` with a CLI, the Claude-skill wrapper deferred to Phase 9.2. Phase 3 in progress — steps 3.1–3.4 complete (356 concept records, 303 `depends_on` edges, all cycles and `(P)` conflicts dispositioned); steps 3.5–3.7 are generation tasks awaiting the toolchain.
+**Last updated:** 2026-07-30
 
 ---
 
@@ -251,8 +251,8 @@ Model/effort recommendation: Opus/high
 | 4.1 | **D9 — canonical home of a definition: DECIDED ontology-first (signed off 2026-07-22).** Structured concept records (one file per concept) are the source of truth; `glossary.md`/`index.md`/`concept-graph.mmd` are generated views with source-map anchors enabling a deterministic comment→edit round-trip; document bodies stay on the moved/derived/added model. Vector/graph DBs rejected as the truth store; NetworkX supplies the algorithms. Fold the C9/C10 framing into the rubric when Phase 3 starts. See research-memo §D9. |
 | 4.2 | **D7 — runtime: DECIDED Python (signed off 2026-07-22).** Python-first ecosystem (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK); Node would need ONNX conversion for the verifier. Did not gate Phase 3. See research-memo D7. |
 | 4.2a | **D10 — continuous change: ADOPTED (2026-07-23, at Nick's direction).** The set is a living document set; the tool ships two operating modes — the one-shot detangle run and a steady-state guard on every subsequent docs PR. Hash-stable provenance anchors, incremental drift lint, derived-artifact regeneration, `manifest.yaml`, term lifecycle + waiver register, tiered verification cadence. Delivered as Phase 10; schema fields land in Phase 3. See research-memo §D10. |
-| 4.3 | Present form-factor options with trade-offs (candidates below). The form factor must serve **both operating modes** (D10): the steady-state guard runs headless from branch policy, which weighs against a pure Claude-skill form. |
-| 4.4 | Nick chooses; decision recorded with rationale. |
+| 4.3 | **DECIDED — candidate B now, C later (ADR-001 Decision 1, approved 2026-07-30).** The deliverable is a Python package `detangle` with a CLI; the Claude-skill wrapper is deferred to Phase 9.2 and explicitly not built now. Candidate A is ruled out by Phase 10: branch policy invokes a process, not a chat session, so a skill cannot be the artifact. The package is required under all three candidates — "hybrid" only adds a `SKILL.md` that shells out to the same CLI — so the CLI contract (ADR-001 Decision 2) keeps it wrapper-ready and the deferral costs no rework. |
+| 4.4 | **DONE.** Decision recorded with rationale in `plan/adr-001-form-factor.md`, accepted 2026-07-30: Decision 1 form factor, 2 CLI contract, 3 repo layout and approved tooling, 4 build order (`validate` → `graph` → `generate`), 5 `concept-graph.yaml` is derived, 6 cycle dispositions live in `registers/cycles.yaml`, 7 the assistant builds the whole toolchain. |
 
 **Candidate architectures:**
 
@@ -266,6 +266,7 @@ Model/effort recommendation: Opus/high
 
 **Output:** architecture decision record (ADR).
 **Done when:** decision recorded.
+**Status: complete.** `plan/adr-001-form-factor.md`, accepted 2026-07-30.
 
 ## Phase 5 — Evaluation set
 Model/effort recommendation: Opus/high

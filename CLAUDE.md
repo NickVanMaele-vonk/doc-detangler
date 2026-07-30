@@ -10,27 +10,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-Detangle — a planned agent/pipeline that turns convoluted markdown
-specifications into a logically structured five-document set. **There is no
-code yet.** The repo currently holds the normative specification (`plan/`),
-the read-only source corpus (`samples/`), and in-progress Phase 3 data
-artifacts (`work/`). The runtime is decided (Python, D7) but nothing is
-implemented, so there is no build, no test runner, and no lint. Do not invent
-one; if a task needs tooling, propose it and get approval first.
+Detangle — an agent/pipeline that turns convoluted markdown specifications
+into a logically structured five-document set. The repo holds the normative
+specification (`plan/`), the read-only source corpus (`samples/`), the
+canonical Phase 3 data (`concepts/`, `registers/`), in-progress working
+artifacts (`work/`), and — from ADR-001 onward — the toolchain itself under
+`src/detangle/`.
+
+**Form factor (ADR-001, approved 2026-07-30):** a Python package `detangle`
+with a CLI. The Claude-skill wrapper is candidate C staged, deferred to
+Phase 9.2, and explicitly not built now. Approved tooling: Python ≥ 3.11,
+`pytest`, `ruff`, `PyYAML`, `networkx`, and `pandoc` invoked as a subprocess.
+Anything beyond that list still needs approval before use.
 
 ## Commands
 
-Everything is git + `gh`. The only workflow that exists:
+Everything is git + `gh`, plus the package's own tooling once `src/` exists:
 
 ```bash
-git checkout -b <area>/<slug>          # areas in use: plan/, work/, samples/
+git checkout -b <area>/<slug>          # areas in use: plan/, work/, samples/, src/
 git add … && git commit                # then:
 gh pr create --base main               # every change lands via PR — see C4
+
+pytest                                 # tests/ — added with the first src/ commit
+ruff check .                           # lint
+detangle validate|graph|generate       # the three commands, in build order (ADR-001 D4)
 ```
 
 Branch naming follows the areas above (`plan/add-section-ids`,
-`work/upd-candidate-terms`, `samples/new`). PRs are merged by Nick, not by the
-assistant.
+`work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
+by Nick, not by the assistant.
 
 ## The three normative documents — read before changing anything
 
@@ -122,12 +131,15 @@ a section ID.
 
 ## Current state
 
-Phases 1, 2 and the Phase 4 gate decisions are closed. **Phase 3 is in
+Phases 1, 2 and **all** of Phase 4 are closed — the gate decisions (4.1 D9,
+4.2 D7, 4.2a D10) plus 4.3/4.4, settled by ADR-001 (Decisions 1–4 approved
+2026-07-30, Decisions 5–6 ruled the same day). **Phase 3 is in
 progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 (all §1 sections, §3a promotions, multi-document leftovers, and the full
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
-across 116 records). `concepts/` holds 332 canonical records plus
+across 116 records). Steps 3.5–3.7 are now **generation** tasks and are the
+first code the project needs. `concepts/` holds 356 canonical records plus
 `registers/reference-terms.md` (the hand-authored criterion-3 references
 list). Nick's 2026-07-30 rulings: RT*/RD* re-placement (PR #51 — codes
 promoted via a §7b (P) ruling follow that ruling's placement even when
@@ -144,8 +156,15 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
   carrying a "Human review decision" column per term. This column is Nick's;
   do not fill it in.
 
-Remaining Phase 3 queue: the §4 decision-register dispositions (Nick's).
-The §7c `(P)` dispositions are closed (PR #63): P-1/P-2 ruled incorrect
+Remaining Phase 3 queue: the §4 word-overload cluster (items 29–32:
+"Tier", "Level", "Layer", "IS"), which **Nick ruled 2026-07-30 gets
+distinct records per sense** — qualified surfaces, one definition site
+each, so criterion 1's disambiguation requirement is met by the record
+set rather than by a note in the generated glossary. The §4 definition
+conflicts (items 1–15) are already carried into the records as
+`conflict:` blocks and the identity questions (16–28) are answered, so
+that is the last open row in the register. The §7c `(P)` dispositions are
+closed (PR #63): P-1/P-2 ruled incorrect
 readings by `(P)` and recorded in `notes` without raising a conflict;
 P-3 – P-12 carried into the records as machine-readable `conflict:`
 entries. **P-13 and P-14 stay candidate-list rows only** (Nick,
@@ -159,8 +178,11 @@ identity-driven-coordination, condensed by the view generator). Direction
 rulings worth remembering: classification precedes gate (a status
 recommended by a tool precedes the decision moment about it), and RT01
 precedes SB-01 (a raw-data alert precedes the calculated fraud-detection
-item that shares its name). Nick builds the D9 view-generator himself;
-the assistant delivers ontology content (records, edges) directly.
+item that shares its name). **Division of labour (Nick, 2026-07-30):** the
+assistant builds the whole toolchain — validator, graph, and the D9
+view-generator — as well as delivering ontology content (records, edges).
+This supersedes the earlier split in which Nick built the view-generator
+himself.
 
 ## Record-authoring conventions (learned in practice, steps 3.3–3.4)
 

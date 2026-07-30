@@ -1,8 +1,9 @@
 # ADR-001 — Form factor and toolchain layout
 
 **Phase:** 4.3 / 4.4
-**Status:** Decisions 1–4 proposed, awaiting Nick's sign-off. Decision 5
-ruled by Nick 2026-07-30 and applied.
+**Status:** **Accepted.** Decisions 1–4 approved by Nick 2026-07-30, as
+proposed and without amendment. Decisions 5 and 6 ruled by Nick the same day
+and applied.
 **Date:** 2026-07-30
 **Depends on:** D7 (Python), D9 (ontology-first), D10 (continuous change)
 
@@ -27,7 +28,7 @@ A constraint surfaced during this decision: business users have VS Code with
 the Claude extension, which raises the question of whether a skill is the
 easier invocation surface for them.
 
-## Decision 1 — form factor: **B now, C later**
+## Decision 1 — form factor: **B now, C later** (approved 2026-07-30)
 
 **The deliverable is a Python package `detangle` with a CLI. A Claude skill
 wrapper is deferred to Phase 9.2 and is explicitly not built now.**
@@ -65,7 +66,7 @@ forward reachability) and D9 round-trip step 3 (propose a field value from a
 PR comment). The latter needs a model regardless, but D9 stages it as
 assisted-manual first, so neither is on the critical path.
 
-## Decision 2 — CLI contract
+## Decision 2 — CLI contract (approved 2026-07-30)
 
 Rules that keep the package wrapper-ready and CI-ready from the first commit,
 so adding `SKILL.md` in Phase 9 costs no rework:
@@ -85,7 +86,7 @@ so adding `SKILL.md` in Phase 9 costs no rework:
   `definition-of-done.md` §Parameters is read from a config file
   (`detangle.toml`); the code ships no default that contradicts the rubric.
 
-## Decision 3 — repo layout
+## Decision 3 — repo layout (approved 2026-07-30, tooling included)
 
 ```
 src/detangle/
@@ -108,7 +109,7 @@ Python ≥ 3.11 (3.12.3 present), `pytest`, `ruff`, `PyYAML`, `networkx`.
 `concepts/README.md` is defined in terms of `pandoc -t plain` output — and is
 invoked as a subprocess, not a library. Confirmed present: pandoc 3.1.3.
 
-## Decision 4 — build order
+## Decision 4 — build order (approved 2026-07-30)
 
 Three commands, in dependency order, none of which touches an LLM:
 
@@ -226,17 +227,33 @@ load-bearing analytical difficulty of the anonymous market. Its own trailing
 "unless … confirms identity-driven coordination" carries the forward
 reference, marked as bridging text per criterion 7.
 
+## Decision 7 — the assistant builds the whole toolchain (ruled 2026-07-30)
+
+**Nick's ruling: the assistant builds `validate`, `graph` **and** the D9
+view-generator, alongside delivering ontology content.** This supersedes the
+earlier split — recorded in CLAUDE.md and in the assistant's memory — under
+which Nick built the view-generator himself and the assistant supplied only
+records and edges.
+
+The two statements had already diverged in practice, and Decision 4 makes the
+divergence load-bearing: `generate` is step 3 of the build order, so leaving
+its ownership ambiguous would have stalled the sequence exactly where
+`validate` and `graph` hand off. Nothing else in the ADR changes — the
+generator still emits the three views with `gen:` anchors per D9, and the
+regenerate-and-compare guard still makes a hand-edited view a CI failure.
+
 ## Consequences
 
 **Already amended (Decision 5, ruled):** plan C6, plan §4 Storage, plan
 §Phase 2 status, plan step 3.4, plan Phase 3 Outputs, README Contents table,
 CLAUDE.md derived list, research-memo §D2 (rewritten) and §2.4.
 
-**Still to amend, on approval of Decisions 1–4:** plan §Status and Phase
-4.3/4.4 (record the form-factor decision), README §Status (still says "Next:
-Phase 3 — build the concept records", which the 356 landed records have
-overtaken), CLAUDE.md's "no build, no test runner, no lint" statement, which
-stops being true at the first commit of `src/`.
+**Amended on approval of Decisions 1–4 (2026-07-30, this PR):** plan §Status
+and Phase 4.3/4.4 (form-factor decision recorded), README §Status (it still
+said "Next: Phase 3 — build the concept records", which the 356 landed records
+had overtaken), CLAUDE.md's "no build, no test runner, no lint" statement,
+which stopped being true at the first commit of `src/`, and CLAUDE.md's
+division-of-labour sentence per Decision 7.
 
 **Not decided here** — deferred to their own phases: how LLM stages are
 packaged and prompted (Phase 6), Azure DevOps authentication and PAT scope
