@@ -163,14 +163,15 @@ hand-editing the graph is a CI failure rather than a reconciliation problem.
 
 **Applied in this PR:** plan C6, plan §4 Storage, plan §Phase 2 status, plan
 step 3.4, plan Phase 3 Outputs, README Contents table, CLAUDE.md derived
-list, and an amendment note under research-memo D2 (the decision register is
-amended, never rewritten).
+list, and research-memo §D2 and §2.4. Nick ruled that §D2 be **rewritten
+clean** rather than carrying an amendment note, so this ADR is the only
+record of why the canonicity claim changed.
 
 ## Consequences
 
 **Already amended (Decision 5, ruled):** plan C6, plan §4 Storage, plan
 §Phase 2 status, plan step 3.4, plan Phase 3 Outputs, README Contents table,
-CLAUDE.md derived list, research-memo D2 amendment note.
+CLAUDE.md derived list, research-memo §D2 (rewritten) and §2.4.
 
 **Still to amend, on approval of Decisions 1–4:** plan §Status and Phase
 4.3/4.4 (record the form-factor decision), README §Status (still says "Next:
