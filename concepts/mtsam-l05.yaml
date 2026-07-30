@@ -1,0 +1,28 @@
+id: mtsam-l05
+term: MTSAM-L05
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:18153ef7152fb17cbc35c405819fd44d7ad0cfc19de7f989cc95bc92b6962b9c
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Entry of
+  [[mtsam-l-data-limitation-register]] (register entries get records in
+  their own right, sb-26 precedent; [[mtsam-l01]] shape). Orphan: the
+  register's own L05 row is not included in the shortened corpus (§7b
+  caution — absence is not evidence of absence); the single
+  shortened-corpus use is the RT05 assessment clause 'OTC bilateral
+  component limited by MTSAM-L05' — see [[rt05]],
+  [[otc-bilateral-trading]].

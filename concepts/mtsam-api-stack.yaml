@@ -1,0 +1,43 @@
+id: mtsam-api-stack
+term: MTSAM API Stack
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  MTSAM API Stack: The MTSAM analytical engine operates across four data
+  layers.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:03d2c2295fd90601b94623171e7b1197c0b1dd2c8757bb767e042d17f5ef42d1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:0389d02d0e8aafbb3902bcd1a2acae3bf1d3ba57b0337bd1ae95674a47a6dd6d
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled from the §1.0
+  intro; the four layers are 'Layer 1 — Core Surveillance (Primary
+  analytical inputs)', 'Layer 2 — Context (External market context for
+  ECIL enrichment)', 'Layer 3 — Intelligence (Participant and entity
+  context)' and 'Layer 4 — AI (Narrative generation and analyst query
+  interface)' — layer titles are values of this term, not aliases (C9
+  hygiene). The explicit exclusion register documents that 'the model was
+  designed around what MTSAM can realistically obtain, not around what a
+  theoretically complete surveillance system would require'. Data stack
+  governance ties feed additions to [[cco-assessment]] approval and the
+  [[calibration-change-register]], and feed changes to the
+  [[analytical-perimeter]]. 'Layer' polysemy (four data layers here vs the
+  five-layer FSMA architecture) is §4 item 31 — see
+  [[five-layer-architecture]]. See [[mts-trades]],
+  [[alert-abstraction-layer]].
