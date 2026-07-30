@@ -1,7 +1,8 @@
 # ADR-001 — Form factor and toolchain layout
 
 **Phase:** 4.3 / 4.4
-**Status:** Proposed — awaiting Nick's sign-off
+**Status:** Decisions 1–4 proposed, awaiting Nick's sign-off. Decision 5
+ruled by Nick 2026-07-30 and applied.
 **Date:** 2026-07-30
 **Depends on:** D7 (Python), D9 (ontology-first), D10 (continuous change)
 
@@ -130,34 +131,52 @@ Three commands, in dependency order, none of which touches an LLM:
 This closes Phase 3 steps 3.5–3.7 and produces the standalone MTSAM
 deliverable named in the sequencing rationale.
 
-## Open ruling required — is `concept-graph.yaml` canonical or derived?
+## Decision 5 — `concept-graph.yaml` is derived (ruled 2026-07-30)
 
-Three documents still call it the source of truth — plan C6, plan §4
-("Storage: a plain-text edge-list source of truth"), and the README Contents
-table. D9/D10 make the **concept records** canonical, and CLAUDE.md's derived
-list does not mention `concept-graph.yaml` at all. Under D9 it cannot be
-canonical; the wording predates the decision.
+**Nick's ruling, 2026-07-30: `concept-graph.yaml` is a derived artifact.**
+Regenerated from the concept records (canonical `depends_on`) plus the bodies
+(derived usage edges, C11); never hand-edited; hand-edits fail the
+regenerate-and-compare guard. The concept records are the only source of
+truth.
 
-C11 settles what it is *for*: derived usage edges ("section S uses term X")
-live there. So:
+**The conflict was internal to the plan, not D9-versus-C6.** C6 called the
+file the source of truth, citing D2 (2026-07-21). C11, as amended by D10
+(2026-07-23), said "dependency edges in the concept records are the only
+canonical edge data". Both sit in the same constraints table and cannot both
+be operative. D2 simply predates D9 (2026-07-22), which moved canonicity into
+the records, and was never revisited.
 
-- **Recommended:** `concept-graph.yaml` is a **derived artifact** —
-  regenerated from the records (canonical `depends_on`) plus the bodies
-  (derived usage edges), never hand-edited, hand-editing fails CI. Add it to
-  the CLAUDE.md derived list; amend C6, plan §4, and the README table to say
-  "generated from the records" rather than "source of truth".
-- **Alternative:** drop the file entirely and generate `concept-graph.mmd`
-  straight from the records. Rejected — it would leave derived usage edges
-  (C11) without a home, and the `.mmd` render is lossy for diffing.
+The substance follows: after D9 and D10 every edge in the file is either a
+copy of a record's `depends_on` or a usage edge that is explicitly derived.
+Nothing canonical remained in it. The charitable reading of C6 — that "source
+of truth" meant only "the `.mmd` is generated from this, not hand-drawn" —
+was plausible, which is why this was raised as a ruling rather than edited
+unilaterally.
 
-This needs Nick's ruling because C6 is a signed constraint, not just prose.
+**Rejected alternative:** drop the file and render `concept-graph.mmd`
+straight from the records. That would leave C11's usage edges without a home,
+and `.mmd` diffs poorly.
+
+**Consequence for the code:** `detangle graph` **writes** this file rather
+than reading it, `depends_on` has exactly one edit site (the record), and
+hand-editing the graph is a CI failure rather than a reconciliation problem.
+
+**Applied in this PR:** plan C6, plan §4 Storage, plan §Phase 2 status, plan
+step 3.4, plan Phase 3 Outputs, README Contents table, CLAUDE.md derived
+list, and an amendment note under research-memo D2 (the decision register is
+amended, never rewritten).
 
 ## Consequences
 
-**Documents to amend on approval:** plan §Status and Phase 4.3/4.4 (record
-the decision), plan C6 and §4 storage note (the ruling above), README
-Contents table and Status, CLAUDE.md (derived list; the "no build, no test
-runner" statement stops being true at the first commit).
+**Already amended (Decision 5, ruled):** plan C6, plan §4 Storage, plan
+§Phase 2 status, plan step 3.4, plan Phase 3 Outputs, README Contents table,
+CLAUDE.md derived list, research-memo D2 amendment note.
+
+**Still to amend, on approval of Decisions 1–4:** plan §Status and Phase
+4.3/4.4 (record the form-factor decision), README §Status (still says "Next:
+Phase 3 — build the concept records", which the 356 landed records have
+overtaken), CLAUDE.md's "no build, no test runner, no lint" statement, which
+stops being true at the first commit of `src/`.
 
 **Not decided here** — deferred to their own phases: how LLM stages are
 packaged and prompted (Phase 6), Azure DevOps authentication and PAT scope

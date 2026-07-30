@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Style
 
-Answer factually and concisely. 
+- Answer factually and concisely. 
+- Save tokens - avoid multiple hits against the same text, use scratchpads to avoid them. 
+
 
 ## What this repository is
 
@@ -67,8 +69,12 @@ added (criterion 7).
 
 - Canonical: concept records, including `depends_on` dependency edges.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
-  usage edges, first-use links, `index.md`, `concept-graph.mmd`,
-  `state/section-map.yaml`, `manifest.yaml`.
+  usage edges, first-use links, `index.md`, `concept-graph.yaml`,
+  `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`.
+  (`concept-graph.yaml` was called the source of truth in plan C6 and the
+  README until Nick's 2026-07-30 ruling in ADR-001 — that wording predated
+  D9. Every edge in it is a copy of a record's `depends_on` or a derived
+  usage edge, so nothing canonical remained in it.)
 
 Anything location- or order-sensitive is derived, because a reorder rots it.
 

@@ -483,7 +483,7 @@ per the boundary above.
 |---|---|---|---|
 | Term extraction | — | **KeyBERT** (MIT; deps carry own licences) — one datapoint, rest not researched | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
-| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | `concept-graph.yaml` source of truth + generated `concept-graph.mmd` render, local dependency edge |
+| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) generated `concept-graph.yaml` edge list + generated `concept-graph.mmd` render (records are canonical, 2026-07-30), local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
 | Markdown parsing / structure | — | **pandoc JSON AST** via panflute/Lua (R3); **Marko/mistune ruled out — no grid-table support** | section-move logic on the AST |
 | Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
@@ -596,7 +596,8 @@ Keep the SKOS *concept model* (concepts, plus our project-local "definition
 of X uses term Y" dependency edge), and require a **Mermaid-compatible
 format** so the graph displays natively in Azure DevOps and GitHub, rather
 than Turtle. The two-artifact arrangement is retained: a plain-text edge-list
-**source of truth** (`concept-graph.yaml`) with a **Mermaid render**
+**source of truth** (`concept-graph.yaml`) [*canonicity superseded — see the
+amendment at the end of this decision*] with a **Mermaid render**
 (`concept-graph.mmd`) generated from it. Mermaid is a compatible *view*, not
 the sole source of truth.
 
@@ -608,6 +609,21 @@ Open sub-questions, folded into round 2 (C2):
   This is an open question, **not** a settled collapse to a single file.
 - Whether existing SKOS-to-Mermaid or graph-to-Mermaid tooling exists, or the
   conversion is ours to write.
+
+**Amendment 2026-07-30 (Nick's ruling, ADR-001) — `concept-graph.yaml` is
+derived, not canonical.** The decision above is otherwise unchanged: SKOS
+model, Mermaid-compatible render, two artifacts. Only the canonicity claim is
+corrected. D2 was recorded on 2026-07-21, before D9 (2026-07-22) made the
+concept records the source of truth and before D10 (2026-07-23) made usage
+edges derived. Between them those two decisions left nothing canonical in the
+file — every edge in it is either a copy of a record's `depends_on` or a
+derived usage edge — and C11 already asserted, post-D10, that "dependency
+edges in the concept records are the only canonical edge data", contradicting
+C6 in the same table. `concept-graph.yaml` is therefore **generated**:
+regenerated from the records plus the bodies, never hand-edited, with
+hand-edits caught by the regenerate-and-compare guard. The first open
+sub-question above (could the source-of-truth format itself be Mermaid-native)
+is thereby closed as moot — neither file is the source of truth.
 
 ### D6 — note on the reasoning
 
@@ -887,8 +903,9 @@ artifacts enumerated in element 4.
 ### What is now settled for Phase 4 / build
 
 Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
-`concept-graph.yaml` source of truth, generated `concept-graph.mmd` render
-(D2). No TBX (D3). Reuse **MiniCheck** for fabrication checking, MIT
+generated `concept-graph.yaml` edge list and generated `concept-graph.mmd`
+render (D2, canonicity amended 2026-07-30 — the records are the source of
+truth; both graph files are derived). No TBX (D3). Reuse **MiniCheck** for fabrication checking, MIT
 Flan-T5-Large / DeBERTa-v3-Large checkpoint only (D4, confirmed). Reuse
 **Vale** for term/acronym rules only, not concept-before-use (D5, confirmed).
 No `language_tool_python` (D6). Runtime is **Python** (D7, signed off
