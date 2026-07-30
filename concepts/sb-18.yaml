@@ -19,6 +19,8 @@ source:
 depends_on:
   - alert
   - auction-window
+  - bt-05
+  - bt-07
   - close-window
   - convergence
   - risk-archetype

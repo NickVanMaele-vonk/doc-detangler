@@ -27,6 +27,8 @@ depends_on:
   - outcome-score
   - rd03
   - rd04
+  - rd07
+  - rd12
   - signal
 flags: []
 conflict: null

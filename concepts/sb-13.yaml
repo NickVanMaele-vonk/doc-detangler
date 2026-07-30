@@ -24,6 +24,9 @@ source:
       stated_version: "Version 29 | June 2026"
 depends_on:
   - qml
+  - qml-direction
+  - qml-lead-rate
+  - qml-market-impact
   - risk-archetype
 flags: []
 conflict: null

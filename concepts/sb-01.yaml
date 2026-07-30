@@ -25,6 +25,7 @@ source:
 depends_on:
   - behavioural-objective-assessment
   - behavioural-primitive
+  - bt-03
   - multi-day-conditioning-score
   - risk-archetype
   - rt01
