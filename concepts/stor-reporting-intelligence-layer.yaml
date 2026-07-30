@@ -1,0 +1,48 @@
+id: stor-reporting-intelligence-layer
+term: STOR Reporting Intelligence Layer
+aliases: [Doc 7, terminal supervisory articulation layer]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Terminal supervisory articulation layer: NIM-MAR four-layer narrative,
+  FSMA fsma_2016_08_d six-section template mapping, RAAF alternative
+  explanation governance, XS-MAR explainability scoring, SCL supervisory
+  confidence tiers, NFIL non-filing defensibility, RCS-MAR challenge
+  simulation, QA-MAR, EU AI Act
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:9e5feda3c2e59ce4f863a9626b88cd4dde61c0e7f27d5e747f7efee976673a71
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict:
+  summary: >-
+    Cited as ‘Doc 7’ although the title block states ‘Document 1 of 3’ — the
+    document-set extent conflict (candidate-terms-merged.md §4 item 12,
+    together with Doc 6 and the ECIL Supplemental Specification) — surfaced,
+    not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Document 1 of 3
+      para_hash: sha256:3ebfe9c277de8f92f925591719743184aa527e60f6f3412504f1879cbda12cc7
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Doc 7 — STOR Reporting Intelligence Layer
+      para_hash: sha256:9e5feda3c2e59ce4f863a9626b88cd4dde61c0e7f27d5e747f7efee976673a71
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition is the Doc 7 contents row's
+  descriptive cell (C2); it ends 'RCS-MAR challenge simulation, QA-MAR, EU
+  AI Act' without further gloss — possible truncation, surfaced as-is.
+  Constituent constructs are name-checked only: [[nim-mar]], [[raaf]],
+  [[xs-mar]], [[nfil]], [[rcs-mar]], [[qa-mar]]; SCL is a shared term —
+  see [[scl]]. FSMA and the EU AI Act are regulator-owned (references
+  list, criterion 3).

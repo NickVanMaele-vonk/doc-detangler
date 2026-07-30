@@ -1,0 +1,25 @@
+id: fp-code
+term: FP code
+aliases: [FP]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.2 Human Intervention Checkpoints"
+    para_hash: sha256:da8a322e129c1e11c071d0180d576fa78e038757450b8ff7d6b0dcce52dfc1d6
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: closure code assigned at HCP-1 —
+  'Analyst reviews signal, assesses explanation sufficiency, documents
+  reasoning, assigns FP code or escalates.' — with the code taxonomy and
+  the FP expansion nowhere in the shortened corpus. See
+  [[human-intervention-checkpoint]].
