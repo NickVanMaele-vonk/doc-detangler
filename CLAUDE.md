@@ -112,6 +112,13 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
   do not fill it in.
 
 Remaining Phase 3 queue: the §4 decision-register dispositions (Nick's).
+The §7c `(P)` dispositions are closed (PR #63): P-1/P-2 ruled incorrect
+readings by `(P)` and recorded in `notes` without raising a conflict;
+P-3 – P-12 carried into the records as machine-readable `conflict:`
+entries. **P-13 and P-14 stay candidate-list rows only** (Nick,
+2026-07-30) — neither names a corpus term, and P-14 collides with the
+plan's own C1–C12 constraint IDs rather than with anything in `samples/`,
+so no record and no `reference-terms.md` row is minted for them.
 All cycles from the closing pass are dispositioned (Nick's rulings
 2026-07-30, applied in PR #62): the concept graph is acyclic except the
 one accepted contrastive pair (liquidity-driven-reaction ↔
