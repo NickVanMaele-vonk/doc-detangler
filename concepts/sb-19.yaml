@@ -1,0 +1,29 @@
+id: sb-19
+term: SB-19
+aliases: [Block Trade Reversal Behaviour]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Block-family risk archetype Block Trade Reversal Behaviour; detection
+  basis BT-03: block trade reversal (profitable bt03_profitable and
+  adverse bt03_adverse sub-types).
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Value of the master term [[risk-archetype]], carried as its own record
+  (sb-01/sb-13 precedent); single-document term (§3 bulk). Definition
+  assembled from the A.6 archetype row; the S span is the whole archetype
+  grid table (hash covers the block). Row columns: MTSAM supervisory tier
+  Tier 1, Pack response Full. BT-03 is a value of
+  [[bt-block-trade-code-family]].

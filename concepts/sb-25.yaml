@@ -1,0 +1,36 @@
+id: sb-25
+term: SB-25
+aliases: [SB-25 MTS conditioning / OTC exploitation]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:6fd9b9d54d216ad86c12e6b2ef3bc449a71e980b90ade8b8c8c310c146de5dad
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Value of the master term [[risk-archetype]]; single-document term (§3
+  bulk). Orphan (definition: null — not invented, C2): name-checked twice
+  in the A.4.1 observability rows — the Level 2 row gives 'Economic
+  incentive context for SB-25 and SB-26 hypotheses' and the Level 3 row
+  lists 'SB-25 MTS conditioning / OTC exploitation' as an
+  investigative-hypothesis example ('Investigative hypothesis only'). No
+  archetype row: the shortened table carries SB-01–SB-20 only despite the
+  §A.6 title '35 Archetype Reference Table' — surfaced. Sibling [[sb-26]]
+  carries a definition because M's CICI/CMCS rows characterise it; SB-25
+  has no equivalent defining span.

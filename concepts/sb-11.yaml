@@ -1,0 +1,36 @@
+id: sb-11
+term: SB-11
+aliases: [Dominance Through Liquidity Control]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Liquidity-family risk archetype Dominance Through Liquidity Control;
+  detection basis QDSP, PLCS, LIQUIDITY_REMOVAL primitive, RD-03 repeated
+  liquidity concentration, BT-04.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Value of the master term [[risk-archetype]], carried as its own record
+  (sb-01/sb-13 precedent); single-document term (§3 bulk). Definition
+  assembled from the A.6 archetype row; the S span is the whole archetype
+  grid table (hash covers the block). Row columns: MTSAM supervisory tier
+  Tier 1, Pack response Full. QDSP is [[quote-depth-share-position]]; PLCS
+  is [[participant-liquidity-contribution-score]]; the LIQUIDITY_REMOVAL
+  primitive keeps its own definition site [[liquidity-removal]] (C9). The
+  row's 'RD-03' hyphenation diverges from the RD03 casing used elsewhere
+  in the table (e.g. SB-04 row) — reproduced verbatim, surfaced not fixed
+  (criterion 5/6). The extraction's alias 'Dominance Behaviour (Tier 1
+  archetype)' is not adopted: the A.4.1 operational-priority paragraph
+  lists 'Dominance Behaviour' among the Tier 1 archetypes without tying it
+  to SB-11 — surfaced, not judged.

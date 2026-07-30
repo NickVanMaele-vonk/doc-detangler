@@ -1,0 +1,26 @@
+id: intraday-dominance
+term: Intraday Dominance
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:7f9567d43084f13b1d3df844f549f450961399c1334baedc902c234d2547b3ea
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan (definition: null — not invented,
+  C2): single name-check in the A.1 concentrated-dealer-network row, in
+  the dominance-threshold list '(RD02, RT14, QDSP, Intraday Dominance)' —
+  all 'calibrated relative to dealer population size', with dealer
+  population size feeding DOMINANCE_THRESHOLD calibration. QDSP is
+  [[quote-depth-share-position]].

@@ -1,0 +1,28 @@
+id: cvce
+term: CVCE
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan (definition: null — not invented,
+  C2): the acronym is never expanded. Sole occurrence, in the
+  Three-Position Data Types row on participant OTC positions: 'The OTC
+  bilateral trade direction (available T+1) feeds the CVCE detection in
+  Â§A.4.2' — reproduced verbatim including the OCR-damaged 'Â§' (the whole
+  A.4.3 area carries this damage; criterion 5). Context suggests the A.4.2
+  cross-venue framework ([[cross-venue-manipulation]]) but no expansion is
+  given.
