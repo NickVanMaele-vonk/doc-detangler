@@ -5,10 +5,7 @@ status: candidate
 superseded_by: null
 placement: SBSP
 used_in: [S]
-definition: >-
-  The Silver enrichment step: the event context label is provided by
-  the Silver enrichment step (DataEnrichmentOrchestrator) from the API
-  enrichment connectors and written to IBE.metadata['event_context'].
+definition: null
 source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
@@ -16,17 +13,22 @@ source:
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
-depends_on:
-  - event-context
-  - intraday-behavioural-event
+depends_on: []
 flags: []
 conflict: null
-review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+review: "Decision: undefine software components, keep business terms only (Nick, 2026-07-30, cycle disposition on the DEO / event_context / MRE / explanation_type circle; IBE/IBEB precedent)"
 notes: >-
-  Single-document term (§3 bulk). Software component; single
+  Cycle disposition (Nick, 2026-07-30): software component — not defined;
+  outgoing edges dropped (edges live only on defined records, D10 §4).
+  Not flagged orphan: the source does define it; the corpus wording is
+  preserved here verbatim: "The Silver enrichment step: the event context
+  label is provided by the Silver enrichment step
+  (DataEnrichmentOrchestrator) from the API enrichment connectors and
+  written to IBE.metadata['event_context']." Single-document term (§3
+  bulk). Software component; single
   occurrence, in the embedded §D.4.2 amendment text inside the A.6
-  archetype table (hash covers the whole table block); the definition
-  is the span's own sentence, whose apposition supports the alias.
+  archetype table (hash covers the whole table block); the preserved
+  wording is the span's own sentence, whose apposition supports the alias.
   MediumReviewEngine reads the written field as the event_context_map
   input ([[mediumreviewengine]]). The 'Silver' step naming — implying a
   Bronze/Silver/Gold data-layer scheme — is not otherwise described in

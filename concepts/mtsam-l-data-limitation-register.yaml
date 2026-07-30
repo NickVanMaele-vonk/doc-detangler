@@ -6,9 +6,8 @@ superseded_by: null
 placement: glossary
 used_in: [S, M]
 definition: >-
-  The register of numbered data-limitation codes (MTSAM-L01, MTSAM-L02, …)
-  recording which data absences constrain which analytical capabilities at
-  MTSAM.
+  The register of numbered data-limitation codes recording which data
+  absences constrain which analytical capabilities at MTSAM.
 source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "0.3 Language Governance --- Approved and Prohibited Formulations"
@@ -30,8 +29,6 @@ source:
       stated_version: null
 depends_on:
   - mts-associated-markets
-  - mtsam-l01
-  - mtsam-l02
 flags: [A, P]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
@@ -43,3 +40,8 @@ notes: >-
   MTSAM-L08 appears in U's amendment table and (P), and the candidate list
   reports L10/L11 also exist. (A) uses L01 and L03. See
   [[historical-quote-lifecycle-dataset]] (L08) and [[removal-register]].
+  Cycle disposition (Nick, 2026-07-30): the example parenthetical
+  "(MTSAM-L01, MTSAM-L02, …)" moved here verbatim from the definition
+  proper and the genus→instance edges to [[mtsam-l01]] and [[mtsam-l02]]
+  dropped (ISO 704 §6.5.2) — the entries keep their edges to this
+  register.
