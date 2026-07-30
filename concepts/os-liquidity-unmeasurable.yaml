@@ -1,0 +1,28 @@
+id: os-liquidity-unmeasurable
+term: os_liquidity_unmeasurable
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:8ad12b0eacdf565e289c49af2a4c73908059ba15aaee8aee469c182bffb5964e
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: boolean field set once, in the
+  §1.1 OTC bilateral component row — 'os_liquidity_unmeasurable=TRUE for
+  OTC bilateral sessions.' — never defined (C2). Underscore casing is the
+  corpus form (criterion 5). The os_ field family also includes
+  os_downstream_exposure (§1.1 Regulatory authority row) — see
+  [[downstream-exposure]]. Same row applies [[lite-data-mode]] and a
+  QUOTE_DATA_ABSENT [[surveillance-gap-flag]] to the OTC bilateral
+  portion ([[otc-bilateral-trading]]).

@@ -1,0 +1,31 @@
+id: supervisory-challenge-pre-emption
+term: supervisory challenge pre-emption
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  FSMA or a regulatory authority reviewing a quote-based interaction
+  signal will ask: 'How did you identify coordination if the order book
+  was anonymous?' The answer must be in the case record, not produced in
+  response to the challenge.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+    para_hash: sha256:711caedf7d5ae9242af42d7780c7523a33e2505f7feff043bc7698a5a757c0ef
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Row label in the §1.2 anonymity
+  calibration table; definition verbatim from that row. Its governance
+  requirement is the [[anonymity-attribution-narrative]] mandate: 'Every
+  quote-domain interaction signal reaching HIGH or VERY HIGH
+  classification must include an anonymity_attribution_narrative field.'
+  Related deliverable: [[supervisory-challenge-pack]]. FSMA is a
+  reference-terms row (criterion 3).
