@@ -1,0 +1,40 @@
+id: five-pillar-fsma-argument
+term: Five-Pillar FSMA Argument
+aliases: [five-pillar position]
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  The regulatory position is built on five analytically distinct pillars.
+  Each pillar must be present in any FSMA engagement narrative.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:08858e7561e760087e9b0ded021242f72e228bf75de41faded2ee917f6f89802
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:78ad448c485b39b7778fbe54aedd8adca18d9bf8116f93d4341e0f76221a359b
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Heading surface: '0.1 The Five-Pillar
+  FSMA Argument'; the definition block continues 'Together they constitute
+  a coherent, nuanced, and supervisory-mature position that is materially
+  stronger than either claiming complete coverage or conceding fundamental
+  insufficiency.' The five pillar headings (Pillar 1–Pillar 5) are values,
+  not aliases (C9 hygiene). Alias 'five-pillar position' is the §0.3
+  surface — second span: 'The five-pillar position in Section 0.1 and the
+  language governance in Section 0.3 are designed to produce strong
+  answers to all five questions.' The generic 'five pillars' is not
+  adopted. See [[core-regulatory-position]], [[language-governance]],
+  [[block-trade-behavioural-analysis]],
+  [[quote-intelligence-architecture]].

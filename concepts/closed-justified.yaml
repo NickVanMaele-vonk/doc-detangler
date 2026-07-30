@@ -1,0 +1,29 @@
+id: closed-justified
+term: CLOSED_JUSTIFIED
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:513a37330e32059e7f952ddfb22066e559a27abbd2677d1f68ffede7865cdc9a
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: closure code named only in the
+  §0.3 row 'Describing non-filing decisions (CLOSED_JUSTIFIED)' and never
+  defined in this shortened document. The approved formulations require
+  naming the specific evidence, the accepted alternative-explanation
+  category, the specific EscalationReadiness condition not met, and
+  completion of the non-filing documentation package; a generic 'no
+  reasonable grounds' closure is prohibited as analytically empty. See
+  [[escalationreadiness]], [[non-filing-documentation-package]],
+  [[language-governance]].
