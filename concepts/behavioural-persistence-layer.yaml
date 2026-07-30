@@ -30,6 +30,7 @@ depends_on:
   - cross-window-persistence-score
   - escalating-dominance-trend
   - multi-day-conditioning-score
+  - pattern-gate
   - scs
 flags: []
 conflict: null
