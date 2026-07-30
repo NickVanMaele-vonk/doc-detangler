@@ -1,0 +1,31 @@
+id: sb-27
+term: SB-27
+aliases: [Cross-Instrument Conditioning]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Value of the master term [[risk-archetype]]; single-document term (§3
+  bulk). Orphan (definition: null — not invented, C2): single name-check
+  in the Level 1 observability row examples ('SD02, RD06, IPI,
+  CROSS_WINDOW campaign type. SB-07 Yield Curve Distortion. SB-27
+  Cross-Instrument Conditioning.') — directly observable, 'Primary
+  operational detection domain'. No archetype row: the shortened table
+  carries SB-01–SB-20 only; the §A.6 title says '35 Archetype Reference
+  Table' — surfaced. Nick's ruling 2026-07-30: the title is likely
+  outdated and is not leading; the archetype count is the count of
+  archetypes with an ID and a definition (i.e. the [[risk-archetype]]
+  records). See [[sb-07]], [[sd02]].

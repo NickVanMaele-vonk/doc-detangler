@@ -1,0 +1,34 @@
+id: off-platform-price-conditioning
+term: Off-Platform Price Conditioning
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cross-venue manipulation pattern in which the participant quotes
+  aggressively on one side of the MTS order book — not to execute
+  electronically but to condition the price expectation of bilateral
+  counterparties who can see the electronic book — and executes
+  bilaterally at prices close to or better than the electronic book levels
+  they just conditioned.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:f46709350040facd3893704d6c98215cba3f299a85cae931e04815dee3320cb8
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); one of the four named
+  [[cross-venue-manipulation]] patterns (grid-table row; the hash covers
+  the pattern table block). Detection logic: OTC execution price proximity
+  to MTS quote price at the time of conditioning, within
+  SD03_REVERSION_WINDOW_SECONDS of the participant's MTS quote withdrawal
+  ([[sd03]]'s calibration parameter); 'where the execution price reflects
+  the conditioned price level, off-platform price conditioning is
+  confirmed as a candidate pattern.'

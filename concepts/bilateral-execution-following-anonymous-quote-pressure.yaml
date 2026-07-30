@@ -1,0 +1,33 @@
+id: bilateral-execution-following-anonymous-quote-pressure
+term: Bilateral Execution Following Anonymous Quote Pressure
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cross-venue manipulation pattern in which the participant applies
+  anonymous quote pressure on MTS (bid-side or ask-side aggressive quoting
+  creating one-sided depth) causing other participants to adjust their
+  bilateral OTC pricing expectations in response to the electronic book
+  signal; other participants execute bilaterally at prices that reflect
+  the electronic book condition created by the suspected participant's MTS
+  activity.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:b2298b5bc63e8f0c6ade4e99ebb92bd3be7b44fb94da1db036aa099475c747d8
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); one of the four named
+  [[cross-venue-manipulation]] patterns (grid-table row; the hash covers
+  the pattern table block). Detection logic: third-party OTC execution
+  response within SIGNAL_TRANSMISSION_WINDOW_SECONDS (§3 queue term, no
+  record yet), with cross-venue ECIL integration — 'where no macro event
+  explains the price shift, the MTS conditioning is the candidate cause.'
