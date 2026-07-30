@@ -90,17 +90,18 @@ a section ID.
 ## Current state
 
 Phases 1, 2 and the Phase 4 gate decisions are closed. **Phase 3 is in
-progress**: steps 3.1–3.2 are done and step 3.3 record authoring is nearly
-complete. `concepts/` holds 321 canonical records plus
+progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
+(all §1 sections, §3a promotions, multi-document leftovers, and the full
+U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
+`depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
+across 116 records). `concepts/` holds 332 canonical records plus
 `concepts/reference-terms.md` (the hand-authored criterion-3 references
-list). Merged so far: all reviewed §1 sections, the §3a promotions, the
-step 3.4 `depends_on` pass (89 edges), the cycle dispositions (see below),
-the 21 multi-document leftovers, the full U bulk (3 batches, PRs #37–#40),
-the full S bulk (3 batches, PRs #41–#47), M batches 1–2 (PRs #48, #50),
-and Nick's 2026-07-30 RT*/RD* ruling (PR #51) re-placing `rt02`, `rt05`,
-`rt22`, `rd01` to the glossary — codes promoted via a §7b (P) ruling
-follow that ruling's placement even when the shortened corpus shows the
-surface in one doc only.
+list). Nick's 2026-07-30 rulings: RT*/RD* re-placement (PR #51 — codes
+promoted via a §7b (P) ruling follow that ruling's placement even when
+the shortened corpus shows the surface in one doc only); keep all
+sense-collision edges; and the dangling-list ruling delivered in
+PRs #59–#60 — 20 new records (BT/RD/MTSAM-L code families, QML
+sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
@@ -110,13 +111,16 @@ surface in one doc only.
   carrying a "Human review decision" column per term. This column is Nick's;
   do not fill it in.
 
-Remaining Phase 3 queue: M batch 3 (11 records, the §1.1–1.3
-market-structure cluster: surveillance gap, Market Making explanation
-category, ISGO-02, Lite data mode, the five snake_case fields, correlated
-instrument pair, supervisory challenge pre-emption — closes the §3 bulk),
-then one closing `depends_on` edge pass over the whole bulk, then the §4
-decision-register dispositions (Nick's). Nick builds the D9 view-generator
-himself; the assistant delivers ontology content (records, edges) directly.
+Remaining Phase 3 queue: the §4 decision-register dispositions (Nick's).
+All cycles from the closing pass are dispositioned (Nick's rulings
+2026-07-30, applied in PR #62): the concept graph is acyclic except the
+one accepted contrastive pair (liquidity-driven-reaction ↔
+identity-driven-coordination, condensed by the view generator). Direction
+rulings worth remembering: classification precedes gate (a status
+recommended by a tool precedes the decision moment about it), and RT01
+precedes SB-01 (a raw-data alert precedes the calculated fraud-detection
+item that shares its name). Nick builds the D9 view-generator himself;
+the assistant delivers ontology content (records, edges) directly.
 
 ## Record-authoring conventions (learned in practice, steps 3.3–3.4)
 
@@ -168,6 +172,30 @@ Established across PRs #17–#35; follow them so records stay uniform.
   text only, live only on defined records, and are added in dedicated
   passes; targets that don't exist yet are logged in the PR body and added
   when they land.
+- **Edge matching discipline (closing pass, PRs #54–#58).** Case-sensitive
+  token match for codes, case-insensitive with plural for phrases,
+  token-boundary rules (MTSAM ≠ MTSAM-L01), plus occurrence-level
+  **containment suppression**: a match whose every occurrence sits inside
+  a longer matched span or the record's own term/aliases is not an
+  independent use and mints no edge; code-path composition
+  (`IBE.metadata['event_context']`) is exempt. Sense-collision edges are
+  kept as textual truth and listed in the PR body — Nick ruled keep-all
+  on the closing-pass list (2026-07-30). New cycles are surfaced for
+  disposition, never repaired unilaterally.
+- **Business terms, not software components (IBE/IBEB ruling
+  2026-07-30).** Where a business object and the software that produces
+  it share a definition site, only the business term is defined. The
+  software record stays (`definition: null`, corpus wording preserved
+  verbatim in `notes`, outgoing edges dropped, **no** orphan flag — the
+  orphan count measures source convolutedness, and the source does define
+  it). Applied to `intraday-behavioural-event-builder`,
+  `dataenrichmentorchestrator`, `mediumreviewengine`; cited for
+  `rsaengine`, `mediumreviewgroup`.
+- **External vendors are reference rows (2026-07-30 ruling, Eurex
+  precedent).** OpenSanctions, OpenCorporates, Azure OpenAI / AWS
+  Bedrock, Azure AI Search are criterion-3 rows in
+  `concepts/reference-terms.md`, not records — even when a ruling
+  loosely says "record", ownership beats it; flag the deviation.
 
 ## Working with the corpus
 
