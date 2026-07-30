@@ -121,6 +121,16 @@ Three commands, in dependency order, none of which touches an LLM:
    `placement` recomputed against `used_in`, alias uniqueness across records.
    The C2 wording check is restricted to domain-shaped tokens per Nick's
    2026-07-30 ruling — ordinary English is exempt.
+
+   It also checks **markdown table well-formedness** across `plan/`,
+   `registers/`, the READMEs and the generated views: every row in a
+   contiguous table has the same cell count. An edit in PR #65 silently
+   collapsed a four-column row to three by dropping a leading `|`, and it
+   survived review. **The cell count must be taken after removing escaped
+   `\|`** — an escaped pipe is literal content, not a separator. The ad-hoc
+   `awk` check used during that PR did not do this and false-flagged an
+   untouched row in `concepts/README.md`, which is exactly the kind of noise
+   that trains a reviewer to ignore the check.
 2. **`detangle graph`** — build the NetworkX graph from `depends_on`; topo
    sort, `simple_cycles`, orphan and dead-entry detection, forward/backward
    reachability. Emits `concept-graph.yaml` (see the open ruling below).
@@ -206,12 +216,15 @@ cycle with no entry is a blocking finding; an entry with no cycle is a stale
 ruling, flagged rather than dropped; a cycle resolved by narrowing gets no
 entry, its trace being the clause moved verbatim to the record's `notes`.
 
-**Open — needs Nick.** Criterion 1 clause 2 requires a designated
-`entry_point` per cycle. The 2026-07-29 ruling accepted the
-liquidity-driven-reaction ↔ identity-driven-coordination cycle but never
-named one, so it is `null` and the generator cannot yet render the pair.
-Recommendation recorded in the register: `liquidity-driven-reaction`, as the
-corpus default classification that a reader should meet before the exception.
+**Entry point ruled 2026-07-30.** Criterion 1 clause 2 requires a designated
+`entry_point` per cycle, and the 2026-07-29 ruling had accepted the cycle
+without naming one. Nick ruled `liquidity-driven-reaction`: default before
+exception, general before specific (criterion 2), and — the deciding
+argument — it leaves the *identical-observable-pattern* clause resolving
+backwards rather than deferred, that clause being what the records call the
+load-bearing analytical difficulty of the anonymous market. Its own trailing
+"unless … confirms identity-driven coordination" carries the forward
+reference, marked as bridging text per criterion 7.
 
 ## Consequences
 

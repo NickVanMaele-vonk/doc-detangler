@@ -214,9 +214,11 @@ Established across PRs #17–#35; follow them so records stay uniform.
   the topological sort. **Accepted cycles are recorded in
   `registers/cycles.yaml`**, one entry per live cycle, and the generator
   rolls them into `concept-graph.yaml` — a narrowed cycle gets no entry,
-  so entries and live cycles stay 1:1. Criterion 1 also requires an
-  `entry_point` per cycle (which member is defined first); the 2026-07-29
-  ruling did not name one, so it is `null` and awaits Nick.
+  so entries and live cycles stay 1:1. Each entry also carries the
+  criterion-1 `entry_point`: the member defined first, whose cross-reference
+  becomes the marked forward reference. For the accepted pair that is
+  `liquidity-driven-reaction` (Nick, 2026-07-30) — default before exception,
+  so the identical-observable-pattern clause is never the deferred one.
 - **PR mechanics.** ≤ `param-max-terms-changed-per-PR` (25) files counting
   new records, edited records, and edge changes together. Note the count in
   every PR body. When wrapping notes programmatically, keep `[[...]]`
