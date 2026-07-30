@@ -483,7 +483,7 @@ per the boundary above.
 |---|---|---|---|
 | Term extraction | — | **KeyBERT** (MIT; deps carry own licences) — one datapoint, rest not researched | unknown |
 | Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
-| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) generated `concept-graph.yaml` edge list + generated `concept-graph.mmd` render (records are canonical, 2026-07-30), local dependency edge |
+| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | generated `concept-graph.yaml` edge list + generated `concept-graph.mmd` render (records are canonical, 2026-07-30), local dependency edge |
 | Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
 | Markdown parsing / structure | — | **pandoc JSON AST** via panflute/Lua (R3); **Marko/mistune ruled out — no grid-table support** | section-move logic on the AST |
 | Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
