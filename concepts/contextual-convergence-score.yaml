@@ -1,0 +1,36 @@
+id: contextual-convergence-score
+term: Contextual Convergence Score
+aliases: [CCS]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:1ed71d5f09e8db4f498a5654e2ad2b0a2c153e5b5bb4579b48441584ffc64f00
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: letter-expanded only in the ECIL
+  Supplemental Specification contents row — 'CCS (Contextual Convergence
+  Score)' — and owned by that companion document, but already wired into
+  the ELS formula here. Step 19 verbatim: 'CCS_penalty: where CCS ≥ HIGH
+  and all active ECIL events are CONTRADICTS_PATTERN or FULLY_EXPLAINED,
+  CCS_penalty = −0.05 applied before normalisation (active deduction, not
+  just weight reduction).' CCS_penalty is a derived deduction, not an
+  alias. Distinct from CQS ([[convergence-quality-score]]) and from
+  [[crs]]. See [[external-context-intelligence-layer]],
+  [[escalation-likelihood-score]], [[contradicts-pattern]].

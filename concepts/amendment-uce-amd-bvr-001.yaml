@@ -1,0 +1,41 @@
+id: amendment-uce-amd-bvr-001
+term: Amendment UCE-AMD-BVR-001
+aliases: [UCE-AMD-BVR-001]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict:
+  summary: >-
+    Same amendment ID is attached to two different change sets — the v25 RSA
+    rules and the v29 BCI engine (candidate-terms-merged.md §5, U structural
+    anomaly) — surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        §XI Reasonable Suspicion Assessment — PIR Amplifier Rule and Scoring
+        (Amendment UCE-AMD-BVR-001)
+      para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        §VI-A.3.7 BCI Engine — Production Implementation (Amendment
+        UCE-AMD-BVR-001)
+      para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: an amendment identifier used on
+  two Version History change sets and never defined; the amendment-ID
+  scheme itself is not described in the shortened corpus. See
+  [[pir-amplifier-only-rule]], [[behavioural-causality-indicator]].

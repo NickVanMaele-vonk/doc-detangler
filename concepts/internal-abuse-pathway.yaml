@@ -1,0 +1,24 @@
+id: internal-abuse-pathway
+term: internal abuse pathway
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:4d2307b0726cb43b0de4de01455c977b84f93cc9c141632f8efcac05e7d2f0fe
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: redirect target named once in
+  Step 1 — 'SRS=3 assigns DS=2 and redirects to internal abuse pathway.' —
+  and specified nowhere in the shortened corpus. See [[enrichment-gate]],
+  [[structural-relationship-score]], [[dependency-score]].

@@ -1,0 +1,36 @@
+id: participant-history
+term: Participant History
+aliases: [PIR, participant_history]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: named in the v24 row ('§VII.4
+  PIR') and constrained by the v25 §XI amendment — 'Participant History
+  (PIR) cannot sole-drive a MEDIUM or HIGH preliminary RSA assessment.' —
+  but what the factor comprises is not stated; §VII.4 is not included in
+  the shortened corpus. The II.1 intro lists 'participant history' among
+  the raw data streams the IBEB groups into IBEs. The acronym PIR does not
+  match the letters of 'Participant History'; no document expands PIR. See
+  [[pir-amplifier-only-rule]], [[assessment-basis]],
+  [[reasonable-suspicion-assessment]],
+  [[intraday-behavioural-event-builder]].

@@ -1,0 +1,32 @@
+id: enrichment-gate
+term: Enrichment Gate
+aliases: [Data enrichment and participant classification]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  IBE input: participant data loaded; SRS (0–3) assigned. SRS=3 assigns
+  DS=2 and redirects to internal abuse pathway. Step 1 receives the IBE
+  object from the IBEB (§XVII.10), not raw alert data.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:4d2307b0726cb43b0de4de01455c977b84f93cc9c141632f8efcac05e7d2f0fe
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 1 of the 22-step pipeline; the
+  Gate/Output cell reads 'ENRICHMENT GATE'. The row continues verbatim:
+  'The IBE carries ibe_stream_count, ibe_primitives, ibe_score,
+  ibe_sensitive_timing_flag, and constituent event references. These IBE
+  fields are available to all subsequent pipeline steps as enrichment
+  context.' See [[22-step-analytical-pipeline]],
+  [[structural-relationship-score]], [[dependency-score]],
+  [[intraday-behavioural-event]], [[intraday-behavioural-event-builder]],
+  [[internal-abuse-pathway]].

@@ -1,0 +1,25 @@
+id: raaf
+term: RAAF
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:9e5feda3c2e59ce4f863a9626b88cd4dde61c0e7f27d5e747f7efee976673a71
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked once in the Doc 7
+  contents row — 'RAAF alternative explanation governance' — and never
+  letter-expanded anywhere in the corpus (set-level orphan,
+  candidate-terms-merged.md §4 item 61). See
+  [[stor-reporting-intelligence-layer]], [[explanation-framework]].

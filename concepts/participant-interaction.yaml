@@ -1,0 +1,43 @@
+id: participant-interaction
+term: Participant interaction
+aliases: [IDS, ISS, IQ, IQ gate, interaction_outcome_score]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  IDS (0–3); ISS (0–3); IQ gate. interaction_outcome_score=0 suppresses
+  escalation from interaction.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:e03662294af2a9bc3c098619a9f2d6bf2114f3d03d12c188fd67bc1da983e180
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 6 dimension 'Participant
+  interaction (IDS, ISS, IQ)', SCORED OUTPUT + GATE; the extraction's
+  fuller surface 'Participant interaction assessment' does not occur in
+  the corpus. IDS, ISS and IQ are never letter-expanded. DIF domain C is
+  '(C) Interaction --- IDS/ISS/IQ participant interaction'; the
+  [[persistence-gate]] trigger includes 'no participant interaction is
+  active (IDS=0, ISS=0)'. ISS is distinct from IS ([[intent-score]]) and
+  from [[iscore]] — extraction hazard, candidate-terms-merged.md §4 item
+  32. See [[domain-independence-filter]], [[dif-analytical-domains]].
