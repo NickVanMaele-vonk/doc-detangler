@@ -1,0 +1,39 @@
+id: futures-position-intelligence
+term: Futures Position Intelligence
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Bund futures, OAT futures, or any derivatives position data for MTSAM
+  participants.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:5dd021e704cc10f244ef075c84487de5612c93cd0c12b0136263d9628e903636
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on:
+  - bund
+  - mts-associated-markets
+  - oat
+flags: []
+conflict: null
+review: >-
+  Decision: mint the four Formally Removed Data Categories as records, as
+  values of their master term (Nick, in-session ruling 2026-07-30;
+  candidate-terms-merged.md §4 item 18)
+notes: >-
+  Row 2 of the four removed-category entries in [[removal-register]]; the
+  definition is the row's "Description" cell verbatim. MTSAM Limitation
+  cell: "MTSAM-L10: cross-asset futures data absent." — see [[mtsam-l10]].
+  Removal Rationale and Residual Treatment cell, verbatim: "Removed. The
+  SB-26 cash bond / futures interaction archetype is retained as a Tier 3
+  investigative hypothesis but is explicitly not a primary detection
+  pillar. The model does not claim to detect confirmed cash-futures
+  manipulation from MTSAM data alone." This row is the scoping site for
+  [[sb-26]]'s Tier 3 status. Public Eurex market data remains in scope for
+  CICI/ECIL enrichment (reference-terms row "Eurex") — what is removed is
+  participant-level position data.

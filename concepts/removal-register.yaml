@@ -1,6 +1,6 @@
 id: removal-register
 term: Removal Register
-aliases: [explicit exclusion register, Formally Removed Data Categories]
+aliases: [explicit exclusion register]
 status: candidate
 superseded_by: null
 placement: glossary
@@ -42,10 +42,24 @@ conflict:
       para_hash: sha256:41e222f9b780b055961960943f2598f59ddc4d8cc048d671a233d9630a71e59c
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
 notes: >-
-  Term follows the candidate row's first-listed name; both other names are
-  aliases. The S conflict quote reproduces the source's OCR mojibake
+  Term follows the candidate row's first-listed name; "explicit exclusion
+  register" is the remaining alias. "Formally Removed Data Categories" was
+  dropped as an alias (Nick's ruling 2026-07-30, candidate-terms-merged.md
+  §4 item 18): per that ruling the phrase denotes the four *entries* in
+  this register, not a synonym for the register itself, and the four are
+  now records in their own right —
+  [[otc-positions-repo-intelligence]], [[futures-position-intelligence]],
+  [[cross-venue-surveillance-feed]] and
+  [[client-portfolio-order-flow-intelligence]]. The phrase is nonetheless
+  M's section title, which is why it survives as the M side of the naming
+  conflict above; a conflict span does not require an alias. No
+  `depends_on` edge runs to the four rows: this definition does not use
+  their terms, and edges are extracted from definition text only. The S
+  conflict quote reproduces the source's OCR mojibake
   ("Â§" for "§") verbatim per criterion 5 — the damage is data. The cross-reference is load-bearing: S points at "Document 3
   §1.0.1" by name, so a rename in either document breaks the reference —
   exactly the drift the steady-state guard (D10) exists to catch. The
-  second M span is a removed-category entry (client order flow → SB-30
-  footprint approach); see [[sb-30]].
+  second M span is the row block now recorded as
+  [[client-portfolio-order-flow-intelligence]]; it is retained here
+  because the definition's "detection approach that replaces it" clause is
+  assembled from the row structure it exhibits.
