@@ -48,6 +48,8 @@ authority's own terminology and are **not** corpus text.
 | HHI | Herfindahl–Hirschman Index (corpus gloss: (P) §0.1 "concentration measure, 0–10,000 scale") | economics literature / antitrust practice | S (as `bt06_counterparty_hhi`), (P) | Sourced from §7b (P) per Nick's ruling 2026-07-28; externally owned, routed here rather than into §1. |
 | market manipulation | — (MAR legal concept) | European Union / MAR | U only | The engine's adjudication target: "market manipulation or insider dealing under MAR Article 12" (U I.1). From the §3 bulk (author-as-is ruling 2026-07-29); regulator-owned per the extraction, so routed here per criterion 3 despite the single-document count. |
 | insider dealing | — (MAR legal concept) | European Union / MAR | U only | Adjudication target alongside market manipulation (U I.1). The full UCE has a Part XI on insider dealing, absent from the shortened version — whose Part-contents table reuses "XI" for Deployment Maturity (numbering conflict; surfaced, not fixed). Routed here per criterion 3, same basis as the row above. |
+| BTP | Buono del Tesoro Poliennale — Italian multi-year government bond | Republic of Italy / Ministry of Economy and Finance | S only | Corpus surface "BTPs", once, in the S front-matter scope sentence: "OLOs, OATs, Bunds, BTPs, Gilts, and equivalent sovereign debt instruments". Named in criterion 3's own example list as external; routed here from the §3 bulk (Nick's ruling 2026-07-30). |
+| Gilt | — (UK government bond; from "gilt-edged security") | United Kingdom / HM Treasury, UK Debt Management Office | S only | Corpus surface "Gilts", once, same scope sentence as BTP. Externally owned by analogy with BTP and OLO — analogy confirmed by Nick's ruling 2026-07-30. |
 
 ## Resolved tensions
 
