@@ -3,11 +3,11 @@
 Tooling to transform convoluted markdown documents into logically
 structured, human-readable documents with clear definitions.
 
-## Problem
+## Problem description
 
-Supplied documentation is dense and detail-first: 
-- terms are used before they are introduced
-- there is little top-down introduction of business concepts.
+At times, supplied requirements documentation is dense and detail-first: 
+- little to no top-down introduction of business concepts.
+- cryptic terms are used before they are introduced
 Representative examples: the `./samples/blueprint-*-shortened.md` files.
 
 ## Approach
@@ -17,21 +17,18 @@ which definitions depend on which, then use topological ordering to restructure
 documents so every concept is defined before first use. A verification harness
 proves losslessness — no meaning lost, no meaning invented.
 
-The output is **five** documents, not three. A single `glossary.md` is read
-first and holds the definition of every term used in more than one document;
-terms local to one document are defined there. No term is defined twice, and
-none is left undefined. Putting the shared definitions ahead of everything is
-what makes "defined before first use" achievable across a heavily
-interdependent set — and it turns cross-document definitional cycles, which
-no reordering can fix, into intra-glossary ones, which reordering can.
+The input is three documents, the output is **five** documents - the three restructured documents, plus a glossary, plus an index. 
 
-Reading order and lookup order are separated rather than compromised. The
-glossary is ordered **topologically**, so it reads start to finish without
-ever meeting an undefined term. `index.md` is the fifth document: a single
-**alphabetical** list spanning all four others, giving each term and the
-location of its definition — terms only, no definitions. It sits outside the
-reading order, is generated rather than written, and answers the one
-question a glossary ordered for reading cannot: *where is this term?*
+A single `glossary.md` is read first and holds the definition of every term used in more than one document; terms local to one document are defined there. No term is defined twice, and none is left undefined. 
+Putting the shared definitions ahead of everything is what makes "defined before first use" achievable across a heavily interdependent set — and it turns cross-document definitional cycles, which no reordering can fix, into intra-glossary ones, which reordering can. The glossary is ordered **topologically**, so it reads start to finish without ever meeting an undefined term. 
+
+Reading order and lookup order are separated rather than compromised. 
+
+`index.md` is the fifth document: a single **alphabetical** list spanning all four others, giving each term and the location of its definition. `index.md` contains terms only, no definitions. It sits outside the reading order, is generated rather than written, and answers the one question a glossary ordered for reading cannot: *where is this term?*
+
+If one term appears in more than one input document, then: 
+- "what is this term's definition?" -> via glossary
+- "where is this term used in the corpus?" -> via index 
 
 ## Hard constraints
 
@@ -43,8 +40,8 @@ question a glossary ordered for reading cannot: *where is this term?*
   rewritten source text is marked separately, as *derived*.
 - Any update on an existing document goes through pull requests ("PRs"); the tool posts findings as PR comments, which must be Resolved before merge.
 - Glossary-first, single definition site: a term used in more than one
-  document is defined in `glossary.md` and only there; a term used in one
-  document is defined in that document.
+  document is defined in `glossary.md` and only there; a term used in only one
+  document is defined in only that document.
 - Reading order and lookup order are separate artifacts: `glossary.md` is
   topological, `index.md` is alphabetical and covers every term across all
   four other documents. The index is generated and contains no definitions.
