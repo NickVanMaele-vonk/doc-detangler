@@ -37,8 +37,8 @@ notes: >-
   assesses cross-venue behavioural inconsistency 'as an independent
   behavioural indicator contributing to the convergence score, not merely
   as a data reconciliation problem'; where divergence is confirmed,
-  cross_venue_divergence_confirmed=TRUE feeds the Repetition indicator (§3
-  queue term, no record yet) and the Dependency Filter assessment
+  cross_venue_divergence_confirmed=TRUE feeds the
+  [[repetition-indicator]] and the Dependency Filter assessment
   ([[dependency-score]]). The extraction's alias 'cross-venue
   fragmentation detection' is not adopted: the corpus phrase 'cross-venue
   fragmentation' appears only in the MTSAM-L03 participant-identity

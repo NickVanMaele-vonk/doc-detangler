@@ -1,0 +1,59 @@
+id: information-request
+term: information request
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:5f042237cf4ac1ed894639cd76822a1233ccfdf82ca09b86b0d4c5463ac37384
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
+    para_hash: sha256:ad524d6466b57a1ee26aa869d43d6f880fc5ce2456649c6f2919a973d4ce8cba
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:8fbae0a7d02daa5d5d8d6180fc8c6dcc596f179b3a08b0b5d88027a7a85e3f4c
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: a generic supervisory phrase
+  given a specific role but never defined — the designated supervisory
+  action produced by Level 3 / CICI hypothesis findings. A.4.1 Level 3
+  row ([[four-level-observability-framework]]): 'The hypothesis is
+  useful for framing an information request even without confirmatory
+  data', with ISGO language recommending 'An information request
+  regarding the participant’s positions at other venues during the
+  relevant period is recommended'; the A.4.1 operational-priority
+  paragraph adds that Level 3 hypotheses 'provide investigative context
+  and support information requests'. The CICI epistemological position
+  ([[cross-instrument-context-intelligence]]) states that the finding
+  'justifies an information request to the participant about their
+  derivatives positions' and continues — across a span of C1
+  control-byte mojibake that YAML scalars cannot carry, so the quote
+  stops around the damage (batch-2 precedent) — 'which is a supervisory
+  action that can be taken on the basis of the CICI finding alone'. The CMCS ISGO mandatory
+  language ([[cross-market-convergence-score]], [[isgo]]) closes with
+  'An information request regarding the participant’s derivatives and
+  futures positions during the relevant period is recommended'. The
+  extraction alias 'information request regarding the participant's
+  positions' is a usage phrase, not adopted (C9 hygiene).
