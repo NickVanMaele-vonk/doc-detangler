@@ -1,0 +1,27 @@
+id: six-level-progressive-deployment-model
+term: Six-level progressive deployment model
+aliases: [Deployment Maturity]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:20d2760c251dd9c57b1ce3abfa06d85c230c7fd750489c1e335b81458c80bd30
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: the Part XI contents row is
+  its only occurrence — 'Six-level progressive deployment model with BPL
+  availability by maturity level. MVP specification (P0–P3).' — and the
+  six levels are never enumerated in the shortened corpus. Alias
+  'Deployment Maturity' is the Part XI title (Doc 7 alias precedent).
+  The maturity levels and the MVP phases P0–P3 are name-checked only.
+  See [[behavioural-persistence-layer]].

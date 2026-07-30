@@ -1,0 +1,26 @@
+id: event-object-schema
+term: Event Object Schema
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:362c09fd102fe07c9f86a27efd89ba584402b515b3c00610bbd7ef02c3dd0c20
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked once in the Part
+  XVIII contents row — 'ECIL: event ingestion, Event Object Schema,
+  contextual directionality logic, event materiality scoring' — and never
+  expanded; Part XVIII exists only as this one-line summary in the
+  shortened corpus. See [[external-context-intelligence-layer]],
+  [[ecil-supplemental-specification]].
