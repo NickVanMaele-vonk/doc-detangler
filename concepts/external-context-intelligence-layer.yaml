@@ -26,6 +26,9 @@ source:
       stated_version: "v21"
 depends_on:
   - alert
+  - contextual-directionality-logic
+  - event-materiality-scoring
+  - event-object-schema
 flags: []
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"

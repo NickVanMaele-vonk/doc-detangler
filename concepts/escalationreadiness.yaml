@@ -23,6 +23,10 @@ source:
       stated_version: "v21"
 depends_on:
   - causality-confidence-layer
+  - convergence-quality-tier
+  - counterfactual-strength
+  - explanationfailure
+  - gate
   - intent-score
   - outcome-score
 flags: [A]

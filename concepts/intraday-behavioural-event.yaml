@@ -24,8 +24,11 @@ source:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
 depends_on:
+  - 22-step-analytical-pipeline
   - alert
   - external-context-intelligence-layer
+  - intraday-behavioural-event-builder
+  - participant-history
 flags: [A]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
