@@ -1,0 +1,30 @@
+id: behavioural-concern-layer
+term: Behavioural Concern Layer
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: §VI.1a content is not included
+  in the shortened corpus; the v24 row names the layer with its taxonomies
+  — see [[detection-signal-taxonomy]], [[behaviour-category-taxonomy]],
+  and [[risk-archetype]] (Risk Archetype Taxonomy, 45 archetypes). The
+  code value BehaviouralConcern is its own glossary record and is not
+  carried as an alias here (C9, one definition site) — see
+  [[behaviouralconcern]]. The v24 row also names 'Final Behavioural
+  Concern' under §VI.1b; whether that is this layer's output, the
+  BehaviouralConcern value, or a distinct construct cannot be resolved
+  from the shortened corpus — surfaced, not harmonised.
