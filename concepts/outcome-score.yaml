@@ -34,7 +34,13 @@ conflict:
     shortened corpus, so only the U-side is anchorable; the S-side
     implication is carried from candidate-terms-merged.md §1c, not from an
     anchorable span. (P) §0.1 sides with "Outcome Score". Surfaced, not
-    reconciled (C8 / criterion 6).
+    reconciled (C8 / criterion 6). Undefined sub-acronyms (candidate list
+    §7c, conflict P-7): the same (P) row abbreviates four OS dimensions
+    PI / LI / I / BC, none of which gets a glossary row of its own —
+    breaking (P)'s stated rule that every abbreviation is spelled out —
+    and BC additionally collides with Behaviour Category, see
+    [[behaviour-category-taxonomy]]. Nick's ruling 2026-07-30: keep, flag
+    to humans for disambiguation.
   spans:
     - doc: samples/blueprint-UCE-shortened.md
       section: "II.1 Pipeline Overview"
@@ -43,11 +49,18 @@ conflict:
         OS (0–2/U) = max(Price, Liquidity, Information Impact). OS=0 →
         PriorityScore=0; MEDIUM ceiling.
       para_hash: sha256:50020b55b40b1937d744f26b10d8afcd6774790dbccb2174aabdc2d6ddc19716
+    - doc: samples/prototype-BC17.md
+      section: "§0.1 Master glossary — every abbreviation spelled out"
+      quote: >-
+        OS Outcome Score PI Price / LI Liquidity / I Information / BC
+        Behavioural-Conditioning impact
+      para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
 review: "Decision: keep, refine definition (Nick, candidate-terms-merged.md §1c)"
 notes: >-
   S materially varies the doctrine as well as the name: "OS Liquidity Impact
   and Information Impact dimensions are co-primary with Price Impact. OS=0 on
   Price Impact alone does not cap classification where Liquidity or
-  Information Impact is present." (P) §0.1 also lists a fourth dimension ("PI
+  Information Impact is present." The (P) dimension-set difference ("PI
   Price / LI Liquidity / I Information / BC Behavioural-Conditioning
-  impact") — dimension-set difference, informational only.
+  impact") is now carried in the conflict field per Nick's ruling
+  2026-07-30, not only here.

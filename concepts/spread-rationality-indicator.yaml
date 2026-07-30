@@ -26,14 +26,32 @@ source:
       git_blob: 36ad20437886a1883a547599a368c28c794b179a
       stated_version: null
 depends_on: []
-flags: [orphan, P]
-conflict: null
+flags: [orphan, P, conflict]
+conflict:
+  summary: >-
+    Availability conflict internal to (P) (candidate list §7c, conflict
+    P-12): its data-availability contract marks SRI undetermined under gap
+    MTSAM-L07, yet its own RSA rubric still scores on "Spread Rationality
+    ≥2σ". Nick's ruling 2026-07-30: keep, flag to humans for
+    disambiguation — surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/prototype-BC17.md
+      section: "§1.5 Data-availability contract (what is and isn't computable)"
+      quote: >-
+        has_participant_ids_quote False quote attribution absent → gap
+        MTSAM-L07 (caps CCT at IMPLICIT; QDSP, SRI = undetermined)
+      para_hash: sha256:1d92248efff8202198125eb4c2a7c9426b85796c24f51d250c4fa3d9eff2c502
+    - doc: samples/prototype-BC17.md
+      section: "Appendix A — Regulatory basis and global constants"
+      quote: >-
+        Economic Irrationality (20%) AOB level 0 1 2 or Spread Rationality
+        ≥2σ 3
+      para_hash: sha256:744159a7dd330d6b4b69eeccfa3f449d72d9df8ba4a17a93ce0c109b1610d2ec
 review: "Decision: keep - define later (Nick, candidate-terms-merged.md §1d)"
 notes: >-
   Set-level orphan (definition: null — not invented, C2; Nick: define
   later). Expansion and role from (P) §0.1: "economic rationality of spread
-  crossing". Carried caveat — conflict P-12 (candidate list §7c): (P) marks
-  SRI both unavailable under gap MTSAM-L07 and consumed by its own RSA
-  rubric; to disposition, not reconciled here. S usage: "SRI spread
+  crossing". The carried caveat is now in the conflict field per Nick's
+  ruling 2026-07-30, not only here. S usage: "SRI spread
   crossing" in the SB-09 archetype row (hash covers the whole table
   block).

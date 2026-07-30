@@ -30,7 +30,10 @@ conflict:
   summary: >-
     Four-level scale (U) vs five-level scale with NONE (M, and A) — surfaced,
     not reconciled (C8 / criterion 6). Nick's ruling: five-level scale is
-    leading.
+    leading. (P) is a third witness on the four-level side (candidate list
+    §7c, conflict P-8): its Final Concern bands run LOW / MEDIUM / HIGH /
+    VERY HIGH with no NONE. Nick's ruling 2026-07-30: keep, flag to humans
+    for disambiguation.
   spans:
     - doc: samples/blueprint-UCE-shortened.md
       section: "II.1 Pipeline Overview"
@@ -44,6 +47,13 @@ conflict:
         Includes the updated five-level BehaviouralConcern axis (NONE / LOW /
         MEDIUM / HIGH / VERY HIGH)
       para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+    - doc: samples/prototype-BC17.md
+      section: "Appendix F — Chronological calculation sequence (raw data → classification)"
+      quote: >-
+        21 4 Final Concern Base Concern + Amplifiers − Suppressors (ECIL
+        context_effect, BCI level, HSL, PIR, RSA) LOW / MEDIUM / HIGH /
+        VERY HIGH
+      para_hash: sha256:d6d0675a15bdf2fa1f54c12d1436c97d77aa495d91084a8ef1691c88e30d2f8d
 review: >-
   Decision: keep - use five-level scale as leading (Nick,
   candidate-terms-merged.md §1b)

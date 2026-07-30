@@ -30,8 +30,33 @@ source:
 depends_on:
   - mts-associated-markets
   - universal-core-engine
-flags: [A]
-conflict: null
+flags: [A, conflict]
+conflict:
+  summary: >-
+    Four-way naming conflict for the same layer (candidate list §7c,
+    conflict P-3): U calls Document 3 an "Institution Calibration Layer", M titles
+    itself "MTSAM Institution Calibration Layer", the filename abbreviates
+    it MCL, and (P) cites it as the "Market Configuration Layer" — a fourth
+    variant that changes the head noun from calibration to configuration.
+    Nick's ruling 2026-07-30: keep, flag to humans for disambiguation —
+    surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Institutional configuration is provided by Institution Calibration
+        Layers (Document 3).
+      para_hash: sha256:f0767104d9d9254f299cb80699dd52e53fb9b766645447239465ee0f5c91ec6f
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "Front matter"
+      quote: >-
+        MTSAM Institution Calibration Layer | Document 3 of 3
+      para_hash: sha256:3f51d8df8121c048c35e7e281f181f2dd84cf40bd16ab8114f5c5bf277844017
+    - doc: samples/prototype-BC17.md
+      section: "BC-17 — Event-Driven Information Behaviour — Comprehensive Specification"
+      quote: >-
+        blueprint-MCL.md (Document 3, Market Configuration Layer §12.2)
+      para_hash: sha256:886231684d547f42c1739a47de702a7e3e0c8e2c5a9bfe6f671f54b0f1a4ffdc
 review: "Decision: keep (Nick, candidate-terms-merged.md §1a)"
 notes: >-
   Acronym MCL appears only in the filename, never in the document body.

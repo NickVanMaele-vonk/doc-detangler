@@ -30,7 +30,7 @@ depends_on:
   - event-cascade-object
   - external-context-intelligence-layer
   - sdail
-flags: []
+flags: [conflict]
 conflict:
   summary: >-
     A companion document outside the stated set extent: the title block
