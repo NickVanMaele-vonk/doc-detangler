@@ -23,6 +23,7 @@ source:
       stated_version: null
 depends_on:
   - alert
+  - sb-01
 flags: []
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
