@@ -18,6 +18,7 @@ source:
       stated_version: null
 depends_on:
   - behavioural-objective-assessment
+  - bt-02
   - risk-archetype
   - rt01
 flags: []

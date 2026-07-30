@@ -19,6 +19,7 @@ source:
       stated_version: null
 depends_on:
   - historical-quote-lifecycle-dataset
+  - mtsam-l08
   - risk-archetype
 flags: []
 conflict: null

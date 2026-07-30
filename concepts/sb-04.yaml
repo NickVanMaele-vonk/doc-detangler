@@ -25,6 +25,7 @@ source:
 depends_on:
   - behavioural-objective-assessment
   - close-window
+  - cwps-intra
   - d6-open-close-framing
   - rd03
   - rd04
