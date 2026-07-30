@@ -34,5 +34,6 @@ notes: >-
   Tier 2, Pack response 'Named framework added §A.6.1'; the row ends 'See
   §A.6.1.' Second span: the Level 1 observability row lists 'SB-07 Yield
   Curve Distortion' as directly observable MTS-only cross-instrument
-  intelligence. [[sd02]] is the named detection input; CROSS_WINDOW
-  campaign is a §3 queue term without a record yet.
+  intelligence. [[sd02]] is the named detection input;
+  [[cross-window-campaign]] is the named campaign type (pointer updated
+  after the S batch 2 merge, PR #43).
