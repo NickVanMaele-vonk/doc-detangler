@@ -18,7 +18,14 @@ source:
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
-depends_on: []
+depends_on:
+  - nfil
+  - nim-mar
+  - qa-mar
+  - raaf
+  - rcs-mar
+  - scl
+  - xs-mar
 flags: []
 conflict:
   summary: >-

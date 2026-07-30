@@ -16,7 +16,11 @@ source:
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
-depends_on: []
+depends_on:
+  - behavioural-episode-consolidation
+  - behavioural-persistence-layer
+  - convergence-quality-score
+  - intent-score
 flags: []
 conflict: null
 review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"

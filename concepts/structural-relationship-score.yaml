@@ -24,6 +24,7 @@ source:
       stated_version: "v21"
 depends_on:
   - dependency-score
+  - internal-abuse-pathway
   - signal
 flags: []
 conflict: null

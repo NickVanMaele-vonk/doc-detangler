@@ -22,7 +22,9 @@ source:
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
-depends_on: []
+depends_on:
+  - external-context-intelligence-layer
+  - market-wide-behavioural-reference
 flags: []
 conflict: null
 review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
