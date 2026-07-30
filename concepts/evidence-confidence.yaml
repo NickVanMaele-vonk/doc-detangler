@@ -22,4 +22,8 @@ notes: >-
   and in the v27 row, which adds Evidence Confidence Caps in §VI-A.4.1
   alongside the Gate-Failure Cause Distinction — see
   [[gate-failure-cause-distinction]]; neither section is included in the
-  shortened corpus.
+  shortened corpus. Nick's ruling 2026-07-30: the M-side camel surface
+  EvidenceConfidence is a Python variable, whereas Evidence Confidence is
+  the business term; the two records stay separate (M record
+  evidenceconfidence, §3 M batch 1 — pointer to be upgraded to a link once
+  that batch merges).
