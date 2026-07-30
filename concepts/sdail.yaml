@@ -1,0 +1,26 @@
+id: sdail
+term: SDAIL
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan and set-level letter-expansion
+  orphan (candidate-terms-merged.md item 60): occurs once, glossed only
+  as 'SDAIL (sovereign debt agencies)' in the ECIL Supplemental
+  Specification contents row; the acronym is never letter-expanded. The
+  parenthetical gloss is not promoted to a definition (C2). See
+  [[ecil-supplemental-specification]].

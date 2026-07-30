@@ -1,0 +1,58 @@
+id: ecil-supplemental-specification
+term: ECIL Supplemental Specification
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Full operational ECIL specification extending Document 1 Part XVIII:
+  SDAIL (sovereign debt agencies), fifteen sovereign event types,
+  sovereign benchmark mapping, CRS (Context Reliability Score), ECO
+  (Event Cascade Objects), CCS (Contextual Convergence Score), missing
+  context governance doctrine, human override governance.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:362c09fd102fe07c9f86a27efd89ba584402b515b3c00610bbd7ef02c3dd0c20
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+depends_on: []
+flags: []
+conflict:
+  summary: >-
+    A companion document outside the stated set extent: the title block
+    states ‘Document 1 of 3’, yet the Part-contents tables cite this
+    supplemental specification (and Doc 7) as separate documents — the
+    document-set extent conflict (candidate-terms-merged.md §4 item 12) —
+    surfaced, not reconciled (C8 / criterion 6). Same conflict recorded on
+    [[stor-reporting-intelligence-layer]].
+  spans:
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Document 1 of 3
+      para_hash: sha256:3ebfe9c277de8f92f925591719743184aa527e60f6f3412504f1879cbda12cc7
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Full operational ECIL specification extending Document 1 Part XVIII
+      para_hash: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition is the dedicated
+  Part-contents row's descriptive cell (C2). Also cited in the Part XVIII
+  row: 'Extended specification in ECIL Supplemental Specification
+  document.' Constituent constructs with records: [[sdail]],
+  [[event-cascade-object]], [[contextual-convergence-score]]; see
+  [[external-context-intelligence-layer]]. CRS (Context Reliability
+  Score), fifteen sovereign event types, sovereign benchmark mapping,
+  missing context governance doctrine and human override governance are
+  name-checked only, with no records.
