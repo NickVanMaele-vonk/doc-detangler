@@ -18,7 +18,7 @@ definition: >-
 source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "Front matter"
-    para_hash: sha256:6ecce907784d8bfd2eb2739f578767dbd42ca45b69cc4688991cc9439279f5f5
+    para_hash: sha256:3dc52441de05271052b25fe9c9d4fe62e7e051e26647f9282d15f06f891e5ab1
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
