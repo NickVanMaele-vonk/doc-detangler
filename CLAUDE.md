@@ -111,15 +111,16 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
   carrying a "Human review decision" column per term. This column is Nick's;
   do not fill it in.
 
-Remaining Phase 3 queue: Nick's dispositions on the four still-open
-cycles from the closing pass (gate ↔ classification; the
-DataEnrichmentOrchestrator / event_context / MediumReviewEngine /
-explanation_type plumbing circle; the MTSAM-L register example-citation
-circle; RT01 ↔ SB-01 — explanations delivered 2026-07-30), then the §4
-decision-register dispositions (Nick's). Resolved cycles so far: IBE ↔
-IBEB (software ruling, see below) and gate's exit from the
-non-compensatory-architecture circle. Nick builds the D9 view-generator
-himself; the assistant delivers ontology content (records, edges) directly.
+Remaining Phase 3 queue: the §4 decision-register dispositions (Nick's).
+All cycles from the closing pass are dispositioned (Nick's rulings
+2026-07-30, applied in PR #62): the concept graph is acyclic except the
+one accepted contrastive pair (liquidity-driven-reaction ↔
+identity-driven-coordination, condensed by the view generator). Direction
+rulings worth remembering: classification precedes gate (a status
+recommended by a tool precedes the decision moment about it), and RT01
+precedes SB-01 (a raw-data alert precedes the calculated fraud-detection
+item that shares its name). Nick builds the D9 view-generator himself;
+the assistant delivers ontology content (records, edges) directly.
 
 ## Record-authoring conventions (learned in practice, steps 3.3–3.4)
 
@@ -187,7 +188,8 @@ Established across PRs #17–#35; follow them so records stay uniform.
   software record stays (`definition: null`, corpus wording preserved
   verbatim in `notes`, outgoing edges dropped, **no** orphan flag — the
   orphan count measures source convolutedness, and the source does define
-  it). Precedent: `intraday-behavioural-event-builder`; cited for
+  it). Applied to `intraday-behavioural-event-builder`,
+  `dataenrichmentorchestrator`, `mediumreviewengine`; cited for
   `rsaengine`, `mediumreviewgroup`.
 - **External vendors are reference rows (2026-07-30 ruling, Eurex
   precedent).** OpenSanctions, OpenCorporates, Azure OpenAI / AWS
