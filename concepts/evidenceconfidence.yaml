@@ -1,0 +1,31 @@
+id: evidenceconfidence
+term: EvidenceConfidence
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "Front matter"
+    para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: single camel-case usage in the
+  v22 changelog — 'formalises the BehaviouralConcern / EvidenceConfidence
+  / EscalationReadiness three-output model' — and never defined in this
+  shortened document (Section 11 is absent, §7b caution). Sibling outputs
+  [[behaviouralconcern]] and [[escalationreadiness]] have records with M
+  usage; the U-side record [[evidence-confidence]] carries the spaced
+  surface 'Evidence Confidence' (U version-history rows only) — identity
+  of the camel and spaced surfaces is plausible but surfaced, not judged,
+  so the camel surface is M-only under the C9 count. The extraction also
+  flags a near-synonym risk with [[modelconfidence]] — relationship not
+  stated in the corpus. See [[three-output-integration]].
