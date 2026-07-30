@@ -7,9 +7,8 @@ placement: glossary
 used_in: [U, S, M]
 definition: >-
   The analytical pipeline's primary output: a band on the five-level scale
-  NONE / LOW / MEDIUM / HIGH / VERY HIGH, determined by the highest
-  structural gate cleared; scoring orders signals within a band and does not
-  influence classification.
+  NONE / LOW / MEDIUM / HIGH / VERY HIGH; scoring orders signals within a
+  band and does not influence classification.
 source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
@@ -25,7 +24,6 @@ source:
       stated_version: "v21"
 depends_on:
   - 22-step-analytical-pipeline
-  - gate
   - signal
 flags: [A, conflict]
 conflict:
@@ -57,4 +55,10 @@ notes: >-
   "BehaviouralConcern axis": possible concept overlap between classification
   and BehaviouralConcern, left for disposition rather than aliased. Both
   conflict quotes are pandoc-plain normalised renderings of grid-table cells;
-  wording, casing, and level names are verbatim (criterion 5).
+  wording, casing, and level names are verbatim (criterion 5). Cycle
+  disposition (Nick, 2026-07-30): classification is a status recommended
+  by a tool and [[gate]] is a decision moment about it — classification
+  precedes gate. The clause "determined by the highest structural gate
+  cleared" moved here verbatim from the definition proper and the edge to
+  [[gate]] dropped (ISO 704 §6.5.2); gate's definition keeps the reverse
+  dependency.

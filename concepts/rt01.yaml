@@ -6,8 +6,8 @@ superseded_by: null
 placement: glossary
 used_in: [S, M]
 definition: >-
-  Alert code RT01 (Momentum ignition): artificial price movement through
-  aggressive directional trading or order-book pressure.
+  Alert code RT01: artificial price movement through aggressive
+  directional trading or order-book pressure.
 source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "0.1 The Five-Pillar FSMA Argument"
@@ -23,7 +23,6 @@ source:
       stated_version: null
 depends_on:
   - alert
-  - sb-01
 flags: []
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
@@ -33,4 +32,9 @@ notes: >-
   vs archetype, two different concept kinds sharing a name; deliberately
   not recorded as an alias here. (P) glosses RT01 as "Real-Time 01" —
   informational only. Both spans are grid tables; each hash covers the
-  whole table block.
+  whole table block. Cycle disposition (Nick, 2026-07-30): RT01 is an
+  alert in the raw data whilst [[sb-01]] is a calculated item in the
+  fraud detection system which happens to have the same name — RT01
+  precedes SB-01. The name label "(Momentum ignition)" moved here
+  verbatim from the definition proper and the edge to [[sb-01]] dropped
+  (ISO 704 §6.5.2); SB-01 keeps its detection-basis edge to RT01.

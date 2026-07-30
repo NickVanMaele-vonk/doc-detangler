@@ -7,9 +7,9 @@ placement: glossary
 used_in: [S, M]
 definition: >-
   Bilateral off-book trading in Belgian OLOs, in scope as T+1 trade reports
-  (direction and size) with EOD-only timestamps (MTSAM-L01); trades outside
-  17:00 CET are not subject to the RT pass but are assessed in a
-  post-session OTC review pass.
+  (direction and size) with EOD-only timestamps; trades outside 17:00 CET
+  are not subject to the RT pass but are assessed in a post-session OTC
+  review pass.
 source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
@@ -29,9 +29,7 @@ source:
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
-depends_on:
-  - mtsam-l-data-limitation-register
-  - mtsam-l01
+depends_on: []
 flags: [A]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
@@ -41,4 +39,10 @@ notes: >-
   and a manipulation vector (S A.4.2 cross-venue detection: MTS
   conditioning with OTC execution, DS=1 dependency treatment). "(A rel.)"
   in the usage column — flagged A. Grid-table spans' hashes cover whole
-  table blocks.
+  table blocks. Cycle disposition (Nick, 2026-07-30): the code annotation
+  "(MTSAM-L01)" moved here verbatim from the definition proper and the
+  edge to [[mtsam-l01]] dropped (ISO 704 §6.5.2); the step 3.4 hand edge
+  to [[mtsam-l-data-limitation-register]], no longer textually confirmed
+  since the L01 record landed, dropped in the same disposition — the
+  entry's edge to this record ([[mtsam-l01]] → OTC bilateral component)
+  carries the relationship.
