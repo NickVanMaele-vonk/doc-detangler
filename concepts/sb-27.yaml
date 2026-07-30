@@ -24,5 +24,8 @@ notes: >-
   CROSS_WINDOW campaign type. SB-07 Yield Curve Distortion. SB-27
   Cross-Instrument Conditioning.') — directly observable, 'Primary
   operational detection domain'. No archetype row: the shortened table
-  carries SB-01–SB-20 only despite the §A.6 title '35 Archetype Reference
-  Table' — surfaced. See [[sb-07]], [[sd02]].
+  carries SB-01–SB-20 only; the §A.6 title says '35 Archetype Reference
+  Table' — surfaced. Nick's ruling 2026-07-30: the title is likely
+  outdated and is not leading; the archetype count is the count of
+  archetypes with an ID and a definition (i.e. the [[risk-archetype]]
+  records). See [[sb-07]], [[sd02]].
