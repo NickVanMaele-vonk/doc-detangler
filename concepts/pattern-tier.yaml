@@ -42,9 +42,14 @@ notes: >-
   names are values enumerated in the overview row, not aliases (C9
   hygiene); the extraction aliases 'MTSAM Tier' and 'Tier 1 archetypes'
   are not adopted — the A.6 'MTSAM supervisory tier' (third span) is a
-  distinct per-archetype taxonomy. 'Tier' is overloaded three ways in
-  this document: pattern tiers, the MTSAM supervisory tier, and
-  external-context feed tiers ('sovereign auction calendar Tier 1
-  mandatory (not Tier 2 recommended)', A.1 primary-market issuance row)
-  — sense collision surfaced, not judged. The shortened U carries its
-  own Tier-1 collision, surfaced on [[three-tier-escalation-modifier]].
+  distinct per-archetype taxonomy, recorded as [[scl]]. 'Tier' is
+  overloaded three ways in this document: pattern tiers, the MTSAM
+  supervisory tier, and external-context feed tiers ('sovereign auction
+  calendar Tier 1 mandatory (not Tier 2 recommended)', A.1 primary-market
+  issuance row). Nick ruled the cluster 2026-07-30
+  (candidate-terms-merged.md §4 item 29): each sense gets a distinct
+  record rather than a shared disambiguation note, so the feed sense is
+  now [[sovereign-auction-calendar]] and this record covers the pattern
+  sense only. The shortened U carries its own Tier-1 collision, surfaced
+  on [[three-tier-escalation-modifier]]; the AI-governance and
+  archetype-status senses are [[ai-hard-controls]] and [[sb-26]].

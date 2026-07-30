@@ -31,8 +31,11 @@ notes: >-
   Principle 1 ('Behaviour precedes suspicion'). The Step 2 gate cell reads
   'GATE: pattern_matc hed=TRUE' (OCR-split token) and its rule reads
   'Behavioural structures identified across Tier 1/2/3 patterns. No
-  pattern → signal closed at Level 0.' 'Level 0' here is a
-  signal-disposition level, distinct from [[evidence-hierarchy]] Levels
-  1–5 (word-overload cluster, candidate-terms-merged.md §4 item 30). 'Tier
-  1/2/3 patterns' is deferred pending the 'Tier' overload disposition (§4
-  item 29). See [[22-step-analytical-pipeline]].
+  pattern → signal closed at Level 0.' Both overload hooks are now
+  dispositioned under Nick's 2026-07-30 ruling (candidate-terms-merged.md
+  §4 items 29-30): 'Level 0' is a signal-disposition level with its own
+  record, [[level-0]], distinct from [[evidence-hierarchy]] Levels 1–5;
+  'Tier 1/2/3 patterns' resolves to [[pattern-tier]], distinct from the
+  external-context feed tiers of [[sovereign-auction-calendar]]. Neither
+  surface is carried as an alias here — both are positions in another
+  term's scale (C9 hygiene). See [[22-step-analytical-pipeline]].
