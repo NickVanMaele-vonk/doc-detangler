@@ -67,3 +67,19 @@ removes the discrepancy for every record that cites the block, now and later.
 **Depends on:** Phase 10.1 (span re-hashing, staleness) for the re-anchor
 half. The flag-and-locate half needs nothing that does not already exist —
 `detangle validate` produces exactly this information today.
+
+**Amendment, same day (Nick, 2026-07-31).** Point 1 above is largely
+overtaken. `samples/` is scaffolding: once the tool exists the sample files
+are replaced by the full documents, and those *are* the living set that
+humans and AI agents edit — so "input, never output" was a property of a
+fixed test fixture, not a standing principle. Two things survive the change.
+The transcription-defect versus substantive-contradiction line still has to
+be drawn, because a correction facility that cannot tell them apart is a
+harmonisation facility (criterion 6) whatever the corpus is called. And the
+provenance cost in point 2 shrinks rather than disappears: `git_blob` is
+per-file today, so one edit invalidates the blob for all ~190 spans citing
+that file, but Phase 10.1 replaces the anchor with `(doc, section ID,
+paragraph hash)`, after which an edit invalidates only the sections it
+touched. Ruling recorded 2026-07-31: the three findings named above are
+source-document defects, fixed later through this path, held as accepted
+debt by the waiver register in the meantime (plan step 3.9).
