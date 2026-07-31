@@ -74,8 +74,10 @@ Decision D10 (research-memo §D10) records the design.
   others, listing every term with the location of its definition and nothing
   else (C10). Generated, outside the reading order, exempt from
   concept-before-use.
-- **Form factor:** undecided — Claude skill vs. standalone pipeline vs. hybrid.
-  Decision is Phase 4.
+- **Form factor:** a Python package `detangle` with a CLI — candidate B,
+  decided in Phase 4 and recorded in `plan/adr-001-form-factor.md` (accepted
+  2026-07-30). The Claude-skill wrapper is candidate C, staged and deferred
+  to Phase 9.2.
 
 ## 4. Key design insight — the concept graph as backbone
 
