@@ -48,6 +48,22 @@ Decision D10 (research-memo §D10) records the design.
 ## 3. Scope
 
 - **Domain:** MTSAM Analytical Layer documentation (MAR surveillance context).
+- **Source corpus provenance:** every document in `samples/` was created the
+  same way — drafted with AI assistance, and not closely reviewed by its human
+  author (Nick, 2026-07-31). Because this holds uniformly across the corpus it
+  is stated once here and carried by no schema field; a record's provenance
+  records whether its wording is *anchored* to a source span, never who
+  authored the source. It does not weaken C1, C2 or C7. Those constrain
+  fidelity to the source — nothing lost, nothing invented, nothing weakened —
+  and never assert that the source is correct; detangling a document set has
+  never been a claim about its truth. What it does qualify is what a reader
+  should infer from "traces to the source", and how to read the contradictions
+  the tool surfaces rather than harmonises (C8, criterion 6). Live version skew
+  — MCL titled v21 while carrying a "what is new in v22" block; MCL applying to
+  UCE v28 while SBSP cites v30 — may be a drafting artefact as easily as a
+  genuine organisational disagreement. The disposition is identical either way:
+  surface it, never harmonise it. But the human dispositioning it should know
+  both readings are open.
 - **Domain glossary:** does not yet exist — building it is Phase 3 and a
   standalone deliverable valuable to the MTSAM project regardless of agent outcome.
   It is the **first document of the output set**, read before the three
