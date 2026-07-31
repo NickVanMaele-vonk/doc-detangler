@@ -3,7 +3,7 @@ term: RT22
 aliases: []
 status: candidate
 superseded_by: null
-placement: glossary
+placement: MCL
 used_in: [M]
 definition: >-
   Alert code RT22: Pre-stress liquidity withdrawal.
@@ -37,6 +37,11 @@ notes: >-
   §0.3 row fixes the approved framing: 'RT08 provides compensating
   coverage for the absent RT22 alert' and 'RT08 detects stress events — it
   does not detect the anticipatory withdrawal that causes them' — see
-  [[language-governance]]. Exact surface M-only under the C9 count;
-  placement glossary per Nick's ruling 2026-07-30 (RT* codes belong in the
-  glossary).
+  [[language-governance]]. Placement MCL: the surface occurs in M only
+  (7 occurrences; 0 in U, 0 in S, and 0 in (P) — unlike RT02 and RT05,
+  this code has no prototype presence at all, so the (P)-promotion
+  rationale of the earlier RT*/RD* re-placement ruling never applied to
+  it). Nick ruled 2026-07-30, on the placement findings of the first
+  `detangle validate` run, that the standard rule governs on the corpus
+  we have. Expected to be revisited against the full documents, where a
+  second component blueprint may well use it.

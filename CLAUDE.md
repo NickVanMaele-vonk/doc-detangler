@@ -148,9 +148,15 @@ U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 across 116 records). Steps 3.5–3.7 are now **generation** tasks and are the
 first code the project needs. `concepts/` holds 358 canonical records plus
 `registers/reference-terms.md` (the hand-authored criterion-3 references
-list). Nick's 2026-07-30 rulings: RT*/RD* re-placement (PR #51 — codes
-promoted via a §7b (P) ruling follow that ruling's placement even when
-the shortened corpus shows the surface in one doc only); keep all
+list). Nick's 2026-07-30 rulings: the RT*/RD* re-placement of PR #51 is
+**superseded** — the first `detangle validate` run surfaced `rd01`,
+`rt02`, `rt05` and `rt22` as the only four records in the set whose
+`placement` contradicted their `used_in`, and Nick ruled that **the
+standard C9 rule governs on the corpus we have**, so all four moved to
+`MCL` (each occurs in M only; `rt22` has no (P) presence at all, so the
+(P)-promotion rationale never applied to it). Expect this to change
+against the full documents; until then placement is computed with no
+exceptions, and no override register is needed. Also: keep all
 sense-collision edges; and the dangling-list ruling delivered in
 PRs #59–#60 — 20 new records (BT/RD/MTSAM-L code families, QML
 sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
