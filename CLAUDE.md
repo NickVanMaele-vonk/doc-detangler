@@ -117,7 +117,11 @@ there.
 
 `registers/` holds canonical data that is **not** a corpus term: human
 rulings whose provenance is a PR thread and a standards clause, not a source
-span. Two registers exist, with `registers/waivers.yaml` to follow in Phase 10:
+span. Two registers exist, with `registers/waivers.yaml` to follow in **Phase
+3 (step 3.9)** — pulled forward from 10.5 by Nick's ruling of 2026-07-31,
+because `detangle validate` already reports findings that are dispositioned
+but not yet fixable, and until they can be held as accepted debt the command
+exits `1` indefinitely and cannot be a required check:
 
 - `registers/cycles.yaml` — cycle dispositions and entry points
   (criterion 1). Entries are 1:1 with live cycles in the graph; a cycle

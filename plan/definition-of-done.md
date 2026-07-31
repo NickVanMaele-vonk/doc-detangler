@@ -219,7 +219,10 @@ rule — and exactly one index entry pointing at it.
   pattern already used for cycles (ISO 704 §6.5.2). The lint distinguishes
   waived debt (does not re-fire) from new regressions (always flag). A
   waiver is a deferral, not an approval: the set is not fully done while
-  waivers are open.
+  waivers are open. **Built in Phase 3 (step 3.9), pulled forward from 10.5
+  by Nick's ruling of 2026-07-31** — `detangle validate` already reports
+  findings that are dispositioned but not yet fixable, and without the
+  register it cannot become a required check.
 - **Acronyms:** every acronym is expanded at first use in each section,
   matching the citation rule in criterion 1. The definition is keyed on the
   expansion, with the acronym as an alias.
@@ -681,7 +684,9 @@ and by AI agents — and every such edit is guarded, not forbidden.
 - **Verification method:** automatic (the lint and regeneration checks are
   themselves CI); contradiction candidates and waiver dispositions go to
   `param-manual-reviewer`.
-- **Status:** schema fields from Phase 3; delivered in Phase 10.
+- **Status:** schema fields from Phase 3; delivered in Phase 10 — except the
+  waiver register, which is built in Phase 3 (step 3.9) under Nick's ruling of
+  2026-07-31.
 
 ---
 
