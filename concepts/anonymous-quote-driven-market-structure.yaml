@@ -7,10 +7,7 @@ placement: glossary
 used_in: [S, M]
 definition: >-
   The market structure in which quote activity is visible to all
-  participants but is not immediately attributable — MTSAM operating as an
-  anonymous interdealer electronic order book — which determines how
-  quote-based manipulation is detected rather than preventing its
-  detection.
+  participants but is not immediately attributable.
 source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
@@ -24,8 +21,7 @@ source:
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
-depends_on:
-  - mts-associated-markets
+depends_on: []
 flags: []
 conflict: null
 review: >-
@@ -42,7 +38,26 @@ notes: >-
   sha256:00f75cd1…, the "Regulatory authority" row of the same 1.1 grid
   table, not the "Anonymous quote-driven structure" row this record is
   assembled from — a transcription slip against the intent already stated
-  above. Now sha256:d7ac0d41…. The source spells the operator out as "MTS
-  Associated Markets operates as an anonymous interdealer electronic order
-  book" and never abbreviates it here, so the definition's "MTSAM" remains
-  an open definition-token finding pending Nick's acronym ruling.
+  above. Now sha256:d7ac0d41…. Narrowed 2026-07-31 (Nick), ISO 704 §6.5.2:
+  the definition proper is the genus-differentia statement alone, assembled
+  from S's A.3 wording. Two clauses moved out of it and are kept here as
+  the record's prior wording. (1) Illustration — "MTSAM operating as an
+  anonymous interdealer electronic order book": a specific venue realising
+  the structure, not part of what the structure is; the source spells the
+  operator out as "MTS Associated Markets operates as an anonymous
+  interdealer electronic order book" in the anchored M 1.1 row and never
+  abbreviates it there, which is what raised the definition-token finding.
+  The finding clears with the clause. (2) Project consequence — "which
+  determines how quote-based manipulation is detected rather than
+  preventing its detection": a compression of M's §1.2, block
+  sha256:881a98c9…, "It does not prevent detection of quote-based
+  manipulation — it determines how that detection is framed, attributed,
+  and escalated." That block is not anchored by this record, so the clause
+  was drawn from outside its cited provenance — the same defect as the
+  MTSAM clause, unflagged only because it contains no domain-shaped token.
+  The edge to [[mts-associated-markets]] is dropped with the illustration,
+  since edges are extracted from definition text only. Both clauses pass
+  the ISO 704 §6.4.4 substitution test as non-definitional: read into M
+  1.2's "The anonymous quoting structure of MTSAM is the single most
+  important market structure characteristic", clause 1 substitutes and the
+  consequence clause does not.
