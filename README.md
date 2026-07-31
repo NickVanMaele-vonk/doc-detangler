@@ -67,6 +67,7 @@ If one term appears in more than one input document, then:
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
 | `src/detangle/` | The toolchain: `validate` and `graph` *(built)*, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
+| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)* |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
@@ -154,17 +155,31 @@ and exit `0` for any known id, `2` for an unknown one.
 
 ### In branch policy
 
-`validate` and `graph --check` are separate gates and neither runs the other —
-one job per command. Run both as separate steps so a failure names which gate
-failed; chaining them in one process would collapse two independent verdicts
-into one exit code.
+`.github/workflows/ci.yml` runs three gates on every PR to `main`, one job
+each, so a red run names which gate failed and each can be marked required
+separately:
 
-```bash
-detangle validate --json      # record-set integrity
-detangle graph --check --json # the derived graph matches the records
-```
+| Job | Command | Guards |
+|-----|---------|--------|
+| `tests and lint` | `ruff check .`, `python -m pytest` | the toolchain itself |
+| `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site |
+| `detangle graph --check` | `detangle graph --check --json` | the **derived** `concept-graph.yaml` against the canonical records and registers |
 
-Order does not matter: they share no state and `--check` never writes.
+The last two are separate gates and neither runs the other; chaining them in
+one process would collapse two independent verdicts into one exit code. Order
+does not matter — they share no state and `--check` never writes. Neither
+subsumes the other: records can be individually sound while the committed
+graph is stale, and a byte-identical graph says nothing about whether a
+definition still matches its source paragraph.
+
+`validate` needs `pandoc`, because `para_hash` is *defined* as a hash of
+pandoc's plain-text rendering — its version is part of the provenance
+contract, so the workflow echoes it. `graph --check` reads YAML only and needs
+no pandoc.
+
+The workflow is pass/fail only. Posting findings as PR comments is Phase 10
+work; the guard should not wait on it, because an unenforced "fails CI" is a
+claim that quietly stops being true.
 
 ## Owner
 

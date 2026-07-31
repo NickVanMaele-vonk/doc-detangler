@@ -1,0 +1,95 @@
+# Branch policy for `main`. Three independent gates, one job each, so a red
+# run names which one failed and each can be marked required separately.
+#
+# Exit codes are the contract (ADR-001 Decision 2, README "Exit codes"):
+# 0 clean, 1 findings a human must disposition, 2 no verdict reached. A step
+# fails on both 1 and 2 — the distinction is for the reader of the log, not
+# for the runner — so nothing needs special handling here.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A force-push supersedes the run it replaced; nothing here is worth finishing.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The floor declared in pyproject. Local development runs 3.12, so the two
+  # ends of the supported range are covered between here and the workbench.
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  tests:
+    name: tests and lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # The test fixtures build a real git repo and shell out to real pandoc,
+      # because stubbing either would test the stub (tests/conftest.py).
+      - name: Install pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+          pandoc --version | head -1
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: python -m pytest
+        # Run the tests even when lint fails: a style complaint should not hide
+        # a broken assertion.
+        if: ${{ !cancelled() }}
+
+  records:
+    name: detangle validate
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # `para_hash` is *defined* as a hash of pandoc's plain-text rendering, so
+      # pandoc is a hard dependency here and its version is part of the
+      # contract. The version is echoed because a provenance failure that
+      # appears out of nowhere is almost certainly this.
+      - name: Install pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+          pandoc --version | head -1
+      - run: pip install -e .
+      # Do the canonical records still tell the truth about `samples/`? Spans,
+      # blob ids, verbatim definition runs, conflict quotes, links, edge
+      # targets, one definition site.
+      - run: detangle validate --json
+
+  graph:
+    name: detangle graph --check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # No pandoc: this gate reads YAML and never touches the corpus.
+      - run: pip install -e .
+      # Does the derived file still match the canonical one? Regenerate in
+      # memory and compare bytes — this is what makes "never hand-edit a
+      # generated artifact" (ADR-001 Decision 5) enforceable rather than
+      # aspirational.
+      - run: detangle graph --check --json
