@@ -1,0 +1,67 @@
+# detangle configuration.
+#
+# ADR-001 Decision 2: "No hard-coded values (working agreement). Every param-*
+# from definition-of-done.md §Parameters is read from a config file
+# (detangle.toml); the code ships no default that contradicts the rubric."
+#
+# The code carries no fallback for anything in [params]: a missing value is a
+# usage error (exit 2), not a silent default. Parameters that the rubric has
+# not set yet are therefore ABSENT here rather than guessed — see the note at
+# the end of this file.
+
+[paths]
+concepts = "concepts"
+registers = "registers"
+samples = "samples"
+
+[documents]
+# The corpus, by its role in C9. Only U, S and M are component blueprints and
+# only they count toward placement: the analytical layer is a read-only
+# reference (Nick, 2026-07-22) and the prototype never counts (2026-07-26).
+# Both appear as informational flags on a record instead.
+U = "samples/blueprint-UCE-shortened.md"
+S = "samples/blueprint-SBSP-shortened.md"
+M = "samples/blueprint-MCL-shortened.md"
+A = "samples/blueprint-analytical-layer.md"
+P = "samples/prototype-BC17.md"
+components = ["U", "S", "M"]
+
+[params]
+# Mirrors definition-of-done.md §Parameters. Keep the two in step; the value
+# there is normative, this file is the machine-readable copy.
+max-terms-changed-per-PR = 25          # set
+glossary-order = "topological"         # set
+max-comments-per-PR = 25               # proposal — set for real from Phase 5
+overview-max-words = 400               # proposal
+false-positive-tolerance = "none"
+claim-granularity = "one claim per source sentence; one claim per table cell carrying an independent assertion"
+manual-reviewer = "Nick, optionally Ivo for domain accuracy"
+full-verify-cadence = "every release tag"  # proposal
+
+[validate]
+# Smallest run of characters from a definition that must appear verbatim in one
+# of its own anchored blocks. This is a TRIPWIRE against a wholly invented
+# definition, not a quality bar: definitions are assembled and lightly stitched
+# (C2), so a stitched definition legitimately has short runs. The floor is
+# derived from the current record set, whose weakest run is 11 characters
+# (`risk-archetype`, the record Nick's 2026-07-30 "ordinary English is free"
+# ruling was written about). Raising this above 11 would flag records that
+# ruling already accepted.
+min-verbatim-run-chars = 10
+
+# Markdown files whose tables are checked for a consistent cell count.
+# `samples/` is deliberately absent: it is read-only input, its grid tables are
+# OCR-damaged, and its defects are data (criterion 6), not findings.
+table-globs = [
+    "*.md",
+    "plan/*.md",
+    "registers/*.md",
+    "concepts/*.md",
+    "work/**/*.md",
+]
+
+# Deliberately absent, because definition-of-done.md has not set them and the
+# working agreement forbids inventing a value:
+#   param-low-confidence-threshold  — "to be set from Phase 5"
+# Add them here when the rubric sets them; until then any command that needs
+# one exits 2 rather than proceeding on a guess.

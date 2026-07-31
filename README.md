@@ -66,7 +66,8 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
+| `src/detangle/` | The toolchain: `validate` *(built)*, `graph`, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
+| `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
@@ -87,12 +88,35 @@ Phase 4 closed 2026-07-30 with `plan/adr-001-form-factor.md`: the deliverable
 is a Python package **`detangle`** with a CLI, and the Claude-skill wrapper is
 deferred to Phase 9.2.
 
-Phase 3 data is essentially complete — **356 concept records** under
+Phase 3 data is essentially complete — **358 concept records** under
 `concepts/` with 303 `depends_on` edges, every cycle and definition conflict
 dispositioned, and the criterion-3 reference terms and cycle rulings in
-`registers/`. Next: build the toolchain in `src/detangle/` — `validate`, then
-`graph`, then `generate` — which closes Phase 3 steps 3.5–3.7 by producing the
-glossary, index and concept graph as generated views.
+`registers/`.
+
+The first of the three commands, **`detangle validate`**, is built: it replaces
+the throwaway per-PR scripts with a tested implementation of the record-set
+integrity checks. Next are `graph` and then `generate`, which close Phase 3
+steps 3.5–3.7 by producing the glossary, index and concept graph as generated
+views.
+
+## Running it
+
+`pandoc` must be on `PATH` — the `para_hash` scheme is defined in terms of its
+plain-text output, so it is a hard dependency, not a convenience.
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -e ".[dev]"
+
+.venv/bin/detangle validate            # the whole record set
+.venv/bin/detangle validate concepts/widget.yaml   # just what a PR touches
+.venv/bin/detangle validate --json     # machine-readable, for CI
+.venv/bin/python -m pytest             # tests
+.venv/bin/ruff check .                 # lint
+```
+
+Exit codes are the branch-policy contract: `0` clean, `1` findings raised,
+`2` usage or internal error.
 
 ## Owner
 
