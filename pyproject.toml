@@ -7,9 +7,9 @@ name = "detangle"
 version = "0.1.0"
 description = "Turn convoluted markdown specifications into a structured five-document set"
 requires-python = ">=3.11"
-# Tooling approved in ADR-001 Decision 3. networkx arrives with `detangle
-# graph`; pandoc is a hard external dependency, invoked as a subprocess.
-dependencies = ["PyYAML>=6.0"]
+# Tooling approved in ADR-001 Decision 3. pandoc is a hard external
+# dependency, invoked as a subprocess rather than imported.
+dependencies = ["PyYAML>=6.0", "networkx>=3.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.5"]

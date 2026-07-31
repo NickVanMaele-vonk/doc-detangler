@@ -79,10 +79,27 @@ class Config:
         return {docs[c] for c in codes}
 
     def path(self, name: str) -> Path:
+        """A declared path, existing or not — for outputs the tool will write."""
         paths = self._section("paths")
         if name not in paths:
             raise UsageError(f"{CONFIG_NAME}: [paths] has no {name!r}")
         return self.root / paths[name]
+
+    def directory(self, name: str) -> Path:
+        """A declared input directory, which must actually be one.
+
+        ``Path.glob`` returns nothing for a missing directory rather than
+        raising, so a mistyped ``[paths]`` entry would otherwise be reported as
+        "0 records, clean" and exit 0 — a false green, which is worse than a
+        crash because branch policy believes it.
+        """
+        path = self.path(name)
+        if not path.is_dir():
+            raise UsageError(
+                f"{CONFIG_NAME}: [paths] {name} = {self._section('paths')[name]!r} "
+                f"is not a directory ({path})"
+            )
+        return path
 
 
 def find_root(start: Path | None = None) -> Path:

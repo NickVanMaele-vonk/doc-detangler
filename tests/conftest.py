@@ -34,6 +34,7 @@ CONFIG = """\
 concepts = "concepts"
 registers = "registers"
 samples = "samples"
+graph = "concept-graph.yaml"
 
 [documents]
 U = "samples/mini.md"
@@ -101,6 +102,15 @@ class MiniRepo:
             data["source"] = [self.span("A widget is a device")]
         path = self.root / "concepts" / f"{data['id']}.yaml"
         path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+        return path
+
+    def write_cycles(self, *entries: dict) -> Path:
+        """``registers/cycles.yaml`` — the canonical home of cycle rulings."""
+        path = self.root / "registers" / "cycles.yaml"
+        path.write_text(
+            yaml.safe_dump({"cycles": list(entries)}, sort_keys=False),
+            encoding="utf-8",
+        )
         return path
 
 

@@ -66,13 +66,13 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate` *(built)*, `graph`, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
+| `src/detangle/` | The toolchain: `validate` and `graph` *(built)*, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1) and `reference-terms.md` (regulator- and industry-owned terms, criterion 3) *(Phase 3)* |
-| `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Generated from the concept records and registers, which are the source of truth *(Phase 3 — pending)* |
+| `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
 | `concept-graph.mmd` | Mermaid render, generated from `concept-graph.yaml`; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
 
@@ -89,15 +89,18 @@ is a Python package **`detangle`** with a CLI, and the Claude-skill wrapper is
 deferred to Phase 9.2.
 
 Phase 3 data is essentially complete — **358 concept records** under
-`concepts/` with 303 `depends_on` edges, every cycle and definition conflict
+`concepts/` with 404 `depends_on` edges, every cycle and definition conflict
 dispositioned, and the criterion-3 reference terms and cycle rulings in
 `registers/`.
 
-The first of the three commands, **`detangle validate`**, is built: it replaces
-the throwaway per-PR scripts with a tested implementation of the record-set
-integrity checks. Next are `graph` and then `generate`, which close Phase 3
-steps 3.5–3.7 by producing the glossary, index and concept graph as generated
-views.
+Two of the three commands are built. **`detangle validate`** replaces the
+throwaway per-PR scripts with a tested implementation of the record-set
+integrity checks. **`detangle graph`** builds the concept graph from the
+records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
+the derived `concept-graph.yaml` — reading order, cycles, orphans, dead
+entries, and reachability queries for impact analysis. Next is `generate`,
+which closes Phase 3 steps 3.5–3.7 by producing `glossary.md`, `index.md` and
+`concept-graph.mmd` as anchored views.
 
 ## Running it
 
@@ -111,12 +114,57 @@ python3 -m venv .venv
 .venv/bin/detangle validate            # the whole record set
 .venv/bin/detangle validate concepts/widget.yaml   # just what a PR touches
 .venv/bin/detangle validate --json     # machine-readable, for CI
+
+.venv/bin/detangle graph               # rewrite concept-graph.yaml
+.venv/bin/detangle graph --check       # CI: fail on a hand-edit or a stale graph
+.venv/bin/detangle graph --impact gate # what breaks if this definition changes
+.venv/bin/detangle graph --requires sb-26   # what must be defined first
+
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint
 ```
 
-Exit codes are the branch-policy contract: `0` clean, `1` findings raised,
-`2` usage or internal error.
+### Exit codes
+
+Exit codes are the branch-policy contract (ADR-001 Decision 2). The governing
+distinction is that **`0` and `1` are verdicts; `2` is the absence of one.**
+
+| Code | Name | Means | CI should |
+|------|------|-------|-----------|
+| `0` | clean | The command ran every check it was asked to and raised nothing | proceed |
+| `1` | findings | The command ran to completion and has something a human must disposition | post the findings; block the merge until each is dispositioned (`param-false-positive-tolerance` is none, but "false positive" is a valid disposition) |
+| `2` | usage or internal error | The command reached **no verdict** | fail the build loudly, and never read it as "no findings" |
+
+What raises each:
+
+- **`1`** — any `Finding` at all, `error` or `warn`. Severity ranks findings
+  for a reader; it does not change the exit code, so a stale span cannot pass
+  CI by being less severe than a malformed one.
+- **`2`** — an unknown flag or missing subcommand; a missing or malformed
+  `detangle.toml`; a `param-*` the rubric has not set; a `[paths]` entry that
+  is not a directory; a path argument that is not a concept record; an unknown
+  id passed to `--impact`/`--requires`; `pandoc` missing or failing; a failing
+  `git rev-parse`; an unreadable source document; **and any unexpected
+  exception** — the traceback goes to stderr and the code is still `2`, never
+  `1`. `--json` does not apply: a usage error writes plain text to stderr,
+  because there is no findings document to emit.
+
+Reachability queries (`graph --impact`, `graph --requires`) report no findings
+and exit `0` for any known id, `2` for an unknown one.
+
+### In branch policy
+
+`validate` and `graph --check` are separate gates and neither runs the other —
+one job per command. Run both as separate steps so a failure names which gate
+failed; chaining them in one process would collapse two independent verdicts
+into one exit code.
+
+```bash
+detangle validate --json      # record-set integrity
+detangle graph --check --json # the derived graph matches the records
+```
+
+Order does not matter: they share no state and `--check` never writes.
 
 ## Owner
 

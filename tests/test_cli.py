@@ -131,3 +131,26 @@ def test_unknown_paths_exit_two(mini_repo, capsys):
     mini_repo.write_record()
     code = main(["validate", "--root", str(mini_repo.root), "nowhere.yaml"])
     assert code == EXIT_USAGE
+
+
+def test_a_missing_concepts_directory_is_exit_two_not_a_clean_run(mini_repo, capsys):
+    """The false green: Path.glob on a missing directory yields nothing."""
+    (mini_repo.root / "concepts").rename(mini_repo.root / "elsewhere")
+    code, _ = run(mini_repo)
+    assert code == EXIT_USAGE
+
+
+def test_an_internal_error_exits_two_never_one(mini_repo, monkeypatch):
+    """ADR-001 D2: "Never 1 for a crash."
+
+    Branch policy reads 1 as "findings raised — post them and block". A crash
+    that exits 1 is therefore reported as a completed run, which is the one
+    failure mode the exit-code contract exists to prevent.
+    """
+    from detangle import cli
+
+    def boom(args):
+        raise RuntimeError("internal error, not a finding")
+
+    monkeypatch.setattr(cli, "cmd_validate", boom)
+    assert cli.main(["validate", "--root", str(mini_repo.root)]) == EXIT_USAGE
