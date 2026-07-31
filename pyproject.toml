@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "detangle"
+version = "0.1.0"
+description = "Turn convoluted markdown specifications into a structured five-document set"
+requires-python = ">=3.11"
+# Tooling approved in ADR-001 Decision 3. networkx arrives with `detangle
+# graph`; pandoc is a hard external dependency, invoked as a subprocess.
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+detangle = "detangle.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -25,17 +25,24 @@ Anything beyond that list still needs approval before use.
 
 ## Commands
 
-Everything is git + `gh`, plus the package's own tooling once `src/` exists:
+Everything is git + `gh`, plus the package's own tooling:
 
 ```bash
 git checkout -b <area>/<slug>          # areas in use: plan/, work/, samples/, src/
 git add … && git commit                # then:
 gh pr create --base main               # every change lands via PR — see C4
 
-pytest                                 # tests/ — added with the first src/ commit
-ruff check .                           # lint
-detangle validate|graph|generate       # the three commands, in build order (ADR-001 D4)
+python3 -m venv .venv                  # system python is externally-managed
+.venv/bin/pip install -e ".[dev]"      # editable install, pytest + ruff
+.venv/bin/python -m pytest             # tests/
+.venv/bin/ruff check .                 # lint
+.venv/bin/detangle validate            # built; `graph` and `generate` follow (ADR-001 D4)
 ```
+
+`.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
+validation scripts — run it on the records a PR touches (it always runs the
+set-wide checks too) instead of writing a new script each time. Exit codes are
+the contract: `0` clean, `1` findings, `2` usage error.
 
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
@@ -139,7 +146,7 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
 across 116 records). Steps 3.5–3.7 are now **generation** tasks and are the
-first code the project needs. `concepts/` holds 356 canonical records plus
+first code the project needs. `concepts/` holds 358 canonical records plus
 `registers/reference-terms.md` (the hand-authored criterion-3 references
 list). Nick's 2026-07-30 rulings: RT*/RD* re-placement (PR #51 — codes
 promoted via a §7b (P) ruling follow that ruling's placement even when
@@ -156,14 +163,18 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
   carrying a "Human review decision" column per term. This column is Nick's;
   do not fill it in.
 
-Remaining Phase 3 queue: the §4 word-overload cluster (items 29–32:
-"Tier", "Level", "Layer", "IS"), which **Nick ruled 2026-07-30 gets
-distinct records per sense** — qualified surfaces, one definition site
-each, so criterion 1's disambiguation requirement is met by the record
-set rather than by a note in the generated glossary. The §4 definition
-conflicts (items 1–15) are already carried into the records as
-`conflict:` blocks and the identity questions (16–28) are answered, so
-that is the last open row in the register. The §7c `(P)` dispositions are
+The §4 decision register is closed. Its last open row, the word-overload
+cluster (items 29–32: "Tier", "Level", "Layer", "IS"), was ruled by Nick
+2026-07-30 — **distinct records per sense**, qualified surfaces with one
+definition site each, so criterion 1's disambiguation requirement is met
+by the record set rather than by a note in the generated glossary — and
+applied in PR #67: step 3.3 had already minted ~26 qualified records
+whose C9-hygiene notes refused to alias the bare surfaces, so only the
+two undefined senses were missing (`level-0`, `sovereign-auction-calendar`,
+both orphans). No head record is minted for a bare overloaded word:
+nothing in the corpus defines one, so it would violate C2. The §4
+definition conflicts (items 1–15) are carried into the records as
+`conflict:` blocks and the identity questions (16–28) are answered. The §7c `(P)` dispositions are
 closed (PR #63): P-1/P-2 ruled incorrect
 readings by `(P)` and recorded in `notes` without raising a conflict;
 P-3 – P-12 carried into the records as machine-readable `conflict:`
