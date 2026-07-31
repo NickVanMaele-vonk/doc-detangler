@@ -36,7 +36,10 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/pip install -e ".[dev]"      # editable install, pytest + ruff
 .venv/bin/python -m pytest             # tests/
 .venv/bin/ruff check .                 # lint
-.venv/bin/detangle validate            # built; `graph` and `generate` follow (ADR-001 D4)
+.venv/bin/detangle validate            # built; `generate` follows (ADR-001 D4)
+.venv/bin/detangle graph               # built; rewrites concept-graph.yaml
+.venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
+.venv/bin/detangle graph --impact <id> # what depends on this definition
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
@@ -47,6 +50,10 @@ the contract: `0` clean, `1` findings, `2` usage error.
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
 by Nick, not by the assistant.
+
+`concept-graph.yaml` is derived: never hand-edit it, and regenerate it in the
+same PR as any change to a record's `depends_on`, to `registers/cycles.yaml`,
+or to the record set itself — `detangle graph --check` fails otherwise.
 
 ## The three normative documents — read before changing anything
 
@@ -145,8 +152,11 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 (all §1 sections, §3a promotions, multi-document leftovers, and the full
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
-across 116 records). Steps 3.5–3.7 are now **generation** tasks and are the
-first code the project needs. `concepts/` holds 358 canonical records plus
+across 116 records; 404 edges set-wide after PRs #59–#60 and #67). Steps
+3.5–3.7 are now **generation** tasks. `detangle validate` and `detangle
+graph` are built; `generate` is the remaining command (ADR-001 D4).
+`concept-graph.yaml` is generated and committed — dependency edges and the
+cycle roll-up now, usage edges when the bodies exist in Phase 5. `concepts/` holds 358 canonical records plus
 `registers/reference-terms.md` (the hand-authored criterion-3 references
 list). Nick's 2026-07-30 rulings: the RT*/RD* re-placement of PR #51 is
 **superseded** — the first `detangle validate` run surfaced `rd01`,
