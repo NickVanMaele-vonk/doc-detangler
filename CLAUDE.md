@@ -49,7 +49,9 @@ the contract: `0` clean, `1` findings, `2` usage or internal error. **`0` and
 `1` are verdicts; `2` is the absence of one** — never read `2` as "no
 findings". Any unexpected exception exits `2`, never `1`, because branch
 policy reads `1` as a completed run that found things. Full table in the
-README; `validate` and `graph --check` are separate gates and CI runs both.
+README; `validate` and `graph --check` are separate gates, and
+`.github/workflows/ci.yml` runs each as its own job — alongside tests and lint
+— on every PR to `main`, so a red run names the gate that failed.
 
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
