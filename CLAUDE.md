@@ -78,6 +78,10 @@ placement is C9 *and* criterion 3 *and* plan §4).
 Decisions D1–D10 are all signed off. Do not reopen a signed-off decision;
 propose an amendment with rationale and let Nick rule.
 
+`plan/backlog.md` (`B-n` entries) is **not** normative — parked candidate work,
+nothing in it approved or scheduled. Add to it rather than to the three above
+when an idea has no phase yet.
+
 ## Architecture (the parts that require reading several files)
 
 **The concept graph is the backbone, not a side artifact.** Directed edges
