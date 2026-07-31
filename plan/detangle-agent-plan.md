@@ -235,13 +235,16 @@ input to any architecture and de-risks everything downstream.
 | 3.6 | Generate `index.md`: an alphabetical list of **every** term defined anywhere in the set — glossary or document — each with the location of its definition, plus alias and acronym entries pointing at the same location. Terms only, no definitions. Generated and verified by regeneration, never hand-maintained. |
 | 3.7 | Record term **usage locations as graph edges** in `concept-graph.yaml` — which document and section uses which term. Usage data lives in the graph only; the glossary defines terms and does not list where they are used. Forward reachability over these edges is what makes impact analysis possible when a definition changes. Also flag **dead entries**: glossary terms with no use anywhere in the set. **Usage edges are derived data (D10):** extracted from the bodies and regenerable at any time, never hand-maintained — the extraction that produces them here is the same one the steady-state guard re-runs incrementally on every later body edit. |
 | 3.8 | Review via PR (Nick, optionally Ivo), within `param-max-terms-changed-per-PR` — the initial glossary will exceed 25 terms, so this lands as a sequence of concept-scoped PRs, not one. |
+| 3.9 | **Waiver register — pulled forward from 10.5 (Nick's ruling, 2026-07-31).** `registers/waivers.yaml` joins `cycles.yaml` and `reference-terms.md` as a canonical register: it records each finding that has a human disposition but no fix yet, so `detangle validate` reports it as accepted debt rather than re-firing it as a live finding. Pulled forward because the first dispositions are of this shape — the `definition-token` findings on `explanation-type`, `otc-bilateral-trading` and `persistence-gate` were ruled source-document defects (a broken hyphen in UCE, a missing one in MCL and SBSP) whose fix waits on the Phase 10 source-correction path. Without the register `validate` exits `1` for as long as that wait lasts, so it cannot be marked a required check and the gate stops meaning anything. Term lifecycle — `status` transitions and `superseded_by` renames — stays in 10.5. **Design not yet proposed and no code written:** per the working agreements the register's schema and the validator's suppression semantics go to Nick before implementation. |
 
-**Outputs:** the concept records (canonical), plus the generated views
-`glossary.md`, `index.md`, `concept-graph.yaml` (edge list) and
+**Outputs:** the concept records (canonical), the registers
+(`cycles.yaml`, `reference-terms.md`, `waivers.yaml`), plus the generated
+views `glossary.md`, `index.md`, `concept-graph.yaml` (edge list) and
 `concept-graph.mmd` (Mermaid render)
 **Done when:** PRs merged; every cycle, orphan, and conflicting definition has
 a human disposition; every term has exactly one definition site and exactly
-one index entry resolving to it.
+one index entry resolving to it; and every finding `detangle validate` reports
+is either fixed or covered by a waiver-register entry.
 
 ## Phase 4 — Architecture decision
 Model/effort recommendation: Opus/high
@@ -348,13 +351,14 @@ branch policy, budgets) and Phase 3's extraction.
 | 10.2 | **Incremental drift lint as branch policy.** On every PR touching a body, classify each section against the section map (ID first, hash second): moved → re-run order-sensitive checks only; edited → re-extract that section only; new → extract + stamp; deleted → orphaned-edge and lost-claim checks. A pure reorder costs ~zero. Comment (per cluster, DoD 8d) on new orphans, inline redefinitions, use-before-definition regressions, placement-boundary crossings (promotion/demotion triggers), contradiction candidates, introduced staleness, and ID-hygiene violations (duplicate IDs from copy-paste, missing or malformed markers). Deterministic checks are code; only contradiction candidacy uses a model. Comments block merge via the existing C3 policy — this is the edit contract for humans and AI agents alike. |
 | 10.3 | **Derived-artifact regeneration on merge.** Usage edges, first-use links, `index.md`, `concept-graph.mmd`, `state/section-map.yaml`, and `manifest.yaml` regenerate whenever bodies or records change; the regenerate-and-compare guard (D9) extends to all of them. Direct edits to derived artifacts remain forbidden. |
 | 10.4 | **Version manifest.** Generated `manifest.yaml`: per-document version, record-set revision, dependency-graph hash, derived-artifact hashes, generation timestamp. The coherence check — "do these five documents + record set belong together?" — becomes mechanical. Version skew (already live: UCE v28 vs v30 citations; MCL v21/v22) becomes machine-checkable state. |
-| 10.5 | **Term lifecycle + waiver register.** `status` transitions (candidate → approved → published → deprecated) and `superseded_by` renames; deprecated aliases in body text are flagged as such, not as unknown terms. The waiver register (extending the ISO 704 §6.5.2 documented-exception path) records ticketed orphans/conflicts with an owner, so during incremental glossary completion the lint separates accepted debt from new regressions. |
+| 10.5 | **Term lifecycle.** `status` transitions (candidate → approved → published → deprecated) and `superseded_by` renames; deprecated aliases in body text are flagged as such, not as unknown terms. **The waiver register moved to step 3.9** (Nick, 2026-07-31): it extends the ISO 704 §6.5.2 documented-exception path and records ticketed orphans/conflicts with an owner, so the lint separates accepted debt from new regressions — needed from Phase 3, not Phase 10, because `detangle validate` already produces findings whose disposition is "accepted, fix deferred". |
 | 10.6 | **Tiered verification cadence.** Cheap structural lint on every PR (10.2); full C1/C2/C7 harness (Phase 7) at `param-full-verify-cadence` — release tags, not every edit. |
 | 10.7 | **Lint test suite — part of the deliverable, not an afterthought.** Mirror the Phase 7 seeded-error pattern: a fixture corpus with one seeded scenario per lint flag type — reorder-only (must flag **nothing** and cost ~zero), typo edit (staleness only), new undefined term, inline redefinition, use-before-definition, placement-boundary crossing, deprecated-alias use, copy-paste duplicate section ID, missing/malformed marker, deleted section with live usage edges, section split, section merge. The guard is not wired into branch policy until every seeded scenario is caught and the reorder-only fixture stays silent. |
 
 **Output:** the guard wired into branch policy; `state/section-map.yaml`;
-`manifest.yaml`; waiver register; the lint test suite (10.7, all fixtures
-green); steady-state usage documentation.
+`manifest.yaml`; term lifecycle (the waiver register itself lands in 3.9);
+the lint test suite (10.7, all fixtures green); steady-state usage
+documentation.
 **Done when:** an ordinary body-edit PR (authored by a human or an AI agent)
 that introduces an undefined term, redefines a term inline, or reorders
 sections is flagged by the lint before merge; a merge regenerates all derived
