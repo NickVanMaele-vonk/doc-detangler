@@ -225,6 +225,177 @@ view-generator — as well as delivering ontology content (records, edges).
 This supersedes the earlier split in which Nick built the view-generator
 himself.
 
+## Session state — 2026-07-31 (family B, provenance, editing surfaces)
+
+**Read this first when picking the thread back up.** The session ran from the
+five open `definition-token` findings into the record schema, the C2
+provenance model, and how end users will edit the set in steady state. Nothing
+in this section is implemented; the record edits below are agreed but not
+written.
+
+**We stopped on one question.** `CLOSE_WINDOW_START_MINUTES` is to become its
+own record. Does it get `flags: [orphan]`, or `flags: []` following the
+IBE/IBEB software-record precedent? The corpus never defines it — it only
+assigns it a value — which argues orphan. But its business term owns the
+concept, which is the shape the IBE ruling covers, and those records
+(`intraday-behavioural-event-builder`, `dataenrichmentorchestrator`) carry
+`definition: null`, `depends_on: []` and **no** orphan flag, because the
+orphan count measures source convolutedness and in those cases the source
+does define the thing. Rule collision; Nick's call.
+
+### Ruled this session
+
+- **Family A — the three `definition-token` findings on `explanation-type`,
+  `otc-bilateral-trading` and `persistence-gate` are source-document
+  defects.** UCE's `MEDIUM- INVESTIGATE` is a broken hyphen; MCL's
+  "EOD only" and SBSP's "BOA Archetype" lack one the record's attributive
+  use wants. Fixed later by a human through the B-1 source-correction path,
+  held as accepted debt until then. Records are **not** edited and the
+  validator is **not** loosened.
+- **The waiver register moves from Phase 10.5 to Phase 3, step 3.9** — see
+  the registers section above. Design not proposed; schema and the
+  validator's suppression semantics go to Nick before any code.
+- **Family B resolves structurally, so the C2-unit question never needs
+  ruling.** The three options considered were: check a definition's tokens
+  against the anchored block only, against the whole corpus for acronyms
+  resolving to a record's alias, or against the block plus its `section`
+  heading. Both flagged records are fixed by narrowing instead, so the
+  status quo (anchored block) stands unchanged.
+  - `anonymous-quote-driven-market-structure` → definition narrows to *"The
+    market structure in which quote activity is visible to all participants
+    but is not immediately attributable."* The MTSAM clause is an
+    illustration and the trailing "which determines how quote-based
+    manipulation is detected…" clause is a project consequence; both move to
+    `notes` verbatim per the ISO 704 §6.5.2 narrowing pattern. Drop
+    `depends_on: [mts-associated-markets]`; regenerate the graph. The M
+    source span still needs a decision — keep it because `notes` will quote
+    that row, or drop it.
+  - `close-window` → `definition: null`, `flags: [orphan]`, `depends_on: []`,
+    `aliases: []`. The general sense is genuinely absent from the corpus
+    (searched: "assessment window", "preceding the close", "end-of-day
+    assessment" appear nowhere). Nick supplies it post-deployment, into the
+    documents, not as an authored record field.
+  - New record `close-window-start-minutes` — `term:
+    CLOSE_WINDOW_START_MINUTES`, `placement: MCL`, `used_in: [M]`,
+    `definition: null` pending Nick's eventual *"the software variable
+    denoting the close window"*, `depends_on: []` because edges come from
+    definition text and there is no definition yet. Corpus value preserved
+    verbatim in `notes`: `CLOSE_WINDOW_START_MINUTES = 30 minutes before
+    17:00 CET`. The alias leaves `close-window` either way (MWBR_ANOMALOUS
+    precedent) — a parameter name is not a synonym for a business term.
+- **Declared document versions are to be removed**; git is the version
+  control, and hand-typed version strings never reflect reality. Carry two
+  things: the existing skew (MCL titled v21 with a v22 block; MCL applying
+  to UCE v28 while SBSP cites v30) must survive as a recorded finding rather
+  than being harmonised away with the numbers, and release identity has to
+  land somewhere for audit — git tags bound by `manifest.yaml`.
+- **Promotion is automatic, after informing the human.** When an edit makes a
+  term cross from one document into two, the message is: *"Your latest edit
+  leads to `<concept>` being used in more than one source document. The
+  definition will be moved to the glossary and all documents that use it,
+  including this one, will receive links to it."* Then the tool reconfigures.
+- **`glossary.md` and `index.md` are committed and tracked in git**, like
+  `concept-graph.yaml`. They still get a regenerate-and-compare guard, a
+  banner, and a CI failure that names the record to edit instead.
+
+### Design learnings that outlive the session
+
+- **`samples/` is scaffolding.** It is replaced by the full documents once
+  the tool exists, and those documents are the living set humans edit.
+  "Input, never output" was a property of a fixed test fixture, not a
+  standing principle. It follows that **`corpus` provenance is a historical
+  fact, not a status anything can migrate into** — it says the wording
+  traces to what the business had written when the run consumed it, and
+  `verified_against.git_blob` keeps that verifiable however the file is
+  later rewritten. Authored content never becomes corpus content.
+- **Provenance is two axes, not one enum.** Anchoring — is there a source
+  span? — is separate from authorship and assurance. `corpus`/`human`/`AI`
+  as one field cannot express AI-written text sitting inside the corpus,
+  which is exactly this project's situation (see the corpus-provenance
+  bullet in plan §3 Scope). Authored content carries author, approver, PR
+  and the set version it entered at; it has no `para_hash`, and that absence
+  is what stops the next version's analysis reading it as source.
+- **The `definition-token` check is a proxy for C2, not C2.** C2 is
+  claim-level, checked by the Phase 7 harness, and has two limbs: every
+  claim traces to the source **or is explicitly marked as bridging text**.
+  The record-layer check is deliberately stricter because the harness does
+  not exist yet. Criterion 7 already covers the orphan case — a glossary
+  entry with no source definition is Category C in full and always raises a
+  PR comment.
+- **Bridging markers must be generated, never typed.** Same principle as
+  C12's section IDs: marking that depends on a human remembering to write
+  `<!-- AI addition:start -->` is marking that goes missing exactly where it
+  mattered.
+- **The `definition` field conflates three things and `source:` is
+  record-level.** A definition proper, an illustration, and a consequence
+  sit in one string, while the token check tests the whole string against
+  the **union** of every anchored block — so a span imported for one clause
+  can launder another. On `anonymous-quote-driven-market-structure`, adding
+  MCL block `881a98c9…` as a third span would have cleared the MTSAM finding
+  outright without improving the record. **82 of 173 defined records are
+  multi-clause** (em-dash, semicolon, or over 35 words); 153 contain a
+  code-shaped token. The fix is provenance per clause, with ISO 704 §6.4.4's
+  substitution principle as the test for what is definitional. Not designed.
+- **Edge-minting cannot be a blanket rule once clauses move out of the
+  definition.** `close-window` → `mts-associated-markets` should go: you do
+  not need the venue to understand what a close window is, and keeping it
+  would order the glossary and answer impact queries wrongly.
+  `persistence-gate` → `medium-investigate` must stay, though it sits in a
+  structurally identical trailing clause, because the cap *is* the gate's
+  point. An instantiation creates no comprehension prerequisite; a
+  consequence naming a defined term usually does.
+- **Definition sites are mostly not in the glossary.** 127 records are
+  glossary-placed, 231 document-placed (100 UCE, 71 SBSP, 60 MCL); of the
+  173 defined, 69 render to the glossary and 104 into document bodies. So
+  D9's "single definition site becomes structurally impossible to violate"
+  holds for the glossary-placed only. Nick's leaning is body-canonical for
+  the 231, not yet ruled.
+- **Editing surfaces.** Direct markdown editing stays the norm (C12) — the
+  corpus is overwhelmingly non-definitional. The tool is required for one
+  class only: definitions of glossary-placed terms. Nobody edits
+  `glossary.md` or `index.md`. A PR diff is not a viable surface for
+  non-IT-literate business users: it shows hunks with ~3 lines of context in
+  raw markdown with `+`/`-` gutters, commenting requires the source view
+  rather than the rendered one, and a topologically-ordered generated file
+  turns a one-word fix into large reorder churn. **So the tool UI is
+  load-bearing, not a convenience**, and nothing in Phase 8 or 9 scopes it
+  yet. The reading-time route only has to serve the team, not external
+  readers (Nick, 2026-07-31).
+- **The comment→edit round-trip only exists inside a PR.** D9's source-map
+  anchors resolve a comment on generated markdown back to its record, but
+  that requires an open PR with `glossary.md` in the diff. Someone reading
+  the published glossary who spots a wrong definition has no comment
+  surface at all — which is the common case, and why the UI matters.
+- **Anchors must be emitted markers, never line offsets** — a regenerated
+  glossary reorders topologically, and line numbers are provenance nowhere
+  (D10).
+
+### Open questions, roughly in blocking order
+
+1. `close-window-start-minutes` orphan flag — the stopping point above.
+2. Inline redefinition: when someone writes a glossary term's definition into
+   a body, does the lint propose lifting it into the record, or only block
+   with a pointer? Asked twice, unanswered.
+3. May an authored definition be AI-drafted and human-approved, or must a
+   human write it? Criterion 7 calls an invented definition the highest-risk
+   output the tool can produce.
+4. Body-canonical for the 231 document-placed definitions — stated as
+   probably fine, never ruled.
+5. Provenance schema shape: field names, whether authored text sits in
+   `definition:` or its own field, and whether `flags: [orphan]` survives an
+   authored definition. It must, or the convolutedness measure decays as
+   fast as the work gets done.
+6. Waiver register design (step 3.9) — schema plus suppression semantics.
+7. Splitting `definition` into definition / illustration / note with
+   per-clause provenance — whether to do it at all, and whether in Phase 3.
+8. Demotion: a term losing its second usage drops out of the glossary, which
+   under body-canonical migrates its definition from record to body text.
+   The reverse of the promotion ruling, unexamined.
+9. Guarding the two newly committed views: regenerate-and-compare, banner,
+   CI redirect message.
+10. PR #71 — merge red now, or hold until 3.9 makes `detangle validate`
+    green.
+
 ## Record-authoring conventions (learned in practice, steps 3.3–3.4)
 
 Established across PRs #17–#35; follow them so records stay uniform.
