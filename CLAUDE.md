@@ -45,7 +45,11 @@ python3 -m venv .venv                  # system python is externally-managed
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
 validation scripts — run it on the records a PR touches (it always runs the
 set-wide checks too) instead of writing a new script each time. Exit codes are
-the contract: `0` clean, `1` findings, `2` usage error.
+the contract: `0` clean, `1` findings, `2` usage or internal error. **`0` and
+`1` are verdicts; `2` is the absence of one** — never read `2` as "no
+findings". Any unexpected exception exits `2`, never `1`, because branch
+policy reads `1` as a completed run that found things. Full table in the
+README; `validate` and `graph --check` are separate gates and CI runs both.
 
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged

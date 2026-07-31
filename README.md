@@ -124,8 +124,47 @@ python3 -m venv .venv
 .venv/bin/ruff check .                 # lint
 ```
 
-Exit codes are the branch-policy contract: `0` clean, `1` findings raised,
-`2` usage or internal error.
+### Exit codes
+
+Exit codes are the branch-policy contract (ADR-001 Decision 2). The governing
+distinction is that **`0` and `1` are verdicts; `2` is the absence of one.**
+
+| Code | Name | Means | CI should |
+|------|------|-------|-----------|
+| `0` | clean | The command ran every check it was asked to and raised nothing | proceed |
+| `1` | findings | The command ran to completion and has something a human must disposition | post the findings; block the merge until each is dispositioned (`param-false-positive-tolerance` is none, but "false positive" is a valid disposition) |
+| `2` | usage or internal error | The command reached **no verdict** | fail the build loudly, and never read it as "no findings" |
+
+What raises each:
+
+- **`1`** — any `Finding` at all, `error` or `warn`. Severity ranks findings
+  for a reader; it does not change the exit code, so a stale span cannot pass
+  CI by being less severe than a malformed one.
+- **`2`** — an unknown flag or missing subcommand; a missing or malformed
+  `detangle.toml`; a `param-*` the rubric has not set; a `[paths]` entry that
+  is not a directory; a path argument that is not a concept record; an unknown
+  id passed to `--impact`/`--requires`; `pandoc` missing or failing; a failing
+  `git rev-parse`; an unreadable source document; **and any unexpected
+  exception** — the traceback goes to stderr and the code is still `2`, never
+  `1`. `--json` does not apply: a usage error writes plain text to stderr,
+  because there is no findings document to emit.
+
+Reachability queries (`graph --impact`, `graph --requires`) report no findings
+and exit `0` for any known id, `2` for an unknown one.
+
+### In branch policy
+
+`validate` and `graph --check` are separate gates and neither runs the other —
+one job per command. Run both as separate steps so a failure names which gate
+failed; chaining them in one process would collapse two independent verdicts
+into one exit code.
+
+```bash
+detangle validate --json      # record-set integrity
+detangle graph --check --json # the derived graph matches the records
+```
+
+Order does not matter: they share no state and `--check` never writes.
 
 ## Owner
 

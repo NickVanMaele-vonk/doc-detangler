@@ -46,3 +46,17 @@ def test_the_root_is_the_nearest_ancestor_with_a_config(mini_repo):
 def test_no_config_anywhere_raises(tmp_path):
     with pytest.raises(UsageError):
         find_root(tmp_path)
+
+
+def test_a_declared_input_directory_must_exist(mini_repo):
+    """A mistyped [paths] entry must not read as "0 records, clean"."""
+    config = Config.load(mini_repo.root)
+    (mini_repo.root / "concepts").rename(mini_repo.root / "elsewhere")
+    with pytest.raises(UsageError, match="is not a directory"):
+        config.directory("concepts")
+
+
+def test_an_output_path_need_not_exist(mini_repo):
+    """`graph` writes concept-graph.yaml, so its absence is not an error."""
+    config = Config.load(mini_repo.root)
+    assert config.path("graph") == mini_repo.root / "concept-graph.yaml"

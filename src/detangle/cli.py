@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import traceback
 from pathlib import Path
 
 from . import __version__, graph, tables
@@ -38,7 +39,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     root = find_root(Path(args.root) if args.root else None)
     config = Config.load(root, Path(args.config) if args.config else None)
 
-    records, findings = load_records(config.path("concepts"), root)
+    records, findings = load_records(config.directory("concepts"), root)
     targets = _selected(records, root, args.paths)
     if args.paths and not targets:
         raise UsageError("none of the given paths is a concept record")
@@ -73,8 +74,8 @@ def cmd_graph(args: argparse.Namespace) -> int:
     root = find_root(Path(args.root) if args.root else None)
     config = Config.load(root, Path(args.config) if args.config else None)
 
-    records, findings = load_records(config.path("concepts"), root)
-    register, register_findings = load_cycles(config.path("registers"), root)
+    records, findings = load_records(config.directory("concepts"), root)
+    register, register_findings = load_cycles(config.directory("registers"), root)
     findings.extend(register_findings)
 
     concept_graph, build_findings = graph.build(records, register)
@@ -179,12 +180,29 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Exit 0 clean, 1 findings, 2 usage or internal error — ADR-001 D2.
+
+    The blanket ``except`` is the "never 1 for a crash" half of that contract.
+    Without it an unexpected exception leaves the interpreter to exit 1, and
+    branch policy — which reads 1 as "findings raised, post them and block" —
+    would treat a crashed run as a completed one that happened to find things.
+    The traceback still reaches stderr, because 2 says only that no verdict
+    was reached, not why.
+    """
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
         return args.func(args)
     except UsageError as exc:
         print(f"detangle: {exc}", file=sys.stderr)
+        return EXIT_USAGE
+    except Exception:  # noqa: BLE001 — deliberate: 2 is the contract for these
+        traceback.print_exc()
+        print(
+            "detangle: internal error — exiting 2, not 1: this run reached no "
+            "verdict, so it is not 'no findings'",
+            file=sys.stderr,
+        )
         return EXIT_USAGE
 
 
