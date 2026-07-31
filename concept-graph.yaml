@@ -14,12 +14,12 @@
 schema: 1
 generator: detangle graph
 counts:
-  nodes: 358
-  dependency_edges: 404
+  nodes: 359
+  dependency_edges: 402
   usage_edges: 0
   cycles: 1
-  orphans: 183
-  undefined: 185
+  orphans: 185
+  undefined: 187
   dead_entries: 0
 cycles:
 - id: liquidity-identity-contrast
@@ -76,6 +76,8 @@ orphans:
 - cco
 - cco-assessment
 - cf
+- close-window
+- close-window-start-minutes
 - closed-justified
 - collusion-override-path
 - contextual-convergence-score
@@ -232,6 +234,7 @@ reading_order:
 - amendment-uce-amd-bvr-001
 - amplifier-suppressor-assessment
 - analytical-perimeter
+- anonymous-quote-driven-market-structure
 - aob
 - attribution-confidence
 - auction-window
@@ -269,6 +272,8 @@ reading_order:
 - cco
 - cco-assessment
 - cf
+- close-window
+- close-window-start-minutes
 - closed-justified
 - collusion-override-path
 - contextual-convergence-score
@@ -361,8 +366,6 @@ reading_order:
 - client-portfolio-order-flow-intelligence
 - liquidity-migration
 - mts-associated-markets
-- anonymous-quote-driven-market-structure
-- close-window
 - mts-trades
 - mtsam-analytical-layer
 - mtsam-api-stack
@@ -852,7 +855,11 @@ nodes:
 - id: close-window
   term: CLOSE_WINDOW
   placement: glossary
-  defined: true
+  defined: false
+- id: close-window-start-minutes
+  term: CLOSE_WINDOW_START_MINUTES
+  placement: MCL
+  defined: false
 - id: closed-justified
   term: CLOSED_JUSTIFIED
   placement: MCL
@@ -2038,8 +2045,6 @@ edges:
       to: mts-associated-markets
     - from: anonymity-attribution-narrative
       to: quote-domain-signal
-    - from: anonymous-quote-driven-market-structure
-      to: mts-associated-markets
     - from: architectural-separation-principle
       to: alert
     - from: architectural-separation-principle
@@ -2132,8 +2137,6 @@ edges:
       to: signal
     - from: client-portfolio-order-flow-intelligence
       to: mts-spa
-    - from: close-window
-      to: mts-associated-markets
     - from: collusion-assessment
       to: coordination-classification-tier
     - from: contextual-suppression-gate

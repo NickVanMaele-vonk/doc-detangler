@@ -1,0 +1,43 @@
+id: close-window-start-minutes
+term: CLOSE_WINDOW_START_MINUTES
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:8d68a21777d24329d8ea36a0d87fb7ae4f527a10a27f60e3e52a08195d64cbd5
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: promote to its own record (Nick, 2026-07-31) — a business term
+  and a software variable are two distinct terms, so the parameter does not
+  belong in [[close-window]]'s aliases or definition.
+notes: >-
+  Split out of [[close-window]] on 2026-07-31. The corpus states only the
+  value, verbatim in the anchored block: "CLOSE_WINDOW_START_MINUTES = 30
+  minutes before 17:00 CET" — MTSAM's company-specific choice for the
+  duration, not a statement of what the variable is. Reproduced with its
+  exact number and timezone (criterion 5). The venue is named by the
+  section heading, not by the block, so the definition carries no MTSAM
+  token. Definition deferred to Nick post-deployment: "the software
+  variable denoting the close window". Until it is written there is no
+  definition text, and edges are extracted from definition text only, so
+  `depends_on` is empty — the edge to [[close-window]] arrives with the
+  definition, not before. Flagged orphan because the corpus uses this
+  variable and never explains it; this is a different case from the
+  software records left unflagged under the IBE/IBEB ruling
+  ([[intraday-behavioural-event-builder]],
+  [[dataenrichmentorchestrator]], [[mediumreviewengine]]), where the
+  source does define the thing and only the record declines to. Nick's
+  direction for the corpus cleaning: software variables should ultimately
+  leave these documents altogether and live in the IT team's functional
+  specifications — the same shape as the criterion-3 terms owned by
+  regulators and industry bodies.

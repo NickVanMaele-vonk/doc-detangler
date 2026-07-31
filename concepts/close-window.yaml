@@ -1,13 +1,11 @@
 id: close-window
 term: CLOSE_WINDOW
-aliases: [CLOSE_WINDOW_START_MINUTES]
+aliases: []
 status: candidate
 superseded_by: null
 placement: glossary
 used_in: [S, M]
-definition: >-
-  The end-of-day assessment window preceding the close, parameterised at
-  MTSAM as CLOSE_WINDOW_START_MINUTES = 30 minutes before 17:00 CET.
+definition: null
 source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.1 MTS Associated Markets --- Key Characteristics"
@@ -21,9 +19,8 @@ source:
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
-depends_on:
-  - mts-associated-markets
-flags: []
+depends_on: []
+flags: [orphan]
 conflict: null
 review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
 notes: >-
@@ -32,3 +29,18 @@ notes: >-
   its exact number and timezone (criterion 5). S treats CLOSE_WINDOW as a
   framework ("15-code end-of-day RD alert taxonomy with CLOSE_WINDOW
   framework") and uses it in archetype detections and BT-07 sub-types.
+  Narrowed to an orphan 2026-07-31 (Nick). The corpus never states what a
+  close window is: searched across all three blueprints, "assessment
+  window", "preceding the close" and "end-of-day assessment" do not occur,
+  and every other occurrence of CLOSE_WINDOW uses it as a code or a
+  framework without explaining it. The only definitional-looking content
+  was MTSAM's parameter value, which is that venue's choice rather than
+  what the term means — so it moves to its own record,
+  [[close-window-start-minutes]], and the alias goes with it (a parameter
+  name is not a synonym for a business term; MWBR_ANOMALOUS precedent).
+  What remains is a term used across S and M and defined nowhere, which is
+  exactly what the orphan flag records. Nick supplies the general sense
+  after tool deployment, into the documents themselves rather than as an
+  authored record field. The edge to [[mts-associated-markets]] is dropped
+  with the parameter clause: the concept is generic and does not depend on
+  the venue.
