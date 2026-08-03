@@ -21,7 +21,12 @@ def test_a_clean_record_set_exits_zero(mini_repo, capsys):
     code, payload = run(mini_repo, capsys=capsys)
     assert code == EXIT_CLEAN
     assert payload["findings"] == []
-    assert payload["summary"] == {"records": 1, "checked": 1, "defined": 1}
+    assert payload["summary"] == {
+        "records": 1,
+        "checked": 1,
+        "defined": 1,
+        "waived": 0,
+    }
 
 
 def test_findings_exit_one(mini_repo, capsys):
@@ -29,7 +34,7 @@ def test_findings_exit_one(mini_repo, capsys):
     code, payload = run(mini_repo, capsys=capsys)
     assert code == EXIT_FINDINGS
     assert [f["check"] for f in payload["findings"]] == ["placement-computed"]
-    assert payload["counts"] == {"error": 1, "warn": 0}
+    assert payload["counts"] == {"error": 1, "warn": 0, "waived": 0}
 
 
 def test_a_stale_git_blob_is_a_warning_not_an_error(mini_repo, capsys):
@@ -39,7 +44,7 @@ def test_a_stale_git_blob_is_a_warning_not_an_error(mini_repo, capsys):
     mini_repo.write_record(source=[span])
     code, payload = run(mini_repo, capsys=capsys)
     assert code == EXIT_FINDINGS
-    assert payload["counts"] == {"error": 0, "warn": 1}
+    assert payload["counts"] == {"error": 0, "warn": 1, "waived": 0}
     assert payload["findings"][0]["check"] == "git-blob-stale"
 
 

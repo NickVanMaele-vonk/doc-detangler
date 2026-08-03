@@ -46,11 +46,16 @@ removes the discrepancy for every record that cites the block, now and later.
 3. **Location must not be a line number.** Per D10, line numbers are
    provenance nowhere. The flag addresses `(doc, section, block hash)`, the
    same triple records use.
-4. **"Marks as done" needs somewhere to live.** Closest existing shape is the
-   Phase 10.5 waiver register: a ticketed entry with an owner that separates
-   accepted debt from new regressions. Either a sibling register
+4. **"Marks as done" needs somewhere to live.** ~~Either a sibling register
    (`registers/source-corrections.yaml`) or a disposition column on the waiver
-   register — decide when the waiver register is designed, not before.
+   register — decide when the waiver register is designed, not before.~~
+   **Decided 2026-08-03, with the waiver register (step 3.9): one register.**
+   `registers/waivers.yaml` carries the disposition in its `disposition`
+   field — `source-defect` for all three of the findings that prompted B-1 —
+   plus `owner`, `ticket` and `review_by`. A sibling register would have
+   duplicated the loader, the staleness pass and the partition machinery to
+   hold a single value. "Marks as done" is therefore: correct the source, then
+   delete the waiver in the same PR, which `waiver-stale` enforces.
 
 **Open questions for whoever picks this up.**
 

@@ -72,7 +72,7 @@ If one term appears in more than one input document, then:
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
-| `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1) and `reference-terms.md` (regulator- and industry-owned terms, criterion 3) *(Phase 3)* |
+| `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
 | `concept-graph.mmd` | Mermaid render, generated from `concept-graph.yaml`; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
@@ -140,7 +140,8 @@ What raises each:
 
 - **`1`** — any `Finding` at all, `error` or `warn`. Severity ranks findings
   for a reader; it does not change the exit code, so a stale span cannot pass
-  CI by being less severe than a malformed one.
+  CI by being less severe than a malformed one. The one exception is a finding
+  covered by the waiver register — see below.
 - **`2`** — an unknown flag or missing subcommand; a missing or malformed
   `detangle.toml`; a `param-*` the rubric has not set; a `[paths]` entry that
   is not a directory; a path argument that is not a concept record; an unknown
@@ -153,6 +154,26 @@ What raises each:
 Reachability queries (`graph --impact`, `graph --requires`) report no findings
 and exit `0` for any known id, `2` for an unknown one.
 
+### Waived findings
+
+`registers/waivers.yaml` (plan step 3.9) holds findings that have a human
+disposition but no fix yet — today, three `definition-token` findings ruled
+source-document defects, whose repair waits on the B-1 source-correction path.
+`detangle validate` prints a covered finding in its own `waived` block and
+counts it in the summary, but leaves it out of the exit-code decision, so a
+gate waiting on work elsewhere can still be green and can therefore be marked
+required. Waiving is a separate channel, not a third severity: everything left
+in the live list still blocks, whatever its severity.
+
+An entry matches on `check` + `where`, narrowed by an optional `match`
+substring of the finding's message — exact strings only, no globs or regex.
+Entries and live findings are 1:1, so an entry that matches nothing on a full
+run raises `waiver-stale` (warn) and a fix must remove its waiver in the same
+PR. `register-parse` and the `waiver-*` checks cannot be waived: a malformed
+register must not be able to excuse itself. A waiver is a deferral, not an
+approval (`definition-of-done.md` §3) — the set is not done while waivers are
+open, which is why a waived finding is still printed on every run.
+
 ### In branch policy
 
 `.github/workflows/ci.yml` runs three gates on every PR to `main`, one job
@@ -162,7 +183,7 @@ separately:
 | Job | Command | Guards |
 |-----|---------|--------|
 | `tests and lint` | `ruff check .`, `python -m pytest` | the toolchain itself |
-| `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site |
+| `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site — less whatever `registers/waivers.yaml` covers |
 | `detangle graph --check` | `detangle graph --check --json` | the **derived** `concept-graph.yaml` against the canonical records and registers |
 
 The last two are separate gates and neither runs the other; chaining them in

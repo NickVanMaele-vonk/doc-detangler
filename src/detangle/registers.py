@@ -4,8 +4,8 @@ A register's provenance is a PR thread and a standards clause, not a source
 span, which is why it lives outside ``concepts/`` (Nick, 2026-07-30). Registers
 are canonical *inputs* to generation and are never generated.
 
-Only ``cycles.yaml`` is read here. ``reference-terms.md`` is prose consumed by
-the view generator, and ``waivers.yaml`` arrives in Phase 10.
+``cycles.yaml`` and ``waivers.yaml`` are read here. ``reference-terms.md`` is
+prose consumed by the view generator.
 """
 
 from __future__ import annotations
@@ -15,9 +15,26 @@ from pathlib import Path
 
 import yaml
 
-from .findings import Finding, error
+from .findings import Finding, error, warn
 
 CYCLES_FILE = "cycles.yaml"
+WAIVERS_FILE = "waivers.yaml"
+
+#: Fields every waiver entry must carry. ``match`` is the sole optional one.
+#: ``owner``, ``ticket`` and ``review_by`` are required by definition-of-done.md
+#: §3, which asks for "each known, ticketed orphan or conflict with an owner and
+#: a disposition deadline".
+WAIVER_FIELDS = (
+    "id",
+    "check",
+    "where",
+    "disposition",
+    "owner",
+    "ticket",
+    "review_by",
+    "rationale",
+    "authority",
+)
 
 
 @dataclass(frozen=True)
@@ -141,4 +158,221 @@ def _check_entry(entry: CycleEntry, where: str) -> list[Finding]:
     return []
 
 
-__all__ = ["CYCLES_FILE", "CycleEntry", "CycleRegister", "load_cycles"]
+def is_waivable(check: str) -> bool:
+    """A malformed register must not be able to excuse itself.
+
+    Register-parse failures and the waiver register's own hygiene checks are
+    outside the reach of any entry; everything else is waivable.
+    """
+    return check != "register-parse" and not check.startswith("waiver-")
+
+
+@dataclass(frozen=True)
+class WaiverEntry:
+    """One finding with a human disposition but no fix yet (plan step 3.9).
+
+    A waiver is a deferral, not an approval (definition-of-done.md §3): the
+    set is not fully done while waivers are open, which is why a waived
+    finding is still reported.
+    """
+
+    id: str
+    check: str
+    where: str
+    match: str | None
+    disposition: str
+    owner: str
+    ticket: str
+    review_by: str
+    rationale: str
+    authority: str
+
+    @property
+    def key(self) -> tuple[str, str, str | None]:
+        """Two entries covering this triple would be indistinguishable."""
+        return (self.check, self.where, self.match)
+
+    def covers(self, finding: Finding) -> bool:
+        """``check`` and ``where`` are a finding's stable half.
+
+        ``message`` is the volatile half — it embeds tokens and shas — so
+        ``match`` narrows by substring rather than the register having to
+        reproduce a whole sentence that the validator may reword.
+        """
+        if finding.check != self.check or finding.where != self.where:
+            return False
+        return self.match is None or self.match in finding.message
+
+    @property
+    def label(self) -> str:
+        return (
+            f"waived: {self.disposition} ({self.owner}, {self.ticket}, "
+            f"review by {self.review_by})"
+        )
+
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "disposition": self.disposition,
+            "owner": self.owner,
+            "ticket": self.ticket,
+            "review_by": self.review_by,
+        }
+
+
+@dataclass
+class WaiverRegister:
+    rel: str
+    entries: list[WaiverEntry] = field(default_factory=list)
+
+    def partition(
+        self, findings: list[Finding]
+    ) -> tuple[list[Finding], list[tuple[Finding, WaiverEntry]]]:
+        """Split findings into the ones that block and the ones that do not."""
+        live: list[Finding] = []
+        waived: list[tuple[Finding, WaiverEntry]] = []
+        for finding in findings:
+            entry = self._covering(finding)
+            if entry is None:
+                live.append(finding)
+            else:
+                waived.append((finding, entry))
+        return live, waived
+
+    def _covering(self, finding: Finding) -> WaiverEntry | None:
+        if not is_waivable(finding.check):
+            return None
+        return next((e for e in self.entries if e.covers(finding)), None)
+
+    def stale_findings(
+        self, waived: list[tuple[Finding, WaiverEntry]]
+    ) -> list[Finding]:
+        """Entries and live findings are 1:1, as for the cycle register.
+
+        So a fix and the removal of its waiver land in the same PR — the same
+        discipline that regenerating ``concept-graph.yaml`` already imposes.
+        Only meaningful on a full run: a record the run never checked cannot
+        prove its waiver dead.
+        """
+        hit = {entry.id for _, entry in waived}
+        return [
+            warn(
+                "waiver-stale",
+                f"{self.rel}:{entry.id}",
+                f"waiver {entry.id!r} matched no finding; if {entry.check!r} on "
+                f"{entry.where} is fixed, remove the entry",
+            )
+            for entry in self.entries
+            if entry.id not in hit
+        ]
+
+
+def load_waivers(
+    registers_dir: Path, root: Path
+) -> tuple[WaiverRegister, list[Finding]]:
+    """Load ``registers/waivers.yaml``.
+
+    A missing file is not an error — a record set with nothing deferred needs
+    no register. A malformed one is, and a malformed *entry* is skipped rather
+    than kept: a half-read waiver must never suppress anything.
+    """
+    path = registers_dir / WAIVERS_FILE
+    rel = str(path.relative_to(root)) if path.is_relative_to(root) else str(path)
+    register = WaiverRegister(rel=rel)
+    if not path.is_file():
+        return register, []
+
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        return register, [error("register-parse", rel, str(exc).replace("\n", " "))]
+    if data is None:
+        return register, []
+    if not isinstance(data, dict) or not isinstance(data.get("waivers"), list):
+        return register, [error("register-parse", rel, "expected a 'waivers' list")]
+
+    findings: list[Finding] = []
+    for i, raw in enumerate(data["waivers"]):
+        where = f"{rel}:waivers[{i}]"
+        if not isinstance(raw, dict):
+            findings.append(error("register-parse", where, "entry is not a mapping"))
+            continue
+        missing = [f for f in WAIVER_FIELDS if not str(raw.get(f) or "").strip()]
+        if missing:
+            findings.append(
+                error(
+                    "register-parse",
+                    where,
+                    f"entry has no {', '.join(repr(m) for m in missing)}",
+                )
+            )
+            continue
+        entry = WaiverEntry(
+            id=str(raw["id"]),
+            check=str(raw["check"]),
+            where=str(raw["where"]),
+            match=None if raw.get("match") is None else str(raw["match"]),
+            disposition=str(raw["disposition"]),
+            owner=str(raw["owner"]),
+            ticket=str(raw["ticket"]),
+            review_by=str(raw["review_by"]),
+            rationale=str(raw["rationale"]),
+            authority=str(raw["authority"]),
+        )
+        if not is_waivable(entry.check):
+            findings.append(
+                error(
+                    "waiver-not-waivable",
+                    where,
+                    f"{entry.check!r} cannot be waived: a malformed register "
+                    "must not be able to excuse itself",
+                )
+            )
+            continue
+        register.entries.append(entry)
+
+    findings.extend(_check_duplicates(register))
+    return register, findings
+
+
+def _check_duplicates(register: WaiverRegister) -> list[Finding]:
+    findings: list[Finding] = []
+    by_key: dict[tuple[str, str, str | None], str] = {}
+    by_id: set[str] = set()
+    for entry in register.entries:
+        if entry.key in by_key:
+            findings.append(
+                error(
+                    "waiver-duplicate-entry",
+                    register.rel,
+                    f"{entry.id!r} and {by_key[entry.key]!r} waive the same "
+                    f"{entry.check!r} finding on {entry.where}; entries and "
+                    "live findings are 1:1",
+                )
+            )
+        else:
+            by_key[entry.key] = entry.id
+        if entry.id in by_id:
+            findings.append(
+                error(
+                    "waiver-duplicate-entry",
+                    register.rel,
+                    f"id {entry.id!r} is used twice; ids are how a waiver is "
+                    "cited in a PR thread and how staleness is tracked",
+                )
+            )
+        by_id.add(entry.id)
+    return findings
+
+
+__all__ = [
+    "CYCLES_FILE",
+    "WAIVERS_FILE",
+    "CycleEntry",
+    "CycleRegister",
+    "WaiverEntry",
+    "WaiverRegister",
+    "is_waivable",
+    "load_cycles",
+    "load_waivers",
+]
