@@ -219,10 +219,15 @@ rule — and exactly one index entry pointing at it.
   pattern already used for cycles (ISO 704 §6.5.2). The lint distinguishes
   waived debt (does not re-fire) from new regressions (always flag). A
   waiver is a deferral, not an approval: the set is not fully done while
-  waivers are open. **Built in Phase 3 (step 3.9), pulled forward from 10.5
-  by Nick's ruling of 2026-07-31** — `detangle validate` already reports
-  findings that are dispositioned but not yet fixable, and without the
-  register it cannot become a required check.
+  waivers are open. **Built 2026-08-03 in Phase 3 (step 3.9), pulled forward
+  from 10.5 by Nick's ruling of 2026-07-31** — `detangle validate` already
+  reports findings that are dispositioned but not yet fixable, and without
+  the register it cannot become a required check. "Does not re-fire" is
+  implemented as *does not block*: `registers/waivers.yaml` entries carry
+  `owner`, `ticket` and `review_by`, and a covered finding is still printed
+  and counted, because a deferral that disappears from the log reads as an
+  approval. `review_by` is recorded but not enforced — a gate whose verdict
+  turned on wall-clock would go red with no commit behind it.
 - **Acronyms:** every acronym is expanded at first use in each section,
   matching the citation rule in criterion 1. The definition is keyed on the
   expansion, with the acronym as an alias.

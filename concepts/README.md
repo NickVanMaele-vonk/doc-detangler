@@ -13,9 +13,10 @@ mechanically enforceable and records load as a flat `concepts/*.yaml`.
 Canonical data that is *not* a corpus term lives in **`registers/`**: human
 rulings whose provenance is a PR thread and a standards clause rather than a
 source span. Today `registers/cycles.yaml` (cycle dispositions and entry
-points, criterion 1) and `registers/reference-terms.md` (regulator- and
-industry-owned terms, criterion 3); `registers/waivers.yaml` follows in
-Phase 10. Registers are canonical *inputs* to generation, never generated.
+points, criterion 1), `registers/reference-terms.md` (regulator- and
+industry-owned terms, criterion 3) and `registers/waivers.yaml` (findings with
+a human disposition but no fix yet, step 3.9). Registers are canonical *inputs*
+to generation, never generated.
 
 Do not put a register in here: `concepts/removal-register.yaml` is a genuine
 record for the corpus term "Removal Register", so a register file named the

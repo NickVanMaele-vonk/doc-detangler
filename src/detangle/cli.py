@@ -19,7 +19,7 @@ from .findings import EXIT_CLEAN, EXIT_USAGE, UsageError, report
 from .graph import emit
 from .records import BlockIndex, load_records
 from .records import checks as record_checks
-from .registers import load_cycles
+from .registers import load_cycles, load_waivers
 
 
 def _selected(records, root: Path, paths: list[str]):
@@ -62,12 +62,19 @@ def cmd_validate(args: argparse.Namespace) -> int:
         globs = config.option("validate", "table-globs", [])
         findings.extend(tables.check_files(root, globs))
 
+    waivers, register_findings = load_waivers(config.directory("registers"), root)
+    live, waived = waivers.partition(findings)
+    live.extend(register_findings)
+    if not args.paths:
+        live.extend(waivers.stale_findings(waived))
+
     summary = {
         "records": len(records),
         "checked": len(targets),
         "defined": sum(1 for r in targets if r.defined),
+        "waived": len(waived),
     }
-    return report(findings, args.json, summary)
+    return report(live, args.json, summary, waived)
 
 
 def cmd_graph(args: argparse.Namespace) -> int:

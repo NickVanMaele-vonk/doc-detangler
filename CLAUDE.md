@@ -123,11 +123,7 @@ there.
 
 `registers/` holds canonical data that is **not** a corpus term: human
 rulings whose provenance is a PR thread and a standards clause, not a source
-span. Two registers exist, with `registers/waivers.yaml` to follow in **Phase
-3 (step 3.9)** — pulled forward from 10.5 by Nick's ruling of 2026-07-31,
-because `detangle validate` already reports findings that are dispositioned
-but not yet fixable, and until they can be held as accepted debt the command
-exits `1` indefinitely and cannot be a required check:
+span. Three registers exist:
 
 - `registers/cycles.yaml` — cycle dispositions and entry points
   (criterion 1). Entries are 1:1 with live cycles in the graph; a cycle
@@ -135,6 +131,18 @@ exits `1` indefinitely and cannot be a required check:
 - `registers/reference-terms.md` — the criterion-3 list of regulator- and
   industry-owned terms, which are deliberately *excluded* from the record
   set. Moved out of `concepts/` under this rule.
+- `registers/waivers.yaml` — findings with a human disposition but no fix
+  yet (step 3.9, built 2026-08-03). An entry matches on `check` + `where`,
+  narrowed by an optional `match` substring of the message; a covered
+  finding is **printed and counted but excluded from the exit-code
+  decision**, so `detangle validate` can be green while a fix waits
+  elsewhere. Entries and live findings are 1:1 like `cycles.yaml`: a stale
+  entry raises `waiver-stale` (warn), so a fix deletes its waiver in the
+  same PR. `register-parse` and the `waiver-*` checks are not waivable — a
+  malformed register must not excuse itself. Waiving is a separate channel,
+  not a third severity: everything left live still blocks. Do **not** file
+  an accepted cycle here (ADR-001 D6): that is an approval and permanent,
+  and a waiver is a deferral.
 
 Registers are canonical inputs to generation, never generated. Do not put a
 register under `concepts/`: records are loaded as `concepts/*.yaml`, and a
@@ -167,12 +175,16 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
 across 116 records; 404 edges set-wide after PRs #59–#60 and #67). Steps
-3.5–3.7 are now **generation** tasks. `detangle validate` and `detangle
-graph` are built; `generate` is the remaining command (ADR-001 D4).
+3.5–3.7 are now **generation** tasks. **Step 3.9 is closed** (2026-08-03):
+`registers/waivers.yaml` is built and `detangle validate` exits `0` on
+`main`, holding its three source-defect `definition-token` findings as
+accepted debt. `detangle validate` and `detangle graph` are built;
+`generate` is the remaining command (ADR-001 D4).
 `concept-graph.yaml` is generated and committed — dependency edges and the
-cycle roll-up now, usage edges when the bodies exist in Phase 5. `concepts/` holds 358 canonical records plus
-`registers/reference-terms.md` (the hand-authored criterion-3 references
-list). Nick's 2026-07-30 rulings: the RT*/RD* re-placement of PR #51 is
+cycle roll-up now, usage edges when the bodies exist in Phase 5. `concepts/`
+holds 359 canonical records; `registers/` holds `cycles.yaml`,
+`reference-terms.md` (the hand-authored criterion-3 references list) and
+`waivers.yaml`. Nick's 2026-07-30 rulings: the RT*/RD* re-placement of PR #51 is
 **superseded** — the first `detangle validate` run surfaced `rd01`,
 `rt02`, `rt05` and `rt22` as the only four records in the set whose
 `placement` contradicted their `used_in`, and Nick ruled that **the
@@ -253,8 +265,8 @@ does define the thing. Rule collision; Nick's call.
   held as accepted debt until then. Records are **not** edited and the
   validator is **not** loosened.
 - **The waiver register moves from Phase 10.5 to Phase 3, step 3.9** — see
-  the registers section above. Design not proposed; schema and the
-  validator's suppression semantics go to Nick before any code.
+  the registers section above. Designed, approved and built 2026-08-03; the
+  three family-A findings are its first entries.
 - **Family B resolves structurally, so the C2-unit question never needs
   ruling.** The three options considered were: check a definition's tokens
   against the anchored block only, against the whole corpus for acronyms
@@ -385,7 +397,12 @@ does define the thing. Rule collision; Nick's call.
    `definition:` or its own field, and whether `flags: [orphan]` survives an
    authored definition. It must, or the convolutedness measure decays as
    fast as the work gets done.
-6. Waiver register design (step 3.9) — schema plus suppression semantics.
+6. ~~Waiver register design (step 3.9) — schema plus suppression semantics.~~
+   **Closed 2026-08-03** — designed, approved and built; see the registers
+   section above. Two sub-decisions ruled with it: one register, not a
+   separate `registers/source-corrections.yaml` (closing backlog B-1 point
+   4), and `review_by` recorded but not enforced, because an expiry check
+   would make CI's verdict turn on wall-clock.
 7. Splitting `definition` into definition / illustration / note with
    per-clause provenance — whether to do it at all, and whether in Phase 3.
 8. Demotion: a term losing its second usage drops out of the glossary, which
@@ -393,8 +410,10 @@ does define the thing. Rule collision; Nick's call.
    The reverse of the promotion ruling, unexamined.
 9. Guarding the two newly committed views: regenerate-and-compare, banner,
    CI redirect message.
-10. PR #71 — merge red now, or hold until 3.9 makes `detangle validate`
-    green.
+10. ~~PR #71 — merge red now, or hold until 3.9 makes `detangle validate`
+    green.~~ **Closed** — merged 2026-07-31 (commit `0f40522`); 3.9 has since
+    made the gate green, so `detangle validate` can now be marked required in
+    branch protection.
 
 ## Record-authoring conventions (learned in practice, steps 3.3–3.4)
 

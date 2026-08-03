@@ -67,6 +67,21 @@ BASE_RECORD = {
 }
 
 
+#: A waiver for the `placement-computed` finding that `write_record(
+#: used_in=["U"], placement="MCL")` raises — the cheapest live finding to cover.
+BASE_WAIVER = {
+    "id": "placement-deferred",
+    "check": "placement-computed",
+    "where": "concepts/widget.yaml:placement",
+    "disposition": "source-defect",
+    "owner": "Nick",
+    "ticket": "B-1",
+    "review_by": "2026-12-31",
+    "rationale": "test",
+    "authority": "test",
+}
+
+
 @dataclass
 class MiniRepo:
     root: Path
@@ -109,6 +124,15 @@ class MiniRepo:
         path = self.root / "registers" / "cycles.yaml"
         path.write_text(
             yaml.safe_dump({"cycles": list(entries)}, sort_keys=False),
+            encoding="utf-8",
+        )
+        return path
+
+    def write_waivers(self, *entries: dict) -> Path:
+        """``registers/waivers.yaml`` — findings dispositioned but not fixed."""
+        path = self.root / "registers" / "waivers.yaml"
+        path.write_text(
+            yaml.safe_dump({"waivers": list(entries)}, sort_keys=False),
             encoding="utf-8",
         )
         return path
