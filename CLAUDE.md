@@ -249,6 +249,42 @@ view-generator — as well as delivering ontology content (records, edges).
 This supersedes the earlier split in which Nick built the view-generator
 himself.
 
+## Session state — 2026-08-03 (waiver register, C9 limb 2, generation design)
+
+**Read this first.** Everything below is merged and green on `main`; the
+2026-07-31 section that follows is still live for its unresolved items.
+
+**Landed.** PR #78 built the waiver register (step 3.9) — `detangle validate`
+now exits `0`, holding its three source-defect findings as accepted debt, so
+it can be marked a required check in branch protection. **That marking is a
+GitHub setting only Nick can apply, and it has not been done.** PR #79
+applied C9 limb 2: 28 records moved to `placement: glossary`, the glossary is
+155 entries (77 undefined), 204 records stay document-placed (110 undefined).
+
+**Why limb 2 exists, because it will look surprising in a record.** Preparing
+`glossary.md` surfaced 34 edges failing criterion 1's own formal check —
+20 glossary entries lean on a term defined later, in a document body, and the
+glossary is read first. Limb 1 counts uses across the three component
+blueprints; the glossary is a fourth place terms get used, which nothing
+counted. So `used_in: [U]` with `placement: glossary` is correct, not a bug.
+Never hand-set `placement` — run `detangle validate`, which names the expected
+value.
+
+**The next task is to build `detangle generate` for step 3.5.** The design is
+approved in full (plan step 3.5, seven numbered points) and **no code is
+written**; Nick approved the design and stopped for the day on 2026-08-03
+without work starting. Nothing blocks it.
+
+**Open questions from this session, none blocking 3.5:**
+
+1. `concept-graph.mmd` scoping — 359 nodes is not a readable diagram, and the
+   render has no consumer yet. Needs a decision before it is generated.
+2. `index.md` (step 3.6) stays blocked until the document bodies exist: DoD
+   criterion 4 wants the document and section for each of the 104
+   document-placed defined terms.
+3. The 110 undefined document-placed terms need positioning before first use
+   and a flag to a human (Case 1.a) — a Phase 5 surface, unbuilt.
+
 ## Session state — 2026-07-31 (family B, provenance, editing surfaces)
 
 **Read this first when picking the thread back up.** The session ran from the
