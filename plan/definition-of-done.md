@@ -257,12 +257,26 @@ rule — and exactly one index entry pointing at it.
 - **A definition that sits after its first use is the ordinary case**
   (Case 2, same ruling), not a defect to disposition: reordering the text is
   what the tool is for. Only the two cases above need a human.
-- **Promotion and demotion:** if a later revision introduces a second use of
-  a document-local term, that term is **promoted** to the glossary; if a
-  term falls to a single document, it may be **demoted**. Both count as
-  changed terms under 8b and are listed in the move-map. In steady state,
-  the drift lint (criterion 9) detects the boundary crossing and raises it;
-  the promotion/demotion itself still lands as a concept-scoped PR.
+- **Promotion and demotion are not symmetric** (Nick, 2026-08-04). Both count
+  as changed terms under 8b and are listed in the move-map, and in steady
+  state the drift lint (criterion 9) detects the boundary crossing. What
+  differs is who acts.
+  - **Promotion is required, so the tool performs it.** A term used in two
+    documents *must* be defined in the glossary; leaving it in a body breaks
+    the single-definition rule. The tool has no choice, so it informs the
+    human and reconfigures (ruling of 2026-07-31).
+  - **Demotion is optional, so a human decides.** A term used in one document
+    *may* be defined there — the rubric's word. Leaving it in the glossary
+    breaks nothing; it only makes the glossary longer than it needs to be. So
+    the tool reports that the term qualifies and **waits**, and the message
+    says plainly that nothing is wrong. Two further reasons: moving a
+    definition out of the glossary is a content change across files with
+    every first-use link rewritten, not the word-preserving tidy-up the guard
+    is allowed to make alone; and usage counts wobble, so an automatic rule
+    would shunt a definition back and forth on successive edits.
+  - Limb 2 keeps the case rare: a single-document term stays in the glossary
+    if any glossary definition depends on it, so demotion only arises when
+    both limbs stop applying.
 - **Term lifecycle (D10):** every concept record carries a `status`
   (`candidate → approved → published → deprecated`). A renamed term records
   its successor in `superseded_by`; the old spelling becomes a deprecated
@@ -738,7 +752,21 @@ and by AI agents — and every such edit is guarded, not forbidden.
   for:
   1. a new term with no definition site (orphan regression);
   2. an inline (re)definition of an existing term (single-definition-site
-     violation);
+     violation). This is narrow now that documents own their own
+     definitions: a body defining a term *it* owns is the normal case, not a
+     finding. It bites only when the term belongs to the glossary. The lint
+     **blocks** — this is a real violation, unlike demotion — and blocks by
+     showing both texts and offering two routes: remove the body text and
+     link, or update the glossary definition to the new wording. It never
+     merges them and never deletes the new wording by itself, because which
+     text is better is a judgement (Nick, 2026-08-04). **A one-click
+     suggested fix is offered only where the body text is a verbatim
+     restatement of the glossary definition** — the case where deleting it
+     provably loses nothing. Where the texts differ, the difference is either
+     an improvement worth promoting or a contradiction worth surfacing, and
+     both need a person. Promoting body wording into the glossary is never
+     one-click: it spans two files, so it could only be delivered as a commit
+     from the guard, which is the guard editing prose;
   3. a term used before the position its topological order assumes
      (criterion-1 regression);
   4. a usage count crossing the placement boundary (promotion/demotion
@@ -772,10 +800,26 @@ and by AI agents — and every such edit is guarded, not forbidden.
   markers. Asking a human or AI author to mint or maintain IDs is a
   non-goal.
 - **Derived artifacts are regenerated, never hand-maintained:** usage edges,
-  first-use links, `index.md`, `concept-graph.mmd`,
-  `state/section-map.yaml`, `manifest.yaml`. The
+  first-use links, `index.md`, `state/section-map.yaml`, `manifest.yaml`. The
   regenerate-and-compare guard covers all of them; a hand-edit to any of
-  them fails CI.
+  them fails CI. Two deliberate exclusions (Nick, 2026-08-04): the Mermaid
+  render is produced on demand by `detangle graph --mmd <id>` rather than
+  committed, so there is nothing to keep in sync; and `state/notices.md` is
+  **generated but unguarded**.
+- **`state/notices.md` — things worth knowing that are not defects** (Nick,
+  2026-08-04). Findings block; waivers defer a real problem with an owner and
+  a date; notices are neither. A demotion candidate, a review date falling
+  due, a Phase 5 authoring debt — none of these is wrong, so none may raise a
+  finding, or "nothing is broken" becomes a red build. They are written to a
+  committed markdown file instead, so a new notice appears as a line in the
+  PR diff, which a green CI log cannot achieve.
+
+  The file is **not** covered by the regenerate-and-compare guard: reading it
+  is the responsibility of the people writing and reviewing documents, and a
+  stale notices file must never block a PR. Because it is not byte-compared
+  it carries a header naming the commit it was generated from and when —
+  visible age in place of enforcement, which `concept-graph.yaml` cannot have
+  without breaking its byte comparison.
 - **The lint ships with its test suite — part of the deliverable.** One
   seeded fixture per flag type above, plus the negative case (a
   reorder-only PR must flag nothing) and the structural edge cases (section

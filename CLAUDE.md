@@ -321,6 +321,34 @@ changes today.** They are written up in the research memo (§D9 amendment,
    not a destination** — records are not part of the output set, so the 13
    records holding narrowed corpus wording must land it in document prose in
    Phase 5 or it is an omission under criterion 4.
+7. **Demotion is not automatic, unlike promotion.** Promotion is required
+   (two documents means the glossary, or C9 breaks), so the tool acts and
+   informs. Demotion is optional — the rubric says a single-document term
+   *may* move — so the tool reports and waits, and the message says plainly
+   that nothing is wrong. It also moves prose across files and rewrites
+   first-use links, and usage counts wobble, so an automatic rule would shunt
+   definitions back and forth.
+8. **`state/notices.md`** carries what is worth knowing but is not a defect.
+   Findings block, waivers defer a real problem, notices are neither — a
+   notice raised as a finding would make "nothing is broken" a red build,
+   which is the trap that already caught the overview gap and `code_quality`.
+   Committed, so new entries appear in the PR diff; **unguarded**, because a
+   stale notices file must never block a PR. Carries a "generated from commit
+   X at time Y" header — visible age instead of enforcement, which
+   `concept-graph.yaml` cannot have without breaking byte comparison.
+9. **Inline redefinition blocks, but shows both texts.** Only bites for
+   glossary-placed terms now. One-click fix offered *only* where the body
+   text verbatim restates the glossary definition; otherwise show and wait,
+   because the difference is either an improvement or a contradiction.
+10. **No `concept-graph.mmd` is committed.** `detangle graph --mmd <id>`
+   prints one concept's neighbourhood on demand. 359 nodes render as a
+   238-node tangle plus 108 loose dots; a single concept is two or three
+   boxes, eight one step out. Amends C6 and D2.
+11. **`close-window-start-minutes` keeps `flags: [orphan]`** — already
+   applied on `main`, and the open-questions list saying otherwise was
+   stale. The IBE/IBEB carve-out needs the source to define the concept
+   under its business name, and here it does not: `close-window` is itself
+   an orphan.
 
 **What the glossary ruling closed and re-opened.** Closed: where the overview
 lives (it is just the document's own overview, written in place, so no
@@ -415,8 +443,9 @@ value.
 
 **Open questions from this session, none blocking 3.5:**
 
-1. `concept-graph.mmd` scoping — 359 nodes is not a readable diagram, and the
-   render has no consumer yet. Needs a decision before it is generated.
+1. ~~`concept-graph.mmd` scoping.~~ **Closed 2026-08-04** — no whole-set file
+   is committed; `detangle graph --mmd <id>` renders one concept's
+   neighbourhood on demand.
 2. `index.md` (step 3.6) stays blocked until the document bodies exist: DoD
    criterion 4 wants the document and section for each of the 104
    document-placed defined terms.
