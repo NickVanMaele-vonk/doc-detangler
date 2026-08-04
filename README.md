@@ -105,7 +105,7 @@ a `<!-- concept:<id> -->` marker before every entry so a comment on the
 generated file resolves to the record behind it (D9).
 
 `generate` writes the glossary and nothing else yet: `index.md` needs the
-document bodies, which carry the definition site of 104 defined terms
+document bodies, which carry the definition site of 94 defined terms
 (criterion 4), and `concept-graph.mmd` needs a scoping decision before 359
 nodes are drawn as one diagram. Both are step 3.6.
 

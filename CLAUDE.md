@@ -103,7 +103,19 @@ added (criterion 7).
 **Canonical vs derived is the distinction that governs everything (D10 §4).**
 
 - Canonical: concept records, including `depends_on` dependency edges, plus
-  the registers (see below).
+  the registers (see below). **One exception, ruled 2026-08-04 (D9
+  amendment): the definition site owns the definition.** A glossary-placed
+  term's definition is canonical in its record; a **document-placed** term's
+  definition is canonical in the **document body**, and the record's
+  `definition` field is a derived copy, byte-compared like any other derived
+  artifact. 78 defined glossary-placed records, 94 defined document-placed.
+  Prospective — it takes effect per document as Phase 5 writes it. The body
+  delimits each definition with tool-stamped
+  `<!-- concept:<id>:start -->` / `<!-- concept:<id>:end -->` markers, which
+  is what keeps the lift deterministic; without them the structural
+  guarantees would rest on re-parsing prose, the exact failure D9 exists to
+  prevent. `depends_on` stays canonical either way — see the edge rule
+  below.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
   `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`.
@@ -113,6 +125,18 @@ added (criterion 7).
   usage edge, so nothing canonical remained in it.)
 
 Anything location- or order-sensitive is derived, because a reorder rots it.
+
+**A body edit proposes edges; it never applies them (Nick, 2026-08-04,
+reaffirming D10 element 4).** The lint extracts candidate `depends_on` edges
+from the changed definition block, diffs them against the record's canonical
+list, and reports the difference. It changes nothing. The reason is that
+identical-looking clauses have needed opposite rulings —
+`close-window → mts-associated-markets` was dropped while
+`persistence-gate → medium-investigate` was kept — and an edge sets reading
+order, answers impact queries, and can relocate real text through a placement
+change. Detection is automatic; the disposition is Nick's. Contrast the
+promotion rule, which *is* applied automatically after informing the human,
+because a placement flip is mechanical and an edge is a claim.
 
 **`concepts/` vs `registers/` — two canonical trees, one rule each (Nick,
 2026-07-30).** `concepts/` holds **only** corpus-derived business terms: one
@@ -251,6 +275,39 @@ assistant builds the whole toolchain — validator, graph, and the D9
 view-generator — as well as delivering ontology content (records, edges).
 This supersedes the earlier split in which Nick built the view-generator
 himself.
+
+## Session state — 2026-08-04 (step 3.5 built; two rulings on definition homes)
+
+**Two rulings landed this session, both prospective — nothing in `concepts/`
+changes today.** They are written up in the research memo (§D9 amendment,
+§D10 element 4 note), the rubric (criteria 3 and 9) and C12.
+
+1. **The definition site owns the definition.** Glossary-placed →
+   record-canonical, unchanged. Document-placed → **body-canonical**, record
+   keeps a derived copy. Conditional on tool-stamped
+   `<!-- concept:<id>:start -->` markers in the body, because a byte-comparable
+   mirror needs a deterministic lift and D9's whole argument was that prose
+   canonicity destroys provability.
+2. **`depends_on` stays canonical; a body edit proposes edge changes and
+   waits.** Detection automatic, disposition Nick's.
+
+**Watch the counts.** `104` document-placed defined terms was stale — it
+predates C9 limb 2, which moved 28 records (10 defined) into the glossary.
+The live figures: **359 records, 172 defined; glossary 155 (78 defined, 77
+undefined); document 204 (94 defined, 110 undefined)**, UCE 82 / SBSP 63 /
+MCL 59. Both `plan/detangle-agent-plan.md` and `README.md` carried `104` and
+are fixed.
+
+**Repo went public on 2026-08-04** so branch protection could be used. One
+ruleset, `protect-main`, now covers everything: `deletion`,
+`non_fast_forward`, `pull_request`, `required_status_checks` (the three CI
+contexts, strict) and `code_scanning`. Two older overlapping rulesets were
+deleted. CodeQL default setup is on (`python`, `actions`); `.claude/` is
+untracked and gitignored because a single stray `.js` file made CodeQL detect
+a JavaScript language it could not analyse. `code_quality` is deliberately
+**not** in the ruleset until that feature is actually enabled — an
+unsatisfiable gate blocks every PR, which is how PR #81 got stuck once
+already.
 
 ## Session state — 2026-08-04 (`detangle generate`, step 3.5 built)
 
