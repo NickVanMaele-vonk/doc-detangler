@@ -37,6 +37,21 @@ subject to the phase-dependent applicability rules in
     or before its first use — **unless a glossary definition depends on it**,
     in which case it is defined in `glossary.md` too (Case 3, 2026-08-03);
   - no term is defined in two places.
+- **Where a definition is canonical — the definition site owns it** (Nick,
+  2026-08-04, amending D9). A glossary-placed term's definition is canonical
+  in its **concept record**, and `glossary.md` is the generated view. A
+  document-placed term's definition is canonical in the **document body**,
+  where it is read and where a person edits it; the record carries a derived
+  copy, regenerated from the body and byte-compared, and hand-editing that
+  copy fails CI with a pointer to the section. The body delimits each
+  definition it owns with generated `<!-- concept:<id>:start -->` /
+  `<!-- concept:<id>:end -->` markers, which is what keeps the lift into the
+  record deterministic — without them the structural guarantees would rest on
+  re-parsing prose, which is the failure D9 exists to prevent. Markers are
+  stamped by the tool, never written by an author. Today's counts: 78 defined
+  glossary-placed, 94 defined document-placed. The direction flips per
+  document as Phase 5 writes it; until then every definition lives in its
+  record, and the first body is seeded from there.
 - **The glossary is subject to this rubric.** As the first document of the
   set it must satisfy all eight content criteria (1–8) itself, with the
   modifications noted per criterion; criterion 9 applies to the set's
@@ -674,6 +689,14 @@ and by AI agents — and every such edit is guarded, not forbidden.
      (criterion-1 regression);
   4. a usage count crossing the placement boundary (promotion/demotion
      trigger, criterion 3);
+  4a. a change to the `depends_on` edges a definition mints — **reported,
+     never applied** (Nick, 2026-08-04, reaffirming D10 element 4). The
+     lint extracts candidate edges from the changed definition block, diffs
+     them against the record's canonical `depends_on`, and lists the
+     difference for a human to rule on. It changes nothing itself: an edge
+     is a judgement about what a definition is for, it sets reading order
+     and impact answers, and a silently minted one can restructure the set
+     or create a cycle nobody dispositioned;
   5. a candidate contradiction with the current glossary definition
      (LLM-assisted, dispositioned by `param-manual-reviewer`);
   6. provenance staleness introduced by the edit (criterion 6);

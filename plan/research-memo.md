@@ -588,8 +588,8 @@ actually implemented.
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
-| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9 |
-| D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10 |
+| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition — record-canonical for glossary-placed terms, body-canonical with a derived record copy for document-placed ones, conditional on generated start/end markers making the lift deterministic — see §D9 amendment |
+| D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10. **Element 4 reaffirmed 2026-08-04:** `depends_on` stays canonical; a body edit proposes edge changes and waits for a human ruling |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
 
@@ -720,6 +720,63 @@ and cannot be regenerated from an ontology without the ontology becoming a
 verbatim copy of the document. "Never rewrite" applies to definitions, not
 bodies.
 
+#### D9 amendment — the definition site owns the definition (Nick, 2026-08-04)
+
+**Ruling.** A definition's canonical home follows its *placement*, not the
+record set as a whole:
+
+- **Glossary-placed terms — record-canonical, unchanged.** The record holds
+  the definition; `glossary.md` is the generated view. 155 records today, 78
+  of them defined.
+- **Document-placed terms — body-canonical, record mirrors.** The definition
+  lives in the document body, where it is read and where a person edits it.
+  The record carries a **derived copy**, regenerated from the body and
+  byte-compared like every other derived artifact; hand-editing the record's
+  `definition` field fails CI, which names the document section to edit
+  instead. 204 records today, 94 of them defined.
+
+**Why the original decision does not cover this case.** D9's headline
+argument is provability: if prose is canonical, every structural guarantee
+rests on an LLM re-parse of prose. That argument holds. It is also why the
+amendment carries a condition rather than simply inverting the direction.
+
+D9 was decided when the plan was for the tool to *author* definitions into
+their sites. The 2026-07-31 session established that direct markdown editing
+stays the norm (C12), that the corpus is overwhelmingly non-definitional, and
+that the tool is required for one class only — definitions of glossary-placed
+terms, which nobody can reach any other way. A document-local definition is
+not in that class: it is one sentence of ordinary prose, in the document a
+reader is already in, and routing its edit through a YAML field would make the
+tool mandatory for the common case in order to protect a guarantee that the
+next clause protects more cheaply.
+
+**Condition — the lift must be deterministic.** The record's copy is only
+byte-comparable if the body says exactly where the definition begins and ends.
+So a document body delimits each definition it owns with generated markers:
+
+```markdown
+<!-- concept:persistence-gate:start -->
+The persistence gate caps an alert at MEDIUM-INVESTIGATE unless …
+<!-- concept:persistence-gate:end -->
+```
+
+Copying the definition into the record is then string-slicing, not
+interpretation. C9, C10 and C11 stay structural properties of the record set
+exactly as D9 requires, and the `depends_on` edges a definition mints are
+computed from a known block rather than from a whole section.
+
+The markers are **generated, never typed by an author** — the same rule D10
+element 2 applies to section IDs and criterion 7 applies to `derived:start`
+and `AI addition:start`. A marker that depends on a human remembering to write
+it is a marker that goes missing exactly where it mattered.
+
+**What does not change.** Placement itself is still computed (C9, two limbs).
+`depends_on` stays canonical — see the D10 element 4 note below. The orphan
+measure is untouched: the 110 undefined document-placed terms have nothing to
+mirror. And the direction only flips once a body exists; until Phase 5 writes
+one, those 94 definitions live in their records as they do today, and the
+first golden body is seeded from them.
+
 ### D10 — continuous change / steady-state operation (adopted 2026-07-23)
 
 **The use case (Nick, 2026-07-23).** After delivery the document set does not
@@ -832,6 +889,37 @@ guard. Anything order- or location-sensitive rots if authored; the reorder
 scenario makes first-use positions and usage locations exactly that. This
 reframes Phase 3 step 3.7: usage edges are *extracted output that stays
 regenerable*, not a hand-kept register.
+
+**Reaffirmed 2026-08-04 (Nick): `depends_on` stays canonical — the tool
+proposes edge changes and waits for a human.** The D9 amendment above makes
+94 definitions body-canonical, which raised the question of whether their
+edges should follow the text and regenerate on every body edit. They do not.
+Element 4 stands as written.
+
+The reason is that an edge is a judgement about what a definition is *for*,
+and the corpus has already produced pairs a machine cannot separate. Both of
+these are trailing clauses of identical shape, ruled opposite ways on
+2026-07-31: `close-window → mts-associated-markets` was **dropped** — you do
+not need the venue to understand what a close window is — while
+`persistence-gate → medium-investigate` was **kept**, because the cap is the
+gate's point. An instantiation creates no comprehension prerequisite; a
+consequence naming a defined term usually does. Nothing in the text
+distinguishes them.
+
+The cost of getting one wrong is not a stray edge. Edges set the glossary's
+reading order and answer impact queries, and a placement change can relocate
+real text between documents — so a silently minted edge can restructure the
+set without anyone having asked. A silently minted *cycle* is worse, and the
+existing discipline already says new cycles are surfaced for disposition and
+never repaired unilaterally.
+
+So the steady-state flow for a body edit is: extract the candidate edges from
+the changed definition block, **diff against the record's canonical
+`depends_on`, report the difference, and change nothing**. This matches the
+promotion ruling of 2026-07-31 in spirit — the tool detects automatically and
+tells the human — and differs in what follows: promotion is mechanical once
+the placement test flips, whereas an edge is a claim, so it waits for a
+ruling. The detection is automatic; the disposition is Nick's.
 
 **5. Set-level version manifest.** A generated `manifest.yaml` binds the
 set: per-document version, record-set revision, dependency-graph hash,
