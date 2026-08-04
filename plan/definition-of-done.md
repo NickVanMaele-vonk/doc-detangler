@@ -34,7 +34,8 @@ subject to the phase-dependent applicability rules in
   - a term used in **more than one document** is defined in `glossary.md`,
     and **only** there;
   - a term used in **exactly one document** is defined in that document, at
-    or before its first use;
+    or before its first use — **unless a glossary definition depends on it**,
+    in which case it is defined in `glossary.md` too (Case 3, 2026-08-03);
   - no term is defined in two places.
 - **The glossary is subject to this rubric.** As the first document of the
   set it must satisfy all eight content criteria (1–8) itself, with the
@@ -198,9 +199,32 @@ rule — and exactly one index entry pointing at it.
   in a **references** list pointing at the authoritative source, not in the
   glossary.
 - **Placement test:** term usage is counted across the source set. Used in
-  ≥ 2 documents → glossary. Used in exactly 1 → that document. The count is
-  derived mechanically from term extraction, so placement is a computed
-  property, not a judgement call.
+  ≥ 2 documents → glossary. Used in exactly 1 → that document, **unless a
+  glossary definition depends on it**, in which case it joins the glossary
+  as well (Nick's Case 3 ruling, 2026-08-03). Both limbs are derived
+  mechanically — the first from term extraction, the second as the
+  dependency closure of the first over `depends_on`, taken to a fixpoint —
+  so placement remains a computed property, not a judgement call.
+
+  Limb 2 exists because the glossary is read first. Without it, a glossary
+  entry can lean on a term whose definition sits in a document further down
+  the reading order, which fails criterion 1's own formal check —
+  `position(definition of Y) < position(first use of X)` — in the very
+  first document of the set. Limb 1 counts uses across the three component
+  blueprints only; the glossary is a fourth place terms get used, and limb 2
+  is what counts it.
+- **An undefined term still gets a place** (Nick's Case 1 ruling,
+  2026-08-03). Having no definition changes nothing about *where* the term
+  belongs: the placement test runs on usage and dependency, both of which
+  exist whether or not anyone ever wrote a definition. So an undefined term
+  is positioned by the same two limbs — in the glossary if it qualifies, in
+  its document at or before first use otherwise — and the missing definition
+  is **flagged to a human** rather than invented (C2, criterion 7) or
+  silently dropped. Dropping it would hide the gap; inventing one is the
+  highest-risk output the tool can produce.
+- **A definition that sits after its first use is the ordinary case**
+  (Case 2, same ruling), not a defect to disposition: reordering the text is
+  what the tool is for. Only the two cases above need a human.
 - **Promotion and demotion:** if a later revision introduces a second use of
   a document-local term, that term is **promoted** to the glossary; if a
   term falls to a single document, it may be **demoted**. Both count as

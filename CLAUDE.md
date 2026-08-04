@@ -152,9 +152,17 @@ term "Removal Register", which is exactly the collision to avoid.
 
 **Five documents, one definition site (C9/C10).** Reading order is
 `glossary.md` → UCE → SBSP → MCL. `index.md` sits outside it. Placement is
-**computed, not judged**: a term used in ≥ 2 of the three component blueprints
-goes in the glossary; used in exactly 1, it is defined in that document. Never
-both. `samples/blueprint-analytical-layer.md` is a read-only reference and is
+**computed, not judged**, in two limbs: a term used in ≥ 2 of the three
+component blueprints goes in the glossary; used in exactly 1, it is defined in
+that document — **unless a glossary definition depends on it, in which case it
+joins the glossary too** (Nick's Case 3 ruling, 2026-08-03). Never both. Limb 2
+is the dependency closure of limb 1 over `depends_on`, taken to a fixpoint, and
+it is seeded from `used_in` alone: reading the `placement` field it computes
+would let one wrongly-placed record drag its dependency tree in behind it. It
+moved 28 records on 2026-08-03 and settled in one hop. The reason it exists is
+that limb 1 counts uses in the three blueprints, and the glossary — read before
+all of them — is a fourth place terms get used.
+`samples/blueprint-analytical-layer.md` is a read-only reference and is
 **excluded from the placement count** (Nick's ruling 2026-07-22) — an `(A)`
 flag is informational only.
 
@@ -175,7 +183,11 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
 across 116 records; 404 edges set-wide after PRs #59–#60 and #67). Steps
-3.5–3.7 are now **generation** tasks. **Step 3.9 is closed** (2026-08-03):
+3.5–3.7 are now **generation** tasks. **C9 limb 2 applied 2026-08-03**: 28
+records moved to `placement: glossary`, so the glossary is 155 entries (77
+undefined) and 204 records stay document-placed (110 undefined, to be
+positioned and flagged when the bodies exist in Phase 5).
+**Step 3.9 is closed** (2026-08-03):
 `registers/waivers.yaml` is built and `detangle validate` exits `0` on
 `main`, holding its three source-defect `definition-token` findings as
 accepted debt. `detangle validate` and `detangle graph` are built;
@@ -454,7 +466,10 @@ Established across PRs #17–#35; follow them so records stay uniform.
   industry-owned terms go to `registers/reference-terms.md` rows, never
   records, even when used in ≥2 docs (criterion 3; MAR Article 12/16, ADA,
   quote stuffing, Eurex, OLO, HHI). (P)-only terms are held as candidate
-  rows until a U/S/M usage appears (ruling on PR #18).
+  rows until a U/S/M usage appears (ruling on PR #18). **Never hand-set
+  `placement`**: run `detangle validate`, which computes both limbs and
+  names the expected value. A record with `used_in: [U]` and
+  `placement: glossary` is limb 2, not a mistake.
 - **Code families get records per code.** SB-xx archetype rows and
   MTSAM-Lxx register entries used in ≥2 docs are records in their own
   right, as values of their master term (sb-26 precedent).

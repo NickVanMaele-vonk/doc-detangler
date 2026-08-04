@@ -3,7 +3,7 @@ term: 22-step analytical pipeline
 aliases: [22-step pipeline, twenty-two sequential steps, Stage 1, the analytical pipeline]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   Stage 1 of the analytical pipeline: twenty-two sequential steps,

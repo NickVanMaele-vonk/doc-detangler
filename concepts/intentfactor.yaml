@@ -3,7 +3,7 @@ term: IntentFactor
 aliases: []
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: null
 source:

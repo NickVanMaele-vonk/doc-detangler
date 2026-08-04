@@ -3,7 +3,7 @@ term: RT22
 aliases: []
 status: candidate
 superseded_by: null
-placement: MCL
+placement: glossary
 used_in: [M]
 definition: >-
   Alert code RT22: Pre-stress liquidity withdrawal.

@@ -3,7 +3,7 @@ term: ExplanationFailure
 aliases: [binary explanation flag]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   Positive confirmation required (timing, structure, outcome).

@@ -179,32 +179,89 @@ def check_schema(rec: Record) -> list[Finding]:
     return out
 
 
-def check_invariants(rec: Record, component_docs: set[str]) -> list[Finding]:
-    """Structural rules the record set is supposed to hold set-wide."""
-    out: list[Finding] = []
-    used = [d for d in rec.get_list("used_in") if d in DOCUMENTS]
-    flags = rec.get_list("flags")
+def expected_placements(records: list[Record]) -> dict[str, str]:
+    """Where each definition belongs. C9: computed, never judged.
 
-    # C9: placement is computed, never judged.
-    if not used:
-        out.append(
-            error(
-                "placement-computed",
-                rec.where("placement"),
-                "used_in is empty, so placement cannot be computed",
-            )
-        )
-    else:
-        expected = "glossary" if len(set(used)) >= 2 else PLACEMENT_OF[used[0]]
-        if rec.data.get("placement") != expected:
+    Two limbs, both mechanical (Nick's Case 3 ruling, 2026-08-03):
+
+    1. used in ≥ 2 component blueprints → the glossary;
+    2. otherwise, if a glossary-placed definition depends on it → the
+       glossary as well, because the glossary is read first and a reader who
+       meets the term there has nowhere to look it up;
+    3. otherwise → the one document that uses it.
+
+    Limb 2 is a closure taken to a fixpoint, seeded from limb 1 alone — never
+    from the ``placement`` field being checked. Reading the field would make
+    the rule self-justifying: one wrongly-placed record would drag its whole
+    dependency tree into the glossary and the check would agree.
+
+    Records with no usable ``used_in`` are absent from the result; they are
+    reported separately, because nothing can be computed for them.
+    """
+    used_of = {
+        rec.id: [d for d in rec.get_list("used_in") if d in DOCUMENTS]
+        for rec in records
+    }
+    known = {rec.id for rec in records}
+    edges = {
+        rec.id: [t for t in rec.get_list("depends_on") if t in known] for rec in records
+    }
+
+    glossary = {rid for rid, used in used_of.items() if len(set(used)) >= 2}
+    frontier = set(glossary)
+    while frontier:
+        pulled = {t for rid in frontier for t in edges[rid]} - glossary
+        glossary |= pulled
+        frontier = pulled
+
+    return {
+        rid: "glossary" if rid in glossary else PLACEMENT_OF[used[0]]
+        for rid, used in used_of.items()
+        if used
+    }
+
+
+def check_placement(records: list[Record]) -> list[Finding]:
+    """C9's placement test. Set-wide, because limb 2 is a graph query.
+
+    This cannot be a per-record check: whether a term belongs in the glossary
+    depends on what every other record's definition leans on.
+    """
+    out: list[Finding] = []
+    expected_of = expected_placements(records)
+    for rec in records:
+        if rec.id not in expected_of:
             out.append(
                 error(
                     "placement-computed",
                     rec.where("placement"),
-                    f"used_in {sorted(set(used))} computes to {expected!r}, "
+                    "used_in is empty, so placement cannot be computed",
+                )
+            )
+            continue
+        expected = expected_of[rec.id]
+        if rec.data.get("placement") != expected:
+            used = sorted(set(d for d in rec.get_list("used_in") if d in DOCUMENTS))
+            because = (
+                "a glossary definition depends on it"
+                if expected == "glossary" and len(used) < 2
+                else f"used_in {used}"
+            )
+            out.append(
+                error(
+                    "placement-computed",
+                    rec.where("placement"),
+                    f"{because} computes to {expected!r}, "
                     f"record says {rec.data.get('placement')!r}",
                 )
             )
+    return out
+
+
+def check_invariants(rec: Record, component_docs: set[str]) -> list[Finding]:
+    """Structural rules the record set is supposed to hold set-wide."""
+    out: list[Finding] = []
+    flags = rec.get_list("flags")
 
     # Edges are extracted from definition text, so they live only on defined
     # records (CLAUDE.md, step 3.4 convention).

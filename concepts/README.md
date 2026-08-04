@@ -34,7 +34,7 @@ Schema and anchoring rules below were approved by Nick on 2026-07-28
 | `aliases` | Acronyms and alternative names found in the sources |
 | `status` | Lifecycle per D10 §6: `candidate → approved → published → deprecated`. New records start at `candidate`; promotion follows Nick's review |
 | `superseded_by` | Record id that replaces this one (renames/deprecations), else `null` |
-| `placement` | `glossary` \| `UCE` \| `SBSP` \| `MCL` — computed per C9, never judged |
+| `placement` | `glossary` \| `UCE` \| `SBSP` \| `MCL` — computed per C9, never judged. Two limbs: used in ≥ 2 component blueprints → `glossary`; otherwise depended on by a glossary definition → `glossary` (Case 3, 2026-08-03); otherwise that document. So a record can read `used_in: [U]` with `placement: glossary` and be correct |
 | `used_in` | Component blueprints using the term: subset of `[U, S, M]`. (A)/(P) never count (Nick's rulings 2026-07-22 / 2026-07-26); they appear in `flags` |
 | `definition` | One-sentence definition drafted from the sources (step 3.3). `null` for orphans — never invented (C2) |
 | `source` | Provenance spans — see anchoring rules |

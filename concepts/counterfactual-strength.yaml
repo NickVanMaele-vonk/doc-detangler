@@ -3,7 +3,7 @@ term: Counterfactual Strength
 aliases: [CFS, but-for argument]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   CFS (0–2): but-for argument. CFS≥1 required where OS≥1.

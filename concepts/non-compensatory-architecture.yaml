@@ -3,7 +3,7 @@ term: non-compensatory architecture
 aliases: [non-compensatory]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   The architecture is non-compensatory: no dimension in a later step can

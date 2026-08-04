@@ -3,7 +3,7 @@ term: BT-03
 aliases: []
 status: candidate
 superseded_by: null
-placement: SBSP
+placement: glossary
 used_in: [S]
 definition: >-
   Block-trade indicator BT-03: block trade reversal (profitable
