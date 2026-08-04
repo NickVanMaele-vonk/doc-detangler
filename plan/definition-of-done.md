@@ -38,20 +38,27 @@ subject to the phase-dependent applicability rules in
     in which case it is defined in `glossary.md` too (Case 3, 2026-08-03);
   - no term is defined in two places.
 - **Where a definition is canonical — the definition site owns it** (Nick,
-  2026-08-04, amending D9). A glossary-placed term's definition is canonical
-  in its **concept record**, and `glossary.md` is the generated view. A
-  document-placed term's definition is canonical in the **document body**,
-  where it is read and where a person edits it; the record carries a derived
-  copy, regenerated from the body and byte-compared, and hand-editing that
-  copy fails CI with a pointer to the section. The body delimits each
-  definition it owns with generated `<!-- concept:<id>:start -->` /
-  `<!-- concept:<id>:end -->` markers, which is what keeps the lift into the
-  record deterministic — without them the structural guarantees would rest on
-  re-parsing prose, which is the failure D9 exists to prevent. Markers are
-  stamped by the tool, never written by an author. Today's counts: 78 defined
-  glossary-placed, 94 defined document-placed. The direction flips per
-  document as Phase 5 writes it; until then every definition lives in its
-  record, and the first body is seeded from there.
+  2026-08-04, amending D9). Every definition is canonical **in the document
+  that defines it**, `glossary.md` included: it is the fourth editable
+  document of the set, not a generated view. The concept record carries a
+  derived copy, regenerated from the document and byte-compared, and
+  hand-editing that copy fails CI with a pointer to the section. All 172
+  defined terms work this way — 78 in the glossary, 94 across the three
+  documents — so there is no exception to remember.
+
+  The record still owns the **ontology**: identity (`id`, `term`, `aliases`),
+  `placement`, `used_in`, `source` provenance, `depends_on`, `flags`,
+  `conflict`, `review`, `notes`. Only the definition prose moves.
+
+  Each document delimits the definitions it owns with generated
+  `<!-- concept:<id>:start -->` / `<!-- concept:<id>:end -->` markers, which
+  is what keeps the lift into the record deterministic — without them the
+  structural guarantees would rest on re-parsing prose, the failure D9 exists
+  to prevent. Markers are stamped by the tool, never written by an author.
+
+  Prospective: the direction flips per document as each comes to exist, and
+  for the glossary when the drift lint that guards it exists. Until then every
+  definition lives in its record and the committed `glossary.md` is the seed.
 - **The glossary is subject to this rubric.** As the first document of the
   set it must satisfy all eight content criteria (1–8) itself, with the
   modifications noted per criterion; criterion 9 applies to the set's
@@ -140,6 +147,16 @@ X, in the reading order of the set.
   from this criterion. Separating the two orderings is the point of the
   split: one document is optimised for reading, the other for retrieval, and
   neither compromises for the other.
+
+  **The tool holds that order, and says so** (Nick, 2026-08-04). Because the
+  glossary is editable, a person will append a new entry at the bottom or
+  insert one alphabetically — that is what everyone does with a glossary. A
+  PR leaving it out of topological order therefore receives a **reorder
+  commit** from the guard, machine-verified to move whole entry blocks and
+  change no words, plus a PR comment naming what moved and why. This is the
+  stamping-commit pattern of criterion 9 applied to order instead of
+  identity, and it is the reason an editable glossary does not decay into an
+  unreadable one.
 - **Cycles:** a genuine definitional cycle cannot be fixed by reordering.
   A cycle satisfies this criterion when all of the following hold:
   1. the cycle carries a human disposition in the **cycle register**,
@@ -703,6 +720,12 @@ and by AI agents — and every such edit is guarded, not forbidden.
   7. use of a deprecated alias (criterion 3 lifecycle);
   8. an ID-hygiene violation — duplicate section-ID markers (copy-paste
      carries the marker along), missing markers, or malformed markers.
+- **What the guard may change, and what it may never change** (Nick,
+  2026-08-04). The guard may make **word-preserving** edits — machine-verified
+  to change no words — and must leave a PR comment whenever it does. Stamping
+  section IDs and reordering glossary entries are both of this kind. It may
+  never change meaning: rewriting prose the tool believes is wrong stays
+  forbidden, and every such case is a comment for a human to act on.
 - **Section IDs are stamped by the tool, never by authors.** Addressing is
   two-layer (research-memo §D10 element 2): tool-stamped `<!-- sec:… -->`
   markers are the identity layer; content hashes in the generated

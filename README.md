@@ -69,7 +69,7 @@ If one term appears in more than one input document, then:
 | `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*; `generate` writes `glossary.md` only — `index.md` and `concept-graph.mmd` await the document bodies and a scoping decision (steps 3.6–3.7) |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. `detangle generate --check` becomes a fourth gate once the overview gap is dispositioned |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
-| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Written by `detangle generate` from the concept records; never hand-edited *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)* |
+| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
@@ -195,11 +195,13 @@ separately:
 | `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site — less whatever `registers/waivers.yaml` covers |
 | `detangle graph --check` | `detangle graph --check --json` | the **derived** `concept-graph.yaml` against the canonical records and registers |
 
-A fourth job, `detangle generate --check`, guards the derived `glossary.md`
-the same way. It is designed and the command is built, but it is not in the
-workflow yet: a clean run still exits `1` on the `overview-gap` finding, and a
-gate that is red by design trains reviewers to ignore it. It lands when that
-finding is dispositioned — by writing the overview, or by waiving it.
+A fourth job, `detangle generate --check`, was designed to guard
+`glossary.md` the same way, and the command is built. It is **not** in the
+workflow, and after Nick's ruling of 2026-08-04 it will not be: the glossary
+becomes a human-edited document, and byte-comparing a file people edit is
+incoherent. A drift lint replaces it — new orphans, inline redefinitions,
+broken topological order, placement crossings — and that lint is what
+eventually becomes the fourth gate.
 
 The validate and graph gates are separate and neither runs the other; chaining them in
 one process would collapse two independent verdicts into one exit code. Order
