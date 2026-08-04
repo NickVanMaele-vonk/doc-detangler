@@ -66,7 +66,7 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate` and `graph` *(built)*, `generate` *(Phase 3 steps 3.5–3.7 — pending)* |
+| `src/detangle/` | The toolchain: `validate` and `graph` *(built)*, `generate` *(step 3.5 — design approved 2026-08-03, not built; steps 3.6–3.7 await the document bodies)* |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)* |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
