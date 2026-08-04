@@ -4,3 +4,10 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 .venv/
+
+# Claude Code runtime artifacts. `.claude/workflows/deep-research.js` was swept
+# into commit ab4d571 by a `git add -A` and was the repo's only JavaScript, which
+# made CodeQL detect a javascript-typescript language it could not then extract
+# (2026-08-04). These are local tooling state, not project content.
+# If a shared project config is ever wanted, unignore it with `!.claude/settings.json`.
+.claude/
