@@ -18,6 +18,11 @@ samples = "samples"
 # hand-edited (ADR-001 Decision 5) — `detangle graph --check` is the guard.
 graph = "concept-graph.yaml"
 
+# Written by `detangle generate` (plan step 3.5). Derived like the graph: a
+# view of the records, never hand-edited, guarded by `generate --check`.
+# `index.md` and `concept-graph.mmd` are absent until step 3.6 writes them.
+glossary = "glossary.md"
+
 [documents]
 # The corpus, by its role in C9. Only U, S and M are component blueprints and
 # only they count toward placement: the analytical layer is a read-only

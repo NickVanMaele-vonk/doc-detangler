@@ -66,10 +66,10 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate` and `graph` *(built)*, `generate` *(step 3.5 — design approved 2026-08-03, not built; steps 3.6–3.7 await the document bodies)* |
-| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)* |
+| `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*; `generate` writes `glossary.md` only — `index.md` and `concept-graph.mmd` await the document bodies and a scoping decision (steps 3.6–3.7) |
+| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. `detangle generate --check` becomes a fourth gate once the overview gap is dispositioned |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
-| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically *(Phase 3 — pending)* |
+| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Written by `detangle generate` from the concept records; never hand-edited *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)* |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
@@ -94,14 +94,20 @@ Phase 3 data is essentially complete — **358 concept records** under
 dispositioned, and the criterion-3 reference terms and cycle rulings in
 `registers/`.
 
-Two of the three commands are built. **`detangle validate`** replaces the
+All three commands are built. **`detangle validate`** replaces the
 throwaway per-PR scripts with a tested implementation of the record-set
 integrity checks. **`detangle graph`** builds the concept graph from the
 records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
 the derived `concept-graph.yaml` — reading order, cycles, orphans, dead
-entries, and reachability queries for impact analysis. Next is `generate`,
-which closes Phase 3 steps 3.5–3.7 by producing `glossary.md`, `index.md` and
-`concept-graph.mmd` as anchored views.
+entries, and reachability queries for impact analysis. **`detangle generate`**
+renders `glossary.md` from the records in that graph's topological order, with
+a `<!-- concept:<id> -->` marker before every entry so a comment on the
+generated file resolves to the record behind it (D9).
+
+`generate` writes the glossary and nothing else yet: `index.md` needs the
+document bodies, which carry the definition site of 104 defined terms
+(criterion 4), and `concept-graph.mmd` needs a scoping decision before 359
+nodes are drawn as one diagram. Both are step 3.6.
 
 ## Running it
 
@@ -120,6 +126,9 @@ python3 -m venv .venv
 .venv/bin/detangle graph --check       # CI: fail on a hand-edit or a stale graph
 .venv/bin/detangle graph --impact gate # what breaks if this definition changes
 .venv/bin/detangle graph --requires sb-26   # what must be defined first
+
+.venv/bin/detangle generate            # rewrite glossary.md
+.venv/bin/detangle generate --check    # CI: fail on a hand-edit or a stale view
 
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint
@@ -186,7 +195,13 @@ separately:
 | `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site — less whatever `registers/waivers.yaml` covers |
 | `detangle graph --check` | `detangle graph --check --json` | the **derived** `concept-graph.yaml` against the canonical records and registers |
 
-The last two are separate gates and neither runs the other; chaining them in
+A fourth job, `detangle generate --check`, guards the derived `glossary.md`
+the same way. It is designed and the command is built, but it is not in the
+workflow yet: a clean run still exits `1` on the `overview-gap` finding, and a
+gate that is red by design trains reviewers to ignore it. It lands when that
+finding is dispositioned — by writing the overview, or by waiving it.
+
+The validate and graph gates are separate and neither runs the other; chaining them in
 one process would collapse two independent verdicts into one exit code. Order
 does not matter — they share no state and `--check` never writes. Neither
 subsumes the other: records can be individually sound while the committed

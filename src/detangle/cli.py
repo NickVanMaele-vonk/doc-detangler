@@ -13,7 +13,7 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, tables
+from . import __version__, graph, tables, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_USAGE, UsageError, report
 from .graph import emit
@@ -111,6 +111,46 @@ def cmd_graph(args: argparse.Namespace) -> int:
     return report(findings, args.json, summary)
 
 
+def cmd_generate(args: argparse.Namespace) -> int:
+    """Write ``glossary.md`` from the records — plan step 3.5.
+
+    Scope is the glossary alone: ``index.md`` needs the document bodies, which
+    carry the definition site of 104 defined terms (criterion 4), and
+    ``concept-graph.mmd`` needs a scoping decision before 359 nodes are drawn
+    as one diagram. Both are step 3.6, not this command.
+
+    The graph's own findings are reported here as well as by ``detangle
+    graph``. The duplication is deliberate: an undispositioned cycle makes the
+    reading order this command renders wrong, so the gate that produces the
+    file must not be green while it stands.
+    """
+    root = find_root(Path(args.root) if args.root else None)
+    config = Config.load(root, Path(args.config) if args.config else None)
+
+    records, findings = load_records(config.directory("concepts"), root)
+    register, register_findings = load_cycles(config.directory("registers"), root)
+    findings.extend(register_findings)
+
+    concept_graph, build_findings = graph.build(records, register)
+    findings.extend(build_findings)
+
+    out_path = config.path("glossary")
+    rel = str(out_path.relative_to(root))
+    glossary = views.build(concept_graph, rel)
+    findings.extend(glossary.findings)
+
+    if args.check:
+        findings.extend(views.check_current(glossary.text, out_path, rel))
+    else:
+        out_path.write_text(glossary.text, encoding="utf-8")
+
+    summary = {
+        **glossary.summary,
+        "checked" if args.check else "wrote": rel,
+    }
+    return report(findings, args.json, summary)
+
+
 def _query(cg, args: argparse.Namespace) -> int:
     """Reachability lookups. Read-only: they never write the graph."""
     node = args.impact or args.requires
@@ -184,6 +224,26 @@ def build_parser() -> argparse.ArgumentParser:
         help="list everything that must be defined before ID can be read",
     )
     graph_cmd.set_defaults(func=cmd_graph)
+
+    generate = sub.add_parser(
+        "generate",
+        help="write the generated views — glossary.md",
+        description=(
+            "Renders glossary.md from the canonical concept records, in the "
+            "concept graph's topological order (param-glossary-order). "
+            "--check verifies the committed file instead of writing it. "
+            "index.md and concept-graph.mmd are step 3.6 and are not written."
+        ),
+    )
+    generate.add_argument("--json", action="store_true", help="machine-readable")
+    generate.add_argument("--config", help="config file (default: detangle.toml)")
+    generate.add_argument("--root", help="repository root (default: nearest ancestor)")
+    generate.add_argument(
+        "--check",
+        action="store_true",
+        help="do not write; fail if a committed view differs from a regeneration",
+    )
+    generate.set_defaults(func=cmd_generate)
     return parser
 
 
