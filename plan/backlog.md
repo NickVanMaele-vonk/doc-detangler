@@ -154,3 +154,72 @@ mechanism:
 **Depends on:** nothing. `detangle validate` and `detangle graph` already
 report every figure involved; `state/notices.md` is the natural surface if a
 check is ever wanted.
+
+---
+
+## B-3 — Pin pandoc, and record the version the hashes were computed with
+
+**Raised:** 2026-08-04 (Nick), after a CI stall on PR #88.
+
+**The idea.** CI installs whatever pandoc Ubuntu ships, and nothing in the
+repository records which pandoc version the record set's `para_hash` values
+were computed with. Pin the version explicitly, and state it somewhere the
+tool can check.
+
+**What prompted it.** `tests and lint` hung for over seven minutes on
+`apt-get install pandoc`, downloading 26.9 MB from `azure.archive.ubuntu.com`,
+while the same step in the same run's `detangle validate` job succeeded and
+the same step on the previous PR took 13 seconds. A transient mirror stall,
+cleared by re-running. The stall is not the problem worth fixing; it is what
+made the real one visible.
+
+**Why the version matters.** `para_hash` is *defined* as a sha256 over
+`pandoc -f markdown -t plain --wrap=none` output (`concepts/README.md`), so
+the pandoc version is part of the provenance contract for all 359 records.
+Today it is implicit twice over:
+
+1. **In CI**, the version is whatever `ubuntu-24.04` ships — currently
+   `3.1.3+ds-2`. A runner image update that moves pandoc could change the
+   plain-text rendering, and every `para_hash` in the set would mismatch at
+   once, turning `detangle validate` red with no commit behind it.
+   `.github/workflows/ci.yml` already anticipates this in a comment: "a
+   provenance failure that appears out of nowhere is almost certainly this."
+2. **Locally**, nothing states the expected version at all. `detangle.toml`
+   does not record it, and `concepts/README.md` gives the recipe without
+   naming the interpreter. A contributor with a different pandoc gets
+   hundreds of `para-hash-stale` findings and no explanation. The current
+   development environment runs 3.1.3, matching CI by coincidence rather
+   than by declaration.
+
+**Candidate fix, in two independent halves.**
+
+- **Pin CI.** `r-lib/actions/setup-pandoc@v2` with `pandoc-version: '3.1.3'`
+  fetches the release from GitHub's own CDN — same network as the checkout,
+  and not dependent on Ubuntu's mirrors.
+- **Declare the contract.** Record the expected version (`detangle.toml`, or
+  the `manifest.yaml` of D10 element 5, which already binds derived-artifact
+  hashes). `detangle validate` compares `pandoc --version` against it and
+  says so plainly on a mismatch, instead of reporting hundreds of stale
+  spans. Whether that is a finding or a `state/notices.md` notice is open —
+  it is not wrong to run a different pandoc, it is only wrong to trust the
+  hashes afterwards.
+
+The second half is the more valuable one and needs no change to CI.
+
+**What makes it non-trivial.**
+
+1. **Debian patches the package.** CI and local both run `3.1.3+ds-2`, not
+   upstream `3.1.3`. Switching to the upstream tarball may or may not produce
+   identical plain-text output. If it differs, every hash in the set breaks
+   simultaneously. **Verify before pinning:** run `detangle validate` under
+   both builds and compare, rather than switching and finding out.
+2. **A version bump means re-anchoring, not a fix.** If a future pandoc does
+   render differently, the remedy is to recompute every `para_hash` in one
+   deliberate pass with a recorded rationale — not to loosen the check. That
+   is a whole-set PR, well past `param-max-terms-changed-per-PR`.
+3. **Two jobs need pandoc, one does not.** `tests and lint` (the fixtures
+   shell out to real pandoc, deliberately — stubbing it would test the stub)
+   and `detangle validate`. `detangle graph --check` reads YAML only.
+
+**Depends on:** nothing. Both halves are independent of the document bodies
+and of each other.
