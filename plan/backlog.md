@@ -88,3 +88,69 @@ paragraph hash)`, after which an edit invalidates only the sections it
 touched. Ruling recorded 2026-07-31: the three findings named above are
 source-document defects, fixed later through this path, held as accepted
 debt by the waiver register in the meantime (plan step 3.9).
+
+---
+
+## B-2 — Stop restating tool-computable counts in normative prose
+
+**Raised:** 2026-08-04, out of an alignment pass over the three top-level
+documents (PR #87).
+
+**The idea.** The plan, the README and `CLAUDE.md` restate figures the tool
+already computes — record counts, edge counts, defined/undefined splits,
+per-document placement. Each is a hand-copied snapshot of a moment. Either
+stop carrying them in prose, or let something compare them against live
+output.
+
+**What prompted it.** Four figures had drifted by 2026-08-04, none of them
+through carelessness at the time of writing:
+
+| Stated | Live | Why it drifted |
+|---|---|---|
+| 404 `depends_on` edges (×3 places) | 402 | true at PR #67; the 2026-07-31 narrowing rulings dropped two |
+| 358 concept records | 359 | a later record landed |
+| 104 document-placed defined terms | 94 | C9 limb 2 moved 28 records, 10 of them defined |
+| 82 of 173 multi-clause | 81 of 172 | same limb-2 pass |
+
+Every one was correct when written. That is the shape of the problem: these
+are not errors, they are facts about a moment, written into documents that
+outlive the moment.
+
+**Nick's ruling, 2026-08-04: low priority.** Counts of edges, terms and
+similar will vary continuously, and a document set that tracks them exactly
+is not worth the machinery. Parked here rather than scheduled.
+
+**The sharper reading, which came out of that ruling.** If the counts vary
+continuously, the durable fix is not to police them — it is to **stop putting
+volatile numbers in normative prose**. A check that compares prose against
+live output keeps the numbers accurate and keeps the underlying habit, which
+means it fires forever. Removing the count, or replacing it with a pointer to
+where the tool reports it, ends the problem once.
+
+Not every number is volatile, and the distinction matters more than the
+mechanism:
+
+- **Volatile** — record counts, edge counts, placement splits, orphan counts.
+  These belong in tool output and in `state/notices.md`, not in a plan.
+- **Load-bearing** — a figure an argument is built on, like "81 of 172
+  records are multi-clause, and 99 cite more than one span, which is the
+  laundering surface". Rewriting these silently would make the reasoning look
+  as though it were made about numbers nobody had. They should be **dated in
+  place**, which is what PR #87 did for the 2026-07-31 session block.
+
+**What makes it non-trivial.**
+
+1. **Telling the two apart is a judgement, not a pattern match.** A regex over
+   digits cannot distinguish a status line from a premise.
+2. **Any check must be a notice, not a finding.** A stale number in a plan is
+   not a build failure, and raising it as one recreates the trap that caught
+   the glossary overview gap and `code_quality` — see criterion 9,
+   `state/notices.md`.
+3. **`CLAUDE.md` is the hard case.** It is read cold by an assistant at the
+   start of every session, so a wrong number there propagates into work
+   before anyone reads the plan. It is also the file with the most restated
+   figures.
+
+**Depends on:** nothing. `detangle validate` and `detangle graph` already
+report every figure involved; `state/notices.md` is the natural surface if a
+check is ever wanted.
