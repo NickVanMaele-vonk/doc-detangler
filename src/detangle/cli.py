@@ -45,6 +45,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
         raise UsageError("none of the given paths is a concept record")
 
     findings.extend(record_checks.check_cross_record(records))
+    findings.extend(record_checks.check_placement(records))
 
     index = BlockIndex(root=root)
     blobs = record_checks.GitBlobs(root)

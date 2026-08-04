@@ -3,7 +3,7 @@ term: dominance_population_size
 aliases: []
 status: candidate
 superseded_by: null
-placement: MCL
+placement: glossary
 used_in: [M]
 definition: >-
   dominance_population_size = documented ADA primary dealer list.

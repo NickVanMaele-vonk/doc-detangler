@@ -3,7 +3,7 @@ term: Pattern gate
 aliases: [Pattern detection]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   Pattern gate: mandatory at Step 2. No pattern → signal closed at Level

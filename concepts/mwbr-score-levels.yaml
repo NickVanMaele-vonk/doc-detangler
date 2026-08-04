@@ -3,7 +3,7 @@ term: MWBR score levels
 aliases: [MWBR_score, MWBR_NORMAL]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   MWBR_score: ANOMALOUS (>2σ from peer median); ELEVATED (1σ–2σ); NORMAL

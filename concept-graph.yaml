@@ -586,7 +586,7 @@ reading_order:
 nodes:
 - id: 22-step-analytical-pipeline
   term: 22-step analytical pipeline
-  placement: UCE
+  placement: glossary
   defined: true
 - id: absence-of-contemporaneous-exogenous-cause
   term: absence_of_contemporaneous_exogenous_cause
@@ -594,7 +594,7 @@ nodes:
   defined: false
 - id: ads
   term: ADS
-  placement: UCE
+  placement: glossary
   defined: false
 - id: ai-governance-prohibitions
   term: AI governance prohibitions
@@ -774,7 +774,7 @@ nodes:
   defined: false
 - id: bt-03
   term: BT-03
-  placement: SBSP
+  placement: glossary
   defined: true
 - id: bt-04
   term: BT-04
@@ -842,7 +842,7 @@ nodes:
   defined: false
 - id: cf
   term: CF
-  placement: UCE
+  placement: glossary
   defined: false
 - id: classification
   term: classification
@@ -878,7 +878,7 @@ nodes:
   defined: false
 - id: contextual-directionality-logic
   term: contextual directionality logic
-  placement: UCE
+  placement: glossary
   defined: false
 - id: contextual-suppression-gate
   term: Contextual Suppression Gate
@@ -906,7 +906,7 @@ nodes:
   defined: false
 - id: convergence-quality-tier
   term: Convergence Quality Tier
-  placement: UCE
+  placement: glossary
   defined: true
 - id: coordination-classification-tier
   term: Coordination Classification Tier
@@ -922,7 +922,7 @@ nodes:
   defined: true
 - id: counterfactual-strength
   term: Counterfactual Strength
-  placement: UCE
+  placement: glossary
   defined: true
 - id: cross-instrument-context-intelligence
   term: Cross-Instrument Context Intelligence
@@ -962,11 +962,11 @@ nodes:
   defined: false
 - id: d6-open-close-framing
   term: D.6 Open-Close Framing
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: daf
   term: DAF
-  placement: UCE
+  placement: glossary
   defined: false
 - id: dataenrichmentorchestrator
   term: DataEnrichmentOrchestrator
@@ -1002,7 +1002,7 @@ nodes:
   defined: true
 - id: dominance-population-size
   term: dominance_population_size
-  placement: MCL
+  placement: glossary
   defined: true
 - id: dominance-threshold
   term: DOMINANCE_THRESHOLD
@@ -1018,7 +1018,7 @@ nodes:
   defined: true
 - id: dqs
   term: DQS
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: driver-code
   term: driver code
@@ -1062,7 +1062,7 @@ nodes:
   defined: true
 - id: escalating-dominance-trend
   term: Escalating Dominance Trend
-  placement: UCE
+  placement: glossary
   defined: false
 - id: escalation-likelihood-score
   term: Escalation Likelihood Score
@@ -1086,11 +1086,11 @@ nodes:
   defined: false
 - id: event-materiality-scoring
   term: event materiality scoring
-  placement: UCE
+  placement: glossary
   defined: false
 - id: event-object-schema
   term: Event Object Schema
-  placement: UCE
+  placement: glossary
   defined: false
 - id: evidence-confidence
   term: Evidence Confidence
@@ -1122,7 +1122,7 @@ nodes:
   defined: true
 - id: explanationfailure
   term: ExplanationFailure
-  placement: UCE
+  placement: glossary
   defined: true
 - id: external-context-intelligence-layer
   term: External Context Intelligence Layer
@@ -1214,11 +1214,11 @@ nodes:
   defined: true
 - id: intentfactor
   term: IntentFactor
-  placement: UCE
+  placement: glossary
   defined: false
 - id: internal-abuse-pathway
   term: internal abuse pathway
-  placement: UCE
+  placement: glossary
   defined: false
 - id: intraday-behavioural-event
   term: Intraday Behavioural Event
@@ -1226,7 +1226,7 @@ nodes:
   defined: true
 - id: intraday-behavioural-event-builder
   term: Intraday Behavioural Event Builder
-  placement: UCE
+  placement: glossary
   defined: false
 - id: intraday-dominance
   term: Intraday Dominance
@@ -1418,7 +1418,7 @@ nodes:
   defined: true
 - id: mwbr-score-levels
   term: MWBR score levels
-  placement: UCE
+  placement: glossary
   defined: true
 - id: nfil
   term: NFIL
@@ -1438,7 +1438,7 @@ nodes:
   defined: false
 - id: non-compensatory-architecture
   term: non-compensatory architecture
-  placement: UCE
+  placement: glossary
   defined: true
 - id: non-filing-documentation-package
   term: non-filing documentation package
@@ -1490,7 +1490,7 @@ nodes:
   defined: true
 - id: participant-history
   term: Participant History
-  placement: UCE
+  placement: glossary
   defined: false
 - id: participant-interaction
   term: Participant interaction
@@ -1506,7 +1506,7 @@ nodes:
   defined: false
 - id: pattern-gate
   term: Pattern gate
-  placement: UCE
+  placement: glossary
   defined: true
 - id: pattern-tier
   term: pattern tier
@@ -1578,15 +1578,15 @@ nodes:
   defined: true
 - id: qml-direction
   term: QML_direction
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: qml-lead-rate
   term: QML_lead_rate
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: qml-market-impact
   term: QML_market_impact
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: quote-behaviour-baseline-engine
   term: Quote Behaviour Baseline Engine
@@ -1662,11 +1662,11 @@ nodes:
   defined: false
 - id: rd07
   term: RD07
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: rd12
   term: RD12
-  placement: SBSP
+  placement: glossary
   defined: false
 - id: rdcs
   term: RDCS
@@ -1754,7 +1754,7 @@ nodes:
   defined: true
 - id: rt22
   term: RT22
-  placement: MCL
+  placement: glossary
   defined: true
 - id: sb-01
   term: SB-01

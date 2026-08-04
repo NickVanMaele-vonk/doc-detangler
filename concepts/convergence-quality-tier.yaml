@@ -3,7 +3,7 @@ term: Convergence Quality Tier
 aliases: [CQT, CQT1, CQT2, CQT3, CQT gate]
 status: candidate
 superseded_by: null
-placement: UCE
+placement: glossary
 used_in: [U]
 definition: >-
   CQT1 (CQS 3–5) = MEDIUM minimum; CQT2 (CQS 6–8) = HIGH minimum; CQT3

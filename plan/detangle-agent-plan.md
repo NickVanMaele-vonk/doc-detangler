@@ -40,7 +40,7 @@ Decision D10 (research-memo §D10) records the design.
 | C6 | **Version-controllable artifacts only.** Concept graph is a plain-text edge list (`concept-graph.yaml`), **generated** — from the records' canonical `depends_on` and from the bodies for usage edges — and never hand-edited; hand-editing it fails CI. A Mermaid render (`concept-graph.mmd`) is generated from it and displays natively in Azure DevOps (D2: SKOS concept model, Mermaid-compatible view). Canonicity sits in the concept records, not in this file (C11, D9/D10) — D2's original "source of truth" wording predated D9 and was corrected by Nick's ruling of 2026-07-30 (ADR-001). | Phase 3 |
 | C7 | **No meaning weakened.** Numbers, thresholds, units, comparison operators, normative modality (`must` vs `should`), scoping qualifiers, internal codes, regulatory citations, and classification/version metadata are reproduced verbatim wherever their claim survives. A claim may map correctly and still have lost its force — so this is checked mechanically, independent of C1/C2. | Precision check (Phase 6), rubric criterion 5 |
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
-| C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document. No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
+| C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document — **unless a glossary definition depends on it, in which case it joins the glossary too** (Nick's Case 3 ruling, 2026-08-03: the glossary is read first, so a term it leans on has nowhere else to be looked up). No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
 | C10 | **Reading order and lookup order are separated.** `glossary.md` is ordered topologically so it can be read start to finish; `index.md` is alphabetical and covers every term across the other four documents. The index is generated, contains no definitions, and is verified by regeneration rather than by review. | Phase 3 + rubric criteria 3 and 6 |
 | C11 | **Links run forward only; usage data lives in the graph.** Each section links its first use of a glossary term to that term's entry. No document links back to where its terms are used: a glossary defines terms, it does not record usage. Usage locations are graph edges in `concept-graph.yaml`, **derived** from the bodies and regenerated on every change (D10) — dependency edges in the concept records are the only canonical edge data. | Phase 3 + rubric criteria 1 and 6 |
 | C12 | **Coherence survives continuous change.** Bodies remain directly editable by humans and AI agents; the price of an edit is an incremental **drift lint** run by branch policy on every docs PR (new orphans, inline redefinitions, use-before-definition, placement-boundary crossings, contradiction candidates, provenance staleness). Addressing is two-layer: tool-stamped section IDs are the identity layer (authors — human or AI — are never asked to create one); content hashes in a generated section map are the change-detection layer; line numbers appear nowhere, and staleness is flagged, never silent. Derived artifacts (usage edges, first-use links, `index.md`, `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`) are regenerated, never hand-maintained. A generated `manifest.yaml` binds the versions of every artifact in the set. | Phase 10 (schema fields land in Phase 3) + rubric criterion 9 |
@@ -93,9 +93,21 @@ The concept dependency graph is not a side feature; it drives the pipeline:
   across the output set, and the ordering of `glossary.md` itself.
 - **Alphabetical projection** of the same term set = `index.md`. One graph,
   two renderings: topological for reading, alphabetical for lookup.
-- **Placement** = a computed property, not a judgement: a term used in ≥ 2
-  documents is defined in the glossary; a term used in exactly 1 is defined
-  in that document (C9).
+- **Placement** = a computed property, not a judgement, in **two limbs**
+  (C9; limb 2 added by Nick's Case 3 ruling of 2026-08-03):
+  1. a term used in ≥ 2 documents is defined in the glossary;
+  2. otherwise, a term that any glossary definition **depends on** is defined
+     in the glossary as well — the glossary is read first, so a reader who
+     meets the term there has nowhere to look it up. This is the dependency
+     closure of limb 1, taken to a fixpoint;
+  3. otherwise the term is defined in the one document that uses it.
+
+  Both limbs are graph queries, so placement stays computed rather than
+  judged, and no override register is needed. The closure is seeded from
+  `used_in` alone and never reads the `placement` field it computes —
+  otherwise one wrongly-placed record would drag its whole dependency tree
+  into the glossary and the check would agree with it. On the corpus as of
+  2026-08-03 limb 2 moved 28 records and reached its fixpoint in one hop.
 - **Cycle detection** = genuinely circular definitions that no reordering fixes
   → mandatory human decision. Glossary-first shrinks this problem: cross-document
   cycles collapse into intra-glossary cycles, which reordering *can* fix.
@@ -246,7 +258,7 @@ input to any architecture and de-risks everything downstream.
 | Step | Description |
 |------|-------------|
 | 3.1 | Extract candidate terms from the three shortened files + full Analytical Layer blueprint (UCE, SBSP, MCL, IBEB, CQS, BOA, …). LLM-assisted, human-reviewed. |
-| 3.2 | Count each term's document usage and apply the **placement test** (C9): used in ≥ 2 documents → glossary; used in exactly 1 → that document. Placement is computed, not judged. |
+| 3.2 | Count each term's document usage and apply the **placement test** (C9): used in ≥ 2 documents → glossary; otherwise, depended on by a glossary definition → glossary (Case 3, 2026-08-03); otherwise → that document. Placement is computed, not judged. |
 | 3.3 | Draft one-sentence definitions per term, sourced from the documents. Flag terms used but never defined (orphans), and terms defined differently in two documents (conflicts — surface, do not reconcile). |
 | 3.4 | Populate the canonical `depends_on` edges in the concept records, and **generate** the dependency edge list (`concept-graph.yaml`) from them; generate the Mermaid render (`concept-graph.mmd`); run topological sort and cycle detection. ISO 704 §6.5.2 defines the cycle policy (inner/outer circle), §6.4.4 the substitution-principle diagnostic; the self-loop check needs a documented-exception path per §6.5.2's graded prohibition. |
 | 3.5 | Assemble `glossary.md`: an overview, then the definitions in **topological order** (`param-glossary-order`), so the glossary reads start to finish without ever meeting an undefined term. No alphabetical section — lookup lives in the index. The glossary is reader-facing and must pass criteria 1, 2, and 3 itself. |
