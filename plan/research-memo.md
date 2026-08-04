@@ -832,6 +832,107 @@ every definition lives in its record, the first golden body is seeded from
 those records, and the committed `glossary.md` is the seed for the editable
 one.
 
+#### Provenance and authorship of definitions (Nick, 2026-08-04)
+
+Settled once `glossary.md` became editable and authored definitions turned
+from an edge case into the normal way the 187 undefined terms get filled.
+
+**One field, not two.** Authored text sits in the same `definition` field as
+corpus-derived text. The document already distinguishes them — criterion 7
+marks a block moved, derived or added — and the record mirrors one marked
+block into one string, so a second field would force the lift to choose a
+target and reintroduce a judgement into the one step the marker scheme just
+made deterministic. Provenance is a **secondary block on the record**, not a
+front-and-centre attribute: what a reader needs is the definition as it
+stands now, with the history available to query (Nick's framing).
+
+**Two axes, not one enum.** *Anchoring* — is there a source span? — is
+separate from *authorship*. A single `corpus`/`human`/`AI` field cannot
+express AI-written text sitting inside the corpus, which is this project's
+actual situation: `samples/` was AI-assisted and not closely reviewed. So
+`source` spans answer anchoring; the provenance block answers authorship —
+author, approver, PR, and the set version the text entered at.
+
+**Authored text joins the document set but never acquires a `para_hash`.**
+It is fully part of the document from then on; nothing marks it second-class
+to a reader. What it never gets is a source span, because a span asserts
+*the business wrote this wording at this revision*. If tool output could
+acquire one, the next run would read its own output as evidence the business
+defined the term — C2's "traces to the source **or** is marked as bridging"
+goes circular, and the 187 undefined terms would silently look closed. The
+absence of the hash is the mechanism; nothing has to remember to mark
+anything. It follows that `flags: [orphan]` survives an authored definition:
+orphan records that the *corpus* never defined the term, which stays true
+however good the definition someone later writes. Without that, the
+convolutedness measure would decay exactly as fast as the work got done.
+
+**Two hashes, two jobs.** `para_hash` answers "did the business write this?"
+and applies to corpus-derived text only. The section map's content hash
+(element 2 below) answers "has this changed?" and applies to everything,
+authored included. Change detection never depended on `para_hash`.
+
+**A provenance claim is asserted against a content hash.** Change the text
+and the claim is invalidated until re-established — re-verified against the
+source, or re-approved. For authored text that means a rewrite always needs a
+human to re-affirm, which is a stronger guard than corpus text carries.
+
+**Breaking corpus provenance auto-demotes.** Editable documents mean someone
+will reword a corpus-derived definition, at which point the record's
+`para_hash` and `git_blob` assert something false — and that is the *stronger*
+false claim, worse than the authored case. The verbatim-run check detects it
+exactly. The tool then drops the provenance one rung down criterion 7's
+moved → derived → added ladder and comments; it does not block. Demotion
+never over-claims, and blocking has the worse failure mode: people stop
+fixing typos in definitions and the documents rot around them.
+
+This generalises the guard rule recorded above: **the guard may weaken a
+provenance claim on its own; it may never strengthen one.**
+
+**AI may draft; a named human approves.** Criterion 7 calls an invented
+definition the highest-risk output the tool can produce, and a term the
+corpus never defines has no source to draw on — so an AI draft is the model
+reaching for general knowledge and applying it to a specific surveillance
+programme. Against that: 187 definitions is not work that gets done by hand,
+and an unwritten definition is itself a failure against criterion 3's
+end-state invariant. Barring AI drafting would also set a higher bar for the
+fix than the source ever met. So drafting is permitted, approval is by a
+named human and recorded, and **the draft shows its evidence** — the usages
+elsewhere in the corpus it was assembled from, or an explicit statement that
+there are none. A definition assembled from six real usages is a different
+object from one composed out of background knowledge, and the approver has to
+be able to see which they are approving.
+
+#### The definition block is the definitional boundary (Nick, 2026-08-04)
+
+**Ruling: `definition` is not split into definition / illustration / note.**
+The marker boundary does that work instead. The definition proper sits inside
+`<!-- concept:<id>:start -->` … `:end`; illustrations and consequences are
+ordinary document prose outside it. The record mirrors only the block, so it
+cannot conflate three things — there is one thing in it by construction.
+
+This retires the field-splitting design sketched on 2026-07-31 without
+retiring its diagnosis. The problem was real: of 172 defined records, **81
+are multi-clause** and **99 draw on more than one source span**, and the token
+check tests a whole definition against the *union* of every span the record
+cites, so a span imported for one clause can vouch for another. Narrowing the
+checked text to the definition proper removes most of that surface, and
+ISO 704 §6.4.4's substitution principle becomes the test for **where the
+marker goes** rather than for how to divide a YAML field.
+
+**Consequence — `notes` is a staging post, not a destination.** Thirteen
+records park corpus wording in `notes`, moved out of their definitions by the
+ISO 704 narrowing pass: `anonymous-quote-driven-market-structure`,
+`classification`, `close-window`, `cwps-intra`, `gate`,
+`identity-driven-coordination`, `intent-score`,
+`mtsam-l-data-limitation-register`, `mwbr-score-levels`,
+`otc-bilateral-trading`, `rd03` and the rest. `notes` renders nowhere and
+records are not part of the output set, so criterion 4 — evaluated over the
+output set — would count that wording as omitted, and the Phase 7 harness
+would never see it because it opens documents, not records. **Those clauses
+land in document prose beside their definition block when Phase 5 writes the
+body** (Nick, 2026-08-04). Their `notes` entries are authoring instructions
+in the meantime.
+
 ### D10 — continuous change / steady-state operation (adopted 2026-07-23)
 
 **The use case (Nick, 2026-07-23).** After delivery the document set does not

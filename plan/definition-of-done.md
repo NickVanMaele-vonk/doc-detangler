@@ -176,7 +176,7 @@ X, in the reading order of the set.
   stale ruling: a definition was narrowed and the exception is dead, so it
   is flagged rather than silently dropped. A cycle resolved by narrowing
   (ISO 704 §6.5.2 inner circle) gets no entry at all; its trace is the
-  clause moved verbatim to the record's `notes`.
+  clause moved verbatim to the record's `notes`. `notes` is a **staging post, not a destination** (Nick, 2026-08-04): records are not part of the output set, so a corpus clause left there is an omission under criterion 4. It lands in document prose beside its definition block when Phase 5 writes the body.
 
   Because shared definitions now sit in one file that precedes the
   documents, cross-document cycles collapse into intra-glossary cycles,
@@ -358,6 +358,12 @@ comment.
 - **Pass condition:** the harness reports zero unresolved omissions and zero
   unresolved fabrications across the output set, and every merge and
   relocation has a report entry.
+- **Records are not part of the output set** (Nick, 2026-08-04). The output
+  set is the five documents; the Phase 7 harness opens those and never opens
+  a concept record. So a corpus claim parked in a record's `notes` — as the
+  ISO 704 narrowing pass did for thirteen records — is an **omission**, not a
+  relocation, and must land in document prose beside its definition block
+  when the body is written. `notes` is a staging post, not a destination.
 - **Verification method:** automatic — Phase 7 harness (claim decomposition →
   coverage check → fabrication check), run over the set.
 - **Status:** depends on the harness existing (Phase 7).
@@ -527,7 +533,38 @@ navigation.
 ### Category C — added (bridging)
 
 New explanatory text with no source claim behind it. Marked both
-machine-readably and visibly:
+machine-readably and visibly.
+
+**Who may write one** (Nick, 2026-08-04). **AI may draft; a named human
+approves**, and the approval is recorded in the record's provenance block
+along with the PR and the set version. The draft **shows its evidence** — the
+usages elsewhere in the corpus it was assembled from — or states explicitly
+that there are none. A definition assembled from six real usages is a
+different object from one composed out of background knowledge, and the
+approver must be able to tell which they are approving. Barring AI drafting
+outright was rejected: 187 undefined terms is not work that gets done by
+hand, an unwritten definition fails criterion 3's end-state invariant, and
+the source corpus was itself AI-assisted, so the bar would have been higher
+for the fix than it ever was for the original.
+
+**Authored text never acquires a source span.** It becomes fully part of the
+document, but a `para_hash` asserts *the business wrote this wording at this
+revision*, which for authored text is false. If tool output could acquire
+one, the next version would read it as evidence the term had been defined all
+along. The absence of the hash is the mechanism — nothing has to remember to
+mark anything — and it is why `flags: [orphan]` survives an authored
+definition.
+
+**Provenance is asserted against a content hash, and breaking it demotes.**
+Change a definition's text and any provenance claim attached to it is
+invalidated until re-established. Where an edit breaks corpus provenance —
+someone rewords a Category A or B definition so it no longer traces to its
+anchored block — the tool **drops it one rung down this ladder and comments;
+it does not block**. Demotion never over-claims, and blocking makes people
+stop fixing typos. The general rule: the guard may weaken a provenance claim
+on its own; it may never strengthen one.
+
+Marking format:
 
 ```markdown
 <!-- AI addition:start -->

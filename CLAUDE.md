@@ -299,6 +299,28 @@ changes today.** They are written up in the research memo (§D9 amendment,
    with a PR comment. This narrowed a hard prohibition into a rule: the guard
    may make word-preserving edits, verified to change no words, and must
    comment; it may never change meaning.
+4. **Provenance for authored definitions.** One `definition` field, with
+   provenance a secondary block. Authored text joins the document set but
+   **never acquires a `para_hash`** — a span asserts the business wrote the
+   wording, and tool output must never be able to claim that, or the next run
+   reads its own output as source. `flags: [orphan]` therefore survives an
+   authored definition. Change detection for everything is the section map's
+   content hash, not `para_hash`; a provenance claim is asserted against that
+   hash, and an edit breaking corpus provenance **auto-demotes** down
+   criterion 7's moved → derived → added ladder with a comment. General rule:
+   **the guard may weaken a provenance claim on its own; it may never
+   strengthen one.**
+5. **AI may draft a definition; a named human approves**, and the draft shows
+   the corpus usages it was assembled from, or says there are none.
+6. **`definition` is not split** into definition / illustration / note. The
+   marked block is the definitional boundary: definition proper inside the
+   markers, illustration and consequence as ordinary prose outside. 81 of the
+   172 defined records are multi-clause and 99 cite more than one span, which
+   is the surface the old field-splitting design was aimed at; narrowing the
+   checked text to the block removes most of it. **`notes` is a staging post,
+   not a destination** — records are not part of the output set, so the 13
+   records holding narrowed corpus wording must land it in document prose in
+   Phase 5 or it is an omission under criterion 4.
 
 **What the glossary ruling closed and re-opened.** Closed: where the overview
 lives (it is just the document's own overview, written in place, so no
@@ -628,7 +650,7 @@ Established across PRs #17–#35; follow them so records stay uniform.
 - **Cycle policy (applied 2026-07-29, ISO 704 §6.5.2).** A circular edge
   whose source clause is consequence/elaboration is resolved by narrowing
   the definition proper — the clause moves verbatim to `notes`, and the
-  edge is dropped. A genuinely contrastive pair is kept as a documented
+  edge is dropped. `notes` is a **staging post, not a destination** (Nick, 2026-08-04): records are not part of the output set, so a corpus clause left there is an omission under criterion 4. It lands in document prose beside its definition block when Phase 5 writes the body. A genuinely contrastive pair is kept as a documented
   outer circle (liquidity-driven-reaction ↔ identity-driven-coordination is
   the only accepted cycle); the view generator must condense that SCC for
   the topological sort. **Accepted cycles are recorded in
