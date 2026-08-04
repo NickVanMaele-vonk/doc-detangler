@@ -588,7 +588,7 @@ actually implemented.
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
-| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition — record-canonical for glossary-placed terms, body-canonical with a derived record copy for document-placed ones, conditional on generated start/end markers making the lift deterministic — see §D9 amendment |
+| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition. All 172 definitions become body-canonical, `glossary.md` included — it becomes the fourth editable document rather than a generated view — with the record's `definition` field a derived copy everywhere, conditional on generated start/end markers making the lift deterministic. The record still owns the ontology: identity, placement, provenance, `depends_on`. See §D9 amendment |
 | D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10. **Element 4 reaffirmed 2026-08-04:** `depends_on` stays canonical; a body edit proposes edge changes and waits for a human ruling |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
@@ -722,20 +722,69 @@ bodies.
 
 #### D9 amendment — the definition site owns the definition (Nick, 2026-08-04)
 
-**Ruling.** A definition's canonical home follows its *placement*, not the
-record set as a whole:
+**Ruling, in two steps taken the same day.** The first scoped canonicity to
+placement; the second removed the remaining exception, because the glossary
+is a definition site too.
 
-- **Glossary-placed terms — record-canonical, unchanged.** The record holds
-  the definition; `glossary.md` is the generated view. 155 records today, 78
-  of them defined.
 - **Document-placed terms — body-canonical, record mirrors.** The definition
   lives in the document body, where it is read and where a person edits it.
   The record carries a **derived copy**, regenerated from the body and
   byte-compared like every other derived artifact; hand-editing the record's
   `definition` field fails CI, which names the document section to edit
   instead. 204 records today, 94 of them defined.
+- **`glossary.md` becomes the fourth editable document** (Nick, later the
+  same day). It is no longer a generated view. Its 78 definitions are
+  canonical in the file, humans edit it directly, and the record mirrors
+  them exactly as it does for the other three documents. So **all 172
+  definitions are body-canonical** and the record's `definition` field is
+  derived everywhere, with no exception left to remember.
 
-**Why the original decision does not cover this case.** D9's headline
+**What the record still owns.** D9's scope narrows from "the definition" to
+**the concept ontology**: identity (`id`, `term`, `aliases`), placement,
+`used_in`, `source` provenance, `depends_on`, `flags`, `conflict`, `review`
+and `notes` all stay canonical in `concepts/*.yaml`. Only the definition
+*prose* moves. Ontology-first survives; it was never the prose that made
+C9/C10/C11 checkable.
+
+**Why the glossary could not stay the exception.** The rubric already calls
+it "the first document of the set", subject to all eight content criteria
+itself. Leaving it generated meant the one definition site that did not own
+its definitions, reachable only by editing a YAML field — which is precisely
+the surface the 2026-07-31 session found unusable for the people who own the
+domain knowledge. It also left the overview homeless: generated prose the
+tool is forbidden to write (C2), in a file no human may edit.
+
+**What is still generated inside it.** `index.md`, `concept-graph.yaml`, the
+sources table, the anchors, first-use links, and the entry blocks for terms
+promoted into the glossary by a placement change. These are generated regions
+inside a human-owned file — the same mixed ownership the other three
+documents already carry through section markers and `derived:` blocks.
+
+**Ordering — the tool reorders, and says so (Nick, 2026-08-04).** The
+glossary's order is computed, not authored: topological, so it reads start to
+finish without meeting an undefined term (`param-glossary-order`). A human
+editing in place will append at the bottom or insert alphabetically. So a PR
+that leaves the glossary out of topological order receives a **reorder
+commit** from the guard, machine-verified to move whole entry blocks and
+change no words, and the guard leaves a PR comment saying what it moved and
+why. This extends the stamping-commit pattern criterion 9 already authorises
+for section IDs.
+
+This narrows the standing prohibition on the guard editing a body, and the
+narrowing is stated as a rule rather than an exception: **the guard may make
+word-preserving changes, machine-verified to change no words, and must
+comment when it does; it may never change meaning.** Rewriting prose the tool
+believes is wrong stays forbidden.
+
+**The cost, stated.** D9 chose record-canonical so C9's single definition
+site and criterion 1's ordering would be structurally impossible to violate
+rather than checked and hopefully caught. An editable glossary can be made to
+define a term twice, or to define one that belongs in a document. Those
+become findings instead of impossibilities. The condition below is what keeps
+them *mechanically* caught on every PR rather than caught in review if
+someone notices.
+
+**Why the original decision does not cover these cases.** D9's headline
 argument is provability: if prose is canonical, every structural guarantee
 rests on an LLM re-parse of prose. That argument holds. It is also why the
 amendment carries a condition rather than simply inverting the direction.
@@ -772,10 +821,16 @@ it is a marker that goes missing exactly where it mattered.
 
 **What does not change.** Placement itself is still computed (C9, two limbs).
 `depends_on` stays canonical — see the D10 element 4 note below. The orphan
-measure is untouched: the 110 undefined document-placed terms have nothing to
-mirror. And the direction only flips once a body exists; until Phase 5 writes
-one, those 94 definitions live in their records as they do today, and the
-first golden body is seeded from them.
+measure is untouched: the 187 undefined terms have nothing to mirror.
+
+**Timing — prospective, and deliberately so.** The direction flips per
+document as each one comes to exist, and for the glossary when the drift lint
+that will guard it exists. Today `glossary.md` is generated and held by
+`detangle generate --check`, a byte comparison; dropping that guard before
+the lint replaces it would leave the file with no guard at all. Until then
+every definition lives in its record, the first golden body is seeded from
+those records, and the committed `glossary.md` is the seed for the editable
+one.
 
 ### D10 — continuous change / steady-state operation (adopted 2026-07-23)
 

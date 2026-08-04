@@ -103,19 +103,23 @@ added (criterion 7).
 **Canonical vs derived is the distinction that governs everything (D10 §4).**
 
 - Canonical: concept records, including `depends_on` dependency edges, plus
-  the registers (see below). **One exception, ruled 2026-08-04 (D9
-  amendment): the definition site owns the definition.** A glossary-placed
-  term's definition is canonical in its record; a **document-placed** term's
-  definition is canonical in the **document body**, and the record's
-  `definition` field is a derived copy, byte-compared like any other derived
-  artifact. 78 defined glossary-placed records, 94 defined document-placed.
-  Prospective — it takes effect per document as Phase 5 writes it. The body
-  delimits each definition with tool-stamped
-  `<!-- concept:<id>:start -->` / `<!-- concept:<id>:end -->` markers, which
-  is what keeps the lift deterministic; without them the structural
-  guarantees would rest on re-parsing prose, the exact failure D9 exists to
-  prevent. `depends_on` stays canonical either way — see the edge rule
-  below.
+  the registers (see below). **But not the definition prose, from
+  2026-08-04 (D9 amendment): the definition site owns the definition.** Every
+  definition is canonical in the document that defines it — **`glossary.md`
+  included, which becomes the fourth editable document rather than a
+  generated view** — and the record's `definition` field is a derived copy
+  everywhere, byte-compared like any other derived artifact. All 172 defined
+  terms: 78 in the glossary, 94 across the three documents. No exception to
+  remember. The record still owns the **ontology**: identity, `placement`,
+  `used_in`, `source` provenance, `depends_on`, `flags`, `conflict`,
+  `review`, `notes`. Each document delimits the definitions it owns with
+  tool-stamped `<!-- concept:<id>:start -->` / `<!-- concept:<id>:end -->`
+  markers, which is what keeps the lift deterministic; without them the
+  structural guarantees would rest on re-parsing prose, the exact failure D9
+  exists to prevent. **Prospective** — it takes effect per document as each
+  comes to exist, and for the glossary when the drift lint that guards it
+  exists; today `glossary.md` is still generated and held by
+  `detangle generate --check`.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
   `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`.
@@ -282,14 +286,29 @@ himself.
 changes today.** They are written up in the research memo (§D9 amendment,
 §D10 element 4 note), the rubric (criteria 3 and 9) and C12.
 
-1. **The definition site owns the definition.** Glossary-placed →
-   record-canonical, unchanged. Document-placed → **body-canonical**, record
-   keeps a derived copy. Conditional on tool-stamped
-   `<!-- concept:<id>:start -->` markers in the body, because a byte-comparable
-   mirror needs a deterministic lift and D9's whole argument was that prose
-   canonicity destroys provability.
+1. **The definition site owns the definition** — and after the second
+   ruling, that means **all 172 definitions**, because `glossary.md` becomes
+   the fourth editable document rather than a generated view. The record's
+   `definition` is a derived copy everywhere; the record still owns the
+   ontology. Conditional on tool-stamped `<!-- concept:<id>:start -->`
+   markers, because a byte-comparable mirror needs a deterministic lift and
+   D9's whole argument was that prose canonicity destroys provability.
 2. **`depends_on` stays canonical; a body edit proposes edge changes and
    waits.** Detection automatic, disposition Nick's.
+3. **The guard reorders the glossary when a human breaks topological order**,
+   with a PR comment. This narrowed a hard prohibition into a rule: the guard
+   may make word-preserving edits, verified to change no words, and must
+   comment; it may never change meaning.
+
+**What the glossary ruling closed and re-opened.** Closed: where the overview
+lives (it is just the document's own overview, written in place, so no
+`registers/glossary-overview.md` is needed) and the waiver-staleness scoping
+that existed only to waive the overview gap. Re-opened: `detangle generate
+--check` cannot be the fourth CI gate — byte-comparing a file humans edit is
+incoherent — so it becomes a drift lint, and **the gate stays out of
+`ci.yml` until that lint exists**. `detangle generate` keeps its job as the
+seeder: it produced the committed `glossary.md`, which is the seed the
+editable file starts from.
 
 **Watch the counts.** `104` document-placed defined terms was stale — it
 predates C9 limb 2, which moved 28 records (10 defined) into the glossary.
@@ -685,5 +704,10 @@ not the glossary.
 
 Beyond the non-goals list in `plan/definition-of-done.md`: never merge a PR,
 resolve a PR comment, or approve an omission on Nick's behalf; never
-auto-"fix" a document body in steady state (the guard comments, humans
-decide); never hand-edit a generated artifact.
+hand-edit a generated artifact; never auto-"fix" a document body in steady
+state — with one narrow exception ruled by Nick 2026-08-04: **the guard may
+make word-preserving edits, machine-verified to change no words, and must
+leave a PR comment when it does.** Stamping section IDs and reordering
+glossary entries left out of topological order are the two authorised cases.
+Changing meaning is never authorised — where the tool believes prose is
+wrong, it comments and a human decides.
