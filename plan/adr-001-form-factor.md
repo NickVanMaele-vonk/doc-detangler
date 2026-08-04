@@ -215,7 +215,8 @@ set.
 **The invariant this buys:** register entries are 1:1 with live cycles. A
 cycle with no entry is a blocking finding; an entry with no cycle is a stale
 ruling, flagged rather than dropped; a cycle resolved by narrowing gets no
-entry, its trace being the clause moved verbatim to the record's `notes`.
+entry, its trace being the clause moved verbatim to the record's `notes`
+(a staging post — see definition-of-done.md criterion 1, Cycles).
 
 **Entry point ruled 2026-07-30.** Criterion 1 clause 2 requires a designated
 `entry_point` per cycle, and the 2026-07-29 ruling had accepted the cycle
