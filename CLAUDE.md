@@ -94,9 +94,13 @@ genuinely circular definitions for human disposition; orphans (used but never
 defined) measure how convoluted the source is.
 
 **Ontology-first (D9).** Structured concept records — one file per concept —
-are the source of truth. `glossary.md`, `index.md`, and `concept-graph.mmd`
-are **generated views** with source-map anchors, so a reviewer's PR comment on
-generated markdown round-trips deterministically back to the record. Document
+are the source of truth **for the ontology** — identity, placement,
+provenance, dependency edges. `index.md` is a generated view with source-map
+anchors, so a reviewer's PR comment round-trips deterministically back to the
+record. Two things changed on 2026-08-04: the definition *prose* is canonical
+in the document that defines it, `glossary.md` included, which is edited
+rather than generated; and there is no `concept-graph.mmd` — the Mermaid
+render is produced per concept on demand. Document
 *bodies* are not ontology; they stay markdown tracked as moved / derived /
 added (criterion 7).
 
@@ -122,7 +126,9 @@ added (criterion 7).
   `detangle generate --check`.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
-  `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`.
+  `state/section-map.yaml`, `manifest.yaml`. Not in this list: the Mermaid
+  render, which is on-demand rather than committed, and `state/notices.md`,
+  which is generated but deliberately unguarded (both Nick, 2026-08-04).
   (`concept-graph.yaml` was called the source of truth in plan C6 and the
   README until Nick's 2026-07-30 ruling in ADR-001 — that wording predated
   D9. Every edge in it is a copy of a record's `depends_on` or a derived
@@ -212,8 +218,10 @@ progress**: steps 3.1–3.2 are done, step 3.3 record authoring is complete
 (all §1 sections, §3a promotions, multi-document leftovers, and the full
 U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 `depends_on` pass over the whole set is merged (PRs #54–#58: 303 edges
-across 116 records; 404 edges set-wide after PRs #59–#60 and #67). Steps
-3.5–3.7 are now **generation** tasks. **C9 limb 2 applied 2026-08-03**: 28
+across 116 records; **402** edges set-wide today — PRs #59–#60 and #67 took
+it to 404, and the 2026-07-31 narrowing rulings then dropped two). Step 3.5
+is built; 3.6's `index.md` awaits the bodies and its Mermaid half was
+cancelled; 3.7 awaits the bodies. **C9 limb 2 applied 2026-08-03**: 28
 records moved to `placement: glossary`, so the glossary is 155 entries (77
 undefined) and 204 records stay document-placed (110 undefined, to be
 positioned and flagged when the bodies exist in Phase 5).
@@ -221,8 +229,9 @@ positioned and flagged when the bodies exist in Phase 5).
 `registers/waivers.yaml` is built and `detangle validate` exits `0` on
 `main`, holding its three source-defect `definition-token` findings as
 accepted debt. `detangle validate`, `detangle graph` and `detangle generate` are all built
-(ADR-001 D4); `generate` writes `glossary.md` only, with `index.md` and
-`concept-graph.mmd` left to step 3.6.
+(ADR-001 D4). `generate` seeded `glossary.md`, which is now edited by humans
+rather than regenerated; `index.md` is left to step 3.6, and no
+`concept-graph.mmd` is produced at all.
 `concept-graph.yaml` is generated and committed — dependency edges and the
 cycle roll-up now, usage edges when the bodies exist in Phase 5. `concepts/`
 holds 359 canonical records; `registers/` holds `cycles.yaml`,
@@ -562,7 +571,10 @@ does define the thing. Rule collision; Nick's call.
   outright without improving the record. **82 of 173 defined records are
   multi-clause** (em-dash, semicolon, or over 35 words); 153 contain a
   code-shaped token. The fix is provenance per clause, with ISO 704 §6.4.4's
-  substitution principle as the test for what is definitional. Not designed.
+  substitution principle as the test for what is definitional. **Ruled
+  2026-08-04: not split — the marked definition block is the boundary
+  instead.** Figures here are as of 2026-07-31 and predate C9 limb 2; the
+  live counts are 81 of 172 multi-clause, 142 with a code-shaped token.
 - **Edge-minting cannot be a blanket rule once clauses move out of the
   definition.** `close-window` → `mts-associated-markets` should go: you do
   not need the venue to understand what a close window is, and keeping it
@@ -571,9 +583,12 @@ does define the thing. Rule collision; Nick's call.
   structurally identical trailing clause, because the cap *is* the gate's
   point. An instantiation creates no comprehension prerequisite; a
   consequence naming a defined term usually does.
-- **Definition sites are mostly not in the glossary.** 127 records are
+- **Definition sites are mostly not in the glossary.** *(Figures as of
+  2026-07-31, before C9 limb 2 moved 28 records. Live: 155 glossary-placed,
+  204 document-placed — UCE 82, SBSP 63, MCL 59 — and of the 172 defined, 78
+  render to the glossary and 94 into document bodies.)* 127 records were
   glossary-placed, 231 document-placed (100 UCE, 71 SBSP, 60 MCL); of the
-  173 defined, 69 render to the glossary and 104 into document bodies. So
+  173 defined, 69 rendered to the glossary and 104 into document bodies. So
   D9's "single definition site becomes structurally impossible to violate"
   holds for the glossary-placed only. Nick's leaning is body-canonical for
   the 231, not yet ruled.
