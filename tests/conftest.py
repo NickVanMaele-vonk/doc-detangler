@@ -35,6 +35,7 @@ concepts = "concepts"
 registers = "registers"
 samples = "samples"
 graph = "concept-graph.yaml"
+glossary = "glossary.md"
 
 [documents]
 U = "samples/mini.md"

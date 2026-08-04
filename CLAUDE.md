@@ -36,10 +36,12 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/pip install -e ".[dev]"      # editable install, pytest + ruff
 .venv/bin/python -m pytest             # tests/
 .venv/bin/ruff check .                 # lint
-.venv/bin/detangle validate            # built; `generate` follows (ADR-001 D4)
+.venv/bin/detangle validate            # all three commands built (ADR-001 D4)
 .venv/bin/detangle graph               # built; rewrites concept-graph.yaml
 .venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
 .venv/bin/detangle graph --impact <id> # what depends on this definition
+.venv/bin/detangle generate            # built; rewrites glossary.md
+.venv/bin/detangle generate --check    # regenerate-and-compare guard, for CI
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
@@ -190,8 +192,9 @@ positioned and flagged when the bodies exist in Phase 5).
 **Step 3.9 is closed** (2026-08-03):
 `registers/waivers.yaml` is built and `detangle validate` exits `0` on
 `main`, holding its three source-defect `definition-token` findings as
-accepted debt. `detangle validate` and `detangle graph` are built;
-`generate` is the remaining command (ADR-001 D4).
+accepted debt. `detangle validate`, `detangle graph` and `detangle generate` are all built
+(ADR-001 D4); `generate` writes `glossary.md` only, with `index.md` and
+`concept-graph.mmd` left to step 3.6.
 `concept-graph.yaml` is generated and committed — dependency edges and the
 cycle roll-up now, usage edges when the bodies exist in Phase 5. `concepts/`
 holds 359 canonical records; `registers/` holds `cycles.yaml`,
@@ -249,6 +252,45 @@ view-generator — as well as delivering ontology content (records, edges).
 This supersedes the earlier split in which Nick built the view-generator
 himself.
 
+## Session state — 2026-08-04 (`detangle generate`, step 3.5 built)
+
+**Read this first.** `detangle generate [--check]` is built and `glossary.md`
+is generated and committed: 155 entries in the graph's topological order, 78
+defined, 77 rendered with an explicit "not defined in the corpus" note, a
+`<!-- concept:<id> -->` marker before every heading, and a sources table
+binding each of the five corpus documents to the git blob its spans were
+verified against. All seven approved design points are implemented except
+point 6, and the reason is worth carrying:
+
+- **The fourth CI gate is held back.** Point 2 makes the overview a marked
+  gap *and a finding*, so a clean `generate` run exits `1`. Adding
+  `generate --check` to `ci.yml` now would put a permanently red job on
+  `main`, which trains reviewers to ignore CI. It lands when the finding is
+  dispositioned — the overview gets written, or it gets a waiver.
+- **Waiving it needs one small change first.** `stale_findings` is called on
+  every full `validate` run and flags any entry that matched nothing, so a
+  waiver for a `generate`-raised finding would make `validate` report
+  `waiver-stale`. Scoping staleness to the checks the running command owns
+  fixes it — and fixes the same latent bug for `validate --no-tables`. Not
+  built: it is a design decision, and the design is Nick's.
+- **Where the overview text lives is open.** It cannot be typed into
+  `glossary.md`, which is regenerated and byte-compared. A register, a
+  front-matter file, or a record — Nick's call. The placeholder block says so
+  rather than telling a reader to edit a generated file.
+
+Two things were rendered beyond the seven points, both required by rubric
+criteria the glossary is itself subject to: **aliases** per entry (criterion
+3) and a **generated bridging marker** on the accepted cycle's forward
+reference (criterion 1 clause 2, citing `registers/cycles.yaml`). Forward
+references are computed from the rendered order, not assumed from the cycle
+register — which confirmed C9 limb 2 empirically: no glossary definition
+depends on a term outside the glossary, so that one cycle edge is the file's
+only forward reference.
+
+Definitions render as **one physical line each, unwrapped**. Wrapping reflows
+a paragraph when one word changes; this file exists to be commented on, and a
+one-line diff points at one record.
+
 ## Session state — 2026-08-03 (waiver register, C9 limb 2, generation design)
 
 **Read this first.** Everything below is merged and green on `main`; the
@@ -270,10 +312,8 @@ counted. So `used_in: [U]` with `placement: glossary` is correct, not a bug.
 Never hand-set `placement` — run `detangle validate`, which names the expected
 value.
 
-**The next task is to build `detangle generate` for step 3.5.** The design is
-approved in full (plan step 3.5, seven numbered points) and **no code is
-written**; Nick approved the design and stopped for the day on 2026-08-03
-without work starting. Nothing blocks it.
+**`detangle generate` was the next task and is now built** — see the
+2026-08-04 section above.
 
 **Open questions from this session, none blocking 3.5:**
 
