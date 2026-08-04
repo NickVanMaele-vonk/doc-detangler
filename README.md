@@ -66,8 +66,8 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*; `generate` writes `glossary.md` only — `index.md` and `concept-graph.mmd` await the document bodies and a scoping decision (steps 3.6–3.7) |
-| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. `detangle generate --check` becomes a fourth gate once the overview gap is dispositioned |
+| `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
+| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
@@ -84,14 +84,17 @@ Phases 1, 2 and 4 complete. Rubric approved (`plan/definition-of-done.md`);
 research memo delivered (`plan/research-memo.md`) across three rounds. The
 gating architecture decisions were signed off 2026-07-22: runtime is
 **Python** (D7), and the definition layer is **ontology-first** (D9) —
-structured concept records are the source of truth, with
-`glossary.md`/`index.md`/`concept-graph.mmd` generated as anchored views.
+structured concept records are the source of truth for the *ontology*:
+identity, placement, provenance and dependency edges. Nick's ruling of
+2026-08-04 moved the definition **prose** out to the documents that define it,
+`glossary.md` included; `index.md` remains a generated view, and the Mermaid
+render is produced on demand rather than committed.
 Phase 4 closed 2026-07-30 with `plan/adr-001-form-factor.md`: the deliverable
 is a Python package **`detangle`** with a CLI, and the Claude-skill wrapper is
 deferred to Phase 9.2.
 
-Phase 3 data is essentially complete — **358 concept records** under
-`concepts/` with 404 `depends_on` edges, every cycle and definition conflict
+Phase 3 data is essentially complete — **359 concept records** under
+`concepts/` with 402 `depends_on` edges, every cycle and definition conflict
 dispositioned, and the criterion-3 reference terms and cycle rulings in
 `registers/`.
 
@@ -101,14 +104,17 @@ integrity checks. **`detangle graph`** builds the concept graph from the
 records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
 the derived `concept-graph.yaml` — reading order, cycles, orphans, dead
 entries, and reachability queries for impact analysis. **`detangle generate`**
-renders `glossary.md` from the records in that graph's topological order, with
-a `<!-- concept:<id> -->` marker before every entry so a comment on the
-generated file resolves to the record behind it (D9).
+seeded `glossary.md` from the records in that graph's topological order, with
+a `<!-- concept:<id> -->` marker before every entry so a comment resolves to
+the record behind it (D9).
 
-`generate` writes the glossary and nothing else yet: `index.md` needs the
-document bodies, which carry the definition site of 94 defined terms
-(criterion 4). The Mermaid render is no longer a file at all — it became an
-on-demand command, since 359 nodes never made a readable diagram.
+That file is now the starting point rather than the output: from 2026-08-04
+`glossary.md` is the fourth **editable** document, its 78 definitions
+canonical in the file and mirrored back into the records. `index.md` still
+needs the document bodies, which carry the definition site of the other 94
+defined terms (criterion 4). The Mermaid render is no longer a file at all —
+it became an on-demand command, since 359 nodes never made a readable
+diagram.
 
 ## Running it
 
