@@ -74,7 +74,8 @@ If one term appears in more than one input document, then:
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
-| `concept-graph.mmd` | Mermaid render, generated from `concept-graph.yaml`; displays natively in Azure DevOps/GitHub *(Phase 3 — pending)* |
+| *(no `concept-graph.mmd`)* | The Mermaid render is produced **on demand** — `detangle graph --mmd <id>` prints one concept's neighbourhood, to paste into a PR comment where GitHub and Azure DevOps render it natively. A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)* |
+| `state/notices.md` | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts. Generated, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file never blocks a PR *(Nick, 2026-08-04)* |
 | `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
 
 ## Status
@@ -106,8 +107,8 @@ generated file resolves to the record behind it (D9).
 
 `generate` writes the glossary and nothing else yet: `index.md` needs the
 document bodies, which carry the definition site of 94 defined terms
-(criterion 4), and `concept-graph.mmd` needs a scoping decision before 359
-nodes are drawn as one diagram. Both are step 3.6.
+(criterion 4). The Mermaid render is no longer a file at all — it became an
+on-demand command, since 359 nodes never made a readable diagram.
 
 ## Running it
 

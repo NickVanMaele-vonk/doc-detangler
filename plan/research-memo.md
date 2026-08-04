@@ -656,7 +656,11 @@ and git-reviewable (C6). Therefore:
   conflicts across versions, and "edit one definition" = change one flat field.
 - **Algorithms:** **NetworkX** in memory at runtime (topo sort, `simple_cycles`,
   reachability) — every query a graph DB would give, no server.
-- **Views:** generated `glossary.md` / `index.md` / `concept-graph.mmd`.
+- **Views:** generated `index.md`; `glossary.md` authored from 2026-08-04
+  (D9 amendment); the Mermaid render produced on demand per concept by
+  `detangle graph --mmd <id>` rather than committed as a whole-set file
+  (Nick, 2026-08-04 — 359 nodes is a tangle, one concept's neighbourhood
+  is two or three boxes).
 - **Rejected as the truth store:** *vector DB* — wrong tool; embeddings are
   fuzzy/lossy and cannot topologically sort or guarantee defined-before-use
   (legitimate only as an *extraction-time* synonym/duplicate helper in Phase 3).
