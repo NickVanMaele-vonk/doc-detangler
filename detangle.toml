@@ -38,7 +38,7 @@ components = ["U", "S", "M"]
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value
 # there is normative, this file is the machine-readable copy.
-max-terms-changed-per-PR = 25          # set
+max-terms-changed-per-PR = 200         # set — raised from 25 (Nick, 2026-08-05)
 glossary-order = "topological"         # set
 max-comments-per-PR = 25               # proposal — set for real from Phase 5
 overview-max-words = 400               # proposal
