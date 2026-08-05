@@ -76,7 +76,7 @@ If one term appears in more than one input document, then:
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
 | *(no `concept-graph.mmd`)* | The Mermaid render is produced **on demand** — `detangle graph --mmd <id>` prints one concept's neighbourhood, to paste into a PR comment where GitHub and Azure DevOps render it natively. A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)* |
 | `state/notices.md` | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts. Generated, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file never blocks a PR *(Nick, 2026-08-04)* |
-| `eval/` | Test inputs and golden reference outputs *(Phase 5 — pending)* |
+| `eval/` | Test inputs and golden reference outputs. `eval/README.md` designates the three shortened blueprints as test inputs, pinned to their git blobs, and names UCE as the golden target *(step 5.1 — done; the golden itself, step 5.2, is pending)* |
 
 ## Status
 
