@@ -40,16 +40,18 @@ jobs:
       # The test fixtures build a real git repo and shell out to real pandoc,
       # because stubbing either would test the stub (tests/conftest.py).
       - name: Install pandoc
-        # A stalled mirror hangs the default six-hour job timeout and someone
-        # has to cancel by hand — it happened on PR #93. Abort a download that
-        # goes quiet for 30s, retry three times, and cap the whole step at
-        # five minutes so a stall fails fast instead of waiting for a human.
+        # Pinned from GitHub's release CDN, not apt (backlog B-3's CI half,
+        # Nick 2026-08-05): Ubuntu mirror stalls hung this step on PR #93 and
+        # again on PR #102. The pin was verified before switching, as B-3
+        # demands: upstream 3.1.3 renders all 359 records to the same hashes
+        # as the Debian 3.1.3+ds-2 the fixtures were computed under —
+        # `detangle validate` runs clean under both. Bumping this version is
+        # a provenance event, not an upgrade: see B-3 before touching it.
+        uses: r-lib/actions/setup-pandoc@v2
         timeout-minutes: 5
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            -o Acquire::Retries=3 -o Acquire::http::Timeout=30 pandoc
-          pandoc --version | head -1
+        with:
+          pandoc-version: "3.1.3"
+      - run: pandoc --version | head -1
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: python -m pytest
@@ -72,16 +74,18 @@ jobs:
       # contract. The version is echoed because a provenance failure that
       # appears out of nowhere is almost certainly this.
       - name: Install pandoc
-        # A stalled mirror hangs the default six-hour job timeout and someone
-        # has to cancel by hand — it happened on PR #93. Abort a download that
-        # goes quiet for 30s, retry three times, and cap the whole step at
-        # five minutes so a stall fails fast instead of waiting for a human.
+        # Pinned from GitHub's release CDN, not apt (backlog B-3's CI half,
+        # Nick 2026-08-05): Ubuntu mirror stalls hung this step on PR #93 and
+        # again on PR #102. The pin was verified before switching, as B-3
+        # demands: upstream 3.1.3 renders all 359 records to the same hashes
+        # as the Debian 3.1.3+ds-2 the fixtures were computed under —
+        # `detangle validate` runs clean under both. Bumping this version is
+        # a provenance event, not an upgrade: see B-3 before touching it.
+        uses: r-lib/actions/setup-pandoc@v2
         timeout-minutes: 5
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            -o Acquire::Retries=3 -o Acquire::http::Timeout=30 pandoc
-          pandoc --version | head -1
+        with:
+          pandoc-version: "3.1.3"
+      - run: pandoc --version | head -1
       - run: pip install -e .
       # Do the canonical records still tell the truth about `samples/`? Spans,
       # blob ids, verbatim definition runs, conflict quotes, links, edge
