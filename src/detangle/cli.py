@@ -13,12 +13,13 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, tables, views
+from . import __version__, graph, registers, tables, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_USAGE, UsageError, report
 from .graph import emit
 from .records import BlockIndex, load_records
 from .records import checks as record_checks
+from .records import load as records_load
 from .registers import load_cycles, load_waivers
 
 
@@ -59,7 +60,11 @@ def cmd_validate(args: argparse.Namespace) -> int:
         findings.extend(record_checks.check_definition_wording(rec, index, min_run))
         findings.extend(record_checks.check_conflict_quotes(rec, index))
 
+    # The checks this run owns, composed rather than assumed: a waiver for a
+    # check nobody ran here must not be judged by it (registers.stale_findings).
+    ran = record_checks.CHECKS | records_load.CHECKS | registers.WAIVER_CHECKS
     if not args.no_tables:
+        ran |= tables.CHECKS
         globs = config.option("validate", "table-globs", [])
         findings.extend(tables.check_files(root, globs))
 
@@ -67,7 +72,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     live, waived = waivers.partition(findings)
     live.extend(register_findings)
     if not args.paths:
-        live.extend(waivers.stale_findings(waived))
+        live.extend(waivers.stale_findings(waived, ran))
 
     summary = {
         "records": len(records),

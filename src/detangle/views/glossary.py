@@ -45,6 +45,11 @@ from ..graph import ConceptGraph
 
 GLOSSARY_PLACEMENT = "glossary"
 
+#: See ``records.checks.CHECKS``.
+CHECKS = frozenset(
+    {"glossary-drift", "glossary-missing", "overview-gap", "sources-blob-skew"}
+)
+
 BANNER = """\
 <!--
 SEEDED by `detangle generate` (plan step 3.5). Not a standing generated view.

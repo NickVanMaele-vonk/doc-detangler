@@ -14,6 +14,9 @@ import yaml
 from ..findings import Finding, error
 from .build import ConceptGraph
 
+#: See ``records.checks.CHECKS``.
+CHECKS = frozenset({"graph-drift", "graph-missing"})
+
 SCHEMA = 1
 
 HEADER = """\

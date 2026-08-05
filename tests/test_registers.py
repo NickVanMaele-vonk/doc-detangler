@@ -198,3 +198,48 @@ def test_the_text_report_names_the_disposition(mini_repo, capsys):
     assert "waived (1) — accepted debt, not blocking" in out
     assert "waived: source-defect (Nick, B-1, review by 2026-12-31)" in out
     assert "clean — no findings" in out
+
+
+def test_a_waiver_for_a_check_this_command_never_runs_is_not_stale(
+    mini_repo, capsys
+):
+    """`validate` must not read "I did not look" as "it is not there".
+
+    `overview-gap` is raised by `generate`. Before the check set was scoped,
+    this waiver was reported stale on every `validate` run, telling a human to
+    delete an entry they still needed — and `waiver-stale` is a finding, so
+    the false alarm blocked a required gate.
+    """
+    mini_repo.write_record()
+    mini_repo.write_waivers(
+        waiver(
+            id="overview-deferred",
+            check="overview-gap",
+            where="glossary.md:overview",
+        )
+    )
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []
+
+
+def test_a_waiver_for_a_check_this_command_does_run_is_still_stale(
+    mini_repo, capsys
+):
+    """The scoping narrows the rule; it does not switch it off."""
+    mini_repo.write_record()
+    mini_repo.write_waivers(waiver())
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_FINDINGS
+    assert payload["findings"][0]["check"] == "waiver-stale"
+
+
+def test_no_tables_does_not_make_a_table_waiver_stale(mini_repo, capsys):
+    """The same hole, one flag over: --no-tables skips its own checks."""
+    mini_repo.write_record()
+    mini_repo.write_waivers(
+        waiver(id="table-deferred", check="table-cell-count", where="README.md:12")
+    )
+    code, payload = run(mini_repo, "--no-tables", capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []

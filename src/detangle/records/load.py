@@ -16,6 +16,9 @@ import yaml
 from ..findings import Finding, error
 
 # concepts/README.md §Record schema, in schema order.
+#: See ``records.checks.CHECKS``.
+CHECKS = frozenset({"yaml-parse"})
+
 REQUIRED_FIELDS = (
     "id",
     "term",
