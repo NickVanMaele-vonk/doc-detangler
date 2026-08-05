@@ -53,9 +53,10 @@ M = "MCL"
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value
 # there is normative, this file is the machine-readable copy.
-max-terms-changed-per-PR = 200         # set — raised from 25 (Nick, 2026-08-05)
+max-terms-changed-per-PR = 200         # set — raised from 25 (Nick, 2026-08-05); confirmed by the 5.3 baseline
 glossary-order = "topological"         # set
-max-comments-per-PR = 25               # proposal — set for real from Phase 5
+max-comments-per-PR = 25               # set — 5.3 baseline: 9 clusters measured for a whole-document run
+low-confidence-threshold = 0.80        # set, provisional — 5.3 baseline; MUST re-baseline at step 6.2
 overview-max-words = 400               # proposal
 false-positive-tolerance = "none"
 claim-granularity = "one claim per source sentence; one claim per table cell carrying an independent assertion"
@@ -85,8 +86,9 @@ table-globs = [
     "work/**/*.md",
 ]
 
-# Deliberately absent, because definition-of-done.md has not set them and the
-# working agreement forbids inventing a value:
-#   param-low-confidence-threshold  — "to be set from Phase 5"
-# Add them here when the rubric sets them; until then any command that needs
-# one exits 2 rather than proceeding on a guess.
+# Nothing is deliberately absent any more: param-low-confidence-threshold,
+# the last unset parameter, was set (provisionally) from the 5.3 baseline on
+# 2026-08-05 — see eval/review-load.md and the rubric row for the mandatory
+# re-baseline at step 6.2. The rule stands for any future parameter: a value
+# the rubric has not set is absent here, and a command that needs it exits 2
+# rather than proceeding on a guess.

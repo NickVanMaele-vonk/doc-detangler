@@ -5,7 +5,10 @@ criterion 9 (continuous-change coherence) and its supporting scope,
 parameter, and criteria amendments added per decision D10, at Nick's
 direction; new parameter values remain proposals until set.
 **Phase:** 1.1 — complete; extended by D10
-**Last updated:** 2026-08-05 — two changes this day: (1)
+**Last updated:** 2026-08-05 — three changes this day: (3) the 5.3
+review-load baseline (`eval/review-load.md`) set `param-max-comments-per-PR`
+(25) and `param-low-confidence-threshold` (0.80 provisional, re-baseline at
+6.2), and confirmed `param-max-terms-changed-per-PR` (200). Earlier: (1)
 `param-max-terms-changed-per-PR` raised from 25 to 200 (Nick); (2) **two
 input sets** (Nick) — the detangle set and the read-only reference set are
 defined in Scope, the placement count and orphan measure are scoped to the
@@ -127,13 +130,13 @@ the rubric can be signed off without silently pre-committing to numbers.
 
 | Parameter | Value | Note |
 |-----------|-------|------|
-| `param-max-terms-changed-per-PR` | **200** (set) | Maximum terms a single PR may change. See 8b. **Raised from 25 to 200 on 2026-08-05** (Nick): the from-scratch build changes terms in far larger batches than steady state — the golden output for `U` alone is in scope for 155 terms — and a cap sized for steady-state edits would split that into seven PRs whose intermediate states leave terms defined twice or not at all, which 8b itself calls a failure. 5.3 still measures against it. |
-| `param-max-comments-per-PR` | 25 | Maximum blocking PR comments; set for real from Phase 5 measurements. |
+| `param-max-terms-changed-per-PR` | **200** (set) | Maximum terms a single PR may change. See 8b. **Raised from 25 to 200 on 2026-08-05** (Nick): the from-scratch build changes terms in far larger batches than steady state — the golden output for `U` alone is in scope for 155 terms — and a cap sized for steady-state edits would split that into seven PRs whose intermediate states leave terms defined twice or not at all, which 8b itself calls a failure. **Confirmed by the 5.3 baseline** (`eval/review-load.md`): 35 measured for the `U` golden; the glossary at 155 is the largest unit the build needs. |
+| `param-max-comments-per-PR` | **25** (set) | Maximum blocking PR comments; a run producing more does not open a PR — it fails and reports (8c). **Set 2026-08-05 from the 5.3 baseline** (`eval/review-load.md`): the `U` golden produced 9 aggregated clusters for a whole-document restructure, and the term cap forces PRs to roughly per-document scope, so 25 gives every real run 2.5–3× headroom. |
 | `param-overview-max-words` | 400 | Maximum length of the required opening overview. |
 | `param-claim-granularity` | one claim per source sentence; one claim per table cell carrying an independent assertion | Governs criterion 4. |
 | `param-false-positive-tolerance` | none | Every flag needs a disposition, but "false positive" is a valid disposition. |
 | `param-manual-reviewer` | Nick, optionally Ivo for domain accuracy | Adjudicator for the manual criteria. |
-| `param-low-confidence-threshold` | to be set from Phase 5 | This dial, and contradiction frequency, are the only unbounded contributors to comment volume. |
+| `param-low-confidence-threshold` | **0.80** (set, provisional — re-baseline at 6.2) | This dial, and contradiction frequency, are the only unbounded contributors to comment volume. **Set 2026-08-05 from the 5.3 baseline**, with the caveat stated there: the hand-produced golden yields the low-confidence *rate* (2 of 289 claims, both source damage), not a machine confidence distribution, so 0.80 on the Phase 7 [0, 1] mapping-confidence scale is provisional by construction and **must be re-baselined at step 6.2** against the prototype's first real distribution. |
 | `param-glossary-order` | **topological** (set) | `glossary.md` is ordered by topological sort throughout. Alphabetical lookup lives in `index.md`, not in the glossary. |
 | `param-full-verify-cadence` | every release tag | How often the full C1/C2/C7 harness runs in steady state (the per-PR drift lint always runs). Proposal; set for real from steady-state experience (D10). |
 

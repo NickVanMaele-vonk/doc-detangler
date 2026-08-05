@@ -288,19 +288,29 @@ to cost nothing" was wrong** (corrected 2026-08-05): 2 records cite `A` and
 17 cite `P` under `source:` — `mts-spa` is defined entirely from `A` — and
 10 more cite `P` in `conflict:` blocks, so the fabrication check needs the
 reference set available, and lifted definitions trace outside the test
-inputs by design. The golden
-target for 5.2 is **`U`**: smallest at 3,835 words and first in reading order.
-Carry one caveat into 5.3 — smallest by words is not lightest by term load, as
-`U` holds 82 document-placed records (35 defined) against `S` 63 (32) and `M`
-59 (27), so review-load figures must not be scaled to `S` and `M` on word count
-alone. **Pinned now, re-baselined later** (Nick's ruling): the backlog B-1
-source correction that fixes the three waived `definition-token` hyphen defects
-rewrites all three blobs and voids whatever golden exists then, and Phase 5 is
-not held for it; the re-baseline updates the blob column in the same PR as the
-correction. Next is **step 5.2**, the golden triple — restructured document,
-glossary slice, index slice — which needs a design proposal before anything is
-written, because how much of a human-approved golden may be AI-drafted is a
-criterion-7 question.
+inputs by design. **Phase 5 closed 2026-08-05.** Step 5.2's golden triple for `U` is approved
+and merged (PR #99, on the reorder plan of PRs #93/#96): `eval/golden/uce.md`
+(six sections plus overview and shared-terms section, 35 record-verbatim
+definition blocks, stamped `sec:`/`concept:` markers), the 73-entry glossary
+slice (zero forward references), the 155-term index slice (84 marked
+undefined), and the four 8f artifacts. Zero orphan definitions were drafted
+(step 3.3 was the exhaustive assembly pass); the overview is the only
+Category C text. None of the 13 `notes` staging-post clauses belongs to `U` —
+all are glossary-placed. Step 5.3 (`eval/review-load.md`) measured 289
+claims, 35 terms changed, 84 orphans and 9 comment clusters, confirmed the
+term cap (200), set `param-max-comments-per-PR` (25) and set
+`param-low-confidence-threshold` (0.80, **provisional — mandatory
+re-baseline at 6.2** against the prototype's first real confidence
+distribution). Two approved deviations to remember from `exceptions.md`: the
+golden carries no generated navigation (first-use links wait for their
+generator), and the orphan roster lives in the exceptions list rather than
+as waiver entries (an unmatched waiver would trip `waiver-stale`).
+**Pinned now, re-baselined later** (Nick's ruling): the backlog B-1 source
+correction that fixes the three waived `definition-token` hyphen defects
+rewrites all three blobs and voids the golden; the re-baseline updates the
+blob column in the same PR as the correction. Next is **Phase 6**: the
+prototype — smallest end-to-end run on one document, compared to this
+golden (6.2), which also re-baselines the low-confidence threshold.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line

@@ -13,7 +13,8 @@ def test_a_set_parameter_is_read_from_the_file(mini_repo):
 
 
 def test_an_unset_parameter_raises_rather_than_defaulting(mini_repo):
-    """param-low-confidence-threshold is "to be set from Phase 5"."""
+    """The fixture config deliberately omits this parameter (the real one
+    sets it since 5.3); asking for an absent value must raise, not guess."""
     config = Config.load(mini_repo.root)
     with pytest.raises(UsageError, match="low-confidence-threshold"):
         config.param("param-low-confidence-threshold")
