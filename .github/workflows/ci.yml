@@ -31,8 +31,8 @@ jobs:
     name: tests and lint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -40,9 +40,15 @@ jobs:
       # The test fixtures build a real git repo and shell out to real pandoc,
       # because stubbing either would test the stub (tests/conftest.py).
       - name: Install pandoc
+        # A stalled mirror hangs the default six-hour job timeout and someone
+        # has to cancel by hand — it happened on PR #93. Abort a download that
+        # goes quiet for 30s, retry three times, and cap the whole step at
+        # five minutes so a stall fails fast instead of waiting for a human.
+        timeout-minutes: 5
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends pandoc
+          sudo apt-get install -y --no-install-recommends \
+            -o Acquire::Retries=3 -o Acquire::http::Timeout=30 pandoc
           pandoc --version | head -1
       - run: pip install -e ".[dev]"
       - run: ruff check .
@@ -55,8 +61,8 @@ jobs:
     name: detangle validate
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -66,9 +72,15 @@ jobs:
       # contract. The version is echoed because a provenance failure that
       # appears out of nowhere is almost certainly this.
       - name: Install pandoc
+        # A stalled mirror hangs the default six-hour job timeout and someone
+        # has to cancel by hand — it happened on PR #93. Abort a download that
+        # goes quiet for 30s, retry three times, and cap the whole step at
+        # five minutes so a stall fails fast instead of waiting for a human.
+        timeout-minutes: 5
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends pandoc
+          sudo apt-get install -y --no-install-recommends \
+            -o Acquire::Retries=3 -o Acquire::http::Timeout=30 pandoc
           pandoc --version | head -1
       - run: pip install -e .
       # Do the canonical records still tell the truth about `samples/`? Spans,
@@ -80,8 +92,8 @@ jobs:
     name: detangle graph --check
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
