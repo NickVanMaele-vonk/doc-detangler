@@ -193,7 +193,11 @@ Both on 2026-08-05, and both applied above.
 
 ## 6. Still open
 
-1. **`notes` staging-post clauses.** Corpus wording parked in records during
-   the ISO 704 narrowing pass must land in `uce.md` prose beside its
-   definition block, or it is an omission under criterion 4. Which of the
-   thirteen belong to `U` is resolved in stage B, and needs no ruling.
+*Nothing.* The one item this section held is resolved:
+
+1. **`notes` staging-post clauses — resolved in stage B (2026-08-05):
+   none belongs to `U`.** All thirteen records holding narrowed corpus
+   wording in `notes` are glossary-placed, so no clause lands in `uce.md`
+   prose. They land beside their glossary definitions when the glossary's
+   body work happens, and beside `S`/`M` definitions in those goldens.
+   Measurement in `eval/golden/term-changes.md`.
