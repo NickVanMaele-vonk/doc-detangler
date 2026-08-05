@@ -217,6 +217,20 @@ all of them — is a fourth place terms get used.
 **excluded from the placement count** (Nick's ruling 2026-07-22) — an `(A)`
 flag is informational only.
 
+**Two input sets (Nick, 2026-08-05).** The **detangle set** (`components` in
+`detangle.toml [documents]` — U/S/M today) is what gets restructured, and it
+is the only set that counts for placement, orphan measurement, omission
+checking and the verbatim-token diff. The **reference set** (`references` —
+A and P today, plus future side documents business users write) is
+read-only: never modified, never restructured, never stamped, never
+counted — but citable for provenance, and **a definition found only in a
+reference document is lifted as the definition**, with a real span into the
+reference file. The term keeps its `orphan` flag after the lift: the flag
+measures the detangle set. `mts-spa` (defined entirely from A, `flags:
+[orphan, A]`) is the live example. Adding a reference document is a config
+edit, never a code change. See research-memo §Two input sets; the old
+per-document A/P rulings are instances of this rule.
+
 **Two operating modes (D10).** The one-shot detangle run (Phases 5–9) and the
 steady-state drift lint that guards every later docs PR (Phase 10). Section
 identity is two-layer: tool-stamped `<!-- sec:… -->` markers for identity,
@@ -269,9 +283,12 @@ sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
 **Phase 5 has started — step 5.1 is done (PR #90, 2026-08-04).**
 `eval/README.md` designates the three shortened blueprints as the test inputs,
 each pinned to the git blob it carried at commit `a088ee9`; `A`, `P` and the
-two CSV fixtures are excluded, and that exclusion is verified rather than
-assumed — **all 359 records draw their `source` spans from U/S/M only**, so no
-definition in the set traces to a document outside the test inputs. The golden
+two CSV fixtures are excluded. **The claim that this exclusion was "verified
+to cost nothing" was wrong** (corrected 2026-08-05): 2 records cite `A` and
+17 cite `P` under `source:` — `mts-spa` is defined entirely from `A` — and
+10 more cite `P` in `conflict:` blocks, so the fabrication check needs the
+reference set available, and lifted definitions trace outside the test
+inputs by design. The golden
 target for 5.2 is **`U`**: smallest at 3,835 words and first in reading order.
 Carry one caveat into 5.3 — smallest by words is not lightest by term load, as
 `U` holds 82 document-placed records (35 defined) against `S` 63 (32) and `M`
@@ -697,7 +714,10 @@ Established across PRs #17–#35; follow them so records stay uniform.
   lightly stitched; pandoc-normalized punctuation (en-dashes, ≥, σ) is the
   house form. A term that is used but never defined gets
   `definition: null` + `flags: [orphan]` — do not promote extraction
-  glosses or (P)-only expansions into definitions. **"Lightly stitched"
+  glosses or (P)-only expansions into definitions. **Narrowed, not
+  repealed, 2026-08-05:** an expansion or gloss is still not a definition,
+  but a genuine definition in a reference document is lifted with its
+  provenance span, and the `orphan` flag survives the lift. **"Lightly stitched"
   means ordinary English is free** (Nick, 2026-07-30): connective and
   descriptive words — *abuse*, *pattern*, *identified*, *catalogued* —
   are standard English, not project terms; they need no corpus

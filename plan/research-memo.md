@@ -588,7 +588,7 @@ actually implemented.
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
-| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition. All 172 definitions become body-canonical, `glossary.md` included — it becomes the fourth editable document rather than a generated view — with the record's `definition` field a derived copy everywhere, conditional on generated start/end markers making the lift deterministic. The record still owns the ontology: identity, placement, provenance, `depends_on`. See §D9 amendment |
+| D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition. All 172 definitions become body-canonical, `glossary.md` included — it becomes the fourth editable document rather than a generated view — with the record's `definition` field a derived copy everywhere, conditional on generated start/end markers making the lift deterministic. The record still owns the ontology: identity, placement, provenance, `depends_on`. See §D9 amendment. **Amended 2026-08-05:** two input sets — the read-only reference set may supply definitions, lifted with provenance; see §Two input sets |
 | D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10. **Element 4 reaffirmed 2026-08-04:** `depends_on` stays canonical; a body edit proposes edge changes and waits for a human ruling |
 
 ### D2 — SKOS model, Mermaid-compatible rendering
@@ -936,6 +936,72 @@ would never see it because it opens documents, not records. **Those clauses
 land in document prose beside their definition block when Phase 5 writes the
 body** (Nick, 2026-08-04). Their `notes` entries are authoring instructions
 in the meantime.
+
+#### Two input sets — detangle set and reference set (Nick, 2026-08-05)
+
+**The ruling.** The tool accepts two input sets. The **detangle set** is the
+documents being restructured — the three component blueprints today. The
+**reference set** is read-only documents supplying definitions and context —
+the full Analytical Layer blueprint `(A)` and the BC-17 prototype spec `(P)`
+today, and over time the smaller side documents business users write.
+Reference documents are never modified, never restructured, never stamped
+with markers, and never produce an output document. They never count toward
+placement (C9) or the orphan measure. But **a definition found only in a
+reference document is lifted as the definition**: a real provenance span
+(`para_hash` + git blob) into the reference file, C2 satisfied because the
+business wrote the wording. The term keeps a flag saying the detangle set
+itself never defines it, so the convolutedness measure survives the lift.
+Both sets are declared in `detangle.toml [documents]` (`components` and
+`references`); adding a side document is a config edit, never a code change.
+
+**What this generalizes.** The per-document rulings of 2026-07-22 (`A` is
+excluded from the placement count) and 2026-07-26 (`P` never counts;
+`(P)`-only terms stay candidate rows) become instances of a rule, and
+`concepts/mts-spa.yaml` — defined entirely from `(A)`, full provenance,
+`flags: [orphan, A]` — turns out to have been the first lift, legitimized by
+`check_invariants` all along. What changes is that the old prohibition "do
+not promote `(P)`-only expansions into definitions" is **narrowed, not
+repealed**: an expansion or gloss is still not a definition; a genuine
+definition in a reference document now is one.
+
+**A third provenance axis.** The 2026-08-04 section above established two
+axes: anchoring (is there a source span?) and authorship. This ruling adds a
+third, carried by the span itself rather than a new field: **which input set
+the span points into**. A detangle-set span supports placement, orphan
+accounting and the criterion-4/5 checks; a reference-set span supports only
+the definition it anchors. No schema change is needed — the set membership
+of `span.doc` is read from `detangle.toml`.
+
+**Canonical home of a lifted definition.** Once lifted into the output set,
+the output-set definition site owns it, like every other definition under
+the D9 amendment — there is still no exception to remember. The span into
+the reference file is **historical provenance**: it records where the
+wording came from at lift time, per the standing principle that corpus
+provenance is a fact, not a status. A later edit to the lifted definition
+demotes the provenance claim down the criterion-7 ladder exactly as for any
+Category A/B text; a later change to the reference document itself surfaces
+as a stale blob and re-opens verification of the definitions lifted from it.
+Reference files are never stamped, so their spans stay on heading-path +
+hash anchoring permanently.
+
+**Scope of the D10 edit contract.** "Humans and AI agents may edit bodies
+directly" applies to the detangle set and the glossary only. The reference
+set sits outside the edit contract: the tool neither edits it nor guards it,
+and business users go on writing those documents by whatever process they
+already use.
+
+**Correction recorded with this ruling.** Step 5.1 and `eval/README.md`
+claimed no record cites `A` or `P` for provenance. Measured against the
+records, that was false: 2 records cite `A` and 17 cite `P` under
+`source:`, and 10 more cite `P` in `conflict:` blocks. The claim is
+corrected in both places in the same PR as this section.
+
+**Known exposure, parked.** The `definition-token` check tests a definition
+against the union of every anchored block the record cites, so a reference
+span in a mixed-provenance record could vouch for wording claimed against
+the detangle set. Per-clause provenance was considered and rejected on
+2026-08-04 ("the definition block is the definitional boundary"); the
+exposure is recorded in `plan/backlog.md` rather than reopening that ruling.
 
 ### D10 — continuous change / steady-state operation (adopted 2026-07-23)
 

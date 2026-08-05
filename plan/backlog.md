@@ -226,35 +226,65 @@ and of each other.
 
 ---
 
-## B-4 — `glossary.md`'s sources table lists documents no record draws on
+## B-4 — Label the sources table rows by input set
 
 **Raised:** 2026-08-04 (assistant), while verifying the Phase 5 test-input
-exclusions for step 5.1.
+exclusions for step 5.1. **Rewritten 2026-08-05:** the original entry rested
+on a premise that measurement disproved.
 
-**What is wrong.** The generated sources table in `glossary.md` is introduced
-as "Every source document the entries below draw on, each bound to the git blob
-its records were verified against", and then lists all five corpus documents —
-including `samples/blueprint-analytical-layer.md` and
-`samples/prototype-BC17.md`. Neither is a provenance source for anything:
-**all 359 records draw their `source` spans from U, S and M only.** The
-generator lists every document in `detangle.toml [documents]` rather than the
-documents the rendered entries actually cite.
+**The original complaint, and why it was wrong twice.** The entry claimed
+the sources table in `glossary.md` lists documents no record draws on,
+because "all 359 records draw their `source` spans from U, S and M only",
+and blamed the generator for listing the config map instead of the cited
+documents. Both halves are false. The generator already computes the table
+from the spans of the records it renders (`views/glossary.py::_sources`).
+And the rendered entries genuinely cite all five documents — 2 records cite
+`A` and 17 cite `P` under `source:` (`mts-spa`'s definition comes entirely
+from `A`). The table was telling the truth; the surprise was the false
+belief about the records, which also sat in `eval/README.md` and plan step
+5.1 and is corrected there.
 
-**Why it matters more than it looks.** The table is the glossary's answer to
-the rubric's source-version binding — "`glossary.md` records the version of
-every source it draws on". A reader auditing provenance is told to check two
-blobs that contribute nothing, and a future reader may reasonably infer that
-`A` and `P` content is present in the set. It also mis-states the position on
-`P` specifically, which by the 2026-07-26 ruling never counts.
+**What is still worth doing.** Under the two-input-set ruling (Nick,
+2026-08-05 — see research-memo §Two input sets), the table should say which
+role each document plays: label each row `component` or `reference`, read
+from `detangle.toml [documents]`. A reader auditing provenance then sees
+that `A` and `P` supply lifted definitions and context, not detangled
+content, without inferring that their bodies are in the set.
 
-**The fix.** Compute the table from the spans of the records being rendered,
-not from the config map — a document appears if and only if some rendered
-entry cites it. Config stays the place that says which documents exist and
-what their C9 role is; the table says what this file drew on.
+**Watch one thing.** The glossary is human-edited from the 2026-08-04
+ruling, so this is a change to seed output that a drift lint will later
+guard. Fixing it now, while the file is still exactly what `detangle
+generate` produced, is cheaper than after human edits have landed on top.
 
-**Watch one thing.** The glossary is human-edited from the 2026-08-04 ruling,
-so this is a change to seed output that a drift lint will later guard. Fixing
-it now, while the file is still exactly what `detangle generate` produced, is
-cheaper than after human edits have landed on top.
+**Depends on:** the two-input-set config change (`references` key in
+`detangle.toml`). Independent of the document bodies.
 
-**Depends on:** nothing. Independent of the document bodies.
+---
+
+## B-5 — A reference span can vouch for detangle-set wording in a mixed definition
+
+**Raised:** 2026-08-05 (assistant), while designing the two-input-set
+amendment.
+
+**The exposure.** The `definition-token` check (and the
+`min-verbatim-run-chars` tripwire) test a definition against the **union**
+of every anchored block its record cites. A record whose definition mixes
+detangle-set wording with a reference-set span therefore lets the reference
+block vouch for tokens claimed against the detangle set — the same
+laundering shape already noted on 2026-07-31 for multi-span records
+("a span imported for one clause can launder another"), now reaching across
+the input-set boundary. 81 of 172 defined records are multi-clause and 99
+cite more than one span, so the surface is real.
+
+**Why it is parked rather than fixed.** The clean fix is per-clause
+provenance, which Nick considered and rejected on 2026-08-04 ("the
+definition block is the definitional boundary"). The exposure is already
+live, but small: exactly three defined records cite spans from both sets
+today (`mts-associated-markets`, `mtsam-l-data-limitation-register`,
+`quote-behaviour-baseline-engine` — measured 2026-08-05), which is
+reviewable by hand. A cheaper partial guard, if wanted later: warn when one
+definition cites spans from both input sets, so each new mixed record gets
+one human look.
+
+**Depends on:** nothing. Grows with every new definition that cites spans
+from both sets.
