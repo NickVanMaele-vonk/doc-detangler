@@ -726,7 +726,8 @@ Established across PRs #17–#35; follow them so records stay uniform.
   becomes the marked forward reference. For the accepted pair that is
   `liquidity-driven-reaction` (Nick, 2026-07-30) — default before exception,
   so the identical-observable-pattern clause is never the deferred one.
-- **PR mechanics.** ≤ `param-max-terms-changed-per-PR` (25) files counting
+- **PR mechanics.** ≤ `param-max-terms-changed-per-PR` (200, raised from 25
+  on 2026-08-05) files counting
   new records, edited records, and edge changes together. Note the count in
   every PR body. When wrapping notes programmatically, keep `[[...]]`
   tokens atomic (`break_on_hyphens=False`) — split links reached main once.
