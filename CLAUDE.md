@@ -48,6 +48,9 @@ python3 -m venv .venv                  # system python is externally-managed
                                        # refuses to write from a plan with an
                                        # error-grade finding, and runs the
                                        # criterion-5 token-parity check
+.venv/bin/detangle restructure … --report <dir>
+                                       # also write the 8f self-report:
+                                       # move-map.md, counts.md, exceptions.md
 .venv/bin/detangle restructure … --check   # re-execute and byte-compare
 ```
 
@@ -322,11 +325,32 @@ restructure` executes it deterministically, authoring nothing. Build steps
 1 and 2 are merged (PRs #102, #104): the plan schema/loader/validation, and
 the execution engine, whose machine run of the real plan **reproduces the
 approved golden** (identical section markers, all 35 definition blocks
-byte-equal, empty token diff both ways) — held as a test. Step 3 adds the
-criterion-5 `token-parity` check inside the command and the generated 8f
-self-report; step 4 records the 6.2 comparison in `eval/`, and 6.2 is not
+byte-equal, empty token diff both ways) — held as a test. Step 3 is merged
+too, in halves: 3a the criterion-5 `token-parity` check inside the command
+(PR #105), 3b the generated 8f self-report behind `--report <dir>`. Step 4
+records the 6.2 comparison in `eval/`, and 6.2 is not
 done until `param-low-confidence-threshold` has been re-baselined against
 the first artifact carrying a mapping score (the Phase 7 harness dry-run).
+
+**The 8f split (Nick, 2026-08-05).** The report generator writes only what
+the run measured — block moves, drops, category tallies, the criterion-5
+accounting, the undefined-term roster, forward references. A ruling is a
+human's sentence and the tool never writes one: the plan carries an
+`exceptions:` list of one line per ruling (`title` + `where`), and the
+report names it and points at where the reasoning is written rather than
+reprinting it, so the wording lives in one place. The declarations exist
+because the 8c budget counts PR comments and a comment the tool cannot see
+is one it would count wrong; over `param-max-comments-per-PR` the run
+reports and writes no document. The real plan reports **9 clusters** — the
+5.3 baseline exactly, 3 measured and 6 declared.
+
+Two golden defects the generator surfaced, both awaiting Nick's disposition:
+the golden's `exceptions.md` counts **84 orphans** where 83 are orphans and
+`intraday-behavioural-event-builder` is undefined by the IBE/IBEB ruling
+instead (it carries no orphan flag); and its §9 "forward references: zero"
+checked the glossary slice, not `uce.md`'s own definition order, where
+`persistence-gate` and `dif-analytical-domains` both depend on
+`participant-interaction`, defined further down.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line

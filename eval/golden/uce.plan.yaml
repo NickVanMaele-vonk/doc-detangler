@@ -212,3 +212,22 @@ additions:
 
       This extract contains the content of Parts I and II only. Parts III–XX
       exist here only as one-line summaries in the Parts index in section 6.
+
+# Rulings a human made about this document (criterion 8f / 8c). Title and
+# pointer only: the reasoning is written once, where the pointer says, and
+# the tool never reprints it. They are listed here because the 8c comment
+# budget counts PR comments, and a comment the tool cannot see is one it
+# would count wrong (Nick, 2026-08-05).
+exceptions:
+  - title: Version skew carried, not harmonised
+    where: eval/golden/exceptions.md §3
+  - title: Normative rules left inside the change log
+    where: eval/golden/exceptions.md §4
+  - title: Source defects carried verbatim (B-1 candidates)
+    where: eval/golden/exceptions.md §5
+  - title: Interleaved section boundaries reconstructed
+    where: eval/golden/exceptions.md §6
+  - title: "Deviation: no generated navigation"
+    where: eval/golden/exceptions.md §7
+  - title: "Deviation: exceptions list instead of waiver entries"
+    where: eval/golden/exceptions.md §8

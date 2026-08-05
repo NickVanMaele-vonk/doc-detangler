@@ -7,6 +7,14 @@ sections are generated rather than moved. Blocks are addressed by
 ``para_hash`` — never line numbers (D10) — so a plan survives any edit that
 does not change the block it names, and breaks loudly on one that does.
 
+A plan also carries ``exceptions``: one short line per ruling a human made
+about this document — the version skew stands, the change-log rules stay
+put, the OCR damage is carried verbatim. Only the title and a pointer to
+where the reasoning is written; the wording lives in one place and the tool
+never reprints it. The tool needs them because the 8c comment budget counts
+comments, and a comment it cannot see is one it would count wrong (Nick,
+2026-08-05).
+
 Validation enforces the ADR's losslessness-at-run-time rule: every block of
 the source must be covered by exactly one of assignment, rejoin, or noise.
 An uncovered block is ``plan-incomplete``; a doubly covered one is
@@ -72,6 +80,7 @@ class Plan:
     repairs: list[dict] = field(default_factory=list)
     definitions: list[dict] = field(default_factory=list)
     additions: list[dict] = field(default_factory=list)
+    exceptions: list[dict] = field(default_factory=list)
 
     def section_ids(self) -> set[str]:
         return {s.id for s in self.sections}
@@ -112,6 +121,7 @@ LIST_FIELDS = (
     "repairs",
     "definitions",
     "additions",
+    "exceptions",
 )
 
 
@@ -179,6 +189,7 @@ def load_plan(path: Path, root: Path) -> tuple[Plan | None, list[Finding]]:
         ("repairs", plan.repairs, ("block", "from", "to")),
         ("definitions", plan.definitions, ("record", "section")),
         ("additions", plan.additions, ("section", "form", "text")),
+        ("exceptions", plan.exceptions, ("title", "where")),
     ):
         for i, entry in enumerate(entries):
             missing = [k for k in req if k not in entry]

@@ -26,6 +26,7 @@ from .records import load as records_load
 from .registers import load_cycles, load_waivers
 from .restructure import execute as restructure_execute
 from .restructure import parity as restructure_parity
+from .restructure import report as restructure_report
 
 
 def _selected(records, root: Path, paths: list[str]):
@@ -222,6 +223,7 @@ def cmd_restructure(args: argparse.Namespace) -> int:
         restructure.CHECKS
         | restructure_execute.CHECKS
         | restructure_parity.CHECKS
+        | restructure_report.CHECKS
         | records_load.CHECKS
         | registers.WAIVER_CHECKS
     )
@@ -252,11 +254,40 @@ def cmd_restructure(args: argparse.Namespace) -> int:
         parity = restructure_parity.measure(plan, source, rendered)
         findings.extend(restructure_parity.check(parity, plan.rel))
 
+        # The 8f self-report is built on every run, not only when it is
+        # written: the 8c budget counts the clusters it found, and a run that
+        # buries its reviewer is over budget whether or not files were asked
+        # for.
+        limit = config.param("param-max-comments-per-PR")
+        built = restructure_report.build(
+            plan,
+            records,
+            source,
+            text,
+            parity,
+            registry.placements[plan.doc],
+            limit,
+            blob=plan.pinned_blob or head,
+        )
+        budget = restructure_report.check_budget(built, limit, plan.rel)
+        findings.extend(budget)
+
+        report_dir = Path(args.report) if args.report else None
         if args.check:
             findings.extend(restructure_execute.check_current(text, out_path, rel))
+            if report_dir is not None:
+                findings.extend(
+                    restructure_report.check_current(built, report_dir, args.report)
+                )
+        elif budget:
+            # Reported, not emitted (ADR-002 Decision 3).
+            if report_dir is not None:
+                restructure_report.write(built, report_dir)
         else:
             out_path.parent.mkdir(parents=True, exist_ok=True)
             out_path.write_text(text, encoding="utf-8")
+            if report_dir is not None:
+                restructure_report.write(built, report_dir)
         summary.update(
             {
                 "doc": plan.doc,
@@ -266,9 +297,15 @@ def cmd_restructure(args: argparse.Namespace) -> int:
                 "source words": sum(parity.expected.values()),
                 "unexplained": sum(parity.missing.values())
                 + sum(parity.extra.values()),
-                "checked" if args.check else "wrote": rel,
+                "comments": f"{len(built.clusters)}/{limit}",
             }
         )
+        if budget:
+            summary["blocked"] = "over the comment budget; document not written"
+        else:
+            summary["checked" if args.check else "wrote"] = rel
+        if report_dir is not None:
+            summary["report"] = args.report
     else:
         summary["blocked"] = "plan findings prevent execution"
 
@@ -394,6 +431,11 @@ def build_parser() -> argparse.ArgumentParser:
     restructure_cmd.add_argument("--plan", required=True, help="the plan file")
     restructure_cmd.add_argument(
         "--out", required=True, help="output path for the restructured document"
+    )
+    restructure_cmd.add_argument(
+        "--report",
+        help="directory for the generated 8f self-report "
+        f"({', '.join(restructure_report.ARTIFACTS)}); omitted, none is written",
     )
     restructure_cmd.add_argument(
         "--json", action="store_true", help="machine-readable"
