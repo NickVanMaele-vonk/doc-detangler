@@ -110,7 +110,11 @@ the record behind it (D9).
 
 That file is now the starting point rather than the output: from 2026-08-04
 `glossary.md` is the fourth **editable** document, its 78 definitions
-canonical in the file and mirrored back into the records. `index.md` still
+canonical in the file and mirrored back into the records. So `generate`
+**refuses to overwrite it** — a second run would discard human edits that
+nothing else holds a copy of, and the drift lint that would mirror them into
+the records does not exist yet. `--check` still compares, and `--force`
+re-seeds deliberately (it will be needed when B-1 rewrites the corpus). `index.md` still
 needs the document bodies, which carry the definition site of the other 94
 defined terms (criterion 4). The Mermaid render is no longer a file at all —
 it became an on-demand command, since 359 nodes never made a readable
@@ -134,8 +138,9 @@ python3 -m venv .venv
 .venv/bin/detangle graph --impact gate # what breaks if this definition changes
 .venv/bin/detangle graph --requires sb-26   # what must be defined first
 
-.venv/bin/detangle generate            # rewrite glossary.md
-.venv/bin/detangle generate --check    # CI: fail on a hand-edit or a stale view
+.venv/bin/detangle generate            # seeded glossary.md; now refuses to
+                                       # overwrite it (exit 2) unless --force
+.venv/bin/detangle generate --check    # read-only: compare against a regeneration
 
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint

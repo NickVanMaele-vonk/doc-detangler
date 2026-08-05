@@ -179,8 +179,46 @@ def test_the_render_is_byte_stable(mini_repo, capsys):
     mini_repo.write_record(id="omega", term="omega", **GLOSSARY)
     run(mini_repo, capsys=capsys)
     first = text(mini_repo)
-    run(mini_repo, capsys=capsys)
+    # --force because the second run is exactly what the overwrite guard
+    # exists to stop; here it is deliberate, which is what the flag says.
+    run(mini_repo, "--force", capsys=capsys)
     assert text(mini_repo) == first
+
+
+def test_a_second_run_refuses_to_overwrite_the_seeded_file(mini_repo, capsys):
+    """The file is edited by people (Nick, 2026-08-04) and nothing mirrors it.
+
+    A warning would arrive after the bytes were gone, so the command refuses.
+    Exit 2, not 1: no verdict was reached, and nothing was written.
+    """
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+    seeded = text(mini_repo)
+
+    code = main(["generate", "--root", str(mini_repo.root)])
+    assert code == EXIT_USAGE
+    assert "--force" in capsys.readouterr().err
+    assert text(mini_repo) == seeded
+
+
+def test_force_overwrites_a_file_that_has_been_edited(mini_repo, capsys):
+    """The escape hatch is real: a re-seed must stay possible after B-1."""
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+    (mini_repo.root / "glossary.md").write_text("hand-written\n", encoding="utf-8")
+
+    run(mini_repo, "--force", capsys=capsys)
+    assert text(mini_repo) != "hand-written\n"
+
+
+def test_check_still_reads_an_existing_file(mini_repo, capsys):
+    """--check never writes, so the guard must not stand in its way."""
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+
+    code, payload = run(mini_repo, "--check", capsys=capsys)
+    assert code == EXIT_FINDINGS
+    assert checks(payload) == ["overview-gap"]
 
 
 def test_an_undeclared_output_path_is_a_usage_error(mini_repo, capsys):

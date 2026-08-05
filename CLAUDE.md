@@ -40,8 +40,9 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/detangle graph               # built; rewrites concept-graph.yaml
 .venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
 .venv/bin/detangle graph --impact <id> # what depends on this definition
-.venv/bin/detangle generate            # built; rewrites glossary.md
-.venv/bin/detangle generate --check    # regenerate-and-compare guard, for CI
+.venv/bin/detangle generate            # seeded glossary.md; refuses to
+                                       # overwrite it (exit 2) — --force only
+.venv/bin/detangle generate --check    # read-only compare against a regeneration
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR

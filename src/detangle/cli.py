@@ -142,6 +142,19 @@ def cmd_generate(args: argparse.Namespace) -> int:
     if args.check:
         findings.extend(views.check_current(glossary.text, out_path, rel))
     else:
+        # This command is the seeder, and it ran (2026-08-04). Nick's ruling of
+        # the same day made the file the fourth *editable* document, so a
+        # second run would silently destroy human work that nothing else holds
+        # a copy of — the drift lint that would mirror it into the records does
+        # not exist yet. Refuse rather than warn: a warning arrives after the
+        # bytes are gone.
+        if out_path.exists() and not args.force:
+            raise UsageError(
+                f"{rel} already exists, and it is edited by people (Nick, "
+                "2026-08-04) — generate would rewrite it in full and discard "
+                "every edit. Use --check to compare it against a "
+                "regeneration, or --force to overwrite it deliberately."
+            )
         out_path.write_text(glossary.text, encoding="utf-8")
 
     summary = {
@@ -232,6 +245,8 @@ def build_parser() -> argparse.ArgumentParser:
             "Renders glossary.md from the canonical concept records, in the "
             "concept graph's topological order (param-glossary-order). "
             "--check verifies the committed file instead of writing it. "
+            "This command seeded glossary.md, which is now edited by people, "
+            "so it refuses to overwrite an existing file unless --force. "
             "index.md and concept-graph.mmd are step 3.6 and are not written."
         ),
     )
@@ -242,6 +257,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--check",
         action="store_true",
         help="do not write; fail if a committed view differs from a regeneration",
+    )
+    generate.add_argument(
+        "--force",
+        action="store_true",
+        help="overwrite an existing glossary.md, discarding any human edits",
     )
     generate.set_defaults(func=cmd_generate)
     return parser
