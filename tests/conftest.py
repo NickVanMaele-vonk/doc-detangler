@@ -62,6 +62,7 @@ M = "MCL"
 
 [params]
 max-terms-changed-per-PR = 25
+max-comments-per-PR = 25
 
 [validate]
 min-verbatim-run-chars = 10

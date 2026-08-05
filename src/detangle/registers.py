@@ -190,6 +190,8 @@ NOT_WAIVABLE = frozenset(
         "glossary-missing",
         "restructure-drift",
         "restructure-missing",
+        "report-drift",
+        "report-missing",
     }
 )
 

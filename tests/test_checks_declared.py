@@ -24,6 +24,7 @@ from detangle.records import load as records_load
 from detangle.restructure import execute as restructure_execute
 from detangle.restructure import parity as restructure_parity
 from detangle.restructure import plan as restructure_plan
+from detangle.restructure import report as restructure_report
 from detangle.views import glossary
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "detangle"
@@ -42,6 +43,7 @@ DECLARED = {
     "restructure/execute.py": restructure_execute.CHECKS,
     "restructure/parity.py": restructure_parity.CHECKS,
     "restructure/plan.py": restructure_plan.CHECKS,
+    "restructure/report.py": restructure_report.CHECKS,
     "views/glossary.py": glossary.CHECKS,
 }
 

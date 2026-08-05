@@ -147,6 +147,25 @@ and authors nothing. Two guarantees it enforces on every run:
   words the output invents, are findings. Nothing is repaired: the
   disposition is a plan edit, and that is a human's.
 
+The run also accounts for itself. `--report <dir>` writes the criterion-8f
+self-report — `move-map.md` (every block, where it went, what was done to it,
+what was dropped and why), `counts.md` (the category tallies and the
+criterion-5 accounting) and `exceptions.md` (what a reviewer is being asked to
+look at). They are derived artifacts: `--check` byte-compares them, and
+`report-drift` is no more waivable than any other hand-edited generated file.
+
+**The tool writes what it measured; a human writes the rulings.** Block moves,
+drops, tallies, the undefined-term roster and forward references are
+measurements, and the report states them in full. That the version skew stands
+rather than being harmonised, or that OCR damage is carried verbatim, is
+judgment — so the plan carries one line per ruling, a title and a pointer to
+where the reasoning is written, and the report names it and points there
+rather than reprinting it. The wording lives in one place. The tool needs the
+line for one reason only: the 8c rule caps how many PR comments one
+restructure may raise (`param-max-comments-per-PR`), and a comment it cannot
+see is one it would count wrong. Over budget, the run reports and writes no
+document.
+
 ## Running it
 
 `pandoc` must be on `PATH` — the `para_hash` scheme is defined in terms of its
@@ -171,6 +190,8 @@ python3 -m venv .venv
 
 .venv/bin/detangle restructure --plan eval/golden/uce.plan.yaml \
                     --out work/uce.md   # execute a reorder plan (ADR-002)
+.venv/bin/detangle restructure --plan … --out … --report work/report/
+                                       # also write the 8f self-report
 .venv/bin/detangle restructure --plan … --out … --check   # re-execute and compare
 
 .venv/bin/python -m pytest             # tests
