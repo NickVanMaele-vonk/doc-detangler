@@ -224,6 +224,17 @@ The second half is the more valuable one and needs no change to CI.
 **Depends on:** nothing. Both halves are independent of the document bodies
 and of each other.
 
+**CI half done (Nick, 2026-08-05).** The stall recurred on PR #102 — the
+same one-job mirror hang, this time killed by the 5-minute step timeout
+instead of a human. Nick approved the pin, and the point-1 verification ran
+first: the upstream 3.1.3 release binary renders **all 359 records to the
+same hashes** as Debian's 3.1.3+ds-2 — `detangle validate` exits 0 under
+both — so pinning is hash-safe. `ci.yml` now installs pandoc via
+`r-lib/actions/setup-pandoc@v2` pinned to `3.1.3`, from GitHub's own CDN.
+The second half — declaring the expected version in `detangle.toml` and
+having `validate` compare `pandoc --version` against it — **stays parked**,
+including its open finding-vs-notice question.
+
 ---
 
 ## B-4 — Label the sources table rows by input set
