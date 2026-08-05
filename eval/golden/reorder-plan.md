@@ -4,7 +4,8 @@ Step 5.2, stage A. This is the **8g two-stage review** artifact: a one-page
 table of section moves and term placements, approved on its own before the
 rewrite runs. Nothing here is output — no restructured prose exists yet.
 
-**Status:** proposed, awaiting Nick's approval.
+**Status:** approved and merged (PR #93, 2026-08-05), then amended the same day
+by two rulings — see §5. Stage B may proceed on this plan.
 **Input:** `samples/blueprint-UCE-shortened.md`, pinned at blob
 `4cae72dece7638c1ddec8206a3c6a24610196de0` (`eval/README.md`).
 **Output of stage B:** `eval/golden/uce.md`, `eval/golden/glossary-slice.md`,
@@ -77,20 +78,24 @@ Reading order within the document, general → specific (criterion 2).
 | 3 | `## 3. Core design principles` | `S-09`, `S-10` | Twelve principles; Principle 12's version note becomes a footnote, not a row. |
 | 4 | `## 4. The analytical pipeline` | `S-12`, `S-13` | 4.1 Stage 0 and the IBEB; 4.2 the 22 steps, rejoined into one table. |
 | 5 | `## 5. Human intervention checkpoints` | `S-14` | Where a human acts, after the machine pipeline that triggers them. |
-| 6 | `## 6. Constructs specified in amendment notes` | `S-03`, `S-04`, `S-05` | **Relocated out of the change log.** These are normative rules (PIR amplifier-only cap, price-impact gate, RSA scaling formula, BCI levels and gates, 18 new output fields), not change metadata. |
-| 7 | `## 7. Document control` | `S-02`, `S-06` | Version history and the Parts index, verbatim, moved to the end: a change log is the archetype of detail-first opening. |
+| 6 | `## 6. Document control` | `S-02`, `S-03`, `S-04`, `S-05`, `S-06` | Version history and the Parts index, verbatim, moved to the end: a change log is the archetype of detail-first opening. The amendment blocks stay inside the version history, where the source put them (Nick, 2026-08-05). |
 
-Two moves carry the restructuring argument and are the ones worth
-disagreeing with:
+Two things about this outline are worth stating rather than leaving implicit:
 
-- **§6 exists because normative content is living in a change log.** The
-  amendment blocks specify Parts VI-A, XI and XIII, none of which are present
-  in this extract. Leaving them inside the version-history table would keep a
-  reader from ever finding them; relocating them without comment would hide
-  that the source put them there. So they move, and the relocation is raised
-  as a criterion-6 finding for disposition.
+- **The amendment rules are not moved.** `S-03`, `S-04` and `S-05` carry
+  normative content — the PIR amplifier-only cap, the price-impact gate, the
+  RSA scaling formula, the BCI levels and gates, the 18 new output fields —
+  and they sit inside a change log, specifying Parts VI-A, XI and XIII that
+  this extract does not contain. An earlier draft of this plan lifted them
+  into a section of their own. **Nick ruled on 2026-08-05 that they stay in
+  the version history**, to be removed by hand in a later review pass. So the
+  document has six sections, not seven, and nothing leaves the change log.
 - **Document control moves to the end.** Nothing in it is dropped and no
   number changes (criterion 5), so this is a Category A move.
+
+**`samples/` is not touched** (Nick, same ruling). The restructured document
+is a separate file under `eval/golden/`; the source corpus is read and never
+written, as it has been throughout.
 
 ---
 
@@ -164,24 +169,31 @@ What stage B is expected to raise as PR comments, aggregated per cluster
 |---------|---------|
 | Orphan terms with a drafted definition | one comment, listing each |
 | Orphan terms left undefined and waived | one comment, listing each |
-| Normative content relocated out of the change log (§6) | one |
 | Version skew across `U`/`S`/`M` | one |
+| Normative rules left inside the change log | one — the rules stay put (Nick, 2026-08-05), but a reader cannot find them there, so the condition is reported rather than fixed |
 | Source defects already waived (`definition-token` hyphens) | carried, not re-raised |
 | Forward references | expected zero — the accepted cycle is not in `U`'s slice |
 
 ---
 
-## 5. Not decided here
+## 5. Ruled since this plan was written
 
-1. **Index coverage of undefined terms.** Criterion 3 defines the index over
-   terms *defined* anywhere in the set. The generated glossary already renders
-   the 77 undefined entries with a "not defined in the corpus" note, so those
-   anchors exist. Proposal: the index slice covers all 155 and marks the
-   placeholder targets, so a reader looking up an orphan learns it is
-   undefined instead of finding nothing. Nick's call.
-2. **`notes` staging-post clauses.** Corpus wording parked in records during
+Both on 2026-08-05, and both applied above.
+
+1. **The index lists every term, including the undefined ones.** Criterion 3
+   defines the index over terms *defined* anywhere in the set, which would
+   have left the 84 orphans out of it entirely. Nick ruled the index slice
+   covers **all 155**, with the 84 marked as undefined — so a reader who looks
+   one up learns there is no definition, instead of finding nothing and not
+   knowing why. The anchors already exist: the glossary renders an entry for
+   each undefined term with a "not defined in the corpus" note.
+2. **The amendment blocks stay in the version history.** See §2. The document
+   has six sections, not seven, and nothing is lifted out of the change log.
+   A later human review pass removes them.
+
+## 6. Still open
+
+1. **`notes` staging-post clauses.** Corpus wording parked in records during
    the ISO 704 narrowing pass must land in `uce.md` prose beside its
    definition block, or it is an omission under criterion 4. Which of the
-   thirteen belong to `U` is resolved in stage B.
-3. **Whether §6 survives review.** If Nick rules the amendment blocks stay in
-   the change log, §6 disappears and `S-03`–`S-05` fold back into §7.
+   thirteen belong to `U` is resolved in stage B, and needs no ruling.
