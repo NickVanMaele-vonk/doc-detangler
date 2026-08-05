@@ -43,6 +43,12 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/detangle generate            # seeded glossary.md; refuses to
                                        # overwrite it (exit 2) — --force only
 .venv/bin/detangle generate --check    # read-only compare against a regeneration
+.venv/bin/detangle restructure --plan <plan.yaml> --out <doc.md>
+                                       # execute a reorder plan (ADR-002);
+                                       # refuses to write from a plan with an
+                                       # error-grade finding, and runs the
+                                       # criterion-5 token-parity check
+.venv/bin/detangle restructure … --check   # re-execute and byte-compare
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
@@ -308,9 +314,19 @@ as waiver entries (an unmatched waiver would trip `waiver-stale`).
 **Pinned now, re-baselined later** (Nick's ruling): the backlog B-1 source
 correction that fixes the three waived `definition-token` hyphen defects
 rewrites all three blobs and voids the golden; the re-baseline updates the
-blob column in the same PR as the correction. Next is **Phase 6**: the
-prototype — smallest end-to-end run on one document, compared to this
-golden (6.2), which also re-baselines the low-confidence threshold.
+blob column in the same PR as the correction.
+
+**Phase 6 is in progress**, on ADR-002 (approved 2026-08-05, PR #101): the
+reorder plan is **data** — `eval/golden/uce.plan.yaml` — and `detangle
+restructure` executes it deterministically, authoring nothing. Build steps
+1 and 2 are merged (PRs #102, #104): the plan schema/loader/validation, and
+the execution engine, whose machine run of the real plan **reproduces the
+approved golden** (identical section markers, all 35 definition blocks
+byte-equal, empty token diff both ways) — held as a test. Step 3 adds the
+criterion-5 `token-parity` check inside the command and the generated 8f
+self-report; step 4 records the 6.2 comparison in `eval/`, and 6.2 is not
+done until `param-low-confidence-threshold` has been re-baselined against
+the first artifact carrying a mapping score (the Phase 7 harness dry-run).
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line

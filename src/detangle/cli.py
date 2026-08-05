@@ -25,6 +25,7 @@ from .records import checks as record_checks
 from .records import load as records_load
 from .registers import load_cycles, load_waivers
 from .restructure import execute as restructure_execute
+from .restructure import parity as restructure_parity
 
 
 def _selected(records, root: Path, paths: list[str]):
@@ -220,6 +221,7 @@ def cmd_restructure(args: argparse.Namespace) -> int:
     ran = (
         restructure.CHECKS
         | restructure_execute.CHECKS
+        | restructure_parity.CHECKS
         | records_load.CHECKS
         | registers.WAIVER_CHECKS
     )
@@ -242,7 +244,14 @@ def cmd_restructure(args: argparse.Namespace) -> int:
     summary: dict = {"plan": args.plan}
     if not blocked:
         source = (root / registry.paths[plan.doc]).read_text(encoding="utf-8")
-        text = restructure_execute.execute(plan, records, source)
+        rendered = restructure_execute.render(plan, records, source)
+        text = rendered.text()
+
+        # Criterion 5 runs on every execution, write or check: a document
+        # that lost a word is wrong whether or not it also drifted.
+        parity = restructure_parity.measure(plan, source, rendered)
+        findings.extend(restructure_parity.check(parity, plan.rel))
+
         if args.check:
             findings.extend(restructure_execute.check_current(text, out_path, rel))
         else:
@@ -254,6 +263,9 @@ def cmd_restructure(args: argparse.Namespace) -> int:
                 "sections": len(plan.sections),
                 "units": len(plan.assignments),
                 "definitions": len(plan.definitions),
+                "source words": sum(parity.expected.values()),
+                "unexplained": sum(parity.missing.values())
+                + sum(parity.extra.values()),
                 "checked" if args.check else "wrote": rel,
             }
         )

@@ -9,6 +9,16 @@ from the plan's authored ``additions`` and from the concept records'
 definitions — the tool itself writes scaffolding (headings, markers, table
 furniture) and no domain prose (C2).
 
+The render is emitted as **provenance-tagged parts**, not one string: every
+piece of the output says whether it carries source words or is authored
+scaffolding, and which source blocks it came from. That is what lets the
+criterion-5 parity check compare like with like instead of re-parsing its
+own output, and what the generated move-map reports from.
+
+Anything the renderer discards that is not declared noise is recorded as a
+``Drop`` with a reason, verbatim. Nothing leaves the document silently: a
+drop is either explained to the parity check or it fails it.
+
 Table parsing: the corpus is pandoc simple/multiline tables whose rows are
 blank-line-separated blocks. Column geometry comes from the multi-run ruler
 lines; a block with no ruler of its own is sliced by the most recent ruler
@@ -20,18 +30,23 @@ pipe row can carry.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from collections.abc import Callable
+from dataclasses import dataclass, field, replace
 
 from ..findings import UsageError
 from ..records.load import Record
 from ..records.spans import block_hash, normalise, split_blocks
 from .plan import Plan
+from .tokens import same_words
 
 WS = re.compile(r"\s+")
 #: A line that is only dashes/equals and spaces. One run = a border; two or
 #: more runs = a column ruler whose dash spans are the column geometry.
 RULE_LINE = re.compile(r"^\s*[-=]+[\s\-=]*$")
 RUN = re.compile(r"[-=]+")
+
+SOURCE = "source"
+AUTHORED = "authored"
 
 
 def _runs(line: str) -> list[tuple[int, int]]:
@@ -48,6 +63,71 @@ class ParsedBlock:
     row: list[str] | None = None  # the block's single data row, if tabular
     grid_rows: list[list[str]] | None = None  # grid-table rows (history)
     prose: str | None = None  # collapsed text, if not tabular
+
+
+@dataclass(frozen=True)
+class Part:
+    """One piece of the output, with its provenance.
+
+    ``origin`` is ``source`` when the words come from the document being
+    restructured and ``authored`` when they come from anywhere else — the
+    plan's Category C additions, a concept record's definition, or the
+    tool's own scaffolding. Only source parts are weighed against the source
+    by the parity check.
+    """
+
+    text: str
+    origin: str
+    kind: str
+    blocks: tuple[str, ...] = ()
+    section: str = ""
+    #: Join to the previous part with a single newline (a table's rows) rather
+    #: than a blank line (a paragraph).
+    glue: bool = False
+
+
+@dataclass(frozen=True)
+class Drop:
+    """Source text the renderer discarded, recorded verbatim with its reason.
+
+    The reason is what the parity check weighs. Three of them are declared
+    transforms — a repeat of a header the output keeps, the header row of a
+    grid table the plan asked to render as a headed list, the ``PART`` banner
+    word that becomes the index column head — and explain the words away.
+    ``dropped-table-header`` is the residual bucket: header-shaped text the
+    renderer could not match against any header the output kept. It explains
+    nothing, so those words surface as a parity finding.
+    """
+
+    text: str
+    reason: str
+    block: str
+    section: str = ""
+
+
+@dataclass
+class Render:
+    """The output as parts plus everything discarded on the way."""
+
+    parts: list[Part] = field(default_factory=list)
+    drops: list[Drop] = field(default_factory=list)
+    #: Table headers the output kept, for classifying header drops at the end.
+    kept_headers: list[str] = field(default_factory=list)
+
+    def text(self) -> str:
+        out = ""
+        for part in self.parts:
+            body = part.text.rstrip("\n")
+            if not body.strip():
+                continue
+            if not out:
+                out = body
+            else:
+                out += ("\n" if part.glue else "\n\n") + body
+        return out + "\n" if out else ""
+
+    def source_text(self) -> str:
+        return "\n".join(p.text for p in self.parts if p.origin == SOURCE)
 
 
 def _slice(line: str, spans: list[tuple[int, int]]) -> list[str]:
@@ -129,9 +209,7 @@ def parse_blocks(source: str) -> list[ParsedBlock]:
                 continue  # borders and rulers are furniture
             (row_lines if own_ruler else header_lines).append(line)
 
-        gappy = any(
-            re.search(r"\S\s{3,}\S", ln) for ln in raw.splitlines()
-        )
+        gappy = any(re.search(r"\S\s{3,}\S", ln) for ln in raw.splitlines())
         if own_ruler is None and (not gappy or not spans):
             block.prose = WS.sub(" ", raw).strip()
             out.append(block)
@@ -160,45 +238,12 @@ def _strip_furniture(cells: list[str]) -> list[str]:
     return [WS.sub(" ", c).strip().strip("*").strip() for c in cells]
 
 
-def _definition_block(record: Record) -> str:
-    prose = WS.sub(" ", str(record.data["definition"])).strip()
-    head = f"**{record.data.get('term')}**"
-    aliases = [str(a) for a in record.get_list("aliases")]
-    if aliases:
-        head += " (also known as: " + ", ".join(aliases) + ")"
-    return (
-        f"{head}\n<!-- concept:{record.id}:start -->\n{prose}\n"
-        f"<!-- concept:{record.id}:end -->\n"
-    )
+def cleaner(plan: Plan) -> Callable[[str, str], str]:
+    """The plan's declared text transforms, as one function of (text, block).
 
-
-@dataclass
-class _Table:
-    header: list[str] | None = None
-    rows: list[list[str]] = field(default_factory=list)
-
-    def render(self) -> str:
-        used = 0
-        for cells in ([self.header] if self.header else []) + self.rows:
-            for i, cell in enumerate(cells):
-                if cell.strip():
-                    used = max(used, i + 1)
-        width = max(used, 1)
-        lines = []
-        header = ((self.header or []) + [""] * width)[:width]
-        lines.append("| " + " | ".join(header) + " |")
-        lines.append("| " + " | ".join(["---"] * width) + " |")
-        for row in self.rows:
-            padded = (row + [""] * width)[:width]
-            lines.append("| " + " | ".join(padded) + " |")
-        return "\n".join(lines) + "\n"
-
-
-def execute(plan: Plan, records: list[Record], source: str) -> str:
-    """The restructured document, deterministically, from plan + source."""
-    parsed = {b.hash: b for b in parse_blocks(source)}
-    by_id = {r.id: r for r in records}
-
+    Shared with the parity check, so what it measures as "the source, after
+    what the plan said to do to it" is exactly what the renderer emitted.
+    """
     removals: dict[str, list[str]] = {}
     for entry in plan.inline_removals:
         removals.setdefault(entry["block"], []).append(str(entry["remove"]))
@@ -216,6 +261,78 @@ def execute(plan: Plan, records: list[Record], source: str) -> str:
         # pandoc escape backslashes are markdown syntax, not content
         return WS.sub(" ", text.replace("\\", "")).strip()
 
+    return clean
+
+
+def _definition_block(record: Record) -> str:
+    prose = WS.sub(" ", str(record.data["definition"])).strip()
+    head = f"**{record.data.get('term')}**"
+    aliases = [str(a) for a in record.get_list("aliases")]
+    if aliases:
+        head += " (also known as: " + ", ".join(aliases) + ")"
+    return (
+        f"{head}\n<!-- concept:{record.id}:start -->\n{prose}\n"
+        f"<!-- concept:{record.id}:end -->\n"
+    )
+
+
+@dataclass
+class _Table:
+    """A pipe table under construction, remembering where each row came from."""
+
+    header: list[str] | None = None
+    header_origin: str = SOURCE
+    header_block: str = ""
+    rows: list[tuple[list[str], str]] = field(default_factory=list)
+
+    def parts(self, section: str) -> list[Part]:
+        used = 0
+        for cells in ([self.header] if self.header else []) + [
+            r for r, _ in self.rows
+        ]:
+            for i, cell in enumerate(cells):
+                if cell.strip():
+                    used = max(used, i + 1)
+        width = max(used, 1)
+        header = ((self.header or []) + [""] * width)[:width]
+        out = [
+            Part(
+                text="| " + " | ".join(header) + " |",
+                origin=self.header_origin,
+                kind="table-header",
+                blocks=(self.header_block,) if self.header_block else (),
+                section=section,
+            ),
+            Part(
+                text="| " + " | ".join(["---"] * width) + " |",
+                origin=AUTHORED,
+                kind="table-rule",
+                section=section,
+                glue=True,
+            ),
+        ]
+        for row, block in self.rows:
+            padded = (row + [""] * width)[:width]
+            out.append(
+                Part(
+                    text="| " + " | ".join(padded) + " |",
+                    origin=SOURCE,
+                    kind="table-row",
+                    blocks=(block,),
+                    section=section,
+                    glue=True,
+                )
+            )
+        return out
+
+
+def render(plan: Plan, records: list[Record], source: str) -> Render:
+    """The restructured document as provenance-tagged parts, deterministically."""
+    parsed = {b.hash: b for b in parse_blocks(source)}
+    by_id = {r.id: r for r in records}
+    clean = cleaner(plan)
+    out = Render()
+
     def cells_of(h: str) -> tuple[list[str] | None, list[str] | None]:
         b = parsed[h]
         header = (
@@ -224,7 +341,6 @@ def execute(plan: Plan, records: list[Record], source: str) -> str:
         row = [clean(c, h) for c in b.row] if b.row else None
         return header, row
 
-    out: list[str] = []
     for section in plan.sections:
         assigned = [a for a in plan.assignments if a.get("section") == section.id]
         defs = [d for d in plan.definitions if d.get("section") == section.id]
@@ -233,34 +349,80 @@ def execute(plan: Plan, records: list[Record], source: str) -> str:
         if section.kind == "head":
             for a in assigned:
                 for h in plan.blocks_of(a):
-                    out.append(parsed[h].raw.strip() + "\n")
+                    out.parts.append(
+                        Part(
+                            text=parsed[h].raw.strip() + "\n",
+                            origin=SOURCE,
+                            kind="head",
+                            blocks=(h,),
+                            section=section.id,
+                        )
+                    )
             continue
-        out.append(f"<!-- sec:{section.id} -->\n## {section.title}\n")
+        out.parts.append(
+            Part(
+                text=f"<!-- sec:{section.id} -->\n## {section.title}\n",
+                origin=AUTHORED,
+                kind="section-heading",
+                section=section.id,
+            )
+        )
 
         for a in adds:
             if a.get("form") != "ai-addition-section":
                 raise UsageError(f"unknown addition form {a.get('form')!r}")
-            out.append(
-                '<!-- AI addition:start scope="section" -->\n'
-                + str(a["text"]).strip()
-                + "\n<!-- AI addition:end -->\n"
+            out.parts.append(
+                Part(
+                    text='<!-- AI addition:start scope="section" -->\n'
+                    + str(a["text"]).strip()
+                    + "\n<!-- AI addition:end -->\n",
+                    origin=AUTHORED,
+                    kind="addition",
+                    section=section.id,
+                )
             )
         if section.kind == "generated" and defs and not adds:
-            out.append(
-                "Definitions used in more than one section of this document, "
-                "in dependency\norder — a term is defined before any "
-                "definition below uses it.\n"
+            out.parts.append(
+                Part(
+                    text="Definitions used in more than one section of this "
+                    "document, in dependency\norder — a term is defined "
+                    "before any definition below uses it.\n",
+                    origin=AUTHORED,
+                    kind="lead",
+                    section=section.id,
+                )
             )
         for d in defs:
-            out.append(_definition_block(by_id[d["record"]]))
+            out.parts.append(
+                Part(
+                    text=_definition_block(by_id[d["record"]]),
+                    origin=AUTHORED,
+                    kind="definition",
+                    blocks=(),
+                    section=section.id,
+                )
+            )
 
         table: _Table | None = None
 
-        def flush_table() -> None:
+        def flush_table(section_id: str = section.id) -> None:
             nonlocal table
             if table is not None:
-                out.append(table.render())
+                out.parts.extend(table.parts(section_id))
                 table = None
+
+        def drop(
+            text: str, reason: str, block: str, section_id: str = section.id
+        ) -> None:
+            if text.strip():
+                out.drops.append(
+                    Drop(
+                        text=text.strip(),
+                        reason=reason,
+                        block=block,
+                        section=section_id,
+                    )
+                )
 
         for a in assigned:
             hashes = plan.blocks_of(a)
@@ -269,18 +431,45 @@ def execute(plan: Plan, records: list[Record], source: str) -> str:
             sub = a.get("subheading")
             if sub:
                 flush_table()
-                out.append(str(sub).strip() + "\n")
+                out.parts.append(
+                    Part(
+                        text=str(sub).strip() + "\n",
+                        origin=AUTHORED,
+                        kind="subheading",
+                        section=section.id,
+                    )
+                )
 
             if hint == "history-list":
                 flush_table()
                 rows = first.grid_rows or []
-                for cells in rows[1:] if len(rows) > 1 else rows:
-                    cells = [c for c in cells]
+                if len(rows) > 1:
+                    # The grid header row has no place in a headed list.
+                    drop(" ".join(rows[0]), "history-table-header", hashes[0])
+                    rows = rows[1:]
+                for cells in rows:
                     version = WS.sub(" ", cells[0]).strip().strip("*")
                     date = WS.sub(" ", cells[1]).strip()
-                    out.append(f"**{version} --- {date}**\n")
-                    for para in cells[2].split("\n\n"):
-                        out.append(clean(para, hashes[0]) + "\n")
+                    out.parts.append(
+                        Part(
+                            text=f"**{version} --- {date}**\n",
+                            origin=SOURCE,
+                            kind="history-head",
+                            blocks=(hashes[0],),
+                            section=section.id,
+                        )
+                    )
+                    for cell in cells[2:]:
+                        for para in cell.split("\n\n"):
+                            out.parts.append(
+                                Part(
+                                    text=clean(para, hashes[0]) + "\n",
+                                    origin=SOURCE,
+                                    kind="history-body",
+                                    blocks=(hashes[0],),
+                                    section=section.id,
+                                )
+                            )
                 continue
             if hint == "part-row":
                 lines = [
@@ -290,37 +479,103 @@ def execute(plan: Plan, records: list[Record], source: str) -> str:
                 m = re.match(r"PART\s+(\S+)\s+(.*)$", content)
                 if not m:
                     raise UsageError(f"part-row block does not parse: {content!r}")
+                # "PART" is the banner's own label; the row keeps the part
+                # number and its title.
+                drop("PART", "part-row-label", hashes[0])
                 if table is None:
-                    table = _Table(header=["Part", "Content"])
-                table.rows.append([m.group(1), clean(m.group(2), hashes[0])])
+                    # Headerless on purpose: the index table's real header is
+                    # a source block further down, and the tool does not write
+                    # column names of its own.
+                    table = _Table()
+                table.rows.append(
+                    ([m.group(1), clean(m.group(2), hashes[0])], hashes[0])
+                )
                 continue
             if hint == "note-italic":
                 flush_table()
                 note = " ".join(first.header or [])
-                out.append(f"*{clean(note, hashes[0])}*\n")
+                if first.row:
+                    drop(" ".join(first.row), "table-header", hashes[0])
+                out.parts.append(
+                    Part(
+                        text=f"*{clean(note, hashes[0])}*\n",
+                        origin=SOURCE,
+                        kind="note",
+                        blocks=(hashes[0],),
+                        section=section.id,
+                    )
+                )
                 continue
 
             tabular = any(parsed[h].row for h in hashes)
             if not tabular:
                 flush_table()
                 for h in hashes:
-                    out.append(clean(parsed[h].raw, h) + "\n")
+                    out.parts.append(
+                        Part(
+                            text=clean(parsed[h].raw, h) + "\n",
+                            origin=SOURCE,
+                            kind="prose",
+                            blocks=(h,),
+                            section=section.id,
+                        )
+                    )
                 continue
 
             header, row = cells_of(hashes[0])
             for h in hashes[1:]:
-                _extra_header, extra_row = cells_of(h)
+                extra_header, extra_row = cells_of(h)
+                if extra_header:
+                    # A fragment's own header repeats the table's; the kept
+                    # header is always the first fragment's, so this one goes.
+                    drop(" ".join(extra_header), "table-header", h)
                 if extra_row:
                     row = _join_cells(
                         [row or [], extra_row], max(len(row or []), len(extra_row))
                     )
             if table is None:
-                table = _Table(header=header)
+                table = _Table(header=header, header_block=hashes[0] if header else "")
+                if header:
+                    out.kept_headers.append(" ".join(header))
+            elif header and table.header is None:
+                # A table opened by a render hint takes the first header the
+                # source offers, rather than one the tool invented.
+                table.header, table.header_block = header, hashes[0]
+                out.kept_headers.append(" ".join(header))
+            elif header:
+                # A page-split table repeats its header on every page; one is
+                # kept and the repeats are furniture. Whether this really is a
+                # repeat is settled after the render, against every header the
+                # output kept — one that matches none is not explained away.
+                drop(" ".join(header), "table-header", hashes[0])
             if row and any(row):
-                table.rows.append(row)
+                table.rows.append((row, hashes[0]))
         flush_table()
 
-    return "\n".join(part.rstrip("\n") + "\n" for part in out if part.strip())
+    _classify_header_drops(out)
+    return out
+
+
+def _classify_header_drops(rendered: Render) -> None:
+    """Settle every ``table-header`` drop against the headers the output kept.
+
+    Order-independent on purpose: a repeated header can be discarded before
+    the run has seen the copy it repeats, and "is this the same header?" is a
+    question about the finished document, not about where the renderer was.
+    """
+    for i, drop in enumerate(rendered.drops):
+        if drop.reason != "table-header":
+            continue
+        repeat = any(same_words(drop.text, kept) for kept in rendered.kept_headers)
+        rendered.drops[i] = replace(
+            drop,
+            reason="repeated-table-header" if repeat else "dropped-table-header",
+        )
+
+
+def execute(plan: Plan, records: list[Record], source: str) -> str:
+    """The restructured document, deterministically, from plan + source."""
+    return render(plan, records, source).text()
 
 
 #: Split like the glossary's: a write run and a --check run raise different
@@ -354,4 +609,17 @@ def check_current(text: str, path, rel: str) -> list:
     return []
 
 
-__all__ = ["CHECKS", "check_current", "execute", "parse_blocks"]
+__all__ = [
+    "AUTHORED",
+    "CHECKS",
+    "SOURCE",
+    "Drop",
+    "ParsedBlock",
+    "Part",
+    "Render",
+    "check_current",
+    "cleaner",
+    "execute",
+    "parse_blocks",
+    "render",
+]

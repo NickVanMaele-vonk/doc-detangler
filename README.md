@@ -73,7 +73,7 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
+| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` and `restructure` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
@@ -127,6 +127,26 @@ defined terms (criterion 4). The Mermaid render is no longer a file at all —
 it became an on-demand command, since 359 nodes never made a readable
 diagram.
 
+A fourth command, **`detangle restructure`**, arrived with Phase 6 (ADR-002):
+it executes a machine-readable reorder plan and writes the restructured
+document. The judgment — what moves where, what is noise, which page-split
+fragments rejoin, the Category C text — lives in the plan, an
+AI-drafted/human-approved artifact landed by PR; the command is mechanical
+and authors nothing. Two guarantees it enforces on every run:
+
+- **Nothing undecided is executed.** Every source block must be covered by
+  exactly one assignment or noise entry; an uncovered one is
+  `plan-incomplete` and **no document is written**, because writing from an
+  incomplete plan launders a coverage hole into an omission.
+- **Criterion 5 is checked in-command.** `token-parity` is a multiset diff
+  of word tokens: the blocks the plan assigns, after the plan's declared
+  removals and repairs, against every part of the output tagged as carrying
+  source words. Authored text — the overview, definition blocks copied from
+  records — is excluded, because its words are not claiming to come from the
+  document. Words that are in neither the output nor a declared drop, and
+  words the output invents, are findings. Nothing is repaired: the
+  disposition is a plan edit, and that is a human's.
+
 ## Running it
 
 `pandoc` must be on `PATH` — the `para_hash` scheme is defined in terms of its
@@ -148,6 +168,10 @@ python3 -m venv .venv
 .venv/bin/detangle generate            # seeded glossary.md; now refuses to
                                        # overwrite it (exit 2) unless --force
 .venv/bin/detangle generate --check    # read-only: compare against a regeneration
+
+.venv/bin/detangle restructure --plan eval/golden/uce.plan.yaml \
+                    --out work/uce.md   # execute a reorder plan (ADR-002)
+.venv/bin/detangle restructure --plan … --out … --check   # re-execute and compare
 
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint
