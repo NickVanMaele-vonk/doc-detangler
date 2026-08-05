@@ -122,8 +122,12 @@ added (criterion 7).
   structural guarantees would rest on re-parsing prose, the exact failure D9
   exists to prevent. **Prospective** — it takes effect per document as each
   comes to exist, and for the glossary when the drift lint that guards it
-  exists; today `glossary.md` is still generated and held by
-  `detangle generate --check`.
+  exists; today `glossary.md` is a **seed** that `detangle generate` wrote
+  once, and **nothing guards it** — `generate --check` still exists as a
+  command but was withdrawn as a CI gate, so an edit to the file is mirrored
+  nowhere and checked by nothing until the drift lint is built. Re-running
+  `detangle generate` rewrites the file in full and would discard every human
+  edit; there is no guard against that either.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
   `state/section-map.yaml`, `manifest.yaml`. Not in this list: the Mermaid
