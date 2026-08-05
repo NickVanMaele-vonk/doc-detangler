@@ -39,11 +39,15 @@ CHECKS = frozenset(
         "plan-overlap",
         "plan-section-unknown",
         "plan-record-unknown",
+        "plan-repair-unsafe",
     }
 )
 
 SECTION_KINDS = ("head", "generated", "content")
 NOISE_KINDS = ("furniture", "artifact", "navigation")
+#: Presentation transforms an assignment may declare. Each is implemented
+#: deterministically by the renderer; declaring one is a stage-A judgment.
+RENDER_HINTS = ("history-list", "part-row", "note-italic")
 SECTION_ID = re.compile(r"^head$|^[a-z]-[0-9a-f]{8}$")
 HASH = re.compile(r"^sha256:[0-9a-f]{64}$")
 
@@ -63,28 +67,38 @@ class Plan:
     pinned_blob: str | None
     sections: list[Section] = field(default_factory=list)
     assignments: list[dict] = field(default_factory=list)
-    rejoins: list[dict] = field(default_factory=list)
     noise: list[dict] = field(default_factory=list)
     inline_removals: list[dict] = field(default_factory=list)
+    repairs: list[dict] = field(default_factory=list)
     definitions: list[dict] = field(default_factory=list)
     additions: list[dict] = field(default_factory=list)
 
     def section_ids(self) -> set[str]:
         return {s.id for s in self.sections}
 
+    def blocks_of(self, entry: dict) -> list[str]:
+        """The block hashes an assignment claims — one, or a fragment list.
+
+        A page-split rejoin is an assignment with ``fragments``: one output
+        unit from several source blocks, sitting at one position in the
+        section's ordered stream — order within a section is a stage-A
+        judgment, so it lives in the plan, not in source order.
+        """
+        if "fragments" in entry:
+            return [h for h in entry.get("fragments", []) if isinstance(h, str)]
+        block = entry.get("block")
+        return [block] if isinstance(block, str) else []
+
     def covered(self) -> dict[str, list[str]]:
         """Block hash → the roles claiming it (for coverage/overlap checks).
 
-        A rejoin's fragments count as covered by the rejoin; a noise entry
-        covers every occurrence of its hash, which is what makes the four
-        identical bare-rule blocks one entry rather than four.
+        A noise entry covers every occurrence of its hash, which is what
+        makes the four identical bare-rule blocks one entry rather than four.
         """
         roles: dict[str, list[str]] = {}
         for a in self.assignments:
-            roles.setdefault(a.get("block", ""), []).append("assignment")
-        for r in self.rejoins:
-            for h in r.get("fragments", []):
-                roles.setdefault(h, []).append("rejoin")
+            for h in self.blocks_of(a):
+                roles.setdefault(h, []).append("assignment")
         for n in self.noise:
             roles.setdefault(n.get("block", ""), []).append("noise")
         return roles
@@ -93,9 +107,9 @@ class Plan:
 LIST_FIELDS = (
     "sections",
     "assignments",
-    "rejoins",
     "noise",
     "inline_removals",
+    "repairs",
     "definitions",
     "additions",
 )
@@ -160,12 +174,11 @@ def load_plan(path: Path, root: Path) -> tuple[Plan | None, list[Finding]]:
                     )
 
     for key, entries, req in (
-        ("assignments", plan.assignments, ("block", "section")),
-        ("rejoins", plan.rejoins, ("section", "fragments")),
         ("noise", plan.noise, ("block", "kind")),
         ("inline_removals", plan.inline_removals, ("block", "remove")),
+        ("repairs", plan.repairs, ("block", "from", "to")),
         ("definitions", plan.definitions, ("record", "section")),
-        ("additions", plan.additions, ("section", "form")),
+        ("additions", plan.additions, ("section", "form", "text")),
     ):
         for i, entry in enumerate(entries):
             missing = [k for k in req if k not in entry]
@@ -173,6 +186,24 @@ def load_plan(path: Path, root: Path) -> tuple[Plan | None, list[Finding]]:
                 findings.append(
                     error("plan-schema", f"{rel}:{key}[{i}]", f"missing {missing}")
                 )
+    for i, a in enumerate(plan.assignments):
+        if "section" not in a or not (("block" in a) ^ ("fragments" in a)):
+            findings.append(
+                error(
+                    "plan-schema",
+                    f"{rel}:assignments[{i}]",
+                    "needs 'section' and exactly one of 'block' / 'fragments'",
+                )
+            )
+        hint = a.get("render")
+        if hint is not None and hint not in RENDER_HINTS:
+            findings.append(
+                error(
+                    "plan-schema",
+                    f"{rel}:assignments[{i}]",
+                    f"render {hint!r} not one of {list(RENDER_HINTS)}",
+                )
+            )
     for i, n in enumerate(plan.noise):
         if n.get("kind") is not None and n["kind"] not in NOISE_KINDS:
             findings.append(
@@ -242,7 +273,8 @@ def validate_plan(
             )
 
     for i, a in enumerate(plan.assignments):
-        check_hash(f"{rel}:assignments[{i}]", a.get("block"))
+        for h in plan.blocks_of(a):
+            check_hash(f"{rel}:assignments[{i}]", h)
         if a.get("section") not in section_ids:
             out.append(
                 error(
@@ -251,21 +283,23 @@ def validate_plan(
                     f"section {a.get('section')!r} is not declared",
                 )
             )
-    for i, r in enumerate(plan.rejoins):
-        for h in r.get("fragments", []):
-            check_hash(f"{rel}:rejoins[{i}]", h)
-        if r.get("section") not in section_ids:
-            out.append(
-                error(
-                    "plan-section-unknown",
-                    f"{rel}:rejoins[{i}]",
-                    f"section {r.get('section')!r} is not declared",
-                )
-            )
     for i, n in enumerate(plan.noise):
         check_hash(f"{rel}:noise[{i}]", n.get("block"))
     for i, entry in enumerate(plan.inline_removals):
         check_hash(f"{rel}:inline_removals[{i}]", entry.get("block"))
+    for i, r in enumerate(plan.repairs):
+        check_hash(f"{rel}:repairs[{i}]", r.get("block"))
+        frm, to = str(r.get("from", "")), str(r.get("to", ""))
+        if re.sub(r"\s+", "", frm) != re.sub(r"\s+", "", to):
+            out.append(
+                error(
+                    "plan-repair-unsafe",
+                    f"{rel}:repairs[{i}]",
+                    f"{frm!r} → {to!r} is not whitespace-only — a repair may "
+                    "rejoin split characters, never change them (the guard "
+                    "may make word-preserving edits only)",
+                )
+            )
     for kind, entries in (
         ("definitions", plan.definitions),
         ("additions", plan.additions),

@@ -98,7 +98,7 @@ def test_an_unknown_hash_is_reported(mini_repo):
 
 def test_an_undeclared_section_is_reported(mini_repo):
     text = full_plan_text(mini_repo) + (
-        "additions:\n  - {section: u-99999999, form: ai-addition-section}\n"
+        "additions:\n  - {section: u-99999999, form: ai-addition-section, text: x}\n"
     )
     assert checks(run(mini_repo, text)) == ["plan-section-unknown"]
 
@@ -174,3 +174,60 @@ def test_the_real_plan_validates_against_the_real_corpus():
     assert findings == [], [f"{f.check}: {f.message}" for f in findings]
     assert len(plan.definitions) == 35
     assert len(plan.sections) == 9
+
+
+def test_a_fragmented_assignment_covers_all_its_blocks(mini_repo):
+    """A page-split rejoin is one ordered unit claiming several blocks."""
+    hashes = mini_hashes(mini_repo)
+    lines = [f"  - {{block: {h}, section: {SEC}}}" for h in hashes[2:]]
+    text = (
+        "doc: U\n"
+        f"sections:\n  - {{id: {SEC}, title: Everything, kind: content}}\n"
+        "assignments:\n"
+        f"  - section: {SEC}\n"
+        "    fragments:\n"
+        f"      - {hashes[0]}\n"
+        f"      - {hashes[1]}\n" + "\n".join(lines) + "\n"
+    )
+    assert run(mini_repo, text) == []
+
+
+def test_an_assignment_needs_exactly_one_of_block_and_fragments(mini_repo):
+    path = write_plan(
+        mini_repo,
+        "doc: U\n"
+        f"sections:\n  - {{id: {SEC}, title: x, kind: content}}\n"
+        f"assignments:\n  - {{section: {SEC}}}\n",
+    )
+    _, findings = load_plan(path, mini_repo.root)
+    assert "plan-schema" in checks(findings)
+
+
+def test_a_whitespace_only_repair_is_allowed(mini_repo):
+    hashes = mini_hashes(mini_repo)
+    text = full_plan_text(mini_repo) + (
+        f'repairs:\n  - {{block: {hashes[0]}, from: "St ep", to: "Step"}}\n'
+    )
+    assert run(mini_repo, text) == []
+
+
+def test_a_repair_that_changes_characters_is_unsafe(mini_repo):
+    """The guard may make word-preserving edits only (Nick, 2026-08-04)."""
+    hashes = mini_hashes(mini_repo)
+    text = full_plan_text(mini_repo) + (
+        f'repairs:\n  - {{block: {hashes[0]}, from: "must", to: "should"}}\n'
+    )
+    findings = run(mini_repo, text)
+    assert checks(findings) == ["plan-repair-unsafe"]
+
+
+def test_an_unknown_render_hint_is_a_schema_error(mini_repo):
+    hashes = mini_hashes(mini_repo)
+    path = write_plan(
+        mini_repo,
+        "doc: U\n"
+        f"sections:\n  - {{id: {SEC}, title: x, kind: content}}\n"
+        f"assignments:\n  - {{block: {hashes[0]}, section: {SEC}, render: sparkle}}\n",
+    )
+    _, findings = load_plan(path, mini_repo.root)
+    assert "plan-schema" in checks(findings)

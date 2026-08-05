@@ -13,9 +13,9 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, registers, tables, views
+from . import __version__, graph, registers, restructure, tables, views
 from .config import Config, find_root
-from .findings import EXIT_CLEAN, EXIT_USAGE, UsageError, report
+from .findings import EXIT_CLEAN, EXIT_FINDINGS, EXIT_USAGE, UsageError, report
 from .graph import emit
 
 # `graph` re-exports the *function* `build`, which shadows the submodule.
@@ -24,6 +24,7 @@ from .records import BlockIndex, load_records
 from .records import checks as record_checks
 from .records import load as records_load
 from .registers import load_cycles, load_waivers
+from .restructure import execute as restructure_execute
 
 
 def _selected(records, root: Path, paths: list[str]):
@@ -200,6 +201,71 @@ def cmd_generate(args: argparse.Namespace) -> int:
     return report(findings, args.json, summary, waived)
 
 
+def cmd_restructure(args: argparse.Namespace) -> int:
+    """Execute a reorder plan — ADR-002 Decision 3, the detangle run itself.
+
+    The plan is data the tool never authors; an error-grade plan finding
+    (an undecided block, a broken reference, an unsafe repair) blocks
+    execution outright — writing a document from an incomplete plan would
+    launder a coverage hole into an omission.
+    """
+    root = find_root(Path(args.root) if args.root else None)
+    config = Config.load(root, Path(args.config) if args.config else None)
+    registry = config.registry()
+
+    records, findings = load_records(config.directory("concepts"), root)
+    plan, plan_findings = restructure.load_plan(Path(args.plan), root)
+    findings.extend(plan_findings)
+
+    ran = (
+        restructure.CHECKS
+        | restructure_execute.CHECKS
+        | records_load.CHECKS
+        | registers.WAIVER_CHECKS
+    )
+    out_path = Path(args.out)
+    try:
+        rel = str(out_path.resolve().relative_to(root.resolve()))
+    except ValueError:
+        rel = str(out_path)  # outside the repo is fine for an output
+
+    if plan is not None:
+        index = BlockIndex(root=root)
+        blobs = record_checks.GitBlobs(root)
+        doc_path = registry.paths.get(plan.doc)
+        head = blobs.head(doc_path) if doc_path in registry.component_docs else None
+        findings.extend(
+            restructure.validate_plan(plan, registry, index, records, head)
+        )
+
+    blocked = plan is None or any(f.severity == "error" for f in findings)
+    summary: dict = {"plan": args.plan}
+    if not blocked:
+        source = (root / registry.paths[plan.doc]).read_text(encoding="utf-8")
+        text = restructure_execute.execute(plan, records, source)
+        if args.check:
+            findings.extend(restructure_execute.check_current(text, out_path, rel))
+        else:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(text, encoding="utf-8")
+        summary.update(
+            {
+                "doc": plan.doc,
+                "sections": len(plan.sections),
+                "units": len(plan.assignments),
+                "definitions": len(plan.definitions),
+                "checked" if args.check else "wrote": rel,
+            }
+        )
+    else:
+        summary["blocked"] = "plan findings prevent execution"
+
+    findings, waived = _waived(config, root, findings, ran)
+    summary["waived"] = len(waived)
+    code = report(findings, args.json, summary, waived)
+    return max(code, EXIT_FINDINGS) if blocked and code == EXIT_CLEAN else code
+
+
 def _query(cg, args: argparse.Namespace) -> int:
     """Reachability lookups. Read-only: they never write the graph."""
     node = args.impact or args.requires
@@ -300,6 +366,38 @@ def build_parser() -> argparse.ArgumentParser:
         help="overwrite an existing glossary.md, discarding any human edits",
     )
     generate.set_defaults(func=cmd_generate)
+
+    restructure_cmd = sub.add_parser(
+        "restructure",
+        help="execute a reorder plan and write the restructured document",
+        description=(
+            "Executes a machine-readable reorder plan (ADR-002): source "
+            "blocks move verbatim, declared fragments rejoin, declared noise "
+            "drops, definitions render from the records, and the authored "
+            "Category C additions come from the plan. An error-grade plan "
+            "finding blocks execution. --check re-executes and compares "
+            "against the committed output instead of writing."
+        ),
+    )
+    restructure_cmd.add_argument("--plan", required=True, help="the plan file")
+    restructure_cmd.add_argument(
+        "--out", required=True, help="output path for the restructured document"
+    )
+    restructure_cmd.add_argument(
+        "--json", action="store_true", help="machine-readable"
+    )
+    restructure_cmd.add_argument(
+        "--config", help="config file (default: detangle.toml)"
+    )
+    restructure_cmd.add_argument(
+        "--root", help="repository root (default: nearest ancestor)"
+    )
+    restructure_cmd.add_argument(
+        "--check",
+        action="store_true",
+        help="do not write; fail if the committed output differs from a re-execution",
+    )
+    restructure_cmd.set_defaults(func=cmd_restructure)
     return parser
 
 
