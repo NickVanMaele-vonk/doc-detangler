@@ -17,9 +17,16 @@ which definitions depend on which, then use topological ordering to restructure
 documents so every concept is defined before first use. A verification harness
 proves losslessness — no meaning lost, no meaning invented.
 
-The input is three documents, the output is **five** documents - the three restructured documents, plus a glossary, plus an index. 
+The input is **two sets of documents** (Nick, 2026-08-05). The **detangle
+set** — three documents today — is what gets restructured; the output is
+**five** documents: the three restructured documents, plus a glossary, plus
+an index. The **reference set** is additional read-only documents that
+supply definitions and context — never modified, never counted for term
+placement, but a definition found only there is lifted into the output with
+provenance pointing at the reference file. Both sets are declared in
+`detangle.toml [documents]` (`components` and `references`).
 
-A single `glossary.md` is read first and holds the definition of every term used in more than one document; terms local to one document are defined there. No term is defined twice, and none is left undefined. 
+A single `glossary.md` is read first and holds the definition of every term used in more than one detangle-set document; terms local to one document are defined there. No term is defined twice, and none is left undefined. 
 Putting the shared definitions ahead of everything is what makes "defined before first use" achievable across a heavily interdependent set — and it turns cross-document definitional cycles, which no reordering can fix, into intra-glossary ones, which reordering can. The glossary is ordered **topologically**, so it reads start to finish without ever meeting an undefined term. 
 
 Reading order and lookup order are separated rather than compromised. 
@@ -68,7 +75,7 @@ If one term appears in more than one input document, then:
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
 | `src/detangle/` | The toolchain: `validate`, `graph` and `generate` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
-| `detangle.toml` | Configuration: `param-*` values from the rubric, the corpus document map, validation thresholds. No value is hard-coded in the package |
+| `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |

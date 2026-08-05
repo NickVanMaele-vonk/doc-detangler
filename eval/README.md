@@ -33,15 +33,20 @@ different, so neither is derived from the other.
 
 | File | Reason |
 | --- | --- |
-| `samples/blueprint-analytical-layer.md` (`A`) | Read-only reference, excluded from the placement count (Nick, 2026-07-22); an `(A)` flag on a record is informational only |
-| `samples/prototype-BC17.md` (`P`) | The prototype never counts (2026-07-26); `(P)`-only terms stay candidate rows until a U/S/M usage appears |
+| `samples/blueprint-analytical-layer.md` (`A`) | Reference-set document (read-only; Nick, 2026-07-22 and 2026-08-05): excluded from the placement count and from detangling, citable for provenance |
+| `samples/prototype-BC17.md` (`P`) | Reference-set document (2026-07-26 and 2026-08-05): never counts for placement; `(P)`-only terms stay candidate rows until a U/S/M usage appears |
 | `samples/dummydata-trades.csv`, `samples/dummydata-systemalerts.csv` | Data fixtures, not prose; nothing in the output set derives from them |
 
-Excluding `A` and `P` costs the evaluation nothing, which was checked rather
-than assumed: **all 359 concept records draw their `source` spans from `U`, `S`
-and `M` only** — no record cites `A` or `P` for provenance. So no definition in
-the output set traces to a document outside the test inputs, and the Phase 7
-fabrication check (7.3) can resolve every claim against the three inputs above.
+**Correction (2026-08-05).** This file originally claimed the exclusion was
+verified to cost nothing — "all 359 concept records draw their `source` spans
+from `U`, `S` and `M` only". That was **wrong**: measured against the records,
+2 cite `A` and 17 cite `P` under `source:` (`mts-spa`'s definition comes
+entirely from `A`), and 10 more cite `P` in `conflict:` blocks. The exclusion
+of `A` and `P` from the golden *targets* stands — they are reference-set
+documents and are never detangled — but it is not free: the Phase 7
+fabrication check (7.3) needs the reference set available to resolve those
+spans, and definitions lifted from a reference document (research-memo §Two
+input sets) trace outside the three test inputs by design.
 
 ## Golden target for step 5.2
 

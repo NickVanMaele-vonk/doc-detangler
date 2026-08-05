@@ -20,6 +20,23 @@ markdown documents that:
 Representative "bad input" examples: `blueprint-UCE-shortened.md`,
 `blueprint-SBSP-shortened.md`, `blueprint-MCL-shortened.md`.
 
+**The tool takes two input sets (Nick, 2026-08-05).** The **detangle set**
+is the documents being restructured — the three component blueprints today.
+The **reference set** is additional read-only documents that supply
+definitions and context — today the full Analytical Layer blueprint `(A)`
+and the BC-17 prototype spec `(P)`, and over time the smaller side documents
+business users write. Reference documents are never modified, never
+restructured, and never produce an output document. They never count toward
+placement (C9) or the orphan measure, but a definition found only in a
+reference document is **lifted as the definition**, with a real provenance
+span into the reference file — the business wrote the wording, so C2 is
+satisfied. The term keeps a flag saying the detangle set itself never
+defines it, so the convolutedness measure survives the lift. Both sets are
+declared in `detangle.toml [documents]` (`components` and `references`);
+adding a side document is a config edit, never a code change. This
+generalizes the per-document rulings of 2026-07-22 (`A`) and 2026-07-26
+(`P`) into a rule.
+
 **The output is a living document set, and the tool has two operating
 modes.** After delivery the set keeps evolving: the glossary is completed
 over time, and users or AI agents may reorder the core documents or add
@@ -32,26 +49,36 @@ Decision D10 (research-memo §D10) records the design.
 
 | # | Constraint | Enforcement |
 |---|-----------|-------------|
-| C1 | **No meaning lost.** Every substantive claim in the source must appear in the output. | Verification harness (Phase 7) |
-| C2 | **No meaning invented.** Every output claim traces to the source, or is explicitly marked as bridging text. | Verification harness (Phase 7) |
+| C1 | **No meaning lost.** Every substantive claim in the **detangle set** must appear in the output. A claim that appears only in a reference document is out of scope: nothing detangles it, and its absence from the output is not an omission (two input sets, 2026-08-05). | Verification harness (Phase 7) |
+| C2 | **No meaning invented.** Every output claim traces to **either input set** — the detangle set or a read-only reference document — or is explicitly marked as bridging text. A definition found only in a reference document may be lifted verbatim, carrying a provenance span into the reference file (Nick, 2026-08-05); an expansion or gloss is still not a definition and is never promoted into one. | Verification harness (Phase 7) |
 | C3 | **Omissions require human approval.** Any omission is surfaced as an Azure DevOps PR comment; branch policy requires all comments Resolved before merge. | DevOps integration (Phase 8) |
 | C4 | **All document updates go through PRs with reviewer approval.** The tool posts findings as PR comments; it never merges. A PR assembles changes relating to similar concepts and may touch any number of documents; it may not change more terms than `param-max-terms-changed-per-PR`. | DevOps integration (Phase 8) |
 | C5 | **Bridging/explanatory additions are allowed** but must be visually and mechanically distinguishable from source-derived text. | Rubric (Phase 1) + fabrication check (Phase 7) |
 | C6 | **Version-controllable artifacts only.** Concept graph is a plain-text edge list (`concept-graph.yaml`), **generated** — from the records' canonical `depends_on` and from the bodies for usage edges — and never hand-edited; hand-editing it fails CI. A Mermaid render displays natively in Azure DevOps (D2: SKOS concept model, Mermaid-compatible view), but is produced **on demand** by `detangle graph --mmd <id>` for one concept's neighbourhood rather than committed as a whole-set `concept-graph.mmd` (Nick, 2026-08-04): 359 nodes render as one 238-node tangle plus 108 unconnected dots, whereas a single concept's neighbours are typically two or three boxes and eight at one step further out. Nobody opens a concept graph to look at 359 terms; they open it to ask what a definition rests on and what breaks if it changes, which is one concept at a time. Canonicity sits in the concept records, not in this file (C11, D9/D10) — D2's original "source of truth" wording predated D9 and was corrected by Nick's ruling of 2026-07-30 (ADR-001). | Phase 3 |
-| C7 | **No meaning weakened.** Numbers, thresholds, units, comparison operators, normative modality (`must` vs `should`), scoping qualifiers, internal codes, regulatory citations, and classification/version metadata are reproduced verbatim wherever their claim survives. A claim may map correctly and still have lost its force — so this is checked mechanically, independent of C1/C2. | Precision check (Phase 6), rubric criterion 5 |
+| C7 | **No meaning weakened.** Numbers, thresholds, units, comparison operators, normative modality (`must` vs `should`), scoping qualifiers, internal codes, regulatory citations, and classification/version metadata are reproduced verbatim wherever their claim survives. A claim may map correctly and still have lost its force — so this is checked mechanically, independent of C1/C2. The mechanical comparison runs over the **detangle set plus the spans actually lifted from reference documents** — never over whole reference documents, whose unclaimed content would flood the diff (2026-08-05). | Precision check (Phase 6), rubric criterion 5 |
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
-| C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one document is defined in the glossary and only there; a term used in exactly one document is defined in that document — **unless a glossary definition depends on it, in which case it joins the glossary too** (Nick's Case 3 ruling, 2026-08-03: the glossary is read first, so a term it leans on has nowhere else to be looked up). No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
-| C10 | **Reading order and lookup order are separated.** `glossary.md` is ordered topologically so it can be read start to finish; `index.md` is alphabetical and covers every term across the other four documents. The index is generated, contains no definitions, and is verified by regeneration rather than by review. | Phase 3 + rubric criteria 3 and 6 |
+| C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one **detangle-set** document is defined in the glossary and only there; a term used in exactly one is defined in that document — reference documents never count toward the tally (2026-08-05, generalizing the `(A)`/`(P)` rulings) — **unless a glossary definition depends on it, in which case it joins the glossary too** (Nick's Case 3 ruling, 2026-08-03: the glossary is read first, so a term it leans on has nowhere else to be looked up). No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
+| C10 | **Reading order and lookup order are separated.** `glossary.md` is ordered topologically so it can be read start to finish; `index.md` is alphabetical and covers every term across the rest of the output set. The index is generated, contains no definitions, and is verified by regeneration rather than by review. | Phase 3 + rubric criteria 3 and 6 |
 | C11 | **Links run forward only; usage data lives in the graph.** Each section links its first use of a glossary term to that term's entry. No document links back to where its terms are used: a glossary defines terms, it does not record usage. Usage locations are graph edges in `concept-graph.yaml`, **derived** from the bodies and regenerated on every change (D10) — dependency edges in the concept records are the only canonical edge data. | Phase 3 + rubric criteria 1 and 6 |
-| C12 | **Coherence survives continuous change.** Bodies remain directly editable by humans and AI agents — and from Nick's ruling of 2026-08-04 a document is also the **canonical home** of the definitions placed in it — `glossary.md` included, which becomes the fourth editable document rather than a generated view — delimited by tool-stamped `<!-- concept:<id>:start -->` markers, with the concept record carrying a derived copy (D9 amendment). The guard may make **word-preserving** edits, machine-verified to change no words and always accompanied by a PR comment: stamping section IDs, and reordering glossary entries a human left out of topological order. It may never change meaning. The tool **proposes** the `depends_on` changes a body edit implies and waits for a human ruling; it never applies them (D10 element 4, reaffirmed the same day). The price of an edit is an incremental **drift lint** run by branch policy on every docs PR (new orphans, inline redefinitions, use-before-definition, placement-boundary crossings, contradiction candidates, provenance staleness). Addressing is two-layer: tool-stamped section IDs are the identity layer (authors — human or AI — are never asked to create one); content hashes in a generated section map are the change-detection layer; line numbers appear nowhere, and staleness is flagged, never silent. Derived artifacts (usage edges, first-use links, `index.md`, `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`) are regenerated, never hand-maintained. A generated `manifest.yaml` binds the versions of every artifact in the set. | Phase 10 (schema fields land in Phase 3) + rubric criterion 9 |
+| C12 | **Coherence survives continuous change.** Bodies remain directly editable by humans and AI agents — and from Nick's ruling of 2026-08-04 a document is also the **canonical home** of the definitions placed in it — `glossary.md` included, which becomes the fourth editable document rather than a generated view — delimited by tool-stamped `<!-- concept:<id>:start -->` markers, with the concept record carrying a derived copy (D9 amendment). The guard may make **word-preserving** edits, machine-verified to change no words and always accompanied by a PR comment: stamping section IDs, and reordering glossary entries a human left out of topological order. It may never change meaning. The edit contract covers the detangle set and the glossary only: **reference documents are read-only to the tool** — never edited, never stamped, so their spans stay on heading-path + hash anchoring permanently (2026-08-05). The tool **proposes** the `depends_on` changes a body edit implies and waits for a human ruling; it never applies them (D10 element 4, reaffirmed the same day). The price of an edit is an incremental **drift lint** run by branch policy on every docs PR (new orphans, inline redefinitions, use-before-definition, placement-boundary crossings, contradiction candidates, provenance staleness). Addressing is two-layer: tool-stamped section IDs are the identity layer (authors — human or AI — are never asked to create one); content hashes in a generated section map are the change-detection layer; line numbers appear nowhere, and staleness is flagged, never silent. Derived artifacts (usage edges, first-use links, `index.md`, `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`) are regenerated, never hand-maintained. A generated `manifest.yaml` binds the versions of every artifact in the set. | Phase 10 (schema fields land in Phase 3) + rubric criterion 9 |
 
 ## 3. Scope
 
 - **Domain:** MTSAM Analytical Layer documentation (MAR surveillance context).
+- **Two input sets** (Nick, 2026-08-05; see §1): the **detangle set** (the
+  documents being restructured) and the **reference set** (read-only
+  documents supplying definitions and context — never modified, never
+  counted for placement, but citable for provenance and liftable for
+  definitions). "The source" in this plan means the detangle set unless a
+  constraint says otherwise; C2's tracing runs over both sets.
 - **Source corpus provenance:** every document in `samples/` was created the
   same way — drafted with AI assistance, and not closely reviewed by its human
   author (Nick, 2026-07-31). Because this holds uniformly across the corpus it
-  is stated once here and carried by no schema field; a record's provenance
+  is stated once here and carried by no schema field — a statement scoped to
+  the five documents in `samples/` today: future reference documents written
+  by business users arrive with their own provenance, and if authorship ever
+  stops being uniform it must move into per-document metadata rather than
+  stay a blanket claim (2026-08-05); a record's provenance
   records whether its wording is *anchored* to a source span, never who
   authored the source. It does not weaken C1, C2 or C7. Those constrain
   fidelity to the source — nothing lost, nothing invented, nothing weakened —
@@ -68,7 +95,7 @@ Decision D10 (research-memo §D10) records the design.
   standalone deliverable valuable to the MTSAM project regardless of agent outcome.
   It is the **first document of the output set**, read before the three
   blueprints, and holds the definition of every term used in more than one
-  document (C9). It is reader-facing, not a tool artifact, and is subject to
+  detangle-set document (C9). It is reader-facing, not a tool artifact, and is subject to
   the full rubric itself.
 - **Index:** a fifth document, `index.md` — alphabetical, spanning all four
   others, listing every term with the location of its definition and nothing
@@ -94,8 +121,9 @@ The concept dependency graph is not a side feature; it drives the pipeline:
 - **Alphabetical projection** of the same term set = `index.md`. One graph,
   two renderings: topological for reading, alphabetical for lookup.
 - **Placement** = a computed property, not a judgement, in **two limbs**
-  (C9; limb 2 added by Nick's Case 3 ruling of 2026-08-03):
-  1. a term used in ≥ 2 documents is defined in the glossary;
+  (C9; limb 2 added by Nick's Case 3 ruling of 2026-08-03; both limbs count
+  the detangle set only — reference documents never count, 2026-08-05):
+  1. a term used in ≥ 2 detangle-set documents is defined in the glossary;
   2. otherwise, a term that any glossary definition **depends on** is defined
      in the glossary as well — the glossary is read first, so a reader who
      meets the term there has nowhere to look it up. This is the dependency
@@ -268,7 +296,7 @@ input to any architecture and de-risks everything downstream.
 | Step | Description |
 |------|-------------|
 | 3.1 | Extract candidate terms from the three shortened files + full Analytical Layer blueprint (UCE, SBSP, MCL, IBEB, CQS, BOA, …). LLM-assisted, human-reviewed. |
-| 3.2 | Count each term's document usage and apply the **placement test** (C9): used in ≥ 2 documents → glossary; otherwise, depended on by a glossary definition → glossary (Case 3, 2026-08-03); otherwise → that document. Placement is computed, not judged. |
+| 3.2 | Count each term's document usage and apply the **placement test** (C9): used in ≥ 2 detangle-set documents → glossary; otherwise, depended on by a glossary definition → glossary (Case 3, 2026-08-03); otherwise → that document. Placement is computed, not judged. |
 | 3.3 | Draft one-sentence definitions per term, sourced from the documents. Flag terms used but never defined (orphans), and terms defined differently in two documents (conflicts — surface, do not reconcile). |
 | 3.4 | Populate the canonical `depends_on` edges in the concept records, and **generate** the dependency edge list (`concept-graph.yaml`) from them; generate the Mermaid render (`concept-graph.mmd`); run topological sort and cycle detection. ISO 704 §6.5.2 defines the cycle policy (inner/outer circle), §6.4.4 the substitution-principle diagnostic; the self-loop check needs a documented-exception path per §6.5.2's graded prohibition. |
 | 3.5 | Assemble `glossary.md`: an overview, then the definitions in **topological order** (`param-glossary-order`), so the glossary reads start to finish without ever meeting an undefined term. No alphabetical section — lookup lives in the index. The glossary is reader-facing and must pass criteria 1, 2, and 3 itself. **Design approved by Nick 2026-08-03; built 2026-08-04.** `detangle generate [--check]` writes `glossary.md` from the records, projecting the 155 glossary-placed ones onto `ConceptGraph.reading_order()`, which already condenses the accepted cycle and puts its entry point first. Seven points settled: (1) **scope is `glossary.md` alone** — `index.md` waits on the document bodies, which carry the definition site for 94 of the 172 defined terms (DoD criterion 4), and `concept-graph.mmd` needs its own scoping decision before 359 nodes are rendered as one diagram; (2) the **overview is a marked gap**, not generated prose — the tool will not invent domain text (C2), so it emits a placeholder block and the finding that names it, and `param-overview-max-words` stays unset rather than guessed; (3) the **77 undefined entries are rendered with an explicit "not defined in the corpus" note**, never omitted — Case 1 above, and Phase 5's first-use citations need the anchors to exist; (4) **anchors are emitted markers** — `<!-- concept:<id> -->` before each heading, so a PR comment on generated markdown resolves to the nearest preceding marker and hence to its record (D9), with no line offsets anywhere (D10); (5) a **sources block** lists each corpus document with the `git_blob` its records verified against, which satisfies "the glossary records the version of every source it draws on" without a hand-typed version string, per the 2026-07-31 ruling that declared versions go and git carries release identity; (6) `detangle generate --check` becomes a **fourth CI gate**, mirroring `graph --check`; (7) **no per-record finding for the 77 undefined glossary entries** — `detangle graph` already reports the orphan count, criterion 3's "no term left undefined" is an end-state invariant, and the rendered note in (3) is the flag Case 1 asks for. **Delivered, with two consequences that only surfaced in the build.** (a) Point 6 is held back — and after the rulings of 2026-08-04 it is withdrawn: `glossary.md` is edited by humans, so byte-comparing it is incoherent and the fourth gate becomes the Phase 10 drift lint instead. (b) Point 2 left the overview's *canonical home* open, and that too is closed: the glossary is a document, so the overview is simply its own, written in place. **The file this step generated is a seed, not a standing output** — from 2026-08-04 `glossary.md` is the fourth editable document, its definitions canonical in the file and mirrored into the records. Two things the rubric requires were rendered beyond the seven points, both from already-approved rulings: aliases per entry (criterion 3, "synonyms and aliases recorded explicitly") and a generated bridging marker on the accepted cycle's forward reference (criterion 1 clause 2, `registers/cycles.yaml`). C9 limb 2 is confirmed empirically — no glossary definition depends on a term outside the glossary, so the accepted cycle is the file's only forward reference. |
@@ -317,7 +345,7 @@ Model/effort recommendation: Opus/high
 
 | Step | Description |
 |------|-------------|
-| 5.1 | Designate the three shortened files as test inputs. **Done 2026-08-04** — `eval/README.md` pins `U`, `S` and `M` to the git blobs they carried at commit `a088ee9`, excludes `A`, `P` and the two CSV fixtures, and names `U` (3,835 words, the smallest and first in reading order) as the golden target for 5.2. Excluding `A` and `P` was verified to cost nothing: all 359 records draw their `source` spans from `U`/`S`/`M` only, so no definition in the set traces outside the test inputs. Pinned **now** with a re-baseline later (Nick's ruling): the backlog B-1 source correction that fixes the three `definition-token` hyphen defects will rewrite all three blobs and void whatever golden exists then, and Phase 5 is not held for it. |
+| 5.1 | Designate the three shortened files as test inputs. **Done 2026-08-04** — `eval/README.md` pins `U`, `S` and `M` to the git blobs they carried at commit `a088ee9`, excludes `A`, `P` and the two CSV fixtures, and names `U` (3,835 words, the smallest and first in reading order) as the golden target for 5.2. **Correction (2026-08-05):** the claim recorded here at 5.1 — that all 359 records draw their `source` spans from `U`/`S`/`M` only — was **wrong**: 2 records cite `A` and 17 cite `P` under `source:` (`mts-spa` is defined entirely from `A`), and 10 more cite `P` in `conflict:` blocks. The exclusion of `A`/`P` from the golden targets stands, but it is not free — the Phase 7 fabrication check (7.3) needs the reference set available to resolve those spans. Pinned **now** with a re-baseline later (Nick's ruling): the backlog B-1 source correction that fixes the three `definition-token` hyphen defects will rewrite all three blobs and void whatever golden exists then, and Phase 5 is not held for it. |
 | 5.2 | Hand-produce (AI-assisted, human-approved) one **golden** restructured output for the smallest file — the reference standard. Because of C9/C10 the golden is a *triple*: the restructured document, the glossary slice holding its shared terms, and the index slice. A golden document without its glossary slice cannot demonstrate criterion 1. |
 | 5.3 | **Measure the review load.** Record, for the golden output: claims moved / derived / merged / relocated-to-glossary / added / omitted; terms changed; contradictions, conflicting definitions, and orphans found; and how many exceptions would have become PR comments. This is the first and cheapest real data on reviewability; confirm `param-max-terms-changed-per-PR` and set `param-max-comments-per-PR` and `param-low-confidence-threshold` from it. |
 
@@ -344,9 +372,9 @@ Model/effort recommendation: Fable or Opus/xhigh
 
 | Step | Description |
 |------|-------------|
-| 7.1 | **Claim decomposition:** split source into atomic claims (LLM-assisted). |
-| 7.2 | **Coverage check:** map each source claim to an output location, or flag as omission-pending-approval. |
-| 7.3 | **Fabrication check:** trace each output claim to source, or confirm it is marked bridging text. |
+| 7.1 | **Claim decomposition:** split the **detangle set** into atomic claims (LLM-assisted). Reference documents are never decomposed — their claims are not required in the output (C1, 2026-08-05). |
+| 7.2 | **Coverage check:** map each detangle-set claim to an output location, or flag as omission-pending-approval. Runs over the detangle set only. |
+| 7.3 | **Fabrication check:** trace each output claim to **either input set** — detangle or reference — or confirm it is marked bridging text. The reference set must be available to this check: lifted definitions resolve there (C2, 2026-08-05). |
 | 7.4 | **Structure checks (automatic):** concept-before-use ordering validated against the graph. |
 
 **Output:** verification report per run, committed alongside the document.

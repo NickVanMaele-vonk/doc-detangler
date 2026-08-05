@@ -35,11 +35,11 @@ Schema and anchoring rules below were approved by Nick on 2026-07-28
 | `status` | Lifecycle per D10 §6: `candidate → approved → published → deprecated`. New records start at `candidate`; promotion follows Nick's review |
 | `superseded_by` | Record id that replaces this one (renames/deprecations), else `null` |
 | `placement` | `glossary` \| `UCE` \| `SBSP` \| `MCL` — computed per C9, never judged. Two limbs: used in ≥ 2 component blueprints → `glossary`; otherwise depended on by a glossary definition → `glossary` (Case 3, 2026-08-03); otherwise that document. So a record can read `used_in: [U]` with `placement: glossary` and be correct |
-| `used_in` | Component blueprints using the term: subset of `[U, S, M]`. (A)/(P) never count (Nick's rulings 2026-07-22 / 2026-07-26); they appear in `flags` |
-| `definition` | One-sentence definition drafted from the sources (step 3.3). `null` for orphans — never invented (C2) |
-| `source` | Provenance spans — see anchoring rules |
+| `used_in` | Detangle-set documents using the term: subset of the `components` codes in `detangle.toml [documents]` (`[U, S, M]` today). Reference-set documents never count (Nick's rulings 2026-07-22 / 2026-07-26, generalized 2026-08-05); they appear in `flags` |
+| `definition` | One-sentence definition drafted from the sources (step 3.3). `null` for orphans — never invented (C2). A definition found only in a **reference-set** document is lifted with its provenance span (2026-08-05); the `orphan` flag survives the lift, because the flag measures the detangle set |
+| `source` | Provenance spans — see anchoring rules. `doc` must be a document registered in `detangle.toml [documents]`, from either set |
 | `depends_on` | Canonical dependency edges, "definition of X uses term Y" (D10 §4). Populated at step 3.4 |
-| `flags` | `orphan` (used but never defined in U/S/M), `conflict`, `A`, `P` |
+| `flags` | `orphan` (used but never defined in the detangle set), `conflict`, plus any reference-set code (`A`, `P` today) marking informational presence in that document |
 | `conflict` | If defined differently in two documents: both spans verbatim, surfaced, never reconciled (C8 / criterion 6) |
 | `review` | Nick's human review decision, carried from `work/term-extraction/candidate-terms-merged.md`. Nick's column — the assistant never fills in a decision |
 | `notes` | Optional free text for reviewed caveats (naming variants, meaning drift, version skew). Informational only, never machine-processed |

@@ -5,8 +5,13 @@ criterion 9 (continuous-change coherence) and its supporting scope,
 parameter, and criteria amendments added per decision D10, at Nick's
 direction; new parameter values remain proposals until set.
 **Phase:** 1.1 — complete; extended by D10
-**Last updated:** 2026-08-05 — `param-max-terms-changed-per-PR` raised from
-25 to 200 (Nick, 2026-08-05); no criterion text changed.
+**Last updated:** 2026-08-05 — two changes this day: (1)
+`param-max-terms-changed-per-PR` raised from 25 to 200 (Nick); (2) **two
+input sets** (Nick) — the detangle set and the read-only reference set are
+defined in Scope, the placement count and orphan measure are scoped to the
+detangle set, definitions found only in a reference document are lifted as
+Category B with provenance, and "Modify a reference document" joins the
+non-goals. Criteria 3, 4, 5 and 7 amended accordingly.
 
 A restructured document is "done" when it satisfies all nine criteria below,
 subject to the phase-dependent applicability rules in
@@ -16,10 +21,23 @@ subject to the phase-dependent applicability rules in
 
 ## Scope and applicability
 
-- **The output set is five documents.** Three input documents; a glossary
-  which is created based on the input documents and ranks as the first
+- **The output set is five documents.** The detangle set (three documents
+  today); a glossary which is created based on them and ranks as the first
   document of the set; and an index. Both the glossary and the index are
   reader-facing deliverables, not tool artifacts.
+- **The input is two sets** (Nick, 2026-08-05). The **detangle set** is the
+  documents being restructured; only its documents produce output documents,
+  and everything in this rubric that quantifies over "the source" quantifies
+  over it — placement counts, orphan measurement, omission checking,
+  verbatim-token diffing. The **reference set** is additional read-only
+  documents supplying definitions and context (today the full Analytical
+  Layer blueprint `(A)` and the BC-17 prototype spec `(P)`; over time the
+  smaller side documents business users write). Reference documents are
+  never modified and their claims are never required in the output — but a
+  definition found only in a reference document is **lifted as the
+  definition**, with a provenance span into the reference file, and the term
+  keeps its used-but-never-defined-here flag (see criteria 3 and 7). Both
+  sets are declared in `detangle.toml [documents]`.
 - **Reading order of the set:**
   `glossary.md` → Document 1 (UCE) → Document 2 (SBSP) → Document 3 (MCL).
   A term is "already defined" at any point after its definition site in this
@@ -32,9 +50,10 @@ subject to the phase-dependent applicability rules in
   in the reading order would put a bare term list in front of a reader who
   has not yet met a single concept.
 - **Where a term is defined — the single-definition rule:**
-  - a term used in **more than one document** is defined in `glossary.md`,
-    and **only** there;
-  - a term used in **exactly one document** is defined in that document, at
+  - a term used in **more than one detangle-set document** is defined in
+    `glossary.md`, and **only** there — reference documents never count
+    toward the tally (2026-08-05);
+  - a term used in **exactly one detangle-set document** is defined in that document, at
     or before its first use — **unless a glossary definition depends on it**,
     in which case it is defined in `glossary.md` too (Case 3, 2026-08-03);
   - no term is defined in two places.
@@ -45,7 +64,15 @@ subject to the phase-dependent applicability rules in
   derived copy, regenerated from the document and byte-compared, and
   hand-editing that copy fails CI with a pointer to the section. All 172
   defined terms work this way — 78 in the glossary, 94 across the three
-  documents — so there is no exception to remember.
+  documents — so there is no exception to remember. A definition **lifted
+  from a reference document** (2026-08-05) is no exception either: once
+  lifted, its output-set definition site owns it like any other, and the
+  span into the reference file is historical provenance — it records where
+  the wording came from at lift time, per the standing principle that corpus
+  provenance is a fact, not a status. If the reference document later
+  changes, the recorded blob goes stale and the lift is re-verified; the
+  reference file itself is never stamped with markers, so its spans stay on
+  heading-path + hash anchoring.
 
   The record still owns the **ontology**: identity (`id`, `term`, `aliases`),
   `placement`, `used_in`, `source` provenance, `depends_on`, `flags`,
@@ -73,7 +100,10 @@ subject to the phase-dependent applicability rules in
   files.
 - **Source version binding:** every restructured document records the exact
   source version it was derived from (e.g. `source: blueprint-MCL v21`).
-  `glossary.md` records the version of every source it draws on. When any
+  `glossary.md` records the version of every source it draws on — reference
+  documents included (2026-08-05): a lifted definition binds the reference
+  blob it was verified against, and a change to that blob re-opens
+  verification of the definitions lifted from it. When any
   source version changes, every output document depending on it is **not
   done** until re-verified.
 - **Set version binding (D10):** a generated `manifest.yaml` binds the whole
@@ -231,7 +261,9 @@ rule — and exactly one index entry pointing at it.
   regulator (MAR, MAR Article 12, ESMA, FSMA, CONSOB, OLO, BTP, …). These go
   in a **references** list pointing at the authoritative source, not in the
   glossary.
-- **Placement test:** term usage is counted across the source set. Used in
+- **Placement test:** term usage is counted across the **detangle set** —
+  reference documents never count (2026-08-05, generalizing the `(A)` and
+  `(P)` rulings of 2026-07-22 / 2026-07-26). Used in
   ≥ 2 documents → glossary. Used in exactly 1 → that document, **unless a
   glossary definition depends on it**, in which case it joins the glossary
   as well (Nick's Case 3 ruling, 2026-08-03). Both limbs are derived
@@ -254,7 +286,11 @@ rule — and exactly one index entry pointing at it.
   its document at or before first use otherwise — and the missing definition
   is **flagged to a human** rather than invented (C2, criterion 7) or
   silently dropped. Dropping it would hide the gap; inventing one is the
-  highest-risk output the tool can produce.
+  highest-risk output the tool can produce. One narrowing (2026-08-05): if a
+  **reference document** defines the term, that definition is lifted with
+  its provenance span rather than the gap being flagged as unfillable — the
+  term still carries the flag saying the detangle set never defines it, so
+  the convolutedness measure is undisturbed (see criterion 7).
 - **A definition that sits after its first use is the ordinary case**
   (Case 2, same ruling), not a defect to disposition: reordering the text is
   what the tool is for. Only the two cases above need a human.
@@ -342,9 +378,14 @@ rule — and exactly one index entry pointing at it.
 
 ## 4. Losslessness
 
-Every substantive claim in the source set appears in the output set. Nothing
-is invented. Any omission has explicit human approval, tracked as a PR
-comment.
+Every substantive claim in the **detangle set** appears in the output set.
+Nothing is invented. Any omission has explicit human approval, tracked as a
+PR comment. **Reference-document claims are not required in the output**
+(2026-08-05): the reference set supplies definitions and context, it is not
+detangled, and the absence of its claims from the output set is not an
+omission — with one carve-out: a definition actually lifted from a reference
+document is output content like any other, and criteria 5 and 7 apply to it
+in full.
 
 - **Substantive claim:** an independently assertable statement of fact, rule,
   threshold, or relationship. Granularity per `param-claim-granularity`.
@@ -411,10 +452,14 @@ glossary:
 
 - **Glossary inheritance:** where a definition relocates to the glossary, the
   glossary entry inherits the strictest classification marking of any source
-  it draws on. A CONFIDENTIAL definition does not become unclassified by
-  moving.
+  it draws on — a reference document included, when the definition was
+  lifted from one (2026-08-05). A CONFIDENTIAL definition does not become
+  unclassified by moving.
 - **Verification method:** automatic and mechanical — extract the above
-  tokens from the source set and the output set and diff the multisets. This
+  tokens from the **detangle set plus the spans lifted from reference
+  documents**, and from the output set, and diff the multisets. Whole
+  reference documents are never in the diff: their unclaimed content would
+  make the comparison fail by construction (2026-08-05). This
   check is deliberately independent of the Phase 7 claim mapping, because a
   claim can map correctly and still have lost its modality or its qualifier.
 - **Status:** buildable from Phase 6; specified now.
@@ -529,6 +574,16 @@ meaning, and visible tagging at this volume would make the document
 unreadable. It stays machine-traceable through the comment markers and the
 move-map (criterion 8).
 
+**A definition lifted from a reference document is Category B**
+(2026-08-05): the wording is the business's, reproduced verbatim or lightly
+stitched, and the `src` attribute names the reference document — the
+cross-file qualification above already covers it, so no new category is
+needed. Unlike Category C text it carries a real provenance span
+(`para_hash` + git blob) into the reference file. Every lift is recorded in
+the move-map and listed in the PR's aggregated comments so a reviewer sees
+it, but it needs no per-item approval — the ruling that a named human must
+approve applies to *invented* text, and a lift invents nothing.
+
 ### Generated navigation — outside the categories
 
 `index.md` in its entirety, the first-use glossary links inside the
@@ -616,10 +671,13 @@ Marking format:
   bridging blockquote is written one level deeper (`>>`) to stay
   distinguishable.
 - **Glossary entries with no source definition.** A term used across the set
-  but never defined anywhere in the source is an orphan (the plan's
-  convolutedness measure). Its glossary entry is Category C in full, and it
-  always raises a PR comment — an invented definition is the highest-risk
-  output the tool can produce.
+  but never defined anywhere in the **detangle set** is an orphan (the
+  plan's convolutedness measure — narrowed 2026-08-05; reference documents
+  were never part of the count). If a reference document defines it, the
+  definition is lifted as Category B (above) and the orphan-style flag
+  survives the lift. Only where **neither set** defines the term is its
+  glossary entry Category C in full, and that always raises a PR comment —
+  an invented definition is the highest-risk output the tool can produce.
 
 ### Omissions
 
@@ -863,9 +921,13 @@ A violation here is blocking regardless of any other criterion passing.
 - Invent section headings that assert structure not implied by the source. A
   purely navigational heading over existing content is Category C bridging
   and is allowed, marked.
-- Merge, split, or renumber the three source documents. Relocating a
+- Merge, split, or renumber the detangle-set documents. Relocating a
   definition into the glossary is not a split; adding the glossary ahead of
   them is not a renumbering.
+- Modify a reference document (2026-08-05). The reference set is read-only:
+  never edited, never restructured, never stamped with markers. This was
+  previously only a comment in `detangle.toml`; it is a non-goal in its own
+  right now that reference documents are a first-class input set.
 - Define the same term in two places, or leave a term defined nowhere.
 - Merge a PR, resolve a PR comment, or approve its own omissions.
 - Hand-edit a generated artifact (`index.md`, usage edges, first-use links,
