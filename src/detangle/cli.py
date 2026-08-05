@@ -67,17 +67,18 @@ def cmd_validate(args: argparse.Namespace) -> int:
     if args.paths and not targets:
         raise UsageError("none of the given paths is a concept record")
 
+    registry = config.registry()
     findings.extend(record_checks.check_cross_record(records))
-    findings.extend(record_checks.check_placement(records))
+    findings.extend(record_checks.check_placement(records, registry))
 
     index = BlockIndex(root=root)
     blobs = record_checks.GitBlobs(root)
     min_run = int(config.option("validate", "min-verbatim-run-chars", 10))
-    components = config.component_docs()
 
     for rec in targets:
-        findings.extend(record_checks.check_schema(rec))
-        findings.extend(record_checks.check_invariants(rec, components))
+        findings.extend(record_checks.check_schema(rec, registry))
+        findings.extend(record_checks.check_span_docs(rec, registry))
+        findings.extend(record_checks.check_invariants(rec, registry))
         findings.extend(record_checks.check_provenance(rec, index, blobs))
         findings.extend(record_checks.check_definition_wording(rec, index, min_run))
         findings.extend(record_checks.check_conflict_quotes(rec, index))
@@ -165,7 +166,7 @@ def cmd_generate(args: argparse.Namespace) -> int:
 
     out_path = config.path("glossary")
     rel = str(out_path.relative_to(root))
-    glossary = views.build(concept_graph, rel)
+    glossary = views.build(concept_graph, rel, config.registry())
     findings.extend(glossary.findings)
 
     ran = records_load.CHECKS | registers.CYCLE_CHECKS | BUILD_CHECKS

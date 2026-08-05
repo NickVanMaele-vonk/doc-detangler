@@ -29,6 +29,16 @@ A widget is a device that emits SB-01 alerts when the score is >= 0.85.
 A gadget is used here but never defined anywhere in this corpus.
 """
 
+# The fixture's reference-set document (two input sets, Nick 2026-08-05):
+# read-only context whose definitions may be lifted — the mts-spa shape.
+REFERENCE = """\
+# Analytical reference
+
+## 0. Definitions
+
+A doohickey is a reference-defined device used by widgets.
+"""
+
 CONFIG = """\
 [paths]
 concepts = "concepts"
@@ -41,7 +51,14 @@ glossary = "glossary.md"
 U = "samples/mini.md"
 S = "samples/other.md"
 M = "samples/third.md"
+A = "samples/analytical.md"
 components = ["U", "S", "M"]
+references = ["A"]
+
+[placements]
+U = "UCE"
+S = "SBSP"
+M = "MCL"
 
 [params]
 max-terms-changed-per-PR = 25
@@ -146,6 +163,7 @@ def mini_repo(tmp_path: Path) -> MiniRepo:
     (root / "registers").mkdir()
     (root / "samples").mkdir()
     (root / "samples" / "mini.md").write_text(SAMPLE, encoding="utf-8")
+    (root / "samples" / "analytical.md").write_text(REFERENCE, encoding="utf-8")
     (root / "detangle.toml").write_text(CONFIG, encoding="utf-8")
 
     def git(*args: str) -> None:

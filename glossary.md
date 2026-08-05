@@ -40,16 +40,19 @@ line offset being involved (D10).
 ## Sources
 
 Every source document the entries below draw on, each bound to the git blob
-its records were verified against. Git carries release identity, so no version
+its records were verified against, with its role in the two input sets:
+`component` documents are the detangle set, `reference` documents are
+read-only context whose definitions may be lifted but whose bodies are never
+in this set (Nick, 2026-08-05). Git carries release identity, so no version
 string is typed here (ruling of 2026-07-31).
 
-| Source document | Verified git blob |
-| --- | --- |
-| `samples/blueprint-MCL-shortened.md` | `71b9d9520ea205c72208fcc5d090b744f1e3e43b` |
-| `samples/blueprint-SBSP-shortened.md` | `8a96710aac6c798eac3df1fbde0839725639ba95` |
-| `samples/blueprint-UCE-shortened.md` | `4cae72dece7638c1ddec8206a3c6a24610196de0` |
-| `samples/blueprint-analytical-layer.md` | `7d88ad14949875467adea94e452433e2417e7f4a` |
-| `samples/prototype-BC17.md` | `36ad20437886a1883a547599a368c28c794b179a` |
+| Source document | Role | Verified git blob |
+| --- | --- | --- |
+| `samples/blueprint-MCL-shortened.md` | component | `71b9d9520ea205c72208fcc5d090b744f1e3e43b` |
+| `samples/blueprint-SBSP-shortened.md` | component | `8a96710aac6c798eac3df1fbde0839725639ba95` |
+| `samples/blueprint-UCE-shortened.md` | component | `4cae72dece7638c1ddec8206a3c6a24610196de0` |
+| `samples/blueprint-analytical-layer.md` | reference | `7d88ad14949875467adea94e452433e2417e7f4a` |
+| `samples/prototype-BC17.md` | reference | `36ad20437886a1883a547599a368c28c794b179a` |
 
 <!-- concept:ads -->
 ## ADS

@@ -13,17 +13,9 @@ import re
 import subprocess
 from pathlib import Path
 
+from ..config import DocumentRegistry
 from ..findings import Finding, UsageError, error, warn
-from .load import (
-    DOCUMENTS,
-    FLAGS,
-    OPTIONAL_FIELDS,
-    PLACEMENT_OF,
-    PLACEMENTS,
-    REQUIRED_FIELDS,
-    STATUSES,
-    Record,
-)
+from .load import OPTIONAL_FIELDS, REQUIRED_FIELDS, STATUSES, Record
 from .spans import WHITESPACE, BlockIndex, block_hash, normalise, split_blocks
 
 #: Every check slug this module can raise. Declared so a command can say which
@@ -58,6 +50,7 @@ CHECKS = frozenset(
         "source-dirty",
         "source-empty",
         "source-empty-doc",
+        "span-doc-unknown",
         "span-shape",
         "status-value",
         "superseded-target",
@@ -132,7 +125,7 @@ class GitBlobs:
 # --------------------------------------------------------------------------
 
 
-def check_schema(rec: Record) -> list[Finding]:
+def check_schema(rec: Record, registry: DocumentRegistry) -> list[Finding]:
     """Required keys, no unknown keys, enum membership, id equals filename."""
     out: list[Finding] = []
     data = rec.data
@@ -162,27 +155,33 @@ def check_schema(rec: Record) -> list[Finding]:
                 f"{data.get('status')!r} not one of {list(STATUSES)}",
             )
         )
-    if data.get("placement") not in PLACEMENTS:
+    if data.get("placement") not in registry.placement_values:
         out.append(
             error(
                 "placement-value",
                 rec.where("placement"),
-                f"{data.get('placement')!r} not one of {list(PLACEMENTS)}",
+                f"{data.get('placement')!r} not one of "
+                f"{list(registry.placement_values)}",
             )
         )
     for doc in rec.get_list("used_in"):
-        if doc not in DOCUMENTS:
+        if doc not in registry.components:
             out.append(
                 error(
                     "used-in-value",
                     rec.where("used_in"),
-                    f"{doc!r} not one of {list(DOCUMENTS)} — (A) and (P) never count",
+                    f"{doc!r} not a component code {list(registry.components)} "
+                    "— reference-set documents never count toward placement",
                 )
             )
     for flag in rec.get_list("flags"):
-        if flag not in FLAGS:
+        if flag not in registry.flags:
             out.append(
-                error("flag-value", rec.where("flags"), f"unknown flag {flag!r}")
+                error(
+                    "flag-value",
+                    rec.where("flags"),
+                    f"unknown flag {flag!r} — not one of {list(registry.flags)}",
+                )
             )
     if not rec.get_list("source"):
         out.append(error("source-empty", rec.where("source"), "no provenance spans"))
@@ -218,7 +217,45 @@ def check_schema(rec: Record) -> list[Finding]:
     return out
 
 
-def expected_placements(records: list[Record]) -> dict[str, str]:
+def check_span_docs(rec: Record, registry: DocumentRegistry) -> list[Finding]:
+    """Every span's ``doc`` names a registered document, from either set.
+
+    Before the registry existed, any git-tracked path was silently accepted —
+    a typo'd path produced a hard ``git-blob`` error at best, and a span into
+    an arbitrary repo file was treated as provenance. Registration is what
+    makes "the reference set is citable, everything else is not" enforceable
+    (two input sets, Nick 2026-08-05).
+    """
+    out: list[Finding] = []
+    spans = [
+        (f"source[{i}]", span) for i, span in enumerate(rec.get_list("source"))
+    ]
+    conflict = rec.data.get("conflict")
+    if isinstance(conflict, dict) and isinstance(conflict.get("spans"), list):
+        spans += [
+            (f"conflict.spans[{i}]", span)
+            for i, span in enumerate(conflict["spans"])
+        ]
+    for where, span in spans:
+        if not isinstance(span, dict):
+            continue  # span-shape reports it
+        doc = span.get("doc")
+        if isinstance(doc, str) and doc not in registry.registered_docs:
+            out.append(
+                error(
+                    "span-doc-unknown",
+                    rec.where(where),
+                    f"{doc!r} is not registered in detangle.toml [documents] "
+                    "— spans may only cite the detangle set or the reference "
+                    "set",
+                )
+            )
+    return out
+
+
+def expected_placements(
+    records: list[Record], registry: DocumentRegistry
+) -> dict[str, str]:
     """Where each definition belongs. C9: computed, never judged.
 
     Two limbs, both mechanical (Nick's Case 3 ruling, 2026-08-03):
@@ -238,7 +275,7 @@ def expected_placements(records: list[Record]) -> dict[str, str]:
     reported separately, because nothing can be computed for them.
     """
     used_of = {
-        rec.id: [d for d in rec.get_list("used_in") if d in DOCUMENTS]
+        rec.id: [d for d in rec.get_list("used_in") if d in registry.components]
         for rec in records
     }
     known = {rec.id for rec in records}
@@ -254,20 +291,22 @@ def expected_placements(records: list[Record]) -> dict[str, str]:
         frontier = pulled
 
     return {
-        rid: "glossary" if rid in glossary else PLACEMENT_OF[used[0]]
+        rid: "glossary" if rid in glossary else registry.placements[used[0]]
         for rid, used in used_of.items()
         if used
     }
 
 
-def check_placement(records: list[Record]) -> list[Finding]:
+def check_placement(
+    records: list[Record], registry: DocumentRegistry
+) -> list[Finding]:
     """C9's placement test. Set-wide, because limb 2 is a graph query.
 
     This cannot be a per-record check: whether a term belongs in the glossary
     depends on what every other record's definition leans on.
     """
     out: list[Finding] = []
-    expected_of = expected_placements(records)
+    expected_of = expected_placements(records, registry)
     for rec in records:
         if rec.id not in expected_of:
             out.append(
@@ -280,7 +319,9 @@ def check_placement(records: list[Record]) -> list[Finding]:
             continue
         expected = expected_of[rec.id]
         if rec.data.get("placement") != expected:
-            used = sorted(set(d for d in rec.get_list("used_in") if d in DOCUMENTS))
+            used = sorted(
+                set(d for d in rec.get_list("used_in") if d in registry.components)
+            )
             because = (
                 "a glossary definition depends on it"
                 if expected == "glossary" and len(used) < 2
@@ -297,10 +338,11 @@ def check_placement(records: list[Record]) -> list[Finding]:
     return out
 
 
-def check_invariants(rec: Record, component_docs: set[str]) -> list[Finding]:
+def check_invariants(rec: Record, registry: DocumentRegistry) -> list[Finding]:
     """Structural rules the record set is supposed to hold set-wide."""
     out: list[Finding] = []
     flags = rec.get_list("flags")
+    component_docs = registry.component_docs
 
     # Edges are extracted from definition text, so they live only on defined
     # records (CLAUDE.md, step 3.4 convention).
@@ -313,10 +355,11 @@ def check_invariants(rec: Record, component_docs: set[str]) -> list[Finding]:
             )
         )
 
-    # An orphan is used but never defined *in U/S/M* (concepts/README.md), so
-    # a definition drawn only from the analytical layer or the prototype leaves
-    # the record a set-level orphan — `mts-spa` is the case. What contradicts
-    # the flag is a definition anchored in a component blueprint.
+    # An orphan is used but never defined *in the detangle set*
+    # (concepts/README.md), so a definition lifted from a reference document
+    # leaves the record a set-level orphan — `mts-spa` is the case, and the
+    # 2026-08-05 two-input-set ruling made it the rule. What contradicts the
+    # flag is a definition anchored in a component blueprint.
     #
     # The converse does not hold and is deliberately unchecked: the IBE/IBEB
     # ruling leaves software records undefined and unflagged, because the
@@ -627,6 +670,7 @@ __all__ = [
     "check_provenance",
     "check_schema",
     "check_source_blocks_current",
+    "check_span_docs",
     "normalise",
     "split_blocks",
 ]
