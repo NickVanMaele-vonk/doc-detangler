@@ -66,6 +66,7 @@ table-globs = [
     "plan/*.md",
     "registers/*.md",
     "concepts/*.md",
+    "eval/*.md",
     "work/**/*.md",
 ]
 
