@@ -14,8 +14,8 @@ Detangle — an agent/pipeline that turns convoluted markdown specifications
 into a logically structured five-document set. The repo holds the normative
 specification (`plan/`), the read-only source corpus (`samples/`), the
 canonical Phase 3 data (`concepts/`, `registers/`), in-progress working
-artifacts (`work/`), and — from ADR-001 onward — the toolchain itself under
-`src/detangle/`.
+artifacts (`work/`), the Phase 5 evaluation set (`eval/`), and — from ADR-001
+onward — the toolchain itself under `src/detangle/`.
 
 **Form factor (ADR-001, approved 2026-07-30):** a Python package `detangle`
 with a CLI. The Claude-skill wrapper is candidate C staged, deferred to
@@ -221,7 +221,9 @@ U/S/M single-document bulks, PRs #37–#53), and the closing step 3.4
 across 116 records; **402** edges set-wide today — PRs #59–#60 and #67 took
 it to 404, and the 2026-07-31 narrowing rulings then dropped two). Step 3.5
 is built; 3.6's `index.md` awaits the bodies and its Mermaid half was
-cancelled; 3.7 awaits the bodies. **C9 limb 2 applied 2026-08-03**: 28
+cancelled; 3.7 awaits the bodies — **both now close behind Phase 5**, which
+produces the first bodies, so neither is the next thing to work on.
+**C9 limb 2 applied 2026-08-03**: 28
 records moved to `placement: glossary`, so the glossary is 155 entries (77
 undefined) and 204 records stay document-placed (110 undefined, to be
 positioned and flagged when the bodies exist in Phase 5).
@@ -248,6 +250,25 @@ exceptions, and no override register is needed. Also: keep all
 sense-collision edges; and the dangling-list ruling delivered in
 PRs #59–#60 — 20 new records (BT/RD/MTSAM-L code families, QML
 sub-metrics, singletons, `cwps-intra`) plus their 26 incoming edges.
+
+**Phase 5 has started — step 5.1 is done (PR #90, 2026-08-04).**
+`eval/README.md` designates the three shortened blueprints as the test inputs,
+each pinned to the git blob it carried at commit `a088ee9`; `A`, `P` and the
+two CSV fixtures are excluded, and that exclusion is verified rather than
+assumed — **all 359 records draw their `source` spans from U/S/M only**, so no
+definition in the set traces to a document outside the test inputs. The golden
+target for 5.2 is **`U`**: smallest at 3,835 words and first in reading order.
+Carry one caveat into 5.3 — smallest by words is not lightest by term load, as
+`U` holds 82 document-placed records (35 defined) against `S` 63 (32) and `M`
+59 (27), so review-load figures must not be scaled to `S` and `M` on word count
+alone. **Pinned now, re-baselined later** (Nick's ruling): the backlog B-1
+source correction that fixes the three waived `definition-token` hyphen defects
+rewrites all three blobs and voids whatever golden exists then, and Phase 5 is
+not held for it; the re-baseline updates the blob column in the same PR as the
+correction. Next is **step 5.2**, the golden triple — restructured document,
+glossary slice, index slice — which needs a design proposal before anything is
+written, because how much of a human-approved golden may be AI-drafted is a
+criterion-7 question.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
@@ -755,6 +776,22 @@ correctly and still have lost its force.
 
 Regulator-owned terms (MAR, ESMA, FSMA, CONSOB, …) go to a references list,
 not the glossary.
+
+**`samples/` cannot be untracked, and removing it would not do what it looks
+like it does** (investigated 2026-08-04; a proposal to gitignore and purge it
+was raised and withdrawn). Two reasons, both worth keeping so the idea is not
+re-proposed blind. First, `detangle validate` reads the corpus from HEAD and
+from disk — `git rev-parse HEAD:<doc>` in `records/checks.py`, then the file
+itself in `records/spans.py`, which raises `UsageError` (**exit 2**) when it is
+missing. It is a required check on `protect-main`, so untracking `samples/`
+blocks every PR: the unsatisfiable-gate trap that already stuck PR #81. Second,
+if the aim were keeping corpus wording out of a public repo, deleting
+`samples/` does not achieve it — `concepts/` holds ~186k characters of verbatim
+corpus wording in `notes` plus ~33k in `definition`, and `glossary.md` another
+~56k, against ~369k for the three blueprints. A purge would have to take
+`concepts/`, `glossary.md` and `work/term-extraction/` with it, which is the
+whole project. Making the repo private is the coherent version of that wish;
+the repo is public **only** so branch protection could be used.
 
 ## Working agreements (from the plan, applies to all phases)
 

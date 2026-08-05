@@ -223,3 +223,38 @@ The second half is the more valuable one and needs no change to CI.
 
 **Depends on:** nothing. Both halves are independent of the document bodies
 and of each other.
+
+---
+
+## B-4 — `glossary.md`'s sources table lists documents no record draws on
+
+**Raised:** 2026-08-04 (assistant), while verifying the Phase 5 test-input
+exclusions for step 5.1.
+
+**What is wrong.** The generated sources table in `glossary.md` is introduced
+as "Every source document the entries below draw on, each bound to the git blob
+its records were verified against", and then lists all five corpus documents —
+including `samples/blueprint-analytical-layer.md` and
+`samples/prototype-BC17.md`. Neither is a provenance source for anything:
+**all 359 records draw their `source` spans from U, S and M only.** The
+generator lists every document in `detangle.toml [documents]` rather than the
+documents the rendered entries actually cite.
+
+**Why it matters more than it looks.** The table is the glossary's answer to
+the rubric's source-version binding — "`glossary.md` records the version of
+every source it draws on". A reader auditing provenance is told to check two
+blobs that contribute nothing, and a future reader may reasonably infer that
+`A` and `P` content is present in the set. It also mis-states the position on
+`P` specifically, which by the 2026-07-26 ruling never counts.
+
+**The fix.** Compute the table from the spans of the records being rendered,
+not from the config map — a document appears if and only if some rendered
+entry cites it. Config stays the place that says which documents exist and
+what their C9 role is; the table says what this file drew on.
+
+**Watch one thing.** The glossary is human-edited from the 2026-08-04 ruling,
+so this is a change to seed output that a drift lint will later guard. Fixing
+it now, while the file is still exactly what `detangle generate` produced, is
+cheaper than after human edits have landed on top.
+
+**Depends on:** nothing. Independent of the document bodies.
