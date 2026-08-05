@@ -9,6 +9,7 @@ import json
 
 import pytest
 import yaml
+from conftest import BASE_WAIVER
 
 from detangle import graph as graph_pkg
 from detangle.cli import main
@@ -273,3 +274,30 @@ def test_impact_and_requires_are_mutually_exclusive(mini_repo):
         main(
             ["graph", "--root", str(mini_repo.root), "--impact", "a", "--requires", "b"]
         )
+
+
+def test_graph_honours_a_waiver(mini_repo, capsys):
+    """Every command that reports findings reads the register (2026-08-05)."""
+    mini_repo.write_record(id="alpha", term="alpha", depends_on=["beta"])
+    mini_repo.write_record(id="beta", term="beta", depends_on=["alpha"])
+    mini_repo.write_waivers(
+        {
+            **BASE_WAIVER,
+            "id": "cycle-deferred",
+            "check": "cycle-undispositioned",
+            "where": "registers/cycles.yaml",
+        }
+    )
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []
+    assert payload["summary"]["waived"] == 1
+
+
+def test_graph_does_not_judge_a_validate_only_waiver(mini_repo, capsys):
+    """`graph` never runs the placement check, so it cannot call it dead."""
+    mini_repo.write_record()
+    mini_repo.write_waivers(BASE_WAIVER)  # check: placement-computed
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []

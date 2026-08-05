@@ -40,8 +40,9 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/detangle graph               # built; rewrites concept-graph.yaml
 .venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
 .venv/bin/detangle graph --impact <id> # what depends on this definition
-.venv/bin/detangle generate            # built; rewrites glossary.md
-.venv/bin/detangle generate --check    # regenerate-and-compare guard, for CI
+.venv/bin/detangle generate            # seeded glossary.md; refuses to
+                                       # overwrite it (exit 2) — --force only
+.venv/bin/detangle generate --check    # read-only compare against a regeneration
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
@@ -122,8 +123,12 @@ added (criterion 7).
   structural guarantees would rest on re-parsing prose, the exact failure D9
   exists to prevent. **Prospective** — it takes effect per document as each
   comes to exist, and for the glossary when the drift lint that guards it
-  exists; today `glossary.md` is still generated and held by
-  `detangle generate --check`.
+  exists; today `glossary.md` is a **seed** that `detangle generate` wrote
+  once, and **nothing guards it** — `generate --check` still exists as a
+  command but was withdrawn as a CI gate, so an edit to the file is mirrored
+  nowhere and checked by nothing until the drift lint is built. Re-running
+  `detangle generate` rewrites the file in full and would discard every human
+  edit; there is no guard against that either.
 - Derived — regenerated, never hand-edited, hand-editing them fails CI:
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
   `state/section-map.yaml`, `manifest.yaml`. Not in this list: the Mermaid
@@ -171,11 +176,21 @@ span. Three registers exist:
   yet (step 3.9, built 2026-08-03). An entry matches on `check` + `where`,
   narrowed by an optional `match` substring of the message; a covered
   finding is **printed and counted but excluded from the exit-code
-  decision**, so `detangle validate` can be green while a fix waits
-  elsewhere. Entries and live findings are 1:1 like `cycles.yaml`: a stale
-  entry raises `waiver-stale` (warn), so a fix deletes its waiver in the
-  same PR. `register-parse` and the `waiver-*` checks are not waivable — a
-  malformed register must not excuse itself. Waiving is a separate channel,
+  decision**, so a command can be green while a fix waits elsewhere.
+  **All three commands read the register** (Nick, 2026-08-05) — before that
+  only `validate` did, so a finding raised by `generate` or `graph` could not
+  be deferred at all. Entries and live findings are 1:1 like `cycles.yaml`: a
+  stale entry raises `waiver-stale` (warn), so a fix deletes its waiver in the
+  same PR — but **staleness is judged only by the command that ran the
+  check**, because a command that never ran one cannot prove its waiver dead,
+  and the false alarm would block a required gate. Each module declares the
+  checks it raises in a `CHECKS` constant, kept honest by
+  `tests/test_checks_declared.py`. Not waivable: `register-parse`, the
+  `waiver-*` checks — a malformed register must not excuse itself — and the
+  four **drift** checks (`graph-drift`, `graph-missing`, `glossary-drift`,
+  `glossary-missing`), because a waiver defers work and regenerating a
+  derived file is one command, so there is nothing to defer; C6 and ADR-001
+  D5 hold only while a hand-edited artifact cannot excuse itself. Waiving is a separate channel,
   not a third severity: everything left live still blocks. Do **not** file
   an accepted cycle here (ADR-001 D6): that is an approval and permanent,
   and a waiver is a deferral.

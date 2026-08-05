@@ -110,7 +110,11 @@ the record behind it (D9).
 
 That file is now the starting point rather than the output: from 2026-08-04
 `glossary.md` is the fourth **editable** document, its 78 definitions
-canonical in the file and mirrored back into the records. `index.md` still
+canonical in the file and mirrored back into the records. So `generate`
+**refuses to overwrite it** — a second run would discard human edits that
+nothing else holds a copy of, and the drift lint that would mirror them into
+the records does not exist yet. `--check` still compares, and `--force`
+re-seeds deliberately (it will be needed when B-1 rewrites the corpus). `index.md` still
 needs the document bodies, which carry the definition site of the other 94
 defined terms (criterion 4). The Mermaid render is no longer a file at all —
 it became an on-demand command, since 359 nodes never made a readable
@@ -134,8 +138,9 @@ python3 -m venv .venv
 .venv/bin/detangle graph --impact gate # what breaks if this definition changes
 .venv/bin/detangle graph --requires sb-26   # what must be defined first
 
-.venv/bin/detangle generate            # rewrite glossary.md
-.venv/bin/detangle generate --check    # CI: fail on a hand-edit or a stale view
+.venv/bin/detangle generate            # seeded glossary.md; now refuses to
+                                       # overwrite it (exit 2) unless --force
+.venv/bin/detangle generate --check    # read-only: compare against a regeneration
 
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint
@@ -175,18 +180,32 @@ and exit `0` for any known id, `2` for an unknown one.
 `registers/waivers.yaml` (plan step 3.9) holds findings that have a human
 disposition but no fix yet — today, three `definition-token` findings ruled
 source-document defects, whose repair waits on the B-1 source-correction path.
-`detangle validate` prints a covered finding in its own `waived` block and
-counts it in the summary, but leaves it out of the exit-code decision, so a
-gate waiting on work elsewhere can still be green and can therefore be marked
-required. Waiving is a separate channel, not a third severity: everything left
-in the live list still blocks, whatever its severity.
+**All three commands read the register** (Nick, 2026-08-05). Each prints a
+covered finding in its own `waived` block and counts it in the summary, but
+leaves it out of the exit-code decision, so a gate waiting on work elsewhere
+can still be green and can therefore be marked required. Waiving is a separate
+channel, not a third severity: everything left in the live list still blocks,
+whatever its severity.
 
 An entry matches on `check` + `where`, narrowed by an optional `match`
 substring of the finding's message — exact strings only, no globs or regex.
-Entries and live findings are 1:1, so an entry that matches nothing on a full
-run raises `waiver-stale` (warn) and a fix must remove its waiver in the same
-PR. `register-parse` and the `waiver-*` checks cannot be waived: a malformed
-register must not be able to excuse itself. A waiver is a deferral, not an
+Entries and live findings are 1:1, so an entry that matches nothing raises
+`waiver-stale` (warn) and a fix must remove its waiver in the same PR.
+
+**Staleness is judged only by the command that ran the check.** A command that
+never ran one cannot prove its waiver dead — `validate` does not check the
+glossary's overview, so without this it would report an `overview-gap` waiver
+as stale on every run, and `waiver-stale` is a finding on a required gate.
+Each module declares the checks it raises in a `CHECKS` constant, and
+`tests/test_checks_declared.py` reads the slugs back out of the source so the
+declaration cannot drift.
+
+Two families cannot be waived. `register-parse` and the `waiver-*` checks,
+because a malformed register must not excuse itself. And the drift checks —
+`graph-drift`, `graph-missing`, `glossary-drift`, `glossary-missing` — because
+a waiver defers work somebody must do later, and regenerating a derived file
+is a single command: C6 and ADR-001 Decision 5 hold only while a hand-edited
+artifact cannot excuse itself. A waiver is a deferral, not an
 approval (`definition-of-done.md` §3) — the set is not done while waivers are
 open, which is why a waived finding is still printed on every run.
 

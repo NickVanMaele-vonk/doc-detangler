@@ -13,8 +13,10 @@ JSON payload rather than the exit code.
 
 import json
 
+from conftest import BASE_WAIVER
+
 from detangle.cli import main
-from detangle.findings import EXIT_FINDINGS, EXIT_USAGE
+from detangle.findings import EXIT_CLEAN, EXIT_FINDINGS, EXIT_USAGE
 
 GLOSSARY = {"placement": "glossary", "used_in": ["U", "S"]}
 
@@ -45,6 +47,7 @@ def test_a_clean_run_reports_only_the_overview_gap(mini_repo, capsys):
         "sources": 1,
         "forward_refs": 0,
         "wrote": "glossary.md",
+        "waived": 0,
     }
 
 
@@ -79,6 +82,7 @@ def test_an_undefined_term_gets_an_entry_and_a_note(mini_repo, capsys):
         "sources": 1,
         "forward_refs": 0,
         "wrote": "glossary.md",
+        "waived": 0,
     }
     assert "**Not defined in the corpus.**" in text(mini_repo)
     # No per-record finding: the rendered note is the flag (design point 7).
@@ -179,8 +183,46 @@ def test_the_render_is_byte_stable(mini_repo, capsys):
     mini_repo.write_record(id="omega", term="omega", **GLOSSARY)
     run(mini_repo, capsys=capsys)
     first = text(mini_repo)
-    run(mini_repo, capsys=capsys)
+    # --force because the second run is exactly what the overwrite guard
+    # exists to stop; here it is deliberate, which is what the flag says.
+    run(mini_repo, "--force", capsys=capsys)
     assert text(mini_repo) == first
+
+
+def test_a_second_run_refuses_to_overwrite_the_seeded_file(mini_repo, capsys):
+    """The file is edited by people (Nick, 2026-08-04) and nothing mirrors it.
+
+    A warning would arrive after the bytes were gone, so the command refuses.
+    Exit 2, not 1: no verdict was reached, and nothing was written.
+    """
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+    seeded = text(mini_repo)
+
+    code = main(["generate", "--root", str(mini_repo.root)])
+    assert code == EXIT_USAGE
+    assert "--force" in capsys.readouterr().err
+    assert text(mini_repo) == seeded
+
+
+def test_force_overwrites_a_file_that_has_been_edited(mini_repo, capsys):
+    """The escape hatch is real: a re-seed must stay possible after B-1."""
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+    (mini_repo.root / "glossary.md").write_text("hand-written\n", encoding="utf-8")
+
+    run(mini_repo, "--force", capsys=capsys)
+    assert text(mini_repo) != "hand-written\n"
+
+
+def test_check_still_reads_an_existing_file(mini_repo, capsys):
+    """--check never writes, so the guard must not stand in its way."""
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+
+    code, payload = run(mini_repo, "--check", capsys=capsys)
+    assert code == EXIT_FINDINGS
+    assert checks(payload) == ["overview-gap"]
 
 
 def test_an_undeclared_output_path_is_a_usage_error(mini_repo, capsys):
@@ -193,3 +235,58 @@ def test_an_undeclared_output_path_is_a_usage_error(mini_repo, capsys):
     mini_repo.write_record(**GLOSSARY)
     code, _ = run(mini_repo)
     assert code == EXIT_USAGE
+
+
+def test_generate_honours_a_waiver(mini_repo, capsys):
+    """A disposition means the same thing whichever command surfaced it.
+
+    Before this, only `validate` read the register, so a finding raised here
+    could not be deferred at all.
+    """
+    mini_repo.write_record(**GLOSSARY)
+    mini_repo.write_waivers(
+        {
+            **BASE_WAIVER,
+            "id": "overview-deferred",
+            "check": "overview-gap",
+            "where": "glossary.md:overview",
+        }
+    )
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []
+    assert len(payload["waived"]) == 1
+    assert payload["summary"]["waived"] == 1
+
+
+def test_generate_does_not_judge_a_validate_only_waiver(mini_repo, capsys):
+    """The scoping holds in both directions, not just for `validate`."""
+    mini_repo.write_record(**GLOSSARY)
+    mini_repo.write_waivers(BASE_WAIVER)  # check: placement-computed
+    _, payload = run(mini_repo, capsys=capsys)
+    assert checks(payload) == ["overview-gap"]
+
+
+def test_a_hand_edited_view_cannot_be_waived(mini_repo, capsys):
+    """C6 and ADR-001 Decision 5 survive only if drift cannot be excused.
+
+    Regenerating is one command, so there is nothing to defer — which is what
+    a waiver is for.
+    """
+    mini_repo.write_record(**GLOSSARY)
+    run(mini_repo, capsys=capsys)
+    path = mini_repo.root / "glossary.md"
+    path.write_text(text(mini_repo).replace("## widget", "## Widget"), encoding="utf-8")
+    mini_repo.write_waivers(
+        {
+            **BASE_WAIVER,
+            "id": "drift-excuse",
+            "check": "glossary-drift",
+            "where": "glossary.md",
+        }
+    )
+    code, payload = run(mini_repo, "--check", capsys=capsys)
+    assert code == EXIT_FINDINGS
+    assert "glossary-drift" in checks(payload)
+    assert "waiver-not-waivable" in checks(payload)
+    assert payload["waived"] == []

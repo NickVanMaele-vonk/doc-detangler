@@ -26,6 +26,45 @@ from .load import (
 )
 from .spans import WHITESPACE, BlockIndex, block_hash, normalise, split_blocks
 
+#: Every check slug this module can raise. Declared so a command can say which
+#: checks it actually ran, which is what keeps waiver staleness honest (see
+#: ``WaiverRegister.stale_findings``). ``tests/test_checks_declared.py`` reads
+#: the slugs back out of the source and fails if this set drifts from them, so
+#: adding a check without declaring it is caught rather than silently
+#: un-judged.
+CHECKS = frozenset(
+    {
+        "conflict-flag",
+        "conflict-quote",
+        "conflict-shape",
+        "dangling-link",
+        "definition-not-verbatim",
+        "definition-number",
+        "definition-token",
+        "edge-target",
+        "edges-on-undefined",
+        "flag-value",
+        "git-blob",
+        "git-blob-stale",
+        "id-filename",
+        "id-format",
+        "one-definition-site",
+        "orphan-flag",
+        "para-hash-stale",
+        "placement-computed",
+        "placement-value",
+        "schema-missing-key",
+        "schema-unknown-key",
+        "source-dirty",
+        "source-empty",
+        "source-empty-doc",
+        "span-shape",
+        "status-value",
+        "superseded-target",
+        "used-in-value",
+    }
+)
+
 ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 

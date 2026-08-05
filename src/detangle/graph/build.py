@@ -16,6 +16,17 @@ from ..findings import Finding, error, warn
 from ..records import Record
 from ..registers import CycleEntry, CycleRegister
 
+#: See ``records.checks.CHECKS``.
+CHECKS = frozenset(
+    {
+        "cycle-member-unknown",
+        "cycle-self-loop",
+        "cycle-stale-ruling",
+        "cycle-undispositioned",
+        "edge-dropped",
+    }
+)
+
 # A cycle is matched to its register entry by member set (see CycleEntry.key).
 Members = frozenset
 

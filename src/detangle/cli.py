@@ -13,12 +13,16 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, tables, views
+from . import __version__, graph, registers, tables, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_USAGE, UsageError, report
 from .graph import emit
+
+# `graph` re-exports the *function* `build`, which shadows the submodule.
+from .graph.build import CHECKS as BUILD_CHECKS
 from .records import BlockIndex, load_records
 from .records import checks as record_checks
+from .records import load as records_load
 from .registers import load_cycles, load_waivers
 
 
@@ -33,6 +37,25 @@ def _selected(records, root: Path, paths: list[str]):
         return records
     wanted = {Path(p).resolve() for p in paths}
     return [r for r in records if r.path.resolve() in wanted]
+
+
+def _waived(config, root: Path, findings: list, ran: frozenset, full: bool = True):
+    """Apply ``registers/waivers.yaml`` to one command's findings.
+
+    Every command that reports findings goes through here, so a disposition
+    means the same thing whichever command surfaced the finding. ``ran`` is the
+    set of checks this command actually performed: staleness is judged against
+    that and nothing else (``WaiverRegister.stale_findings``).
+
+    ``full`` is false for a narrowed run — a record the run never looked at
+    cannot prove its waiver dead.
+    """
+    waivers, register_findings = load_waivers(config.directory("registers"), root)
+    live, waived = waivers.partition(findings)
+    live.extend(register_findings)
+    if full:
+        live.extend(waivers.stale_findings(waived, ran))
+    return live, waived
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
@@ -59,15 +82,15 @@ def cmd_validate(args: argparse.Namespace) -> int:
         findings.extend(record_checks.check_definition_wording(rec, index, min_run))
         findings.extend(record_checks.check_conflict_quotes(rec, index))
 
+    # The checks this run owns, composed rather than assumed: a waiver for a
+    # check nobody ran here must not be judged by it (registers.stale_findings).
+    ran = record_checks.CHECKS | records_load.CHECKS | registers.WAIVER_CHECKS
     if not args.no_tables:
+        ran |= tables.CHECKS
         globs = config.option("validate", "table-globs", [])
         findings.extend(tables.check_files(root, globs))
 
-    waivers, register_findings = load_waivers(config.directory("registers"), root)
-    live, waived = waivers.partition(findings)
-    live.extend(register_findings)
-    if not args.paths:
-        live.extend(waivers.stale_findings(waived))
+    live, waived = _waived(config, root, findings, ran, full=not args.paths)
 
     summary = {
         "records": len(records),
@@ -94,10 +117,15 @@ def cmd_graph(args: argparse.Namespace) -> int:
 
     out_path = config.path("graph")
     rel = str(out_path.relative_to(root))
+    ran = records_load.CHECKS | registers.CYCLE_CHECKS | BUILD_CHECKS
+    ran |= registers.WAIVER_CHECKS
     if args.check:
+        ran |= emit.CHECKS
         findings.extend(emit.check_current(concept_graph, out_path, rel))
     else:
         out_path.write_text(emit.render(concept_graph), encoding="utf-8")
+
+    findings, waived = _waived(config, root, findings, ran)
 
     cycles = concept_graph.cycles
     summary = {
@@ -107,15 +135,16 @@ def cmd_graph(args: argparse.Namespace) -> int:
         "orphans": len(concept_graph.orphans()),
         "dead_entries": len(concept_graph.dead_entries()),
         "wrote" if not args.check else "checked": rel,
+        "waived": len(waived),
     }
-    return report(findings, args.json, summary)
+    return report(findings, args.json, summary, waived)
 
 
 def cmd_generate(args: argparse.Namespace) -> int:
     """Write ``glossary.md`` from the records — plan step 3.5.
 
     Scope is the glossary alone: ``index.md`` needs the document bodies, which
-    carry the definition site of 104 defined terms (criterion 4), and
+    carry the definition site of 94 defined terms (criterion 4), and
     ``concept-graph.mmd`` needs a scoping decision before 359 nodes are drawn
     as one diagram. Both are step 3.6, not this command.
 
@@ -139,16 +168,35 @@ def cmd_generate(args: argparse.Namespace) -> int:
     glossary = views.build(concept_graph, rel)
     findings.extend(glossary.findings)
 
+    ran = records_load.CHECKS | registers.CYCLE_CHECKS | BUILD_CHECKS
+    ran |= views.glossary.RENDER_CHECKS | registers.WAIVER_CHECKS
     if args.check:
+        ran |= views.glossary.DRIFT_CHECKS
         findings.extend(views.check_current(glossary.text, out_path, rel))
     else:
+        # This command is the seeder, and it ran (2026-08-04). Nick's ruling of
+        # the same day made the file the fourth *editable* document, so a
+        # second run would silently destroy human work that nothing else holds
+        # a copy of — the drift lint that would mirror it into the records does
+        # not exist yet. Refuse rather than warn: a warning arrives after the
+        # bytes are gone.
+        if out_path.exists() and not args.force:
+            raise UsageError(
+                f"{rel} already exists, and it is edited by people (Nick, "
+                "2026-08-04) — generate would rewrite it in full and discard "
+                "every edit. Use --check to compare it against a "
+                "regeneration, or --force to overwrite it deliberately."
+            )
         out_path.write_text(glossary.text, encoding="utf-8")
+
+    findings, waived = _waived(config, root, findings, ran)
 
     summary = {
         **glossary.summary,
         "checked" if args.check else "wrote": rel,
+        "waived": len(waived),
     }
-    return report(findings, args.json, summary)
+    return report(findings, args.json, summary, waived)
 
 
 def _query(cg, args: argparse.Namespace) -> int:
@@ -232,6 +280,8 @@ def build_parser() -> argparse.ArgumentParser:
             "Renders glossary.md from the canonical concept records, in the "
             "concept graph's topological order (param-glossary-order). "
             "--check verifies the committed file instead of writing it. "
+            "This command seeded glossary.md, which is now edited by people, "
+            "so it refuses to overwrite an existing file unless --force. "
             "index.md and concept-graph.mmd are step 3.6 and are not written."
         ),
     )
@@ -242,6 +292,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--check",
         action="store_true",
         help="do not write; fail if a committed view differs from a regeneration",
+    )
+    generate.add_argument(
+        "--force",
+        action="store_true",
+        help="overwrite an existing glossary.md, discarding any human edits",
     )
     generate.set_defaults(func=cmd_generate)
     return parser

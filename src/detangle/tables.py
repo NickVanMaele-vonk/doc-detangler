@@ -15,6 +15,10 @@ from pathlib import Path
 
 from .findings import Finding, error
 
+#: See ``records.checks.CHECKS``. Skipped entirely under ``--no-tables``, which
+#: is why the running command composes its check set rather than assuming one.
+CHECKS = frozenset({"table-cell-count"})
+
 ESCAPED_PIPE = re.compile(r"\\\|")
 FENCE = re.compile(r"^\s*(```|~~~)")
 PLACEHOLDER = "\x00"
