@@ -129,9 +129,24 @@ def test_the_accepted_cycle_marks_its_forward_reference(mini_repo, capsys):
 def test_the_sources_block_binds_each_document_to_a_git_blob(mini_repo, capsys):
     mini_repo.write_record(**GLOSSARY)
     run(mini_repo, capsys=capsys)
-    assert f"| `samples/mini.md` | `{mini_repo.blob('samples/mini.md')}` |" in text(
-        mini_repo
+    blob = mini_repo.blob("samples/mini.md")
+    assert f"| `samples/mini.md` | component | `{blob}` |" in text(mini_repo)
+
+
+def test_a_reference_source_row_is_labelled_as_such(mini_repo, capsys):
+    """Two input sets (2026-08-05): a reader auditing provenance sees that a
+    reference document supplied lifted definitions, not detangled content."""
+    mini_repo.write_record(
+        id="doohickey",
+        term="doohickey",
+        definition="A doohickey is a reference-defined device",
+        flags=["orphan", "A"],
+        source=[mini_repo.span("A doohickey", doc="samples/analytical.md")],
+        **GLOSSARY,
     )
+    run(mini_repo, capsys=capsys)
+    blob = mini_repo.blob("samples/analytical.md")
+    assert f"| `samples/analytical.md` | reference | `{blob}` |" in text(mini_repo)
 
 
 def test_two_blobs_for_one_document_are_reported_as_skew(mini_repo, capsys):

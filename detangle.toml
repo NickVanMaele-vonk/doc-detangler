@@ -24,16 +24,31 @@ graph = "concept-graph.yaml"
 glossary = "glossary.md"
 
 [documents]
-# The corpus, by its role in C9. Only U, S and M are component blueprints and
-# only they count toward placement: the analytical layer is a read-only
-# reference (Nick, 2026-07-22) and the prototype never counts (2026-07-26).
-# Both appear as informational flags on a record instead.
+# The two input sets (Nick, 2026-08-05). `components` is the detangle set:
+# the documents being restructured, the only ones C9 counts for placement and
+# the only ones the orphan measure reads. `references` is the read-only
+# reference set: never modified, never counted, but citable for provenance —
+# a definition found only in a reference document is lifted with a span into
+# it, and the record keeps its orphan flag. Reference codes double as
+# informational record flags. Every code above the lists must appear in
+# exactly one of them; adding a side document is one path + one list entry,
+# never a code change.
 U = "samples/blueprint-UCE-shortened.md"
 S = "samples/blueprint-SBSP-shortened.md"
 M = "samples/blueprint-MCL-shortened.md"
 A = "samples/blueprint-analytical-layer.md"
 P = "samples/prototype-BC17.md"
 components = ["U", "S", "M"]
+references = ["A", "P"]
+
+[placements]
+# Placement name per component code (C9): where a single-document term is
+# defined. Previously hard-coded in records/load.py, which contradicted the
+# working agreement's "no hard-coded values". Reference codes have no entry —
+# nothing is ever placed in a reference document.
+U = "UCE"
+S = "SBSP"
+M = "MCL"
 
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value

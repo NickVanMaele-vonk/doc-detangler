@@ -15,6 +15,56 @@ from .findings import UsageError
 
 CONFIG_NAME = "detangle.toml"
 
+BASE_FLAGS = ("orphan", "conflict")
+GLOSSARY = "glossary"
+
+
+@dataclass(frozen=True)
+class DocumentRegistry:
+    """The two input sets, resolved from ``[documents]`` and ``[placements]``.
+
+    ``components`` is the detangle set — restructured, counted for placement
+    and the orphan measure. ``references`` is the read-only reference set —
+    citable for provenance, never counted, never modified (Nick, 2026-08-05).
+    Built by ``Config.registry()``, which validates the two lists partition
+    the declared codes; nothing here re-checks that.
+    """
+
+    components: tuple[str, ...]
+    references: tuple[str, ...]
+    paths: dict[str, str]
+    placements: dict[str, str]
+
+    @property
+    def component_docs(self) -> set[str]:
+        return {self.paths[c] for c in self.components}
+
+    @property
+    def reference_docs(self) -> set[str]:
+        return {self.paths[c] for c in self.references}
+
+    @property
+    def registered_docs(self) -> set[str]:
+        return self.component_docs | self.reference_docs
+
+    @property
+    def placement_values(self) -> tuple[str, ...]:
+        """Legal ``placement`` field values: the glossary plus one per component."""
+        return (GLOSSARY, *(self.placements[c] for c in self.components))
+
+    @property
+    def flags(self) -> tuple[str, ...]:
+        """Legal record flags: the structural two plus one per reference code."""
+        return (*BASE_FLAGS, *self.references)
+
+    def role(self, path: str) -> str:
+        """``component`` / ``reference`` for a registered path — for labelling."""
+        if path in self.component_docs:
+            return "component"
+        if path in self.reference_docs:
+            return "reference"
+        return "unregistered"
+
 
 @dataclass
 class Config:
@@ -64,19 +114,70 @@ class Config:
         section = self._section("documents")
         return {k: v for k, v in section.items() if isinstance(v, str)}
 
-    def component_docs(self) -> set[str]:
-        """Paths of the three component blueprints — the only ones C9 counts."""
+    def _codes(self, key: str) -> list[str]:
+        codes = self.data.get("documents", {}).get(key)
+        if not isinstance(codes, list):
+            raise UsageError(f"{CONFIG_NAME}: [documents] has no {key!r} list")
+        return codes
+
+    def registry(self) -> DocumentRegistry:
+        """The two input sets (Nick, 2026-08-05), validated as a closed whole.
+
+        Every document code must sit in exactly one of ``components`` and
+        ``references`` — a code in neither would make its documents silently
+        uncitable (``span-doc-unknown``), and a code in both would let one
+        file be counted and not counted at once. Placement names come from
+        ``[placements]``, one per component code, because nothing is ever
+        placed in a reference document.
+        """
         docs = self.documents()
-        codes = self.data.get("documents", {}).get("components")
-        if not isinstance(codes, list) or not codes:
-            raise UsageError(f"{CONFIG_NAME}: [documents] has no 'components' list")
-        missing = [c for c in codes if c not in docs]
-        if missing:
+        components = self._codes("components")
+        references = self._codes("references")
+        if not components:
+            raise UsageError(f"{CONFIG_NAME}: [documents] 'components' is empty")
+
+        both = sorted(set(components) & set(references))
+        if both:
             raise UsageError(
-                f"{CONFIG_NAME}: [documents] components names {missing}, "
-                "which have no path"
+                f"{CONFIG_NAME}: [documents] lists {both} as both a component "
+                "and a reference — a document is in exactly one input set"
             )
-        return {docs[c] for c in codes}
+        pathless = sorted(set(components + references) - set(docs))
+        if pathless:
+            raise UsageError(
+                f"{CONFIG_NAME}: [documents] names {pathless} with no path"
+            )
+        unassigned = sorted(set(docs) - set(components) - set(references))
+        if unassigned:
+            raise UsageError(
+                f"{CONFIG_NAME}: [documents] declares {unassigned} in neither "
+                "'components' nor 'references' — every document belongs to "
+                "one input set"
+            )
+
+        placements = self._section("placements")
+        unplaced = sorted(set(components) - set(placements))
+        if unplaced:
+            raise UsageError(
+                f"{CONFIG_NAME}: [placements] has no entry for {unplaced}"
+            )
+        stray = sorted(set(placements) - set(components))
+        if stray:
+            raise UsageError(
+                f"{CONFIG_NAME}: [placements] names {stray}, which are not "
+                "component codes — nothing is placed in a reference document"
+            )
+
+        return DocumentRegistry(
+            components=tuple(components),
+            references=tuple(references),
+            paths=dict(docs),
+            placements={c: str(placements[c]) for c in components},
+        )
+
+    def component_docs(self) -> set[str]:
+        """Paths of the component blueprints — the only ones C9 counts."""
+        return self.registry().component_docs
 
     def path(self, name: str) -> Path:
         """A declared path, existing or not — for outputs the tool will write."""

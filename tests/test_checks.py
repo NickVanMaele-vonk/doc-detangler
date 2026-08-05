@@ -4,15 +4,29 @@ from pathlib import Path
 
 from conftest import BASE_RECORD
 
+from detangle.config import DocumentRegistry
 from detangle.records.checks import (
     check_cross_record,
     check_invariants,
     check_placement,
     check_schema,
+    check_span_docs,
 )
 from detangle.records.load import Record
 
-COMPONENTS = {"samples/mini.md", "samples/other.md", "samples/third.md"}
+#: The fixture's two input sets (Nick, 2026-08-05): three component
+#: blueprints and one read-only reference document, mirroring conftest CONFIG.
+REGISTRY = DocumentRegistry(
+    components=("U", "S", "M"),
+    references=("A",),
+    paths={
+        "U": "samples/mini.md",
+        "S": "samples/other.md",
+        "M": "samples/third.md",
+        "A": "samples/analytical.md",
+    },
+    placements={"U": "UCE", "S": "SBSP", "M": "MCL"},
+)
 
 
 def make(**overrides) -> Record:
@@ -36,60 +50,96 @@ def checks(findings) -> list[str]:
 
 def test_a_well_formed_record_passes_schema():
     rec = make(source=[_span()])
-    assert check_schema(rec) == []
+    assert check_schema(rec, REGISTRY) == []
 
 
 def test_missing_key_is_reported():
     data = dict(BASE_RECORD)
     del data["review"]
     rec = Record(Path("concepts/widget.yaml"), "concepts/widget.yaml", data, "")
-    assert "schema-missing-key" in checks(check_schema(rec))
+    assert "schema-missing-key" in checks(check_schema(rec, REGISTRY))
 
 
 def test_unknown_key_is_reported():
-    assert "schema-unknown-key" in checks(check_schema(make(colour="blue")))
+    assert "schema-unknown-key" in checks(check_schema(make(colour="blue"), REGISTRY))
 
 
 def test_id_must_equal_the_filename():
     rec = make(id="widget")
     rec.data["id"] = "gadget"
-    assert "id-filename" in checks(check_schema(rec))
+    assert "id-filename" in checks(check_schema(rec, REGISTRY))
 
 
-def test_A_and_P_are_not_used_in_values():
-    """(A) and (P) never count toward placement, so they never appear here."""
-    assert "used-in-value" in checks(check_schema(make(used_in=["U", "A"])))
+def test_reference_codes_are_not_used_in_values():
+    """Reference documents never count toward placement, so never appear here."""
+    findings = check_schema(make(used_in=["U", "A"]), REGISTRY)
+    assert "used-in-value" in checks(findings)
+
+
+def test_a_reference_code_is_a_legal_flag():
+    """The registry's reference codes double as informational record flags."""
+    assert check_schema(make(flags=["orphan", "A"], source=[_span()]), REGISTRY) == []
+
+
+def test_an_undeclared_flag_is_reported():
+    """`P` is a real code in the live repo but not in this fixture's registry —
+    flags follow the config, not a hard-coded list."""
+    assert "flag-value" in checks(check_schema(make(flags=["P"]), REGISTRY))
 
 
 def test_span_missing_verified_against_is_reported():
     bad = {"doc": "samples/mini.md", "section": "x", "para_hash": "sha256:0"}
-    assert "span-shape" in checks(check_schema(make(source=[bad])))
+    assert "span-shape" in checks(check_schema(make(source=[bad]), REGISTRY))
 
 
-# --- invariants -----------------------------------------------------------
+# --- span registration (two input sets, 2026-08-05) ------------------------
+
+
+def test_a_span_may_cite_either_input_set():
+    rec = make(source=[_span(), _span(doc="samples/analytical.md")])
+    assert check_span_docs(rec, REGISTRY) == []
+
+
+def test_a_span_citing_an_unregistered_document_is_reported():
+    findings = check_span_docs(make(source=[_span(doc="notes/scratch.md")]), REGISTRY)
+    assert checks(findings) == ["span-doc-unknown"]
+    assert "notes/scratch.md" in findings[0].message
+
+
+def test_a_conflict_span_is_held_to_the_same_registry():
+    conflict = {
+        "summary": "x",
+        "spans": [_span(), {**_span(), "doc": "samples/rogue.md"}],
+    }
+    findings = check_span_docs(make(flags=["conflict"], conflict=conflict), REGISTRY)
+    assert checks(findings) == ["span-doc-unknown"]
+    assert findings[0].where.endswith("conflict.spans[1]")
 
 
 # --- placement (C9, both limbs) -------------------------------------------
 
 
 def test_placement_is_computed_from_used_in():
-    assert check_placement([make(used_in=["U"], placement="UCE")]) == []
-    assert check_placement([make(used_in=["U", "M"], placement="glossary")]) == []
+    assert check_placement([make(used_in=["U"], placement="UCE")], REGISTRY) == []
+    assert (
+        check_placement([make(used_in=["U", "M"], placement="glossary")], REGISTRY)
+        == []
+    )
 
 
 def test_placement_disagreeing_with_used_in_is_reported():
-    findings = check_placement([make(used_in=["M"], placement="glossary")])
+    findings = check_placement([make(used_in=["M"], placement="glossary")], REGISTRY)
     assert checks(findings) == ["placement-computed"]
     assert "computes to 'MCL'" in findings[0].message
 
 
 def test_two_documents_place_a_term_in_the_glossary():
-    findings = check_placement([make(used_in=["U", "S"], placement="UCE")])
+    findings = check_placement([make(used_in=["U", "S"], placement="UCE")], REGISTRY)
     assert checks(findings) == ["placement-computed"]
 
 
 def test_an_empty_used_in_cannot_be_computed():
-    findings = check_placement([make(used_in=[], placement="UCE")])
+    findings = check_placement([make(used_in=[], placement="UCE")], REGISTRY)
     assert checks(findings) == ["placement-computed"]
     assert "used_in is empty" in findings[0].message
 
@@ -100,14 +150,14 @@ def test_a_glossary_definitions_dependency_joins_the_glossary():
     shared = make(id="shared", used_in=["U", "S"], placement="glossary",
                   depends_on=["local"])
     local = make(id="local", used_in=["U"], placement="glossary")
-    assert check_placement([shared, local]) == []
+    assert check_placement([shared, local], REGISTRY) == []
 
 
 def test_a_dependency_left_in_its_document_is_reported():
     shared = make(id="shared", used_in=["U", "S"], placement="glossary",
                   depends_on=["local"])
     local = make(id="local", used_in=["U"], placement="UCE")
-    findings = check_placement([shared, local])
+    findings = check_placement([shared, local], REGISTRY)
     assert checks(findings) == ["placement-computed"]
     assert findings[0].where == "concepts/local.yaml:placement"
     assert "a glossary definition depends on it" in findings[0].message
@@ -118,7 +168,7 @@ def test_the_closure_is_transitive():
                   depends_on=["mid"])
     mid = make(id="mid", used_in=["U"], placement="glossary", depends_on=["deep"])
     deep = make(id="deep", used_in=["U"], placement="UCE")
-    findings = check_placement([shared, mid, deep])
+    findings = check_placement([shared, mid, deep], REGISTRY)
     assert [f.where for f in findings] == ["concepts/deep.yaml:placement"]
 
 
@@ -127,7 +177,7 @@ def test_a_document_local_dependency_chain_stays_in_its_document():
     dependencies have no reason to move."""
     local = make(id="local", used_in=["U"], placement="UCE", depends_on=["deeper"])
     deeper = make(id="deeper", used_in=["U"], placement="UCE")
-    assert check_placement([local, deeper]) == []
+    assert check_placement([local, deeper], REGISTRY) == []
 
 
 def test_a_wrongly_glossary_marked_record_does_not_drag_its_tree_in():
@@ -135,38 +185,42 @@ def test_a_wrongly_glossary_marked_record_does_not_drag_its_tree_in():
     otherwise one bad placement would justify itself."""
     wrong = make(id="wrong", used_in=["U"], placement="glossary", depends_on=["dep"])
     dep = make(id="dep", used_in=["U"], placement="UCE")
-    findings = check_placement([wrong, dep])
+    findings = check_placement([wrong, dep], REGISTRY)
     assert [f.where for f in findings] == ["concepts/wrong.yaml:placement"]
+
+
+# --- invariants -----------------------------------------------------------
 
 
 def test_an_undefined_record_cannot_carry_edges():
     rec = make(definition=None, depends_on=["gadget"], flags=["orphan"])
-    assert "edges-on-undefined" in checks(check_invariants(rec, COMPONENTS))
+    assert "edges-on-undefined" in checks(check_invariants(rec, REGISTRY))
 
 
-def test_orphan_defined_only_in_the_analytical_layer_is_legitimate():
-    """The mts-spa case: a set-level orphan, defined where C9 does not count."""
+def test_orphan_defined_only_in_a_reference_document_is_legitimate():
+    """The mts-spa case, now the rule (2026-08-05): a definition lifted from
+    the reference set leaves the record a set-level orphan."""
     rec = make(flags=["orphan", "A"], source=[_span(doc="samples/analytical.md")])
-    assert check_invariants(rec, COMPONENTS) == []
+    assert check_invariants(rec, REGISTRY) == []
 
 
 def test_orphan_defined_in_a_component_blueprint_is_a_contradiction():
     rec = make(flags=["orphan"], source=[_span()])
-    assert "orphan-flag" in checks(check_invariants(rec, COMPONENTS))
+    assert "orphan-flag" in checks(check_invariants(rec, REGISTRY))
 
 
 def test_conflict_and_its_flag_must_agree():
     assert "conflict-flag" in checks(
-        check_invariants(make(conflict={"summary": "x", "spans": [1, 2]}), COMPONENTS)
+        check_invariants(make(conflict={"summary": "x", "spans": [1, 2]}), REGISTRY)
     )
     assert "conflict-flag" in checks(
-        check_invariants(make(flags=["conflict"]), COMPONENTS)
+        check_invariants(make(flags=["conflict"]), REGISTRY)
     )
 
 
 def test_a_conflict_needs_both_sides():
     rec = make(flags=["conflict"], conflict={"summary": "x", "spans": [{}]})
-    assert "conflict-shape" in checks(check_invariants(rec, COMPONENTS))
+    assert "conflict-shape" in checks(check_invariants(rec, REGISTRY))
 
 
 # --- cross-record ---------------------------------------------------------

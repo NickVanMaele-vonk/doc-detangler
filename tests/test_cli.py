@@ -37,6 +37,45 @@ def test_findings_exit_one(mini_repo, capsys):
     assert payload["counts"] == {"error": 1, "warn": 0, "waived": 0}
 
 
+def test_a_span_citing_an_unregistered_document_exits_one(mini_repo, capsys):
+    """Two input sets (2026-08-05): spans may only cite registered documents.
+
+    The rogue file is committed and hashable, so before the registry check it
+    would have passed provenance outright — registration is the only line.
+    """
+    rogue = mini_repo.root / "samples" / "rogue.md"
+    rogue.write_text("A widget is a device that emits SB-01 alerts\n", "utf-8")
+    import subprocess
+
+    subprocess.run(
+        ["git", "-C", str(mini_repo.root), "add", "-A"], check=True
+    )
+    subprocess.run(
+        ["git", "-C", str(mini_repo.root), "commit", "-qm", "rogue"], check=True
+    )
+    mini_repo.write_record(
+        source=[mini_repo.span("A widget is a device", doc="samples/rogue.md")]
+    )
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_FINDINGS
+    assert "span-doc-unknown" in [f["check"] for f in payload["findings"]]
+
+
+def test_a_definition_lifted_from_a_reference_document_is_clean(mini_repo, capsys):
+    """The mts-spa shape, now the rule (2026-08-05): defined from the
+    reference set, orphan flag kept, and `validate` has nothing to say."""
+    mini_repo.write_record(
+        id="doohickey",
+        term="doohickey",
+        definition="A doohickey is a reference-defined device",
+        flags=["orphan", "A"],
+        source=[mini_repo.span("A doohickey", doc="samples/analytical.md")],
+    )
+    code, payload = run(mini_repo, capsys=capsys)
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []
+
+
 def test_a_stale_git_blob_is_a_warning_not_an_error(mini_repo, capsys):
     """A hash mismatch means re-verify the span, not that the record is wrong."""
     span = mini_repo.span("A widget is a device")

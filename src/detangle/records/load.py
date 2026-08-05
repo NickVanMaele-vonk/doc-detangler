@@ -37,12 +37,11 @@ REQUIRED_FIELDS = (
 OPTIONAL_FIELDS = ("notes",)
 
 STATUSES = ("candidate", "approved", "published", "deprecated")
-PLACEMENTS = ("glossary", "UCE", "SBSP", "MCL")
-DOCUMENTS = ("U", "S", "M")
-FLAGS = ("orphan", "conflict", "A", "P")
 
-# used_in of exactly one document places the term in that document (C9).
-PLACEMENT_OF = {"U": "UCE", "S": "SBSP", "M": "MCL"}
+# Document codes, placement names and flag values are NOT declared here: they
+# come from `detangle.toml` via `Config.registry()` (two input sets, Nick
+# 2026-08-05) — adding a reference document is a config edit, never a code
+# change. The checks receive a `DocumentRegistry` for exactly this reason.
 
 
 @dataclass

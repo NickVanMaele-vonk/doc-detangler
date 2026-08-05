@@ -28,12 +28,68 @@ def test_only_the_component_blueprints_count(mini_repo):
     }
 
 
-def test_the_real_config_names_the_three_component_blueprints():
+def test_the_registry_resolves_both_input_sets(mini_repo):
+    """Two input sets (Nick, 2026-08-05): components and references."""
+    registry = Config.load(mini_repo.root).registry()
+    assert registry.reference_docs == {"samples/analytical.md"}
+    assert registry.registered_docs == registry.component_docs | {
+        "samples/analytical.md"
+    }
+    assert registry.placement_values == ("glossary", "UCE", "SBSP", "MCL")
+    assert registry.flags == ("orphan", "conflict", "A")
+    assert registry.role("samples/mini.md") == "component"
+    assert registry.role("samples/analytical.md") == "reference"
+    assert registry.role("notes/scratch.md") == "unregistered"
+
+
+def _rewrite_config(mini_repo, old: str, new: str) -> None:
+    path = mini_repo.root / "detangle.toml"
+    text = path.read_text(encoding="utf-8")
+    assert old in text
+    path.write_text(text.replace(old, new), encoding="utf-8")
+
+
+def test_a_code_in_both_sets_is_a_usage_error(mini_repo):
+    _rewrite_config(mini_repo, 'references = ["A"]', 'references = ["A", "U"]')
+    with pytest.raises(UsageError, match="both a component and a reference"):
+        Config.load(mini_repo.root).registry()
+
+
+def test_a_code_in_neither_set_is_a_usage_error(mini_repo):
+    """An unassigned code would make its document silently uncitable."""
+    _rewrite_config(mini_repo, 'references = ["A"]', "references = []")
+    with pytest.raises(UsageError, match="neither 'components' nor 'references'"):
+        Config.load(mini_repo.root).registry()
+
+
+def test_a_missing_references_list_is_a_usage_error(mini_repo):
+    _rewrite_config(mini_repo, 'references = ["A"]\n', "")
+    with pytest.raises(UsageError, match="'references'"):
+        Config.load(mini_repo.root).registry()
+
+
+def test_a_component_without_a_placement_name_is_a_usage_error(mini_repo):
+    _rewrite_config(mini_repo, 'U = "UCE"\n', "")
+    with pytest.raises(UsageError, match=r"\[placements\] has no entry"):
+        Config.load(mini_repo.root).registry()
+
+
+def test_a_placement_for_a_reference_code_is_a_usage_error(mini_repo):
+    """Nothing is ever placed in a reference document."""
+    _rewrite_config(mini_repo, 'M = "MCL"', 'M = "MCL"\nA = "ANA"')
+    with pytest.raises(UsageError, match="not component codes"):
+        Config.load(mini_repo.root).registry()
+
+
+def test_the_real_config_names_the_two_input_sets():
     from pathlib import Path
 
     root = Path(__file__).resolve().parent.parent
-    docs = Config.load(root).documents()
-    assert Config.load(root).component_docs() == {docs["U"], docs["S"], docs["M"]}
+    config = Config.load(root)
+    docs = config.documents()
+    registry = config.registry()
+    assert registry.component_docs == {docs["U"], docs["S"], docs["M"]}
+    assert registry.reference_docs == {docs["A"], docs["P"]}
     assert docs["A"].endswith("blueprint-analytical-layer.md")
     assert docs["P"].endswith("prototype-BC17.md")
 

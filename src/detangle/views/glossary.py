@@ -40,6 +40,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from ..config import DocumentRegistry
 from ..findings import Finding, error, warn
 from ..graph import ConceptGraph
 
@@ -98,7 +99,10 @@ SOURCES_HEADING = "## Sources\n"
 
 SOURCES_LEAD = """\
 Every source document the entries below draw on, each bound to the git blob
-its records were verified against. Git carries release identity, so no version
+its records were verified against, with its role in the two input sets:
+`component` documents are the detangle set, `reference` documents are
+read-only context whose definitions may be lifted but whose bodies are never
+in this set (Nick, 2026-08-05). Git carries release identity, so no version
 string is typed here (ruling of 2026-07-31).
 """
 
@@ -133,8 +137,15 @@ class Glossary:
         }
 
 
-def build(cg: ConceptGraph, rel: str = "glossary.md") -> Glossary:
-    """Render the glossary and report what only the rendering can see."""
+def build(
+    cg: ConceptGraph, rel: str = "glossary.md", registry: DocumentRegistry | None = None
+) -> Glossary:
+    """Render the glossary and report what only the rendering can see.
+
+    ``registry`` labels each sources-table row by input set; without one the
+    role column reads ``unregistered``, so a caller that forgets it produces
+    output that says so rather than output that quietly claims a role.
+    """
     order = [
         rid
         for rid in cg.reading_order()
@@ -158,7 +169,7 @@ def build(cg: ConceptGraph, rel: str = "glossary.md") -> Glossary:
         "\n",
         SOURCES_LEAD,
         "\n",
-        _sources_table(sources),
+        _sources_table(sources, registry),
     ]
     for rid in order:
         parts.append("\n")
@@ -186,9 +197,11 @@ def build(cg: ConceptGraph, rel: str = "glossary.md") -> Glossary:
     )
 
 
-def render(cg: ConceptGraph, rel: str = "glossary.md") -> str:
+def render(
+    cg: ConceptGraph, rel: str = "glossary.md", registry: DocumentRegistry | None = None
+) -> str:
     """The file as text. Same records always give the same bytes."""
-    return build(cg, rel).text
+    return build(cg, rel, registry).text
 
 
 # -- pieces ----------------------------------------------------------------
@@ -304,12 +317,19 @@ def _sources(
     return {doc: sorted(found) for doc, found in sorted(blobs.items())}, findings
 
 
-def _sources_table(sources: dict[str, list[str]]) -> str:
+def _sources_table(
+    sources: dict[str, list[str]], registry: DocumentRegistry | None
+) -> str:
     if not sources:
         return "No entry cites a source document.\n"
-    rows = ["| Source document | Verified git blob |\n", "| --- | --- |\n"]
+    rows = [
+        "| Source document | Role | Verified git blob |\n",
+        "| --- | --- | --- |\n",
+    ]
     rows.extend(
-        f"| `{doc}` | `{', '.join(blobs)}` |\n" for doc, blobs in sources.items()
+        f"| `{doc}` | {registry.role(doc) if registry else 'unregistered'} "
+        f"| `{', '.join(blobs)}` |\n"
+        for doc, blobs in sources.items()
     )
     return "".join(rows)
 
