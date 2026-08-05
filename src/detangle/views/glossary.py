@@ -45,10 +45,11 @@ from ..graph import ConceptGraph
 
 GLOSSARY_PLACEMENT = "glossary"
 
-#: See ``records.checks.CHECKS``.
-CHECKS = frozenset(
-    {"glossary-drift", "glossary-missing", "overview-gap", "sources-blob-skew"}
-)
+#: See ``records.checks.CHECKS``. Split because ``--check`` and a write run
+#: raise different things, and a command must only claim what it ran.
+DRIFT_CHECKS = frozenset({"glossary-drift", "glossary-missing"})
+RENDER_CHECKS = frozenset({"overview-gap", "sources-blob-skew"})
+CHECKS = DRIFT_CHECKS | RENDER_CHECKS
 
 BANNER = """\
 <!--

@@ -175,13 +175,30 @@ def _check_entry(entry: CycleEntry, where: str) -> list[Finding]:
     return []
 
 
-def is_waivable(check: str) -> bool:
-    """A malformed register must not be able to excuse itself.
+#: Checks no entry can reach. ``register-parse`` and the ``waiver-*`` hygiene
+#: checks, because a malformed register must not excuse itself — and the drift
+#: checks, because a waiver defers a problem somebody has to solve later, and a
+#: derived file disagreeing with its source is not one: regenerating it is a
+#: single command. C6 and ADR-001 Decision 5 make "never hand-edit a generated
+#: artifact" enforceable only while that finding cannot be excused away.
+NOT_WAIVABLE = frozenset(
+    {
+        "register-parse",
+        "graph-drift",
+        "graph-missing",
+        "glossary-drift",
+        "glossary-missing",
+    }
+)
 
-    Register-parse failures and the waiver register's own hygiene checks are
-    outside the reach of any entry; everything else is waivable.
+
+def is_waivable(check: str) -> bool:
+    """A malformed register, or a hand-edited derived file, cannot excuse itself.
+
+    Everything else is waivable: a waiver is a deferral, and most findings name
+    work that legitimately waits on someone.
     """
-    return check != "register-parse" and not check.startswith("waiver-")
+    return check not in NOT_WAIVABLE and not check.startswith("waiver-")
 
 
 @dataclass(frozen=True)
