@@ -51,7 +51,7 @@ If one term appears in more than one input document, then:
   `concept-graph.yaml`.
 - A PR assembles changes relating to similar concepts and may touch any
   number of documents — document count is not the unit. A PR may not change
-  more terms than `param-max-terms-changed-per-PR` (25). Each PR is two
+  more terms than `param-max-terms-changed-per-PR` (200). Each PR is two
   commits — moves only (machine-verified set-wide, no semantic review), then
   text changes (the only part a human reads). Comments are raised per
   cluster, not per instance, and a run exceeding either budget fails rather

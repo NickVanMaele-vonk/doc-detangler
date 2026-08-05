@@ -5,7 +5,8 @@ criterion 9 (continuous-change coherence) and its supporting scope,
 parameter, and criteria amendments added per decision D10, at Nick's
 direction; new parameter values remain proposals until set.
 **Phase:** 1.1 — complete; extended by D10
-**Last updated:** 2026-07-23
+**Last updated:** 2026-08-05 — `param-max-terms-changed-per-PR` raised from
+25 to 200 (Nick, 2026-08-05); no criterion text changed.
 
 A restructured document is "done" when it satisfies all nine criteria below,
 subject to the phase-dependent applicability rules in
@@ -96,7 +97,7 @@ the rubric can be signed off without silently pre-committing to numbers.
 
 | Parameter | Value | Note |
 |-----------|-------|------|
-| `param-max-terms-changed-per-PR` | **25** (set) | Maximum terms a single PR may change. See 8b. |
+| `param-max-terms-changed-per-PR` | **200** (set) | Maximum terms a single PR may change. See 8b. **Raised from 25 to 200 on 2026-08-05** (Nick): the from-scratch build changes terms in far larger batches than steady state — the golden output for `U` alone is in scope for 155 terms — and a cap sized for steady-state edits would split that into seven PRs whose intermediate states leave terms defined twice or not at all, which 8b itself calls a failure. 5.3 still measures against it. |
 | `param-max-comments-per-PR` | 25 | Maximum blocking PR comments; set for real from Phase 5 measurements. |
 | `param-overview-max-words` | 400 | Maximum length of the required opening overview. |
 | `param-claim-granularity` | one claim per source sentence; one claim per table cell carrying an independent assertion | Governs criterion 4. |

@@ -3,7 +3,7 @@
 Source of truth for the ontology (D9, signed off 2026-07-22). One YAML file
 per concept. `glossary.md`, `index.md`, and `concept-graph.mmd` are
 **generated views** of these records — never hand-edit a generated artifact.
-Records change via PR only, within `param-max-terms-changed-per-PR` (25).
+Records change via PR only, within `param-max-terms-changed-per-PR` (200).
 
 **This directory holds only corpus-derived business terms** (Nick's ruling,
 2026-07-30). Every file here is a record obeying the schema below, with a
