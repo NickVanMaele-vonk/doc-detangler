@@ -21,6 +21,7 @@ from detangle import registers, tables
 from detangle.graph import emit
 from detangle.records import checks as record_checks
 from detangle.records import load as records_load
+from detangle.restructure import plan as restructure_plan
 from detangle.views import glossary
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "detangle"
@@ -36,6 +37,7 @@ DECLARED = {
     "tables.py": tables.CHECKS,
     "graph/build.py": graph_build.CHECKS,
     "graph/emit.py": emit.CHECKS,
+    "restructure/plan.py": restructure_plan.CHECKS,
     "views/glossary.py": glossary.CHECKS,
 }
 

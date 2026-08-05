@@ -1,0 +1,317 @@
+"""The machine-readable reorder plan (ADR-002 Decision 2).
+
+A plan says, in data, everything the golden's move-map said in prose: which
+source block lands in which target section, which page-split fragments
+rejoin, what is declared noise, where each definition block goes, and which
+sections are generated rather than moved. Blocks are addressed by
+``para_hash`` — never line numbers (D10) — so a plan survives any edit that
+does not change the block it names, and breaks loudly on one that does.
+
+Validation enforces the ADR's losslessness-at-run-time rule: every block of
+the source must be covered by exactly one of assignment, rejoin, or noise.
+An uncovered block is ``plan-incomplete``; a doubly covered one is
+``plan-overlap``. The tool never decides what a block means — it refuses to
+run a plan that has not decided.
+"""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import yaml
+
+from ..config import DocumentRegistry
+from ..findings import Finding, error, warn
+from ..records.load import Record
+from ..records.spans import BlockIndex
+
+#: See ``records.checks.CHECKS`` for why every module declares its slugs.
+CHECKS = frozenset(
+    {
+        "plan-parse",
+        "plan-schema",
+        "plan-doc",
+        "plan-blob-stale",
+        "plan-block-unknown",
+        "plan-incomplete",
+        "plan-overlap",
+        "plan-section-unknown",
+        "plan-record-unknown",
+    }
+)
+
+SECTION_KINDS = ("head", "generated", "content")
+NOISE_KINDS = ("furniture", "artifact", "navigation")
+SECTION_ID = re.compile(r"^head$|^[a-z]-[0-9a-f]{8}$")
+HASH = re.compile(r"^sha256:[0-9a-f]{64}$")
+
+
+@dataclass(frozen=True)
+class Section:
+    id: str
+    title: str
+    kind: str
+
+
+@dataclass
+class Plan:
+    path: Path
+    rel: str
+    doc: str
+    pinned_blob: str | None
+    sections: list[Section] = field(default_factory=list)
+    assignments: list[dict] = field(default_factory=list)
+    rejoins: list[dict] = field(default_factory=list)
+    noise: list[dict] = field(default_factory=list)
+    inline_removals: list[dict] = field(default_factory=list)
+    definitions: list[dict] = field(default_factory=list)
+    additions: list[dict] = field(default_factory=list)
+
+    def section_ids(self) -> set[str]:
+        return {s.id for s in self.sections}
+
+    def covered(self) -> dict[str, list[str]]:
+        """Block hash → the roles claiming it (for coverage/overlap checks).
+
+        A rejoin's fragments count as covered by the rejoin; a noise entry
+        covers every occurrence of its hash, which is what makes the four
+        identical bare-rule blocks one entry rather than four.
+        """
+        roles: dict[str, list[str]] = {}
+        for a in self.assignments:
+            roles.setdefault(a.get("block", ""), []).append("assignment")
+        for r in self.rejoins:
+            for h in r.get("fragments", []):
+                roles.setdefault(h, []).append("rejoin")
+        for n in self.noise:
+            roles.setdefault(n.get("block", ""), []).append("noise")
+        return roles
+
+
+LIST_FIELDS = (
+    "sections",
+    "assignments",
+    "rejoins",
+    "noise",
+    "inline_removals",
+    "definitions",
+    "additions",
+)
+
+
+def load_plan(path: Path, root: Path) -> tuple[Plan | None, list[Finding]]:
+    """Parse and shape-check a plan file. Reference errors are validate's job."""
+    rel = str(path.relative_to(root)) if path.is_absolute() else str(path)
+    if not path.is_file():
+        return None, [error("plan-parse", rel, "no such plan file")]
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        return None, [error("plan-parse", rel, str(exc).replace("\n", " "))]
+    if not isinstance(data, dict):
+        return None, [error("plan-parse", rel, "top level is not a mapping")]
+
+    findings: list[Finding] = []
+    if not isinstance(data.get("doc"), str):
+        findings.append(error("plan-schema", rel, "missing or non-string 'doc'"))
+        return None, findings
+
+    # str(), because YAML reads an all-digit blob as an integer and an
+    # integer pin would compare unequal to every real blob string.
+    pinned = data.get("pinned_blob")
+    plan = Plan(
+        path=path,
+        rel=rel,
+        doc=data["doc"],
+        pinned_blob=str(pinned) if pinned is not None else None,
+    )
+    for key in LIST_FIELDS:
+        value = data.get(key, [])
+        if not isinstance(value, list):
+            findings.append(error("plan-schema", f"{rel}:{key}", "not a list"))
+            continue
+        if key == "sections":
+            for i, s in enumerate(value):
+                if not isinstance(s, dict) or not SECTION_ID.match(str(s.get("id"))):
+                    findings.append(
+                        error("plan-schema", f"{rel}:sections[{i}]", "bad section")
+                    )
+                    continue
+                if s.get("kind") not in SECTION_KINDS:
+                    findings.append(
+                        error(
+                            "plan-schema",
+                            f"{rel}:sections[{i}]",
+                            f"kind {s.get('kind')!r} not one of {list(SECTION_KINDS)}",
+                        )
+                    )
+                    continue
+                plan.sections.append(
+                    Section(id=s["id"], title=str(s.get("title", "")), kind=s["kind"])
+                )
+        else:
+            getattr(plan, key).extend(v for v in value if isinstance(v, dict))
+            for i, v in enumerate(value):
+                if not isinstance(v, dict):
+                    findings.append(
+                        error("plan-schema", f"{rel}:{key}[{i}]", "not a mapping")
+                    )
+
+    for key, entries, req in (
+        ("assignments", plan.assignments, ("block", "section")),
+        ("rejoins", plan.rejoins, ("section", "fragments")),
+        ("noise", plan.noise, ("block", "kind")),
+        ("inline_removals", plan.inline_removals, ("block", "remove")),
+        ("definitions", plan.definitions, ("record", "section")),
+        ("additions", plan.additions, ("section", "form")),
+    ):
+        for i, entry in enumerate(entries):
+            missing = [k for k in req if k not in entry]
+            if missing:
+                findings.append(
+                    error("plan-schema", f"{rel}:{key}[{i}]", f"missing {missing}")
+                )
+    for i, n in enumerate(plan.noise):
+        if n.get("kind") is not None and n["kind"] not in NOISE_KINDS:
+            findings.append(
+                error(
+                    "plan-schema",
+                    f"{rel}:noise[{i}]",
+                    f"kind {n['kind']!r} not one of {list(NOISE_KINDS)}",
+                )
+            )
+    return plan, findings
+
+
+def validate_plan(
+    plan: Plan,
+    registry: DocumentRegistry,
+    index: BlockIndex,
+    records: list[Record],
+    head_blob: str | None = None,
+) -> list[Finding]:
+    """Every reference resolves and every source block is decided.
+
+    ``head_blob`` is the source's current ``git rev-parse HEAD:<doc>`` where
+    the caller has it; the pin check is a warning, mirroring
+    ``git-blob-stale`` — a moved corpus means re-verify, not that the plan
+    is wrong.
+    """
+    out: list[Finding] = []
+    rel = plan.rel
+
+    if plan.doc not in registry.components:
+        out.append(
+            error(
+                "plan-doc",
+                f"{rel}:doc",
+                f"{plan.doc!r} is not a component code "
+                f"{list(registry.components)} — only the detangle set is "
+                "restructured; reference documents are read-only (ADR-002)",
+            )
+        )
+        return out
+    doc_path = registry.paths[plan.doc]
+
+    if plan.pinned_blob and head_blob and plan.pinned_blob != head_blob:
+        out.append(
+            warn(
+                "plan-blob-stale",
+                f"{rel}:pinned_blob",
+                f"plan pinned {plan.pinned_blob}, HEAD is {head_blob} — the "
+                "source moved; re-verify the plan against it",
+            )
+        )
+
+    source_hashes = set(index.document(doc_path).by_hash)
+    section_ids = plan.section_ids()
+    known_records = {r.id for r in records}
+
+    def check_hash(where: str, h) -> None:
+        if not isinstance(h, str) or not HASH.match(h):
+            out.append(error("plan-block-unknown", where, f"malformed hash {h!r}"))
+        elif h not in source_hashes:
+            out.append(
+                error(
+                    "plan-block-unknown",
+                    where,
+                    f"{h} is not a block of {doc_path}",
+                )
+            )
+
+    for i, a in enumerate(plan.assignments):
+        check_hash(f"{rel}:assignments[{i}]", a.get("block"))
+        if a.get("section") not in section_ids:
+            out.append(
+                error(
+                    "plan-section-unknown",
+                    f"{rel}:assignments[{i}]",
+                    f"section {a.get('section')!r} is not declared",
+                )
+            )
+    for i, r in enumerate(plan.rejoins):
+        for h in r.get("fragments", []):
+            check_hash(f"{rel}:rejoins[{i}]", h)
+        if r.get("section") not in section_ids:
+            out.append(
+                error(
+                    "plan-section-unknown",
+                    f"{rel}:rejoins[{i}]",
+                    f"section {r.get('section')!r} is not declared",
+                )
+            )
+    for i, n in enumerate(plan.noise):
+        check_hash(f"{rel}:noise[{i}]", n.get("block"))
+    for i, entry in enumerate(plan.inline_removals):
+        check_hash(f"{rel}:inline_removals[{i}]", entry.get("block"))
+    for kind, entries in (
+        ("definitions", plan.definitions),
+        ("additions", plan.additions),
+    ):
+        for i, entry in enumerate(entries):
+            if entry.get("section") not in section_ids:
+                out.append(
+                    error(
+                        "plan-section-unknown",
+                        f"{rel}:{kind}[{i}]",
+                        f"section {entry.get('section')!r} is not declared",
+                    )
+                )
+    for i, d in enumerate(plan.definitions):
+        if d.get("record") not in known_records:
+            out.append(
+                error(
+                    "plan-record-unknown",
+                    f"{rel}:definitions[{i}]",
+                    f"record {d.get('record')!r} has no concept record",
+                )
+            )
+
+    roles = plan.covered()
+    for h in sorted(source_hashes - set(roles)):
+        text = index.document(doc_path).text_for(h) or ""
+        out.append(
+            error(
+                "plan-incomplete",
+                f"{rel}",
+                f"source block {h} is covered by no assignment, rejoin or "
+                f"noise entry — losslessness is enforced at run time "
+                f"(ADR-002): {text[:60]!r}…",
+            )
+        )
+    for h, claimed in sorted(roles.items()):
+        if len(claimed) > 1 and h in source_hashes:
+            out.append(
+                error(
+                    "plan-overlap",
+                    f"{rel}",
+                    f"source block {h} is claimed {len(claimed)} times "
+                    f"({', '.join(claimed)}) — a block has exactly one fate",
+                )
+            )
+    return out
+
+
+__all__ = ["CHECKS", "Plan", "Section", "load_plan", "validate_plan"]
