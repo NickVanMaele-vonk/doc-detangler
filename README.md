@@ -87,7 +87,10 @@ If one term appears in more than one input document, then:
 
 ## Status
 
-Phases 1, 2 and 4 complete. Rubric approved (`plan/definition-of-done.md`);
+Phases 1, 2, 4 and 5 complete; Phase 3 nearly so and **Phase 6 in progress**
+(`plan/adr-002-prototype.md`, approved 2026-08-05 — three of 6.1's four build
+steps merged, the 6.2 comparison outstanding).
+Rubric approved (`plan/definition-of-done.md`);
 research memo delivered (`plan/research-memo.md`) across three rounds. The
 gating architecture decisions were signed off 2026-07-22: runtime is
 **Python** (D7), and the definition layer is **ontology-first** (D9) —
