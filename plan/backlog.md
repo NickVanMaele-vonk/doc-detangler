@@ -299,3 +299,63 @@ one human look.
 
 **Depends on:** nothing. Grows with every new definition that cites spans
 from both sets.
+
+---
+
+## B-6 — Build `detangle graph --mmd <id>`, the per-concept Mermaid render
+
+**Raised:** 2026-08-05 (assistant), auditing the three normative documents
+against the code.
+
+**The gap.** Nick's ruling of 2026-08-04 has two halves. The first — no
+whole-set `concept-graph.mmd` is committed, because 359 nodes render as one
+238-node tangle plus 108 unconnected dots — is in force. The second, the
+replacement, was never built: `detangle graph --mmd persistence-gate` exits
+`2` with "unrecognized arguments", and nothing in `src/detangle/` renders
+Mermaid at all. `README.md`, `CLAUDE.md` and plan C6/§4 all described the
+command as a live capability until this entry was minted; they now say
+designed-not-built and point here.
+
+**Why it matters more than a missing convenience.** C6 justifies committing
+no diagram by pointing at this command. Until it exists there is no way to
+look at the graph at all except by reading `concept-graph.yaml`, which is
+exactly the question the render answers — what does this definition rest on,
+and what breaks if it changes.
+
+**Shape, from the ruling.** One concept's neighbourhood: the node, its
+`depends_on` targets, its dependents, typically two or three boxes and about
+eight at one step further out. Printed to stdout for pasting into a PR
+comment, where GitHub and Azure DevOps render Mermaid natively. Nothing is
+written to disk, so no drift check and no CI gate arise from it.
+
+**Depends on:** nothing. `ConceptGraph` already holds the edges and the
+reachability queries `--impact` and `--requires` use.
+
+---
+
+## B-7 — Build the `state/notices.md` generator
+
+**Raised:** 2026-08-05 (assistant), same audit as B-6.
+
+**The gap.** Nick ruled on 2026-08-04 that things worth knowing but not
+defects — demotion candidates, review dates falling due, authoring debts —
+belong in a generated, committed, deliberately unguarded `state/notices.md`,
+carrying a "generated from commit X at time Y" header so it shows visible age
+instead of enforcement. Nothing was built: there is no `state/` directory and
+no code writes one. The plan listed the file among Phase 3's outputs and
+`README.md` listed it among the repo's contents, both as though it existed.
+
+**Why it is worth keeping.** The ruling exists because a notice raised as a
+finding makes "nothing is broken" a red build — the trap that already caught
+the glossary overview gap and the `code_quality` ruleset entry. Every future
+check that wants to say something non-blocking has nowhere to say it until
+this exists, so the pressure is to raise a finding instead.
+
+**What has to be decided first.** Which command generates it (a fifth, or a
+side effect of `validate`), and what the first entries are — demotion
+candidates need the document bodies, and `review_by` dates falling due are
+available today from `registers/waivers.yaml`. Unguarded means no
+`--check`, no drift pair in `NOT_WAIVABLE`, and no CI job.
+
+**Depends on:** nothing hard. Demotion candidates want Phase 5 bodies; the
+waiver review dates do not.

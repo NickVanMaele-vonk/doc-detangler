@@ -54,7 +54,7 @@ Decision D10 (research-memo §D10) records the design.
 | C3 | **Omissions require human approval.** Any omission is surfaced as an Azure DevOps PR comment; branch policy requires all comments Resolved before merge. | DevOps integration (Phase 8) |
 | C4 | **All document updates go through PRs with reviewer approval.** The tool posts findings as PR comments; it never merges. A PR assembles changes relating to similar concepts and may touch any number of documents; it may not change more terms than `param-max-terms-changed-per-PR`. | DevOps integration (Phase 8) |
 | C5 | **Bridging/explanatory additions are allowed** but must be visually and mechanically distinguishable from source-derived text. | Rubric (Phase 1) + fabrication check (Phase 7) |
-| C6 | **Version-controllable artifacts only.** Concept graph is a plain-text edge list (`concept-graph.yaml`), **generated** — from the records' canonical `depends_on` and from the bodies for usage edges — and never hand-edited; hand-editing it fails CI. A Mermaid render displays natively in Azure DevOps (D2: SKOS concept model, Mermaid-compatible view), but is produced **on demand** by `detangle graph --mmd <id>` for one concept's neighbourhood rather than committed as a whole-set `concept-graph.mmd` (Nick, 2026-08-04): 359 nodes render as one 238-node tangle plus 108 unconnected dots, whereas a single concept's neighbours are typically two or three boxes and eight at one step further out. Nobody opens a concept graph to look at 359 terms; they open it to ask what a definition rests on and what breaks if it changes, which is one concept at a time. Canonicity sits in the concept records, not in this file (C11, D9/D10) — D2's original "source of truth" wording predated D9 and was corrected by Nick's ruling of 2026-07-30 (ADR-001). | Phase 3 |
+| C6 | **Version-controllable artifacts only.** Concept graph is a plain-text edge list (`concept-graph.yaml`), **generated** — from the records' canonical `depends_on` and from the bodies for usage edges — and never hand-edited; hand-editing it fails CI. A Mermaid render displays natively in Azure DevOps (D2: SKOS concept model, Mermaid-compatible view), but is to be produced **on demand** by `detangle graph --mmd <id>` for one concept's neighbourhood rather than committed as a whole-set `concept-graph.mmd` (Nick, 2026-08-04) — the prohibition holds today, the command is designed and **not built** (backlog B-6): 359 nodes render as one 238-node tangle plus 108 unconnected dots, whereas a single concept's neighbours are typically two or three boxes and eight at one step further out. Nobody opens a concept graph to look at 359 terms; they open it to ask what a definition rests on and what breaks if it changes, which is one concept at a time. Canonicity sits in the concept records, not in this file (C11, D9/D10) — D2's original "source of truth" wording predated D9 and was corrected by Nick's ruling of 2026-07-30 (ADR-001). | Phase 3 |
 | C7 | **No meaning weakened.** Numbers, thresholds, units, comparison operators, normative modality (`must` vs `should`), scoping qualifiers, internal codes, regulatory citations, and classification/version metadata are reproduced verbatim wherever their claim survives. A claim may map correctly and still have lost its force — so this is checked mechanically, independent of C1/C2. The mechanical comparison runs over the **detangle set plus the spans actually lifted from reference documents** — never over whole reference documents, whose unclaimed content would flood the diff (2026-08-05). | Precision check (Phase 6), rubric criterion 5 |
 | C8 | **Addressing survives restructuring.** Internal and cross-document references still resolve; section identifiers are preserved or aliased; source contradictions are surfaced for human disposition, never silently harmonised. | Reference check (Phase 6), rubric criterion 6 |
 | C9 | **Glossary-first, single definition site.** The output set is five documents. Reading order is `glossary.md` → Doc 1 → Doc 2 → Doc 3; `index.md` sits outside it as a lookup companion. A term used in more than one **detangle-set** document is defined in the glossary and only there; a term used in exactly one is defined in that document — reference documents never count toward the tally (2026-08-05, generalizing the `(A)`/`(P)` rulings) — **unless a glossary definition depends on it, in which case it joins the glossary too** (Nick's Case 3 ruling, 2026-08-03: the glossary is read first, so a term it leans on has nowhere else to be looked up). No term is defined twice, and no term is left undefined. | Phase 3 + rubric criteria 1 and 3 |
@@ -152,9 +152,9 @@ The concept dependency graph is not a side feature; it drives the pipeline:
 - **Storage:** canonical data lives in the concept records (D9); the
   plain-text edge list `concept-graph.yaml` is a **generated** roll-up of
   them → clean git diffs. A Mermaid render displays natively in Azure DevOps
-  and GitHub, but is produced per concept on demand by
+  and GitHub, but is to be produced per concept on demand by
   `detangle graph --mmd <id>` rather than committed as a whole-set file
-  (Nick, 2026-08-04). Decision D2 (2026-07-21): SKOS concept *model*,
+  (Nick, 2026-08-04) — designed, not built (backlog B-6). Decision D2 (2026-07-21): SKOS concept *model*,
   Mermaid-compatible *rendering* — chosen over Turtle so the graph displays
   without extra tooling. D2 originally called the edge list the source of
   truth; D9 (2026-07-22) moved canonicity into the records and D10
@@ -307,9 +307,11 @@ input to any architecture and de-risks everything downstream.
 
 **Outputs:** the concept records (canonical), the registers
 (`cycles.yaml`, `reference-terms.md`, `waivers.yaml`), plus the generated
-views `index.md` and `concept-graph.yaml` (edge list); `glossary.md`, seeded
-by `detangle generate` and thereafter edited by humans (2026-08-04); and
-`state/notices.md`, generated but deliberately unguarded
+views `index.md` and `concept-graph.yaml` (edge list); and `glossary.md`,
+seeded by `detangle generate` and thereafter edited by humans (2026-08-04).
+`state/notices.md` — generated but deliberately unguarded — was ruled on
+2026-08-04 but never built, and is **not** an output of this phase; it is
+parked as backlog B-7 until a phase claims it
 **Done when:** PRs merged; every cycle, orphan, and conflicting definition has
 a human disposition; every term has exactly one definition site and exactly
 one index entry resolving to it; and every finding `detangle validate` reports
