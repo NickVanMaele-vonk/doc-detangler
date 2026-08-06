@@ -106,10 +106,33 @@ per-orphan findings today, and a waiver matching no live finding raises
 can be minted when a check exists that raises these findings. **Needs
 Nick's confirmation.**
 
-## 9. Forward references: zero
+## 9. Forward references: zero — corrected 2026-08-05
 
-Confirmed by projection: the accepted cycle
-(`liquidity-driven-reaction` ↔ `identity-driven-coordination`) is not among
-the 73 entries `U` uses, so the slice reads start to finish with no
-bridging marker — matching the reorder plan's expectation and C9 limb 2's
-guarantee for the rest.
+**What this said, and why it was wrong.** It reported zero forward
+references, confirmed by projection over `glossary-slice.md`: the accepted
+cycle (`liquidity-driven-reaction` ↔ `identity-driven-coordination`) is not
+among the 73 entries `U` uses, so the slice reads start to finish with no
+bridging marker. That statement is true, and it is about the wrong file.
+Criterion 1 also governs `uce.md`'s own definition order, which nothing had
+measured. The step-3b report generator did, and found two: both
+`persistence-gate` (front section) and `dif-analytical-domains` (§4) depend
+on `participant-interaction`, which was defined in §4 below them.
+
+**The cause was a miscount, not a missing rule.** `participant-interaction`
+was placed in §4 because the section count looked at prose sections only.
+It is also used inside `persistence-gate`'s definition block, which renders
+in "Terms defined in this document" — so the term is used in two sections,
+and the existing rule (define it in the section read first) already puts it
+in the front section. This is C9 limb 2 one level down: limb 1 missed that
+the glossary is a fourth place terms get used, and the section count missed
+that a definition block is another.
+
+**Ruled by Nick, 2026-08-05:** definition-block text counts as a use. The
+plan moves `participant-interaction` to `u-61b5f491`, before
+`persistence-gate`. Both forward references clear; `dif-analytical-domains`
+in §4 now reads after its dependency. No exception is recorded, because
+none is needed — the rule as written covers it.
+
+The blast radius beyond `U` is unmeasured. The forward-reference check in
+`detangle restructure --report` is what detects the rest, so `S` and `M`
+will be measured rather than assumed.

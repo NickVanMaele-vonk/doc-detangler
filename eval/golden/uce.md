@@ -68,6 +68,11 @@ Signal Integrity Summary: weakest_link and escalation_distance documented per si
 The Domain Independence Filter (DIF) requires cross-domain evidence before HIGH classification, reducing single-domain HIGH inflation; at Step 5b it verifies that CQS is built from contributions in ≥2 independent analytical domains. Single-domain CQT2 (all CQS contributions from domain A only) → HIGH blocked, retained at MEDIUM- INVESTIGATE for structured review. Exception: Collusion Override Path bypasses DIF.
 <!-- concept:domain-independence-filter:end -->
 
+**Participant interaction** (also known as: IDS, ISS, IQ, IQ gate, interaction_outcome_score)
+<!-- concept:participant-interaction:start -->
+IDS (0–3); ISS (0–3); IQ gate. interaction_outcome_score=0 suppresses escalation from interaction.
+<!-- concept:participant-interaction:end -->
+
 **Persistence Gate** (also known as: PG, Step 11b)
 <!-- concept:persistence-gate:start -->
 Persistence Gate (PG) requires behavioural repetition before HIGH absent explicit structures. At Step 11b, for signals reaching CQT2 that have not been blocked by DIF: where no BPL component is confirmed (bpl_drift_flag=FALSE AND session_consistency_confirmed=FALSE AND multi_day_conditioning_detected=FALSE AND cwps_intra < 0.50 AND escalating_dominance_trend=FALSE) AND no participant interaction is active (IDS=0, ISS=0): classification capped at MEDIUM-INVESTIGATE.
@@ -164,11 +169,6 @@ IBE input: participant data loaded; SRS (0–3) assigned. SRS=3 assigns DS=2 and
 <!-- concept:dif-analytical-domains:start -->
 Domains: (A) Behavioural/Transactional — RT alert patterns, order book behaviour, execution sequences; (B) Persistence — BPL components (BDS, SCS_bpl, MDCS, CWPS, EDT); (C) Interaction — IDS/ISS/IQ participant interaction; (D) Outcome — OS, CCL, CFS, OPL; (E) Contextual — ECIL AMPLIFIES_SUSPICION (only where context amplifies rather than explains).
 <!-- concept:dif-analytical-domains:end -->
-
-**Participant interaction** (also known as: IDS, ISS, IQ, IQ gate, interaction_outcome_score)
-<!-- concept:participant-interaction:start -->
-IDS (0–3); ISS (0–3); IQ gate. interaction_outcome_score=0 suppresses escalation from interaction.
-<!-- concept:participant-interaction:end -->
 
 **Collusion assessment** (also known as: CS, CCaS, CFPS)
 <!-- concept:collusion-assessment:start -->

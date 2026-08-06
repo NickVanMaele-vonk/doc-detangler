@@ -14,23 +14,26 @@ collapsed, the glossary's own rendering rule).
 
 C9's placement rule recursed one level down (reorder plan §3), dependency
 order, dependent after dependency (`persistence-gate` after
-`domain-independence-filter`), ties in first-use order:
+`domain-independence-filter` and after `participant-interaction`), ties in
+first-use order. **A definition block's own text is a use** — corrected
+2026-08-05, see `exceptions.md` §9:
 
 | Record | Used in |
 |---|---|
 | `derisking-assessment` | §3 (principle 7), §4 (step 22) |
 | `signal-integrity-summary` | §3 (principle 10), §6 (Parts index XIII) |
 | `domain-independence-filter` | §3 (principle 11), §4 (step 5b) |
+| `participant-interaction` | §4 (step 11b, DIF domains), and this section — inside `persistence-gate`'s definition block |
 | `persistence-gate` | §3 (principle 11), §4 (step 11b) |
 | `qa-validation` | §3 (principle 12), §6 (v24 entry) |
 | `escalation-likelihood-score` | §4 (step 19), §6 (Parts index XIII, XIV) |
 
-## Placed in one section (used there only)
+## Placed in one section (used there only, definition blocks counted)
 
 | Section | Records |
 |---|---|
 | §3 | `ai-hard-controls`, `replayobject`, `minimum-necessary-escalation`, `contextual-suppression-gate`, `early-disposal-layer` |
-| §4 | `enrichment-gate`, `dif-analytical-domains`, `participant-interaction`, `collusion-assessment`, `six-indicators`, `behaviour-centric-reweighting`, `kill-switch`, `mwbr-metric`, `explanation-fragility-score`, `minimum-evidence-requirement`, `three-tier-escalation-modifier`, `behavioural-distinctiveness-score` |
+| §4 | `enrichment-gate`, `dif-analytical-domains`, `collusion-assessment`, `six-indicators`, `behaviour-centric-reweighting`, `kill-switch`, `mwbr-metric`, `explanation-fragility-score`, `minimum-evidence-requirement`, `three-tier-escalation-modifier`, `behavioural-distinctiveness-score` |
 | §5 | `human-intervention-checkpoint` |
 | §6 | `pir-amplifier-only-rule`, `assessment-basis`, `price-impact-gate`, `behavioural-causality-principle`, `behavioural-causality-indicator`, `bci-dimensions-d1-d4`, `bci-levels`, `follower-rule`, `production-operations-governance`, `stor-reporting-intelligence-layer`, `ecil-supplemental-specification` |
 
