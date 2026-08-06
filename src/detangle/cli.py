@@ -291,7 +291,10 @@ def cmd_restructure(args: argparse.Namespace) -> int:
         summary.update(
             {
                 "doc": plan.doc,
-                "sections": len(plan.sections),
+                # Headed sections only — what a reader meets (Nick,
+                # 2026-08-05). The headless `head` identity block is
+                # listed in the report's Section IDs table, not counted.
+                "sections": sum(1 for s in plan.sections if s.kind != "head"),
                 "units": len(plan.assignments),
                 "definitions": len(plan.definitions),
                 "source words": sum(parity.expected.values()),

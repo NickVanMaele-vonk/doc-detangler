@@ -343,10 +343,19 @@ too, in halves: 3a the criterion-5 `token-parity` check inside the command
 is written** — `eval/prototype-comparison.md`, the 6.2 comparison: the
 prototype matches the golden on all six of ADR-002 Decision 4's dimensions,
 and the five recorded differences are three **golden-side** measurement
-defects awaiting Nick (a section count that counts the plan's headless
-`head` section, "42,172 bytes" that is a character count, and an overview
-word count of 214 that reproduces as neither 206 nor 227), one tally that is
-incomparable by construction, and 18 lines of incidental formatting. Nothing
+defects, one tally that is incomparable by construction, and 18 lines of
+incidental formatting. **The three defects are ruled and applied** (Nick,
+2026-08-05): **sections are counted as a reader meets them**, so the
+generator counts headed sections and reports 8 — the headless `head` block
+still appears in the move-map's Section IDs table, so nothing is hidden;
+the golden's **"42,172 bytes" is relabelled `characters`**, the measurement
+having been right and its name wrong, which leaves this file counting
+characters and the generated report counting bytes, deliberately not
+comparable; and the overview is **227 words, not 214**, because **ink on
+the page counts** toward a text's length even when the tool wrote it — the
+visible `[AI addition]` tag included. That last one is written into the
+rubric beside `param-overview-max-words` so every future overview is
+measured the same way. Nothing
 from the run is committed: the plan and blob are pinned, so one command
 reproduces every figure. **6.2 is still not done** — `param-low-confidence-
 threshold` has to be re-baselined against the first artifact carrying a

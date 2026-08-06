@@ -3,11 +3,30 @@
 Measured from the delivered triple, not predicted. Word counts by
 `wc -w`-style whitespace splitting; token parity by the multiset diff below.
 
+**Two figures in the triple row were corrected on 2026-08-05**, on rulings
+Nick gave when step 6.2 could not reproduce either of them. Both were
+measurement defects in this file; neither changes a verdict.
+
+- **"42,172 bytes" was a character count** and now says so. `uce.md` is
+  42,429 bytes — the 257-byte gap is the multi-byte characters the corpus
+  carries (`≥`, `σ`, en-dashes). The generated report counts bytes and says
+  bytes; this file counts characters and now says characters.
+- **The overview is 227 words, not 214.** The text is unchanged and
+  unambiguous; what was ambiguous was whether the visible `[AI addition]`
+  tag at the head of the section counts. **It does** (Nick, 2026-08-05):
+  ink on the page counts toward how long a text is, even when the tool
+  wrote it. The prose alone is 206 words; 214 was reproducible as neither
+  figure. Both readings sit far below `param-overview-max-words` (400).
+
+The section count needed no correction here — **8 was already the agreed
+measure**, and the same ruling moved the generator onto it (it had reported
+the plan's 9, counting the headless identity block).
+
 ## The triple
 
 | Artifact | Measure |
 |---|---|
-| `uce.md` | 8 sections, 42,172 bytes; 35 definition blocks; 1 Category C section (the overview, 214 words, ≤ `param-overview-max-words` 400) |
+| `uce.md` | 8 sections, 42,172 characters; 35 definition blocks; 1 Category C section (the overview, 227 words, ≤ `param-overview-max-words` 400) |
 | `glossary-slice.md` | 73 entries, 36 defined, 37 with the undefined note; 0 forward references within the slice (the accepted cycle is not in `U`'s slice — as the reorder plan expected). `uce.md`'s own definition order is measured separately, in the review-load table below |
 | `index-slice.md` | 155 terms, 84 marked "not defined in the corpus" (Nick's ruling, 2026-08-05) |
 
