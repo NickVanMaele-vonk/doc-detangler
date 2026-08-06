@@ -36,10 +36,13 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/pip install -e ".[dev]"      # editable install, pytest + ruff
 .venv/bin/python -m pytest             # tests/
 .venv/bin/ruff check .                 # lint
-.venv/bin/detangle validate            # all three commands built (ADR-001 D4)
+.venv/bin/detangle validate            # ADR-001 D4's three, all built; a
+                                       # fourth, restructure, came with 6.1
 .venv/bin/detangle graph               # built; rewrites concept-graph.yaml
 .venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
 .venv/bin/detangle graph --impact <id> # what depends on this definition
+.venv/bin/detangle graph --requires <id>   # what must be defined first
+                                       # (there is no --mmd: backlog B-6)
 .venv/bin/detangle generate            # seeded glossary.md; refuses to
                                        # overwrite it (exit 2) — --force only
 .venv/bin/detangle generate --check    # read-only compare against a regeneration
@@ -110,7 +113,8 @@ anchors, so a reviewer's PR comment round-trips deterministically back to the
 record. Two things changed on 2026-08-04: the definition *prose* is canonical
 in the document that defines it, `glossary.md` included, which is edited
 rather than generated; and there is no `concept-graph.mmd` — the Mermaid
-render is produced per concept on demand. Document
+render is to be produced per concept on demand, which is designed and **not
+built** (backlog B-6). Document
 *bodies* are not ontology; they stay markdown tracked as moved / derived /
 added (criterion 7).
 
@@ -142,7 +146,9 @@ added (criterion 7).
   usage edges, first-use links, `index.md`, `concept-graph.yaml`,
   `state/section-map.yaml`, `manifest.yaml`. Not in this list: the Mermaid
   render, which is on-demand rather than committed, and `state/notices.md`,
-  which is generated but deliberately unguarded (both Nick, 2026-08-04).
+  which is to be generated but deliberately unguarded (both Nick,
+  2026-08-04). Neither of those two is built — the `--mmd` flag does not
+  exist and no generator writes `state/notices.md` (backlog B-6, B-7).
   (`concept-graph.yaml` was called the source of truth in plan C6 and the
   README until Nick's 2026-07-30 ruling in ADR-001 — that wording predated
   D9. Every edge in it is a copy of a record's `depends_on` or a derived
@@ -186,7 +192,8 @@ span. Three registers exist:
   narrowed by an optional `match` substring of the message; a covered
   finding is **printed and counted but excluded from the exit-code
   decision**, so a command can be green while a fix waits elsewhere.
-  **All three commands read the register** (Nick, 2026-08-05) — before that
+  **Every command reads the register** (Nick, 2026-08-05, ruled when there
+  were three; `restructure` joined them and reads it too) — before that
   only `validate` did, so a finding raised by `generate` or `graph` could not
   be deferred at all. Entries and live findings are 1:1 like `cycles.yaml`: a
   stale entry raises `waiver-stale` (warn), so a fix deletes its waiver in the
@@ -196,10 +203,14 @@ span. Three registers exist:
   checks it raises in a `CHECKS` constant, kept honest by
   `tests/test_checks_declared.py`. Not waivable: `register-parse`, the
   `waiver-*` checks — a malformed register must not excuse itself — and the
-  four **drift** checks (`graph-drift`, `graph-missing`, `glossary-drift`,
-  `glossary-missing`), because a waiver defers work and regenerating a
+  **drift** checks, one pair per derived artifact (`graph-drift`,
+  `graph-missing`, `glossary-drift`, `glossary-missing`,
+  `restructure-drift`, `restructure-missing`, `report-drift`,
+  `report-missing`), because a waiver defers work and regenerating a
   derived file is one command, so there is nothing to defer; C6 and ADR-001
-  D5 hold only while a hand-edited artifact cannot excuse itself. Waiving is a separate channel,
+  D5 hold only while a hand-edited artifact cannot excuse itself. The list
+  is `registers.NOT_WAIVABLE` — read it there rather than from memory, since
+  every new derived artifact extends it. Waiving is a separate channel,
   not a third severity: everything left live still blocks. Do **not** file
   an accepted cycle here (ADR-001 D6): that is an approval and permanent,
   and a waiver is a deferral.
@@ -468,14 +479,18 @@ changes today.** They are written up in the research memo (§D9 amendment,
    stale notices file must never block a PR. Carries a "generated from commit
    X at time Y" header — visible age instead of enforcement, which
    `concept-graph.yaml` cannot have without breaking byte comparison.
+   **The ruling stands; the generator does not exist** — there is no `state/`
+   directory and nothing in `src/` writes one (backlog B-7).
 9. **Inline redefinition blocks, but shows both texts.** Only bites for
    glossary-placed terms now. One-click fix offered *only* where the body
    text verbatim restates the glossary definition; otherwise show and wait,
    because the difference is either an improvement or a contradiction.
-10. **No `concept-graph.mmd` is committed.** `detangle graph --mmd <id>`
-   prints one concept's neighbourhood on demand. 359 nodes render as a
+10. **No `concept-graph.mmd` is committed.** `detangle graph --mmd <id>` is
+   to print one concept's neighbourhood on demand. 359 nodes render as a
    238-node tangle plus 108 loose dots; a single concept is two or three
-   boxes, eight one step out. Amends C6 and D2.
+   boxes, eight one step out. Amends C6 and D2. **The half that removes the
+   file is done; the half that replaces it is not** — no `--mmd` flag and no
+   Mermaid rendering anywhere in the package (backlog B-6).
 11. **`close-window-start-minutes` keeps `flags: [orphan]`** — already
    applied on `main`, and the open-questions list saying otherwise was
    stale. The IBE/IBEB carve-out needs the source to define the concept
@@ -576,8 +591,9 @@ value.
 **Open questions from this session, none blocking 3.5:**
 
 1. ~~`concept-graph.mmd` scoping.~~ **Closed 2026-08-04** — no whole-set file
-   is committed; `detangle graph --mmd <id>` renders one concept's
-   neighbourhood on demand.
+   is committed; `detangle graph --mmd <id>` is to render one concept's
+   neighbourhood on demand. The scoping question is closed; the command is
+   unbuilt (backlog B-6).
 2. `index.md` (step 3.6) stays blocked until the document bodies exist: DoD
    criterion 4 wants the document and section for each of the 104
    document-placed defined terms.
