@@ -38,31 +38,50 @@ The approved tooling (ADR-001: Python, pytest, ruff, PyYAML, networkx,
 pandoc) contains no ML stack; adding one needs approval, which Decision 3
 requests.
 
-## Decision 1 — decomposition is deterministic and versioned
+## Decision 1 — decomposition: deterministic backbone, LLM-assisted overrides as data
 
-Plan step 7.1 says "LLM-assisted". The evidence since says the assistance
-is not needed at this granularity: `param-claim-granularity` is already
-mechanical — one claim per source sentence, one per table cell carrying an
-independent assertion — and the 5.2 golden confirmed the corpus decomposes
-that way (289 claims counted by hand, no judgment calls recorded). Three
-candidates:
+Plan step 7.1 says "LLM-assisted". The granularity rule itself is
+mechanical — `param-claim-granularity`: one claim per source sentence, one
+per table cell carrying an independent assertion — and the 5.2 golden
+decomposed the shortened `U` that way (289 claims counted by hand, no
+judgment calls recorded). The question is where judgment enters when the
+rule meets damaged or overloaded prose. Three candidates:
 
 - **A — LLM decomposer.** What the plan sketched. Adds a nondeterministic
-  component to the one place §2.8 says determinism matters most, and adds
-  an unapproved dependency for work the golden showed is mechanical.
-- **B — deterministic decomposer.** Pandoc-based: split blocks the way the
-  record-authoring pipeline already does, sentences within prose blocks,
-  cells within grid tables; drop headings, navigation and pure formatting
-  (non-claims per criterion 4). Carries a version string recorded in every
-  report.
-- **C — B with LLM escalation.** B, plus an LLM pass only where the
-  splitter flags damage (OCR-split rows, broken hyphens).
+  component to the one place §2.8 says determinism matters most; every
+  re-run can produce a different claim list, and every downstream number
+  is counted per claim.
+- **B — deterministic decomposer only.** Pandoc-based: split blocks the
+  way the record-authoring pipeline already does, sentences within prose
+  blocks, cells within grid tables; drop headings, navigation and pure
+  formatting (non-claims per criterion 4). Sufficient for the shortened
+  test inputs (the golden's 289 claims fell out of the rule with no
+  judgment calls), but **Nick's assessment (2026-08-06) is that it will
+  not survive the full documents** — OCR damage, run-on prose and cells
+  carrying several assertions will need judgment.
+- **C — deterministic backbone, LLM-assisted overrides as data.** B is
+  the default path, and it must *flag* what it cannot confidently split
+  (OCR-split rows, broken hyphens, over-long sentences, multi-assertion
+  cells). Flagged spans are split by an LLM-assisted pass whose output is
+  not consumed directly: it is written into a committed override file
+  (span → claim boundaries, one entry per flagged span), reviewed and
+  landed by PR like the reorder plan. `detangle verify` reads the
+  override file and stays deterministic — same input plus same overrides
+  gives the same claim list, so the claim-count tests still hold and the
+  LLM runs only when new or changed flagged spans appear, not on every
+  run.
 
-**Recommendation: B.** If the dry-run shows the splitter mangling the grid
-tables, escalate to C by amendment — the escape hatch is recorded now so it
-is a build decision then, not a design reopening. Either way the decomposer
-version is pinned in the report and our figures never compare against
-published FActScore numbers.
+**Recommendation: C**, ruled by Nick 2026-08-06: LLM assistance will be
+needed on the full documents, so it is designed in now rather than
+escalated to later. The ADR-002 pattern applies one level down — the
+judgment lives in a human-approved data artifact, the command executes
+it and authors nothing. This also keeps the LLM out of the package: the
+assisted pass is a workflow that produces a PR, not a runtime dependency
+of `detangle verify`, so ADR-001's tooling list is untouched by this
+decision (Decision 3's ML stack request stands separately). The
+decomposer version *and* the override file's blob are recorded in every
+report, and our figures never compare against published FActScore
+numbers.
 
 ## Decision 2 — coverage: match first, score the residue
 
@@ -150,9 +169,13 @@ the rubric edit.
 
 Build steps, in order, each its own PR:
 
-1. Decomposer + claim IDs (Decision 1), with its version string and unit
-   tests over the pinned `U` blob (claim count reproduces 289 or the
-   difference is explained in the PR).
+1. Decomposer + claim IDs (Decision 1): the deterministic backbone, the
+   flagging of spans it cannot confidently split, and the override-file
+   loader — with its version string and unit tests over the pinned `U`
+   blob (claim count reproduces 289 or the difference is explained in
+   the PR). The shortened inputs are expected to need few or no
+   overrides; the full documents are where the override path earns its
+   keep.
 2. Deterministic match + structure checks (Decisions 2 stage 1, 4) inside
    `detangle verify`; no model dependency yet.
 3. The scored residue (Decisions 2 stage 2, 3): the `[verify]` extra, the
