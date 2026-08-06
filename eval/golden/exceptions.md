@@ -16,11 +16,25 @@ output the tool can produce. And the overview already demonstrates the
 Category C machinery the golden needs to show. **Nick may direct
 otherwise** — any term below can be given a drafted definition in review.
 
-## 2. Orphans left undefined: 84 terms
+## 2. Orphans left undefined: 83 terms — corrected 2026-08-05
 
-47 UCE-placed (roster in `term-changes.md`) and 37 glossary-placed
-(rendered with the undefined note in `glossary-slice.md`). Each is
-positioned; none blocks reading. One is notable:
+47 UCE-placed (roster in `term-changes.md`) and 36 glossary-placed. Each is
+positioned; none blocks reading.
+
+**This said 84, and 84 was the wrong measure.** It counted every term
+carrying no definition, and one of those is undefined by *ruling* rather
+than by omission: `intraday-behavioural-event-builder` is the software that
+produces a business object defined under its own name, so the IBE/IBEB
+ruling (2026-07-30) leaves it undefined deliberately and it carries no
+orphan flag. An orphan measures how convoluted the source is; a term the
+source does define, under the business name, is not evidence of that. The
+step-3b report generator counts by flag and reported 83, which is what
+surfaced the defect. Ruled by Nick 2026-08-05.
+
+Two neighbouring figures are unaffected and stay as they are: **84 terms
+carry no definition** (`index-slice.md`), and `glossary-slice.md` renders
+**37** entries with the undefined note — 36 orphans plus the one undefined
+by ruling. One is notable:
 `behavioural-scenario-library` is used in **two** sections (§3 principle
 12, §6 v24 entry) while undefined — under C9-recursed it would sit in
 "Terms defined in this document" the day it gains a definition; today it is

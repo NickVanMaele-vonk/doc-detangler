@@ -21,7 +21,8 @@ Measured from the delivered triple, not predicted. Word counts by
 | — of which in a single section | 28 |
 | Promotions / demotions / placement changes | 0 |
 | Definitions drafted (Category C) | 0 |
-| Orphans positioned and flagged | 84 (47 UCE-placed + 37 glossary-placed) |
+| Orphans positioned and flagged | 83 (47 UCE-placed + 36 glossary-placed) — 84 before the 2026-08-05 correction; see `exceptions.md` §2 |
+| Undefined by ruling rather than by omission | 1 (`intraday-behavioural-event-builder`, IBE/IBEB) — so 84 terms carry no definition |
 | Records edited | 0 |
 
 ## Content categories (criterion 7)
@@ -58,7 +59,7 @@ show **zero** residual difference.
 | Expected PR-comment cluster (reorder plan §4) | Measured |
 |---|---|
 | Orphans with a drafted definition | 0 terms — cluster empty, rationale recorded |
-| Orphans left undefined | 1 cluster, 84 terms |
+| Orphans left undefined | 1 cluster, 83 terms (plus 1 undefined by ruling) |
 | Version skew | 1 |
 | Normative rules left inside the change log | 1 |
 | Source defects carried verbatim (beyond the 3 already waived) | 1 cluster (damaged tokens + the step 11b garble + the truncated VI-A.3.7.3 list + the "Ten principles"/12 rows contradiction) |

@@ -145,7 +145,7 @@ stage B writes the body; the source-section table above is the proxy.
 Definitions are never inline inside a table cell — most of `U` is tables, and
 a definition in a cell is unfindable and unmarkable.
 
-### The 84 orphans
+### The 84 undefined terms (83 of them orphans)
 
 Per the approved design point 3: draft a definition where the corpus supplies
 usages it can be assembled from, showing that evidence; where it does not,

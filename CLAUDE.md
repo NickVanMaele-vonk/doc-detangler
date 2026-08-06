@@ -306,7 +306,8 @@ undefined), and the four 8f artifacts. Zero orphan definitions were drafted
 (step 3.3 was the exhaustive assembly pass); the overview is the only
 Category C text. None of the 13 `notes` staging-post clauses belongs to `U` —
 all are glossary-placed. Step 5.3 (`eval/review-load.md`) measured 289
-claims, 35 terms changed, 84 orphans and 9 comment clusters, confirmed the
+claims, 35 terms changed, 83 orphans (84 terms undefined) and 9 comment
+clusters, confirmed the
 term cap (200), set `param-max-comments-per-PR` (25) and set
 `param-low-confidence-threshold` (0.80, **provisional — mandatory
 re-baseline at 6.2** against the prototype's first real confidence
@@ -344,11 +345,14 @@ is one it would count wrong; over `param-max-comments-per-PR` the run
 reports and writes no document. The real plan reports **9 clusters** — the
 5.3 baseline exactly, 3 measured and 6 declared.
 
-**Two golden defects the generator surfaced, both ruled by Nick 2026-08-05
-and applied.** First, `exceptions.md` counted **84 orphans** where 83 are
+**Two golden defects the generator surfaced, both ruled by Nick 2026-08-05.**
+First, `exceptions.md` counted **84 orphans** where 83 are
 orphans and `intraday-behavioural-event-builder` is undefined by the
 IBE/IBEB ruling instead (it carries no orphan flag) — corrected to 83, while
-"84 terms carry no definition" stays true and unchanged. Second, its §9
+"84 terms carry no definition" stays true and unchanged. This one was ruled
+on 2026-08-05 but not applied until 2026-08-05's documentation audit found
+the golden still saying 84 in three places while the generator said 83.
+Second, its §9
 "forward references: zero" checked the glossary slice, not `uce.md`'s own
 definition order, where `persistence-gate` and `dif-analytical-domains` both
 depended on `participant-interaction`, defined further down.
