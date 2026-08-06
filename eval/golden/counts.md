@@ -8,7 +8,7 @@ Measured from the delivered triple, not predicted. Word counts by
 | Artifact | Measure |
 |---|---|
 | `uce.md` | 8 sections, 42,172 bytes; 35 definition blocks; 1 Category C section (the overview, 214 words, ≤ `param-overview-max-words` 400) |
-| `glossary-slice.md` | 73 entries, 36 defined, 37 with the undefined note; 0 forward references (the accepted cycle is not in `U`'s slice — as the reorder plan expected) |
+| `glossary-slice.md` | 73 entries, 36 defined, 37 with the undefined note; 0 forward references within the slice (the accepted cycle is not in `U`'s slice — as the reorder plan expected). `uce.md`'s own definition order is measured separately, in the review-load table below |
 | `index-slice.md` | 155 terms, 84 marked "not defined in the corpus" (Nick's ruling, 2026-08-05) |
 
 ## Terms (8b)
@@ -17,8 +17,8 @@ Measured from the delivered triple, not predicted. Word counts by
 |---|---|
 | Terms in scope | 155 |
 | Terms changed (definition given a marked site in `uce.md`) | 35 |
-| — of which in "Terms defined in this document" | 6 |
-| — of which in a single section | 29 |
+| — of which in "Terms defined in this document" | 7 (6 before the 2026-08-05 correction; see `exceptions.md` §9) |
+| — of which in a single section | 28 |
 | Promotions / demotions / placement changes | 0 |
 | Definitions drafted (Category C) | 0 |
 | Orphans positioned and flagged | 84 (47 UCE-placed + 37 glossary-placed) |
@@ -62,5 +62,5 @@ show **zero** residual difference.
 | Version skew | 1 |
 | Normative rules left inside the change log | 1 |
 | Source defects carried verbatim (beyond the 3 already waived) | 1 cluster (damaged tokens + the step 11b garble + the truncated VI-A.3.7.3 list + the "Ten principles"/12 rows contradiction) |
-| Forward references | 0 — as expected |
+| Forward references | 0 — after the 2026-08-05 correction; measured wrong before it (`exceptions.md` §9) |
 | Deviations needing Nick's confirmation | 2 (no generated navigation; exceptions list instead of waiver entries) — see `exceptions.md` §7–8 |

@@ -151,6 +151,11 @@ definitions:
   - {record: derisking-assessment, section: u-61b5f491}
   - {record: signal-integrity-summary, section: u-61b5f491}
   - {record: domain-independence-filter, section: u-61b5f491}
+  # Used in §4's prose and inside persistence-gate's definition block, which
+  # renders here — so it is used in two sections, and the front section is
+  # read first. Corrected 2026-08-05 (Nick): the section count that first put
+  # it in §4 counted prose sections only. See exceptions.md §9.
+  - {record: participant-interaction, section: u-61b5f491}
   - {record: persistence-gate, section: u-61b5f491}
   - {record: qa-validation, section: u-61b5f491}
   - {record: escalation-likelihood-score, section: u-61b5f491}
@@ -161,7 +166,6 @@ definitions:
   - {record: early-disposal-layer, section: u-8b56eed5}
   - {record: enrichment-gate, section: u-43d38f1e}
   - {record: dif-analytical-domains, section: u-43d38f1e}
-  - {record: participant-interaction, section: u-43d38f1e}
   - {record: collusion-assessment, section: u-43d38f1e}
   - {record: six-indicators, section: u-43d38f1e}
   - {record: behaviour-centric-reweighting, section: u-43d38f1e}

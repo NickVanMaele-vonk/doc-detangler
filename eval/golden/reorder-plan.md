@@ -134,6 +134,10 @@ C9's placement logic, recursed one level down:
   that section**, in a marked block at the top of it.
 - A term used in **two or more** target sections is defined in
   `## Terms defined in this document`, immediately after the overview.
+- **A definition block's own text counts as a use of the terms in it**
+  (Nick, 2026-08-05 — see §5.3). So `## Terms defined in this document` is
+  itself a section that uses terms, exactly as the glossary is under C9
+  limb 2.
 
 The rule is computable from the finished body rather than judged, matching
 C9's "placement is computed, not judged". The split cannot be computed until
@@ -172,13 +176,13 @@ What stage B is expected to raise as PR comments, aggregated per cluster
 | Version skew across `U`/`S`/`M` | one |
 | Normative rules left inside the change log | one — the rules stay put (Nick, 2026-08-05), but a reader cannot find them there, so the condition is reported rather than fixed |
 | Source defects already waived (`definition-token` hyphens) | carried, not re-raised |
-| Forward references | expected zero — the accepted cycle is not in `U`'s slice |
+| Forward references | expected zero — the accepted cycle is not in `U`'s slice. Measured zero in `uce.md` too, but only after the §5.3 correction |
 
 ---
 
 ## 5. Ruled since this plan was written
 
-Both on 2026-08-05, and both applied above.
+All on 2026-08-05, and all applied above.
 
 1. **The index lists every term, including the undefined ones.** Criterion 3
    defines the index over terms *defined* anywhere in the set, which would
@@ -190,6 +194,16 @@ Both on 2026-08-05, and both applied above.
 2. **The amendment blocks stay in the version history.** See §2. The document
    has six sections, not seven, and nothing is lifted out of the change log.
    A later human review pass removes them.
+3. **A definition block's text counts as a use.** The step-3b report
+   generator found two forward references inside `uce.md` that the golden
+   had reported as zero, both on `participant-interaction`. It was placed in
+   §4 because the section count looked at prose sections only, while
+   `persistence-gate`'s definition — which renders in
+   `## Terms defined in this document` — uses it too. So the term is used in
+   two sections and the rule above already placed it wrongly-counted, not
+   wrongly-ruled. Nick ruled the count includes definition blocks; the term
+   moves to `## Terms defined in this document`, before `persistence-gate`,
+   and both forward references clear. Full account in `exceptions.md` §9.
 
 ## 6. Still open
 

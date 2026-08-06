@@ -306,11 +306,15 @@ def test_the_real_plan_reports_the_5_3_baseline_of_nine_clusters():
     assert sum(1 for c in report.clusters if c.where) == 6  # ruled by a human
     assert sum(1 for c in report.clusters if not c.where) == 3  # measured here
 
-    # The two forward references the golden's hand-written §9 did not catch:
-    # it checked the glossary slice, not this document's own definition order.
+    # Zero forward references — but only since the plan was corrected. This
+    # generator found two the golden's hand-written §9 had missed (it checked
+    # the glossary slice, not this document's own definition order), both on
+    # `participant-interaction`. Nick ruled a definition block's text counts
+    # as a use, which moves it into "Terms defined in this document"; see
+    # eval/golden/exceptions.md §9. The regression this guards is the plan
+    # drifting back, not the generator.
     forward = next(c for c in report.clusters if c.title == "Forward references")
-    assert "`persistence-gate` → `participant-interaction`" in forward.body
-    assert "`dif-analytical-domains` → `participant-interaction`" in forward.body
+    assert "**None.**" in forward.body
 
     # 84 undefined terms, split: 83 orphans and the one IBE/IBEB ruling.
     undefined = next(c for c in report.clusters if "no definition" in c.title)

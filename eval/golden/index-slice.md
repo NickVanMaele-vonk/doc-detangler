@@ -126,7 +126,7 @@ Hand-generated for the golden; the real index.md is step 3.6, generated.
 | Outcome Persistence Layer | — not defined in the corpus |
 | Outcome Score | `glossary.md` |
 | Participant History | — not defined in the corpus (placeholder entry in `glossary.md`) |
-| Participant interaction | `uce.md` §4 |
+| Participant interaction | `uce.md` — Terms defined in this document |
 | Pattern gate | `glossary.md` |
 | Persistence Gate | `uce.md` — Terms defined in this document |
 | PIR Amplifier-Only Rule | `uce.md` §6 |

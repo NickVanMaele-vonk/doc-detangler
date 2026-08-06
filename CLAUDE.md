@@ -344,13 +344,29 @@ is one it would count wrong; over `param-max-comments-per-PR` the run
 reports and writes no document. The real plan reports **9 clusters** — the
 5.3 baseline exactly, 3 measured and 6 declared.
 
-Two golden defects the generator surfaced, both awaiting Nick's disposition:
-the golden's `exceptions.md` counts **84 orphans** where 83 are orphans and
-`intraday-behavioural-event-builder` is undefined by the IBE/IBEB ruling
-instead (it carries no orphan flag); and its §9 "forward references: zero"
-checked the glossary slice, not `uce.md`'s own definition order, where
-`persistence-gate` and `dif-analytical-domains` both depend on
-`participant-interaction`, defined further down.
+**Two golden defects the generator surfaced, both ruled by Nick 2026-08-05
+and applied.** First, `exceptions.md` counted **84 orphans** where 83 are
+orphans and `intraday-behavioural-event-builder` is undefined by the
+IBE/IBEB ruling instead (it carries no orphan flag) — corrected to 83, while
+"84 terms carry no definition" stays true and unchanged. Second, its §9
+"forward references: zero" checked the glossary slice, not `uce.md`'s own
+definition order, where `persistence-gate` and `dif-analytical-domains` both
+depended on `participant-interaction`, defined further down.
+
+**A definition block's text counts as a use (Nick, 2026-08-05).** That
+second defect was a miscount, not a missing rule.
+`participant-interaction` sat in §4 because the in-document section count
+looked at prose sections only; it is also used inside `persistence-gate`'s
+definition block, which renders in "Terms defined in this document". Used
+in two sections, so the existing rule — define it in the section read
+first — already places it at the front. **This is C9 limb 2 one level
+down**: limb 1 missed that the glossary is a fourth place terms get used,
+and the section count missed that a definition block is another. The plan
+moved it (`eval/golden/uce.plan.yaml`), both forward references cleared,
+and the front section holds 7 definitions rather than 6. No exception is
+recorded because none is needed. The blast radius beyond `U` is
+**unmeasured** — `restructure --report`'s forward-reference cluster is what
+detects the rest, so `S` and `M` get measured, not assumed.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
