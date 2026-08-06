@@ -21,7 +21,9 @@ from detangle.restructure.report import ARTIFACTS, COUNTS, EXCEPTIONS, MOVE_MAP
 SEC = "u-00000001"
 
 
-def write_plan(mini_repo, *, extra: str = "", definitions: str = "") -> Path:
+def write_plan(
+    mini_repo, *, extra: str = "", definitions: str = "", head: bool = False
+) -> Path:
     from detangle.records.spans import block_hash, normalise, split_blocks
 
     text = (mini_repo.root / "samples" / "mini.md").read_text(encoding="utf-8")
@@ -30,7 +32,8 @@ def write_plan(mini_repo, *, extra: str = "", definitions: str = "") -> Path:
     plan = (
         "doc: U\n"
         "sections:\n"
-        f"  - {{id: {SEC}, title: \"1. Everything\", kind: content}}\n"
+        + ('  - {id: head, title: "", kind: head}\n' if head else "")
+        + f"  - {{id: {SEC}, title: \"1. Everything\", kind: content}}\n"
         f"assignments:\n{assigned}\n"
         "definitions:\n"
         f"  - {{record: widget, section: {SEC}}}\n"
@@ -111,6 +114,24 @@ def test_the_move_map_accounts_for_every_block_and_drop(mini_repo, capsys):
     assert "A widget is a device" in move_map
     assert "1. Everything" in move_map  # the target section, by title
     assert "## Section IDs" in move_map and SEC in move_map
+
+
+def test_the_headless_identity_block_is_not_a_counted_section(mini_repo, capsys):
+    """Sections are counted as a reader meets them (Nick, 2026-08-05).
+
+    A ``head`` section renders with no heading and no ``sec:`` marker, so it
+    is not one of the sections the count is about — but it is not hidden
+    either: the move-map's Section IDs table lists every plan section.
+    """
+    mini_repo.write_record()
+    write_plan(mini_repo, head=True)
+    out = mini_repo.root / "report"
+    _, payload = run(mini_repo, report=out, capsys=capsys)
+    # Two plan sections, one of them headless.
+    assert payload["summary"]["sections"] == 1
+    counts = (out / COUNTS).read_text(encoding="utf-8")
+    assert "| Sections | 1 |" in counts
+    assert "head" in (out / MOVE_MAP).read_text(encoding="utf-8")
 
 
 def test_the_counts_carry_the_criterion_5_accounting(mini_repo, capsys):

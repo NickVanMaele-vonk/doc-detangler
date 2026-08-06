@@ -127,11 +127,11 @@ Three are measured by the run and six are declared in the plan's
 ## Findings
 
 Five differences, none of them a failure of a rubric criterion. The first
-three are golden-side measurement defects of the same family as the two
-already ruled on 2026-08-05; each is recorded for Nick's disposition rather
-than resolved here.
+three were golden-side measurement defects of the same family as the two
+already ruled on 2026-08-05; **Nick ruled all three the same day and each is
+now applied.** The rulings are recorded with their findings below.
 
-### F-1 — "9 sections" and "8 sections" are both true
+### F-1 — "9 sections" and "8 sections" are both true — **ruled: 8**
 
 The generated `counts.md` reports **9** sections; the golden's reports
 **8**. Neither is wrong: the plan declares nine sections, one of which is
@@ -140,21 +140,33 @@ no heading and no `sec:` marker. The generator counts plan sections; the
 golden counted headed sections. A reader comparing the two files sees a
 discrepancy that is not one.
 
-*Reading:* the generator's figure should say what it counts, since the
-reader-facing meaning of "section" in this document is the headed kind.
-Nick's call.
+**Ruled by Nick, 2026-08-05: count the sections a reader can see.** The
+generator now counts headed sections and reports **8**, matching the
+golden, and says in `counts.md` what it is counting. Nothing is hidden by
+the change: the move-map's Section IDs table still lists every plan
+section, headed or not, so the identity block remains visible where its
+identity matters. The run summary line moved with it —
+`sections: 8`. Held by
+`tests/test_restructure_report.py::test_the_headless_identity_block_is_not_a_counted_section`.
 
-### F-2 — the golden's byte count is a character count
+### F-2 — the golden's byte count is a character count — **ruled: relabel**
 
 The golden's `counts.md` says `uce.md` is **42,172 bytes**. The file is
 **42,429 bytes**; 42,172 is its length in characters, the two differing by
 the document's non-ASCII characters (≥, σ, en-dashes). The generator reports
 41,976 for its own output, which is bytes.
 
-*Reading:* a golden-side defect, in the same family as the orphan count —
-the figure is a real measurement of the wrong thing. Nick's call.
+**Ruled by Nick, 2026-08-05: relabel it `characters`.** The number was a
+real measurement wearing the wrong name, so the name changed and the number
+did not. `counts.md` now reads "42,172 characters" and records the gap.
 
-### F-3 — the golden's overview word count reproduces as neither figure
+One consequence to know rather than discover: the two files now measure
+different things on purpose — this one characters, the generated report
+bytes — so the figures are not comparable and are not meant to be. Making
+them comparable would mean the generator emitting both, which is a
+one-line change nobody has asked for.
+
+### F-3 — the golden's overview word count reproduces as neither figure — **ruled: 227**
 
 The golden's `counts.md` says the overview is **214 words**. The overview
 text is byte-identical in both files, and counts as **206** words as prose
@@ -165,9 +177,14 @@ The generator reports 227 — the whole section as a reader meets it. Both
 figures are far below `param-overview-max-words` (400), so criterion 2's cap
 is met on any reading and no verdict turns on this.
 
-*Reading:* a golden-side defect. What the tool should count is a real
-question — the tag is text on the page but is not the overview's content —
-and is worth ruling once rather than per artifact. Nick's call.
+**Ruled by Nick, 2026-08-05: ink on the page counts** toward how long a
+text is, even when AI wrote it. So the tag counts, 227 is the figure, and
+the generator was already right. The golden now says 227.
+
+This was worth ruling once rather than per artifact, so it is written into
+the rubric beside the parameter it governs (`param-overview-max-words`,
+`plan/definition-of-done.md`) — every future overview is measured the same
+way, and no later run has to rediscover the question.
 
 ### F-4 — the category tallies are not comparable row for row
 
