@@ -339,10 +339,19 @@ the execution engine, whose machine run of the real plan **reproduces the
 approved golden** (identical section markers, all 35 definition blocks
 byte-equal, empty token diff both ways) — held as a test. Step 3 is merged
 too, in halves: 3a the criterion-5 `token-parity` check inside the command
-(PR #105), 3b the generated 8f self-report behind `--report <dir>`. Step 4
-records the 6.2 comparison in `eval/`, and 6.2 is not
-done until `param-low-confidence-threshold` has been re-baselined against
-the first artifact carrying a mapping score (the Phase 7 harness dry-run).
+(PR #105), 3b the generated 8f self-report behind `--report <dir>`. **Step 4
+is written** — `eval/prototype-comparison.md`, the 6.2 comparison: the
+prototype matches the golden on all six of ADR-002 Decision 4's dimensions,
+and the five recorded differences are three **golden-side** measurement
+defects awaiting Nick (a section count that counts the plan's headless
+`head` section, "42,172 bytes" that is a character count, and an overview
+word count of 214 that reproduces as neither 206 nor 227), one tally that is
+incomparable by construction, and 18 lines of incidental formatting. Nothing
+from the run is committed: the plan and blob are pinned, so one command
+reproduces every figure. **6.2 is still not done** — `param-low-confidence-
+threshold` has to be re-baselined against the first artifact carrying a
+mapping score (the Phase 7 harness dry-run), and this run carries no
+confidence scores at all, by ADR-002 Decision 1.
 
 **The 8f split (Nick, 2026-08-05).** The report generator writes only what
 the run measured — block moves, drops, category tallies, the criterion-5
