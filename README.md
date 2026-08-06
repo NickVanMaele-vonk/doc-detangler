@@ -73,7 +73,7 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` and `restructure` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
+| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` and `restructure` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6) |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
@@ -81,13 +81,16 @@ If one term appears in more than one input document, then:
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
-| *(no `concept-graph.mmd`)* | The Mermaid render is produced **on demand** — `detangle graph --mmd <id>` prints one concept's neighbourhood, to paste into a PR comment where GitHub and Azure DevOps render it natively. A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)* |
-| `state/notices.md` | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts. Generated, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file never blocks a PR *(Nick, 2026-08-04)* |
+| *(no `concept-graph.mmd`)* | A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)*. The replacement — `detangle graph --mmd <id>`, printing one concept's neighbourhood to paste into a PR comment where GitHub and Azure DevOps render it natively — is **designed, not built**: the flag does not exist and nothing in the package renders Mermaid *(backlog B-6)* |
+| *(no `state/notices.md`)* | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts — are to be generated into `state/notices.md`, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file must never block a PR *(Nick, 2026-08-04)*. **Designed, not built**: no generator exists and no `state/` directory is committed *(backlog B-7)* |
 | `eval/` | Test inputs and golden reference outputs. `eval/README.md` designates the three shortened blueprints as test inputs, pinned to their git blobs, and names UCE as the golden target *(step 5.1 — done; the golden itself, step 5.2, is pending)* |
 
 ## Status
 
-Phases 1, 2 and 4 complete. Rubric approved (`plan/definition-of-done.md`);
+Phases 1, 2, 4 and 5 complete; Phase 3 nearly so and **Phase 6 in progress**
+(`plan/adr-002-prototype.md`, approved 2026-08-05 — three of 6.1's four build
+steps merged, the 6.2 comparison outstanding).
+Rubric approved (`plan/definition-of-done.md`);
 research memo delivered (`plan/research-memo.md`) across three rounds. The
 gating architecture decisions were signed off 2026-07-22: runtime is
 **Python** (D7), and the definition layer is **ontology-first** (D9) —
@@ -105,7 +108,8 @@ Phase 3 data is essentially complete — **359 concept records** under
 dispositioned, and the criterion-3 reference terms and cycle rulings in
 `registers/`.
 
-All three commands are built. **`detangle validate`** replaces the
+All three ADR-001 commands are built — `restructure` came later, with Phase 6
+(below). **`detangle validate`** replaces the
 throwaway per-PR scripts with a tested implementation of the record-set
 integrity checks. **`detangle graph`** builds the concept graph from the
 records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
@@ -232,7 +236,8 @@ and exit `0` for any known id, `2` for an unknown one.
 `registers/waivers.yaml` (plan step 3.9) holds findings that have a human
 disposition but no fix yet — today, three `definition-token` findings ruled
 source-document defects, whose repair waits on the B-1 source-correction path.
-**All three commands read the register** (Nick, 2026-08-05). Each prints a
+**Every command reads the register** (Nick, 2026-08-05, when there were three;
+`restructure` joined them and reads it too). Each prints a
 covered finding in its own `waived` block and counts it in the summary, but
 leaves it out of the exit-code decision, so a gate waiting on work elsewhere
 can still be green and can therefore be marked required. Waiving is a separate
@@ -254,10 +259,13 @@ declaration cannot drift.
 
 Two families cannot be waived. `register-parse` and the `waiver-*` checks,
 because a malformed register must not excuse itself. And the drift checks —
-`graph-drift`, `graph-missing`, `glossary-drift`, `glossary-missing` — because
-a waiver defers work somebody must do later, and regenerating a derived file
-is a single command: C6 and ADR-001 Decision 5 hold only while a hand-edited
-artifact cannot excuse itself. A waiver is a deferral, not an
+`graph-drift`, `graph-missing`, `glossary-drift`, `glossary-missing`,
+`restructure-drift`, `restructure-missing`, `report-drift`, `report-missing` —
+because a waiver defers work somebody must do later, and regenerating a derived
+file is a single command: C6 and ADR-001 Decision 5 hold only while a
+hand-edited artifact cannot excuse itself. The list is
+`registers.NOT_WAIVABLE`, and every derived artifact the toolchain gains
+extends it. A waiver is a deferral, not an
 approval (`definition-of-done.md` §3) — the set is not done while waivers are
 open, which is why a waived finding is still printed on every run.
 
