@@ -29,7 +29,7 @@ a dozen rules.
 | Terms changed (8b) | 35 of 155 in scope |
 | Contradictions surfaced in-document | 2 ("Ten foundational principles" over a twelve-row table; the version-skew cluster) |
 | Conflicting definitions carried on in-scope records (`conflict:` blocks) | 13 records |
-| Orphans | 84 (47 UCE-placed, 37 glossary-placed) |
+| Orphans | 83 (47 UCE-placed, 36 glossary-placed) — corrected from 84 on 2026-08-05; 84 terms carry no definition, one of them undefined by the IBE/IBEB ruling rather than by omission (`eval/golden/exceptions.md` §2) |
 | Source-damage items carried verbatim | 1 unreconstructable passage (step 11b), 1 truncated list (VI-A.3.7.3), ~20 damaged tokens |
 | **PR comments that would have been raised (8d, per cluster)** | **9** — 7 content clusters (one of them empty: zero drafted definitions) + 2 recorded deviations |
 | Low-confidence rewrites | 2 instances — the step 11b garble and the truncated VI-A.3.7.3 list; every other rewrite was a verbatim move or a mechanical rejoin |
