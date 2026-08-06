@@ -73,6 +73,7 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
+| `./plan/adr-002-prototype.md` | Prototype design: the reorder plan is data, `detangle restructure` executes it, and 6.2 compares per criterion rather than by byte equality *(Phase 6 — approved 2026-08-05)* |
 | `src/detangle/` | The toolchain: `validate`, `graph`, `generate` and `restructure` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render became an on-demand command and no file is committed |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
@@ -83,11 +84,14 @@ If one term appears in more than one input document, then:
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
 | *(no `concept-graph.mmd`)* | The Mermaid render is produced **on demand** — `detangle graph --mmd <id>` prints one concept's neighbourhood, to paste into a PR comment where GitHub and Azure DevOps render it natively. A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)* |
 | `state/notices.md` | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts. Generated, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file never blocks a PR *(Nick, 2026-08-04)* |
-| `eval/` | Test inputs and golden reference outputs. `eval/README.md` designates the three shortened blueprints as test inputs, pinned to their git blobs, and names UCE as the golden target *(step 5.1 — done; the golden itself, step 5.2, is pending)* |
+| `eval/` | Test inputs and golden reference outputs. `eval/README.md` designates the three shortened blueprints as test inputs, pinned to their git blobs, and names UCE as the golden target *(step 5.1)*. The golden triple for `U` plus its four 8f artifacts and its machine-readable reorder plan are in `eval/golden/` *(step 5.2 — approved, PR #99)*, and `eval/review-load.md` carries the 5.3 measurement that set the comment and low-confidence parameters. **Phase 5 closed 2026-08-05** |
 
 ## Status
 
-Phases 1, 2 and 4 complete. Rubric approved (`plan/definition-of-done.md`);
+Phases 1, 2, 4 and 5 complete; Phase 3 nearly so and **Phase 6 in progress**
+(`plan/adr-002-prototype.md`, approved 2026-08-05 — three of 6.1's four build
+steps merged, the 6.2 comparison outstanding).
+Rubric approved (`plan/definition-of-done.md`);
 research memo delivered (`plan/research-memo.md`) across three rounds. The
 gating architecture decisions were signed off 2026-07-22: runtime is
 **Python** (D7), and the definition layer is **ontology-first** (D9) —
