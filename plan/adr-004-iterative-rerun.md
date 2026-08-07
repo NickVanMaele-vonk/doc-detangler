@@ -1,10 +1,11 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 2, 2b, 3, 4, 5, 6 and 9 RULED** by Nick, 2026-08-07.
-Decisions 7 and 8 are **PROPOSED** — each carries a recommendation and each
-can be ruled independently. Decisions 2/2b, 4, 5, 6 and 9 are applied; 1 and
-3 are rulings whose normative-document edits are partly outstanding (step 3).
-Decisions 2, 5 and 9 amend signed-off material and say so explicitly.
+**Status: Decisions 1, 2, 2b, 3, 4, 5, 6, 7 and 9 RULED** by Nick, 2026-08-07.
+Decision 8 is **PROPOSED** — it carries a recommendation and can be ruled
+independently. Decisions 2/2b, 4, 5, 6, 7 and 9 are applied; 1 and 3 are
+rulings whose normative-document edits are partly outstanding (step 3).
+Decisions 2, 5 and 9 amend signed-off material and say so explicitly;
+Decision 7 sets a parameter that was only ever a proposal.
 
 ## Context
 
@@ -271,15 +272,89 @@ re-verify, not that the plan is wrong.
 
 ## Decision 7 — verification cadence follows the re-run, not the release tag
 
-`param-full-verify-cadence` is "every release tag" and 10.6 puts the full
+**RULED by Nick, 2026-08-07: cadence the full harness on the re-run, and the
+run records the versions it verified.**
+
+`param-full-verify-cadence` was "every release tag" and 10.6 puts the full
 C1/C2/C7 harness there. Nick expects to forget tags, and a forgotten tag means
 the Phase 7 harness never runs — the per-PR drift lint still catches deletions
 through its `lost-claim` check, so the failure is not silent, but the
 losslessness proof would simply not be produced.
 
-**Recommendation:** cadence the full harness on **the re-run**, which is a
-deliberate act nobody forgets and precisely the moment the proof is wanted.
-Release tags remain a valid additional trigger.
+The recommendation was to cadence the full harness on **the re-run**, which is
+a deliberate act nobody forgets and precisely the moment the proof is wanted,
+with release tags remaining a valid additional trigger. The value was a
+*proposal*, so setting it overturns nothing.
+
+### The condition attached to the ruling
+
+Nick's question — *if the heavy run happens only occasionally, how are the
+document versions at the time of the last run identified?* — is the one that
+decides whether this cadence produces anything durable. Without an answer,
+"verified at the last re-run" is a claim with nothing behind it.
+
+The answer is cheap, because git already solves it. A document's version **is**
+its blob hash (`git rev-parse HEAD:<doc>`): immutable, and `git show <blob>`
+returns the exact bytes however many versions land afterwards. So the set as it
+stood is five 40-character strings plus a commit. Nothing needs archiving, and
+the repo already uses this pin in three places — record spans
+(`verified_against.git_blob`), a reorder plan's `pinned_blob` with its
+`plan-blob-stale` warning, and the generated move-map's source header.
+
+So the ruling carries a requirement: **every full run writes the blob of every
+document in both input sets, plus the commit, into its report** (plan step
+7.5). Two things follow that otherwise cannot — the proof names the artifacts
+it proves, and the next run has a baseline: v_n+1 is checked against v_n, and
+v_n is retrievable. That last point also answers the coverage-baseline question
+ADR-003 Decision 2 leaves open for steady state.
+
+`manifest.yaml` (D10 element 5, step 10.4) is the set-level version of the same
+record and absorbs it when it lands. It is Phase 10 and the harness is Phase 7,
+which is why the record starts in the verification report rather than waiting
+three phases for its designed home.
+
+Durability caveat, stated once so it is not rediscovered: a blob stays
+retrievable while it is reachable from a ref. Document history lives on `main`,
+which `protect-main` guards with `non_fast_forward`, so a force-push cannot
+orphan past blobs. A history rewrite is the only thing that would break this,
+and it is already forbidden.
+
+### Why option C — the full harness on every PR — was rejected
+
+Considered and declined, but not on the ground it first appears. The model
+never reads a document: 7.1 decomposition and 7.4 structure are deterministic,
+and 7.2/7.3 match deterministically first and score only the residue —
+**268 of 289 claims on the golden resolve at confidence 1.0**, because
+restructuring moves blocks verbatim. A full run scores ~21 claims, not 289.
+Per PR, scoped by the section map, it would be single digits.
+
+It was declined for three other reasons:
+
+1. **Its cheap half is already the plan.** Step 10.2 runs per PR and already
+   carries the `lost-claim` check — that is deterministic stage-1 coverage. The
+   93% that resolves by hash is *already* verified on every edit. What C adds is
+   the scored residue, which is exactly the fraction that needs a human.
+2. **The checks are judgment-shaped.** All four of `verify`'s checks are
+   waivable by design, each being "a finding awaiting human disposition, not a
+   drift". A low-confidence mapping means *someone should look*, not *this is
+   wrong*; blocking merge on it converts a review prompt into a hard stop.
+3. **It puts `torch` on a required gate.** ADR-003 Decision 3 asks for
+   `detangle[verify]` as an *extras* group precisely to leave the core package
+   and the three CI gates untouched. A checkpoint-fetch failure would turn a
+   required check red for a reason unrelated to the change — the
+   unsatisfiable-gate trap that stuck PR #81.
+
+Two prerequisites are also unbuilt: `state/section-map.yaml`, without which
+nothing can scope a PR at section granularity (git diff cannot substitute — D10
+rules line numbers out as provenance anywhere), and a persisted claim→location
+index, which incremental *coverage* needs because "is every source claim
+present somewhere" is a global question a per-section scope cannot answer.
+
+**As ruled.** `detangle.toml` and the rubric's parameter row now read "every
+re-run; release tags additionally", set rather than proposed; criterion 4 and
+criterion 9's tiered-cadence bullet carry the version-record requirement; plan
+steps 7.5 and 10.6 carry it as work. No code changed — `detangle verify` does
+not exist yet, and this is its specification.
 
 ## Decision 8 — wording goes in the markdown, position goes in the plan
 
@@ -347,7 +422,15 @@ ruled.
    golden). Documentation only; no code.
 4. **Decisions 5–8** — repeatable campaign mode, the freeze-window rule, the
    cadence change, and the wording/position rule, with the position lint last
-   because it is the only one needing new code.
+   because it is the only one needing new code. Decision 5 done 2026-08-07
+   (D10 element 1 rewritten as three modes); Decision 6 done the same day
+   (`plan-blob-stale` names the rule, backlog B-8 records why plan rebasing
+   was not built); **Decision 7 done the same day** —
+   `param-full-verify-cadence` set in `detangle.toml` and the rubric, plan
+   step 7.5 added for the run version record, 10.6 and criterion 4 updated,
+   ADR-003 Decision 5 annotated where it awaited this parameter.
+   Documentation only; the harness it specifies is Phase 7. Decision 8
+   remains.
 
 Decision 4 was built alongside step 2, since `approval-batch` reads the
 `assurance.pr` that step introduced.

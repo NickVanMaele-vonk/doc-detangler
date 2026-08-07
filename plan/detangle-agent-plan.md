@@ -415,11 +415,15 @@ Model/effort recommendation: Fable or Opus/xhigh
 | 7.2 | **Coverage check:** map each detangle-set claim to an output location, or flag as omission-pending-approval. Runs over the detangle set only. |
 | 7.3 | **Fabrication check:** trace each output claim to **either input set** — detangle or reference — or confirm it is marked bridging text. The reference set must be available to this check: lifted definitions resolve there (C2, 2026-08-05). |
 | 7.4 | **Structure checks (automatic):** concept-before-use ordering validated against the graph. |
+| 7.5 | **Run version record** (ADR-004 Decision 7, Nick 2026-08-07). The harness runs at `param-full-verify-cadence` — every re-run — so documents move between runs and each run must say what it verified. It records the git blob of every document in **both** input sets plus the commit, which is sufficient: a blob *is* the version, immutable and retrievable with `git show` however many versions follow. Same pin already carried by `eval/README.md`, a reorder plan's `pinned_blob` and the generated move-map. Two consequences: the losslessness proof names the artifacts it proves, and the next run has a baseline — v_n+1 checked against v_n, with v_n resolvable from the blob. Superseded in place by `manifest.yaml` (10.4), which is the set-level version of the same record; until then the record lives in the verification report. |
 
-**Output:** verification report per run, committed alongside the document.
+**Output:** verification report per run, committed alongside the document,
+carrying the 7.5 version record.
 **Done when:** harness catches seeded errors — deliberately delete one claim,
 invent one claim, and weaken one claim (change a threshold and downgrade a
-`must` to a `should`, per C7); the harness must flag all three.
+`must` to a `should`, per C7); the harness must flag all three. And the
+report names the blob of every document the run read, so the set it verified
+is recoverable after later versions land.
 
 ## Phase 8 — Azure DevOps integration
 Model/effort recommendation: Opus/high
@@ -460,7 +464,7 @@ branch policy, budgets) and Phase 3's extraction.
 | 10.3 | **Derived-artifact regeneration on merge.** Usage edges, first-use links, `index.md`, `state/section-map.yaml`, and `manifest.yaml` regenerate whenever bodies or records change; the regenerate-and-compare guard (D9) extends to all of them. Direct edits to derived artifacts remain forbidden. Two exclusions (Nick, 2026-08-04): there is no `concept-graph.mmd` to regenerate — the render is on demand — and `state/notices.md` is generated but unguarded, because a stale notices file must never block a PR. |
 | 10.4 | **Version manifest.** Generated `manifest.yaml`: per-document version, record-set revision, dependency-graph hash, derived-artifact hashes, generation timestamp. The coherence check — "do these five documents + record set belong together?" — becomes mechanical. Version skew (already live: UCE v28 vs v30 citations; MCL v21/v22) becomes machine-checkable state. |
 | 10.5 | **Term lifecycle.** `status` transitions (candidate → approved → published → deprecated) and `superseded_by` renames; deprecated aliases in body text are flagged as such, not as unknown terms. **The waiver register moved to step 3.9** (Nick, 2026-07-31): it extends the ISO 704 §6.5.2 documented-exception path and records ticketed orphans/conflicts with an owner, so the lint separates accepted debt from new regressions — needed from Phase 3, not Phase 10, because `detangle validate` already produces findings whose disposition is "accepted, fix deferred". |
-| 10.6 | **Tiered verification cadence.** Cheap structural lint on every PR (10.2); full C1/C2/C7 harness (Phase 7) at `param-full-verify-cadence` — release tags, not every edit. |
+| 10.6 | **Tiered verification cadence.** Cheap structural lint on every PR (10.2); full C1/C2/C7 harness (Phase 7) at `param-full-verify-cadence` — **every re-run**, and additionally at any release tag (ADR-004 Decision 7, Nick 2026-08-07), not every edit. The parameter moved off "every release tag" because a forgotten tag means the harness never runs, whereas a re-run is a deliberate act and is exactly the moment the proof is wanted. Because documents move between full runs, each run records the git blob of every document it verified (7.5) — that is what identifies the set as it stood at the last run, and it is the next run's baseline. |
 | 10.7 | **Lint test suite — part of the deliverable, not an afterthought.** Mirror the Phase 7 seeded-error pattern: a fixture corpus with one seeded scenario per lint flag type — reorder-only (must flag **nothing** and cost ~zero), typo edit (staleness only), new undefined term, inline redefinition, use-before-definition, placement-boundary crossing, deprecated-alias use, copy-paste duplicate section ID, missing/malformed marker, deleted section with live usage edges, section split, section merge. The guard is not wired into branch policy until every seeded scenario is caught and the reorder-only fixture stays silent. |
 
 **Output:** the guard wired into branch policy; `state/section-map.yaml`;

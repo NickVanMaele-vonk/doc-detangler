@@ -62,7 +62,7 @@ overview-max-words = 400               # proposal
 false-positive-tolerance = "none"
 claim-granularity = "one claim per source sentence; one claim per table cell carrying an independent assertion"
 manual-reviewer = "Nick, optionally Ivo for domain accuracy"
-full-verify-cadence = "every release tag"  # proposal
+full-verify-cadence = "every re-run; release tags additionally"  # set — Nick, 2026-08-07, ADR-004 Decision 7
 
 [validate]
 # Smallest run of characters from a definition that must appear verbatim in one
