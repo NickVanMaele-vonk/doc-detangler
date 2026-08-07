@@ -359,3 +359,34 @@ available today from `registers/waivers.yaml`. Unguarded means no
 
 **Depends on:** nothing hard. Demotion candidates want Phase 5 bodies; the
 waiver review dates do not.
+
+---
+
+## B-8 — Rebase a reorder plan onto a moved source
+
+**Raised:** 2026-08-07 (assistant), with ADR-004 Decision 6.
+
+**The gap.** A reorder plan addresses blocks by content hash and is pinned to
+one source blob. `validate_plan` compares the pin against
+`git rev-parse HEAD:<doc>` and raises `plan-blob-stale`, so any merged docs PR
+invalidates every open plan. Nick ruled the operating rule instead — a re-run
+freezes the documents it touches — and this entry parks the automation.
+
+**What it would do.** Re-resolve the plan's block hashes against the moved
+source: a block whose normalised text is unchanged keeps its assignment under
+its new hash, and the plan is rewritten with a fresh pin.
+
+**Why it was not built.** The coordination cost the freeze imposes has not been
+felt yet, so the shape of the real problem is unknown — and one case has no
+correct automatic answer. Where an edit *changed* a block rather than moving
+it, the plan's intent for that block may no longer hold: the text it was
+assigned for may be gone. Rebasing would have to fall back to re-authoring for
+exactly the cases that motivate it, so the honest scope is "carry the
+unchanged blocks, report the rest", which is a smaller win than it first looks.
+
+**What has to be decided first.** Whether a rebase writes the plan (a
+generated edit to a human-authored artifact, which no command does today) or
+emits a diff for a human to apply. The second fits ADR-002's rule that the
+plan is data a human owns.
+
+**Depends on:** one real re-run, to know how often this actually bites.
