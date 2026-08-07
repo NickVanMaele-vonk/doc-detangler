@@ -12,9 +12,14 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.1 Structural Characteristics Governing Detection"
     para_hash: sha256:09ddf6ebde66c1524a71fa15fcb1278f922eacaa5c7901d65843d0565752c3bf
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - rdcs
 flags: []

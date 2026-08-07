@@ -15,15 +15,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.3.1 Identity-Driven Coordination vs Liquidity-Driven Reaction"
     para_hash: sha256:7ef109ec8429808498523c9cb58f730bbbbd01d0fc80a7fc9b519c27d4a52e9e
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
     para_hash: sha256:99ea73702e040cec47e0f36dbef0d0ff977c716983c84c13a05e1855ca85de92
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - classification
   - identity-driven-coordination

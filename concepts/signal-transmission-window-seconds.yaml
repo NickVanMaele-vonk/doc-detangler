@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
     para_hash: sha256:b2298b5bc63e8f0c6ade4e99ebb92bd3be7b44fb94da1db036aa099475c747d8
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

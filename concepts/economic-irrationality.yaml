@@ -10,15 +10,18 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.1 Four-Level Observability Framework"
     para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

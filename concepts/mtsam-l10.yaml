@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.0.1 Formally Removed Data Categories"
     para_hash: sha256:5dd021e704cc10f244ef075c84487de5612c93cd0c12b0136263d9628e903636
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - mtsam-l-data-limitation-register
 flags: [conflict]

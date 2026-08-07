@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.1 Four-Level Observability Framework"
     para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

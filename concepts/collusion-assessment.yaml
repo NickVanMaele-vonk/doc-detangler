@@ -11,15 +11,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
     para_hash: sha256:947a550ee83080bab944ed620b7abc3e05a2e90a496fadc30f749eff0d89cb8c
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
     para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - coordination-classification-tier
 flags: []

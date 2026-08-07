@@ -15,15 +15,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:362c09fd102fe07c9f86a27efd89ba584402b515b3c00610bbd7ef02c3dd0c20
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - contextual-convergence-score
   - crs

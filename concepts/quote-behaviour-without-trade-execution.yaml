@@ -14,9 +14,14 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.3.2 Quote Behaviour Without Trade Execution --- Standalone Manipulation in Anonymous Markets"
     para_hash: sha256:f8ee0ec413bfc8dcc8d1125c6db4f82507a91db5cc1c6dea09656b6165011e53
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - sb-08
 flags: []

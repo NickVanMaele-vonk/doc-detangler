@@ -16,27 +16,35 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:456e28fb58db33f0963669e53f9cbc9422a2e541caa1d383705f9acf6962afec
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - bund
   - cross-instrument-context-intelligence

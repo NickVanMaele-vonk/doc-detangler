@@ -12,33 +12,42 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.2 Human Intervention Checkpoints"
     para_hash: sha256:da8a322e129c1e11c071d0180d576fa78e038757450b8ff7d6b0dcce52dfc1d6
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.2 Human Intervention Checkpoints"
     para_hash: sha256:deb07ec48e54602074121896ffc185050a0a5f8f1a8a46abd500a05e56064863
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.2 Human Intervention Checkpoints"
     para_hash: sha256:f71a4663c323fea7559ad9b145c394ed9318405c084443a9c9dd07819fc1d58e
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.2 Human Intervention Checkpoints"
     para_hash: sha256:58f611893ecdeb6f2f8bfd147be905061666e01c0f2bc8b676b65f370d1baf8c
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.2 Human Intervention Checkpoints"
     para_hash: sha256:ca75f34708ee68631ce45ca8dd0200db57da9dccc3970b2aed56c36a95705f48
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: []
 conflict: null

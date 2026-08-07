@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "Front matter"
     para_hash: sha256:dd46508f7b8af534c4b8066146560f43cc36753286cdf5ea32bf9010b6ff7521
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
     para_hash: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - alert
 flags: [A, conflict]

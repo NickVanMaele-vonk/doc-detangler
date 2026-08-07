@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

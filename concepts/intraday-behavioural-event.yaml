@@ -14,15 +14,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
     para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
     para_hash: sha256:8fbae0a7d02daa5d5d8d6180fc8c6dcc596f179b3a08b0b5d88027a7a85e3f4c
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - 22-step-analytical-pipeline
   - alert

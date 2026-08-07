@@ -858,20 +858,60 @@ actual situation: `samples/` was AI-assisted and not closely reviewed. So
 author, approver, PR, and the set version the text entered at.
 
 **Authored text joins the document set but never acquires a `para_hash`.**
-It is fully part of the document from then on; nothing marks it second-class
-to a reader. What it never gets is a source span, because a span asserts
-*the business wrote this wording at this revision*. If tool output could
-acquire one, the next run would read its own output as evidence the business
-defined the term — C2's "traces to the source **or** is marked as bridging"
-goes circular, and the 187 undefined terms would silently look closed. The
-absence of the hash is the mechanism; nothing has to remember to mark
-anything. It follows that `flags: [orphan]` survives an authored definition:
-orphan records that the *corpus* never defined the term, which stays true
-however good the definition someone later writes. Without that, the
+~~It is fully part of the document from then on; nothing marks it
+second-class to a reader. What it never gets is a source span, because a span
+asserts *the business wrote this wording at this revision*.~~ **Superseded
+2026-08-07 by ADR-004 Decisions 1 and 2** (see below). The rest of the
+paragraph stands.
+
+If tool output could acquire a span silently, the next run would read its own
+output as evidence the business defined the term — C2's "traces to the source
+**or** is marked as bridging" goes circular, and the 187 undefined terms would
+silently look closed. It follows that `flags: [orphan]` survives an authored
+definition: orphan records that the *corpus* never defined the term, which
+stays true however good the definition someone later writes. Without that, the
 convolutedness measure would decay exactly as fast as the work got done.
 
-**Two hashes, two jobs.** `para_hash` answers "did the business write this?"
-and applies to corpus-derived text only. The section map's content hash
+**What changed, and why the mechanism had to.** Withholding the hash was doing
+two jobs at once — recording that text was not in the original, and
+withholding trust from it. Nick ruled on 2026-08-07 that the second is wrong:
+text a human writes at v1.2 has the same definitional strength as text a human
+wrote at v1.0, and AI-drafted text a named human approved is equivalent to
+human-written. The stated reason for the prohibition — that a span asserts
+*the business wrote this wording* — is simply false for a definition Nick
+writes himself. The project's own record cuts the same way: `samples/` was
+"drafted with AI assistance, and not closely reviewed" (plan §3 Scope), so the
+old model trusted the *weaker* artifact more.
+
+The first job still has to be done, or the fabrication check goes vacuous in a
+re-run cycle, where run N+1's input is run N's output. So the two claims are
+split rather than merged (Decision 2, with the levels ruled as Decision 2b):
+
+- **lineage is per span** — `origin: corpus | authored`, because where wording
+  came from varies span by span. An authored span carries a real `para_hash`
+  into the version it entered at, and `verified_against.git_blob` pins which
+  version, so no hand-typed version string appears (the 2026-07-31 ruling).
+  Re-anchoring becomes routine rather than forbidden, which is what unblocks
+  provenance after run 1.
+- **assurance is per record** — `author`, `approved_by`, `pr`, because
+  approval is one human act covering the definition as a whole, not something
+  repeated per citation. `human-approved` is the top level and does not decay
+  with version. Whether a definition is approved is computed from
+  `approved_by`, never stored.
+- **`flags: [orphan]` is an input diagnostic only.** It means the detangle set
+  never defined the term. It never means the definition is weak, and nothing
+  may read it as a quality signal.
+
+Because assurance now carries all the definitional strength, approval has to
+be a real act — bulk-approving 187 drafted definitions in one PR would launder
+AI text through a rubber stamp. Criterion 7's requirement that a draft show
+the usages it was assembled from becomes load-bearing rather than advisory,
+and approval granularity is ADR-004 Decision 4, unruled.
+
+**Two hashes, two jobs.** `para_hash` answers "where did this wording come
+from?" — a hash plus its span's `origin`, so it now applies to authored text
+too (amended 2026-08-07; it previously read "did the business write this?" and
+applied to corpus-derived text only). The section map's content hash
 (element 2 below) answers "has this changed?" and applies to everything,
 authored included. Change detection never depended on `para_hash`.
 

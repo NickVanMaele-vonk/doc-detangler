@@ -14,9 +14,14 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
     para_hash: sha256:711caedf7d5ae9242af42d7780c7523a33e2505f7feff043bc7698a5a757c0ef
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - classification
   - mts-associated-markets

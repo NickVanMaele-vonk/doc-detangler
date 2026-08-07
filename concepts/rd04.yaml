@@ -13,15 +13,21 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "0.1 The Five-Pillar FSMA Argument"
     para_hash: sha256:9c52fb8112b6eb771794a912932c22eab9fd7ebd33e9a635a3fb01ef9e80d7a6
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.1 Structural Characteristics Governing Detection"
     para_hash: sha256:104538add1bf447473617b7bb9d258ea3ba3b6bcb09a935fdfe0ca6205e4d9a7
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - alert
 flags: []

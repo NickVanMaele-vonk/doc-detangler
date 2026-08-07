@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.1 Structural Characteristics Governing Detection"
     para_hash: sha256:6e835a4f85710a9e5ef25a2f7b9cf78ce118fb833850cff662b89b625dc9bfd2
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

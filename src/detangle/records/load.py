@@ -29,6 +29,7 @@ REQUIRED_FIELDS = (
     "used_in",
     "definition",
     "source",
+    "assurance",
     "depends_on",
     "flags",
     "conflict",
@@ -37,6 +38,37 @@ REQUIRED_FIELDS = (
 OPTIONAL_FIELDS = ("notes",)
 
 STATUSES = ("candidate", "approved", "published", "deprecated")
+
+# ADR-004 Decisions 1, 2 and 2b (Nick, 2026-08-07): lineage and assurance are
+# separate axes, and they attach at different levels.
+#
+# LINEAGE is per span, because where wording came from varies span by span.
+# `origin` says which: `corpus` is wording that was in the document when the
+# tool first consumed it; `authored` is wording that entered in a later
+# version. It deliberately does not say *who* wrote the later text — that is
+# the assurance block's job, one level up, and splitting the two is the whole
+# point of the decision. The git blob already pins *which* version, so no
+# hand-typed version string is introduced (the 2026-07-31 ruling).
+#
+# What this replaces: the absence of a `para_hash` used to encode both "not in
+# the original" and "not trustworthy". Decision 1 denies the second, so an
+# authored span may now carry a real hash into the version it entered at, and
+# re-anchoring is routine rather than forbidden.
+SPAN_ORIGINS = ("corpus", "authored")
+
+# ASSURANCE is per record, because approval is one human act covering the
+# definition as a whole, not a thing repeated per citation. `author` is who
+# produced the wording ("assistant" for text the tool assembled from corpus
+# spans under C2, a person's name for text a human typed); `approved_by` is
+# the named human who verified it, `null` until someone has; `pr` is where
+# that happened. Whether a definition is human-approved is *computed* from
+# `approved_by`, never stored — the same rule that keeps `placement` computed.
+ASSURANCE_FIELDS = ("author", "approved_by", "pr")
+
+# Statuses that assert a human has signed the definition off, so they may not
+# be reached with `approved_by: null`. Under Decision 1 assurance carries all
+# the definitional strength, which only holds if approval is a real act.
+APPROVED_STATUSES = ("approved", "published")
 
 # Document codes, placement names and flag values are NOT declared here: they
 # come from `detangle.toml` via `Config.registry()` (two input sets, Nick

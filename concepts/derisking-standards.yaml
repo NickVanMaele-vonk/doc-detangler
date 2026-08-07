@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "SECTION 0 --- Regulatory Positioning Framework --- FSMA Engagement Architecture"
     para_hash: sha256:3c3ebfeb28b1e2aba416126a7647dc1ee835bee6610022d806b8a19c6bc6a4b2
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

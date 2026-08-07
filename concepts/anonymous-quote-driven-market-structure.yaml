@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
     para_hash: sha256:88bc6ac0df9a7e6273942e25989b65da58686f2d04d2d712ebd7ae4afc3f1057
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.1 MTS Associated Markets --- Key Characteristics"
     para_hash: sha256:d7ac0d414ae42cb03e957624fc4b1502c6aafa346a25a5a9ed4767c5e93a0498
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: []
 conflict: null

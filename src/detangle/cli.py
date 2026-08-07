@@ -81,6 +81,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     for rec in targets:
         findings.extend(record_checks.check_schema(rec, registry))
         findings.extend(record_checks.check_span_docs(rec, registry))
+        findings.extend(record_checks.check_assurance(rec))
         findings.extend(record_checks.check_invariants(rec, registry))
         findings.extend(record_checks.check_provenance(rec, index, blobs))
         findings.extend(record_checks.check_definition_wording(rec, index, min_run))

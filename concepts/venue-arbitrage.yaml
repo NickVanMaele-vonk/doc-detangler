@@ -16,9 +16,14 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
     para_hash: sha256:cd33f7e5bdc577438b704d99e7cce68ea7b19584c943b0e74c93e4fda2d1354d
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - cross-venue-manipulation
   - mts-spa

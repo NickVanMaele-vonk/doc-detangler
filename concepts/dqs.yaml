@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
     para_hash: sha256:e1645c687b2734383dfbe8e44006e7f9160201e991ea89846fa2c249cb7bc163
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
     para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
     para_hash: sha256:415098bc8d39b35527902e83bb2313a9e9f8186cbf3062ff89754da582e59052
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - bund
 flags: []

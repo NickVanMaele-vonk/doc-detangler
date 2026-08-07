@@ -551,6 +551,29 @@ Every part of the output is classifiable into exactly one of three provenance
 categories, and the two non-verbatim categories are visually and mechanically
 distinguishable from source-derived text.
 
+**Two axes, recorded separately** (ADR-004 Decisions 1, 2 and 2b, Nick
+2026-08-07). *Lineage* — where wording came from — is per span, `origin:
+corpus | authored` on each of a record's citations, because a definition can
+be assembled from original wording plus a sentence typed later. *Assurance* —
+who vouches for it — is per record, `author` / `approved_by` / `pr`, because
+approval is one human act covering the definition as a whole.
+
+The two must not be collapsed. Withholding a `para_hash` used to do both jobs
+at once, and Decision 1 rules that the second is wrong: text a human writes at
+v1.2 has the same definitional strength as text a human wrote at v1.0, and
+AI-drafted text a named human approved is equivalent to human-written. The
+first job still has to be done — in a re-run cycle run N+1's input is run N's
+output, so without recorded lineage the fabrication check would trace every
+claim successfully by generation 2, inventions included.
+
+Two consequences for this criterion. **An authored definition may carry a real
+span** into the version it entered at; it is no longer the case that authored
+text can never be anchored. And **because assurance now carries all the
+definitional strength, approval has to be a real act** — the requirement below
+that a draft show the usages it was assembled from is load-bearing, not
+advisory. How many definitions one approval may cover is ADR-004 Decision 4,
+unruled, and its parameter is absent from `detangle.toml` rather than guessed.
+
 ### Category A — moved
 
 Source text reproduced verbatim, possibly relocated — including relocated

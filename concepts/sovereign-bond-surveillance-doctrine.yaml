@@ -17,15 +17,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "Front matter"
     para_hash: sha256:e9bc15cee93a9fa7f092f93d1811f8fa0e3e113bdd7096fd8bbe006fc0c58c30
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.1 Structural Characteristics Governing Detection"
     para_hash: sha256:b03c626c124a717f804a18c7d024bd3c4bc4e3197fcd35a9011975153fc2ca64
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: []
 conflict: null

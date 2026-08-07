@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.3 New Surveillance Gap --- MTSAM-L07"
     para_hash: sha256:6fc49e53a45892162c09497d95f530392a6b0a211d61972610dab557fb29190a
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
     para_hash: sha256:a4633c9e59ef984b7877db4267817a9382439ba808dd0c36222edfffa1b8424f
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: []
 conflict: null

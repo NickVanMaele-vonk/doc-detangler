@@ -18,9 +18,14 @@ source:
   - doc: samples/blueprint-analytical-layer.md
     section: "0. Definitions"
     para_hash: sha256:8d90f178449563133a501c9cbd16a0cfa297606a695736ae04a60a56d3e0e6f8
+    origin: corpus
     verified_against:
       git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
       stated_version: "0.1 — Draft for Review"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: [orphan, A]
 conflict: null
