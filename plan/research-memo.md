@@ -1234,8 +1234,14 @@ pattern already used for cycles) records known, ticketed orphans and
 conflicts with an owner, so the lint distinguishes accepted debt from new
 regressions — new violations always flag; waived ones don't re-fire.
 Verification runs in two tiers: the cheap structural lint on every PR
-(element 3); the full C1/C2/C7 harness at release cadence
-(`param-full-verify-cadence`), not on every edit.
+(element 3); the full C1/C2/C7 harness at `param-full-verify-cadence`, not on
+every edit. **That cadence was set on 2026-08-07** (ADR-004 Decision 7) to
+**every re-run**, with release tags an additional trigger, replacing the
+"every release tag" proposal written here: a forgotten tag means the harness
+never runs, while a re-run is deliberate and is the moment the proof is
+wanted. Since documents move between full runs, each run records the git blob
+of every document it verified — a blob *is* the version, so the set as it
+stood is recoverable afterwards, and it is the next run's baseline.
 
 **The edit contract.** Humans and AI agents may edit bodies directly — bodies
 are prose, not generated (D9 scope guard unchanged). The price of a direct
@@ -1260,8 +1266,11 @@ body edits are governed by the lint, not by provenance marking.
   they pass. It reuses Phase 8's PR plumbing.
 - **New constraint C12** and **rubric criterion 9** state the invariant:
   coherence survives continuous change.
-- **New parameter** `param-full-verify-cadence` (DoD parameters table;
-  value a proposal until set from steady-state experience).
+- **New parameter** `param-full-verify-cadence` (DoD parameters table).
+  **Set 2026-08-07** to "every re-run; release tags additionally" — ADR-004
+  Decision 7. The original value here was a proposal awaiting steady-state
+  experience; Nick's description of the actual operating cycle supplied it
+  before steady state, because the cycle makes the re-run the natural anchor.
 
 **Scope guard:** the guard checks and comments; it never auto-fixes bodies
 and never merges (C4 unchanged). Regeneration applies only to the derived

@@ -139,7 +139,7 @@ the rubric can be signed off without silently pre-committing to numbers.
 | `param-manual-reviewer` | Nick, optionally Ivo for domain accuracy | Adjudicator for the manual criteria. |
 | `param-low-confidence-threshold` | **0.80** (set, provisional — re-baseline at 6.2) | This dial, and contradiction frequency, are the only unbounded contributors to comment volume. **Set 2026-08-05 from the 5.3 baseline**, with the caveat stated there: the hand-produced golden yields the low-confidence *rate* (2 of 289 claims, both source damage), not a machine confidence distribution, so 0.80 on the Phase 7 [0, 1] mapping-confidence scale is provisional by construction and **must be re-baselined at step 6.2** against the prototype's first real distribution. |
 | `param-glossary-order` | **topological** (set) | `glossary.md` is ordered by topological sort throughout. Alphabetical lookup lives in `index.md`, not in the glossary. |
-| `param-full-verify-cadence` | every release tag | How often the full C1/C2/C7 harness runs in steady state (the per-PR drift lint always runs). Proposal; set for real from steady-state experience (D10). |
+| `param-full-verify-cadence` | **every re-run; release tags additionally** (set) | How often the full C1/C2/C7 harness runs in steady state (the per-PR drift lint always runs). **Set 2026-08-07, ADR-004 Decision 7**, replacing the "every release tag" proposal: a re-run is a deliberate act nobody forgets, and it is precisely the moment the losslessness proof is wanted. Tags remain a valid additional trigger, so nothing that ran before still runs less often. **The run must record the versions it verified** — the git blob of every document in both input sets, plus the commit — or "verified at the last re-run" is a claim with nothing behind it; that record is also the baseline the *next* run compares against (see criterion 4). |
 
 ---
 
@@ -424,6 +424,19 @@ in full.
   ISO 704 narrowing pass did for thirteen records — is an **omission**, not a
   relocation, and must land in document prose beside its definition block
   when the body is written. `notes` is a staging post, not a destination.
+- **Every run records the versions it verified** (ADR-004 Decision 7, Nick
+  2026-08-07). The harness runs at `param-full-verify-cadence` — every re-run
+  — not on every PR, so documents move between runs and "the set as it stood
+  at the last run" has to be identifiable afterwards. It is, cheaply: a
+  document's version *is* its git blob (`git rev-parse HEAD:<doc>`), immutable
+  and retrievable with `git show` however many versions follow. So the run
+  writes the blob of every document in **both** input sets, plus the commit,
+  into its report — the same pin `eval/README.md`, a reorder plan's
+  `pinned_blob` and the generated move-map already carry. Two things then
+  work that otherwise cannot: the proof names what it proved, and the next
+  run has a baseline — v_n+1 is checked against v_n, and v_n is a blob. This
+  is deliberately not a new mechanism; `manifest.yaml` (step 10.4) is the
+  set-level version of the same record and absorbs it when it lands.
 - **Verification method:** automatic — Phase 7 harness (claim decomposition →
   coverage check → fabrication check), run over the set.
 - **Status:** depends on the harness existing (Phase 7).
@@ -931,8 +944,12 @@ and by AI agents — and every such edit is guarded, not forbidden.
   applies to tool restructuring runs, not to ordinary steady-state body
   edits — those are governed by this criterion.
 - **Tiered cadence:** this lint runs on every PR; the full losslessness
-  harness (criterion 4) runs at `param-full-verify-cadence`. A release is
-  not done until the full harness has passed on the current set.
+  harness (criterion 4) runs at `param-full-verify-cadence` — **every
+  re-run**, and additionally at any release tag (ADR-004 Decision 7). A
+  release is not done until the full harness has passed on the current set.
+  Between full runs the documents move, so each full run records the blob of
+  every document it verified: that is what identifies "the set as it stood
+  at the last run", and what the next run reads as its baseline.
 - **Waivers:** findings covered by an open waiver-register entry do not
   re-fire (criterion 3); anything not waived flags every time.
 - **Verification method:** automatic (the lint and regeneration checks are

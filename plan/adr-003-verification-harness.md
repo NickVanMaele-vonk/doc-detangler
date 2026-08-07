@@ -145,6 +145,21 @@ minutes of CPU, and the DoD already says the full losslessness harness
 runs at `param-full-verify-cadence`, not per PR. Wiring any part of it
 into CI is a separate decision when that parameter is set.
 
+**Update, 2026-08-07 — the parameter is now set** (ADR-004 Decision 7):
+"every re-run; release tags additionally". The separate decision it
+awaited was taken with it, and the answer was still no CI gate — for
+reasons better than cost, since stage-1 matching resolves 268 of 289
+claims deterministically and a per-PR run would score single digits.
+The three grounds are that step 10.2's per-PR lint already carries the
+deterministic half through its `lost-claim` check; that all four checks
+above are waivable *because* each awaits a human disposition, so blocking
+merge on one converts a review prompt into a hard stop; and that a
+required gate depending on `detangle[verify]` would go red on a
+checkpoint fetch failure. ADR-004 Decision 7 also adds one output to this
+command: the report records the git blob of every document in both input
+sets plus the commit (plan step 7.5), which identifies the set a run
+verified and gives the next run its baseline.
+
 ## Decision 6 — the seeded-error test seeds into reordered output
 
 The done-when requires catching a deleted claim, an invented claim, and a
