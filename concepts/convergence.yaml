@@ -13,21 +13,28 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:dd8c2d6d81b3209d4cd5d983d469474dcbd7a889456494e6c9bbb47153e24f2e
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
     para_hash: sha256:e3498bb704c14c1e59328c73c14da7f398ae69f2cc0650d04ab9ad51870c7892
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-MCL-shortened.md
     section: "0.1 The Five-Pillar FSMA Argument"
     para_hash: sha256:bceef3d967f697fbec3cc11860c7144b3de3143a3127e45f156cc74610816ae6
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - classification
 flags: []

@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:96582d743a313085962bb502aaf541f60fd3d7724a7fc378b0cb9dfe94781889
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

@@ -15,7 +15,15 @@ from pathlib import Path
 
 from ..config import DocumentRegistry
 from ..findings import Finding, UsageError, error, warn
-from .load import OPTIONAL_FIELDS, REQUIRED_FIELDS, STATUSES, Record
+from .load import (
+    APPROVED_STATUSES,
+    ASSURANCE_FIELDS,
+    OPTIONAL_FIELDS,
+    REQUIRED_FIELDS,
+    SPAN_ORIGINS,
+    STATUSES,
+    Record,
+)
 from .spans import WHITESPACE, BlockIndex, block_hash, normalise, split_blocks
 
 #: Every check slug this module can raise. Declared so a command can say which
@@ -26,6 +34,8 @@ from .spans import WHITESPACE, BlockIndex, block_hash, normalise, split_blocks
 #: un-judged.
 CHECKS = frozenset(
     {
+        "assurance-shape",
+        "assurance-unapproved",
         "conflict-flag",
         "conflict-quote",
         "conflict-shape",
@@ -51,6 +61,7 @@ CHECKS = frozenset(
         "source-empty",
         "source-empty-doc",
         "span-doc-unknown",
+        "span-origin",
         "span-shape",
         "status-value",
         "superseded-target",
@@ -189,13 +200,24 @@ def check_schema(rec: Record, registry: DocumentRegistry) -> list[Finding]:
         if not isinstance(span, dict):
             out.append(error("span-shape", rec.where(f"source[{i}]"), "not a mapping"))
             continue
-        for key in ("doc", "section", "para_hash", "verified_against"):
+        for key in ("doc", "section", "para_hash", "origin", "verified_against"):
             if key not in span:
                 out.append(
                     error(
                         "span-shape", rec.where(f"source[{i}]"), f"missing {key!r}"
                     )
                 )
+        if "origin" in span and span["origin"] not in SPAN_ORIGINS:
+            out.append(
+                error(
+                    "span-origin",
+                    rec.where(f"source[{i}].origin"),
+                    f"{span['origin']!r} not one of {list(SPAN_ORIGINS)} — "
+                    "'corpus' is wording the document already carried when the "
+                    "tool first consumed it, 'authored' is wording that entered "
+                    "in a later version (ADR-004 Decision 2)",
+                )
+            )
         verified = span.get("verified_against")
         if isinstance(verified, dict):
             if "git_blob" not in verified:
@@ -214,6 +236,114 @@ def check_schema(rec: Record, registry: DocumentRegistry) -> list[Finding]:
                         "missing 'stated_version'",
                     )
                 )
+    return out
+
+
+def check_assurance(rec: Record) -> list[Finding]:
+    """Who vouches for this definition — ADR-004 Decisions 1, 2 and 2b.
+
+    Assurance carries all the definitional strength under Decision 1, which
+    only holds if the claim is present, well-formed, and cannot be reached
+    without a named human. So three things are checked:
+
+    - a record has an assurance block exactly when it has a definition. There
+      is nothing to vouch for otherwise, and an orphan carrying an approver
+      would read as a definition nobody can see;
+    - the block's shape is exact, because a check reading a misspelt key would
+      silently find no approver and report nothing;
+    - a status that asserts sign-off (``approved``, ``published``) may not be
+      reached with ``approved_by: null``. Today every record is ``candidate``,
+      so this fires on nothing — it is the gate that keeps the field
+      load-bearing rather than decorative once records start being promoted.
+
+    Deliberately *not* checked here: how many definitions one approval may
+    cover. That is ADR-004 Decision 4, unruled, and its parameter is absent
+    from ``detangle.toml`` rather than guessed.
+    """
+    out: list[Finding] = []
+    where = rec.where("assurance")
+    block = rec.data.get("assurance")
+
+    if not rec.defined:
+        if block is not None:
+            out.append(
+                error(
+                    "assurance-shape",
+                    where,
+                    "record has no definition, so there is nothing to vouch "
+                    "for — assurance must be null (ADR-004 Decision 2)",
+                )
+            )
+        return out
+
+    if block is None:
+        out.append(
+            error(
+                "assurance-shape",
+                where,
+                "a defined record must say who wrote the definition and who "
+                "approved it — assurance carries the definitional strength "
+                "(ADR-004 Decision 1)",
+            )
+        )
+        return out
+    if not isinstance(block, dict):
+        out.append(error("assurance-shape", where, "not a mapping"))
+        return out
+
+    for key in ASSURANCE_FIELDS:
+        if key not in block:
+            out.append(error("assurance-shape", where, f"missing {key!r}"))
+    for key in sorted(set(block) - set(ASSURANCE_FIELDS)):
+        out.append(error("assurance-shape", where, f"unknown key {key!r}"))
+
+    author = block.get("author")
+    if not isinstance(author, str) or not author.strip():
+        out.append(
+            error(
+                "assurance-shape",
+                rec.where("assurance.author"),
+                f"{author!r} is not a name — who produced this wording?",
+            )
+        )
+    approver = block.get("approved_by")
+    if approver is not None and (not isinstance(approver, str) or not approver.strip()):
+        out.append(
+            error(
+                "assurance-shape",
+                rec.where("assurance.approved_by"),
+                f"{approver!r} is neither a name nor null",
+            )
+        )
+    pr = block.get("pr")
+    if pr is not None and not isinstance(pr, int):
+        out.append(
+            error(
+                "assurance-shape",
+                rec.where("assurance.pr"),
+                f"{pr!r} is neither a PR number nor null",
+            )
+        )
+    if approver is None and pr is not None:
+        out.append(
+            error(
+                "assurance-shape",
+                where,
+                f"PR {pr} is recorded but no approver is named — a PR number "
+                "is where an approval happened, not the approval itself",
+            )
+        )
+
+    if rec.data.get("status") in APPROVED_STATUSES and approver is None:
+        out.append(
+            error(
+                "assurance-unapproved",
+                where,
+                f"status {rec.data.get('status')!r} asserts a human signed "
+                "this definition off, but approved_by is null — approval must "
+                "be a real act (ADR-004 Decision 1)",
+            )
+        )
     return out
 
 
@@ -663,6 +793,7 @@ def check_source_blocks_current(index: BlockIndex, docs: list[str]) -> list[Find
 __all__ = [
     "GitBlobs",
     "block_hash",
+    "check_assurance",
     "check_conflict_quotes",
     "check_cross_record",
     "check_definition_wording",

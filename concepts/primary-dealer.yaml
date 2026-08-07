@@ -13,15 +13,21 @@ source:
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.1 MTS Associated Markets --- Key Characteristics"
     para_hash: sha256:f5bdc44b1461ef99b9045a2513ad1f9a795f7b8f7fe82abdaee283a2876ad403
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.1 Structural Characteristics Governing Detection"
     para_hash: sha256:7f9567d43084f13b1d3df844f549f450961399c1334baedc902c234d2547b3ea
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: [conflict]
 conflict:

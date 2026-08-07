@@ -13,15 +13,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:b1519fceb8989aba1d05557a1371ecde4d53e38b2e3ec3912d882beeef5520e7
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-MCL-shortened.md
     section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
     para_hash: sha256:77a0c82da2aa8e257d62625db0d715d84339b90979e96165feb434188a943164
+    origin: corpus
     verified_against:
       git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
       stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - mts-associated-markets
 flags: []

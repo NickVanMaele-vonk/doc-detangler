@@ -10,15 +10,18 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "Front matter"
     para_hash: sha256:dfba875ce0931df8753896416c2f95cbef053abeaa1e3b8d908e64863bde1e1c
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
     para_hash: sha256:9e124028b5956ea43be8df0fdf98793db6dffb81857567b863d9375167c2c7b7
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

@@ -15,15 +15,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
     para_hash: sha256:524f86641e8837b3d5c0b7fc840c82388561b75a8c14a46063d67e6613aa44bf
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
     para_hash: sha256:e3498bb704c14c1e59328c73c14da7f398ae69f2cc0650d04ab9ad51870c7892
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on: []
 flags: []
 conflict: null

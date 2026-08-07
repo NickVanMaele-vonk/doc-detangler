@@ -14,9 +14,14 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
     para_hash: sha256:40620ed67d518a68c38bae94e62ab3567c5ea37badd4a1a7f3bbfe478b6f24a3
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - automatic-validation
   - signal

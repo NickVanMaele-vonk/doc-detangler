@@ -6,6 +6,7 @@ from conftest import BASE_RECORD
 
 from detangle.config import DocumentRegistry
 from detangle.records.checks import (
+    check_assurance,
     check_cross_record,
     check_invariants,
     check_placement,
@@ -259,10 +260,99 @@ def test_superseded_by_must_resolve():
     ]
 
 
-def _span(doc: str = "samples/mini.md") -> dict:
+def _span(doc: str = "samples/mini.md", origin: str = "corpus") -> dict:
     return {
         "doc": doc,
         "section": "1.1 The Only Section",
         "para_hash": "sha256:" + "0" * 64,
+        "origin": origin,
         "verified_against": {"git_blob": "0" * 40, "stated_version": None},
     }
+
+
+# --- lineage and assurance (ADR-004 Decisions 1, 2, 2b) --------------------
+
+ASSURED = {"author": "assistant", "approved_by": None, "pr": None}
+
+
+def test_a_defined_record_with_an_assurance_block_passes():
+    assert check_assurance(make(assurance=dict(ASSURED))) == []
+
+
+def test_a_defined_record_without_assurance_is_reported():
+    """Under Decision 1 assurance carries the strength, so it cannot be absent."""
+    assert checks(check_assurance(make(assurance=None))) == ["assurance-shape"]
+
+
+def test_an_undefined_record_has_nothing_to_vouch_for():
+    assert check_assurance(make(definition=None, assurance=None)) == []
+
+
+def test_an_undefined_record_may_not_claim_an_approver():
+    """An orphan with an approver would read as a definition nobody can see."""
+    rec = make(definition=None, assurance={**ASSURED, "approved_by": "Nick"})
+    assert checks(check_assurance(rec)) == ["assurance-shape"]
+
+
+def test_an_unknown_assurance_key_is_reported():
+    """A misspelt key would leave a check silently finding no approver."""
+    rec = make(assurance={**ASSURED, "approver": "Nick"})
+    assert checks(check_assurance(rec)) == ["assurance-shape"]
+
+
+def test_a_missing_assurance_key_is_reported():
+    assert checks(check_assurance(make(assurance={"author": "Nick"}))) == [
+        "assurance-shape",
+        "assurance-shape",
+    ]
+
+
+def test_an_author_must_be_a_name():
+    assert checks(check_assurance(make(assurance={**ASSURED, "author": ""}))) == [
+        "assurance-shape"
+    ]
+
+
+def test_a_pr_without_an_approver_is_reported():
+    """A PR number is where an approval happened, not the approval itself."""
+    rec = make(assurance={**ASSURED, "pr": 120})
+    assert checks(check_assurance(rec)) == ["assurance-shape"]
+
+
+def test_a_signed_off_status_needs_a_named_approver():
+    rec = make(status="approved", assurance=dict(ASSURED))
+    assert checks(check_assurance(rec)) == ["assurance-unapproved"]
+
+
+def test_a_signed_off_status_with_an_approver_passes():
+    rec = make(
+        status="published",
+        assurance={"author": "assistant", "approved_by": "Nick", "pr": 120},
+    )
+    assert check_assurance(rec) == []
+
+
+def test_a_candidate_may_sit_unapproved():
+    """Every record on `main` today is candidate; the gate must not fire."""
+    assert check_assurance(make(status="candidate", assurance=dict(ASSURED))) == []
+
+
+def test_a_span_must_declare_its_origin():
+    span = _span()
+    del span["origin"]
+    assert "span-shape" in checks(check_schema(make(source=[span]), REGISTRY))
+
+
+def test_an_unknown_span_origin_is_reported():
+    rec = make(source=[_span(origin="invented")])
+    assert "span-origin" in checks(check_schema(rec, REGISTRY))
+
+
+def test_an_authored_span_is_legal():
+    """The point of Decision 2: text that entered later gets a real span.
+
+    Before the split, the absence of a hash carried both "not in the original"
+    and "not trustworthy". Lineage now says the first and assurance the
+    second, so an authored span is honest data rather than a violation.
+    """
+    assert check_schema(make(source=[_span(origin="authored")]), REGISTRY) == []

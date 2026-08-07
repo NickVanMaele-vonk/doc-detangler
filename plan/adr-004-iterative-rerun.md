@@ -1,9 +1,10 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 3 and 9 RULED** by Nick, 2026-08-07. Decisions 2 and
+**Status: Decisions 1, 2, 2b, 3 and 9 RULED** by Nick, 2026-08-07. Decisions
 4–8 are **PROPOSED** — each carries a recommendation and each can be ruled
-independently. Decision 9 is built; nothing else below is. Decisions 2 and 9
-amend signed-off material and say so explicitly.
+independently. Decisions 2/2b and 9 are built; 1 and 3 are rulings whose
+normative-document edits are partly outstanding (build step 3). Decisions 2
+and 9 amend signed-off material and say so explicitly.
 
 ## Context
 
@@ -98,6 +99,9 @@ Amends C2, criterion 7, and the provenance notes under §D9 and §D10 element 4.
 
 ## Decision 2 — split lineage from strength
 
+**RULED by Nick, 2026-08-07, and built.** See Decision 2b for the levels the
+two axes attach at.
+
 One thing from the old model must survive in a new form, or C2 becomes
 vacuous. In this cycle run N+1's input is run N's output, so if nothing
 distinguishes text that entered at v1.2 from text present at v1.0, the
@@ -119,9 +123,42 @@ the second. So separate them:
   detangle set never defined this". It never means "this definition is weak",
   and nothing may read it as a quality signal.
 
-**Recommendation: adopt.** It is a schema change across 359 records and should
-not be started before it is ruled. It closes open question 5 of 2026-07-31
-(provenance schema shape).
+**Ruled: adopt.** It closes open question 5 of 2026-07-31 (provenance schema
+shape).
+
+## Decision 2b — the two axes attach at different levels
+
+Decision 2 says *split*; it does not say where each half lives. A record has
+one definition but usually several citations — 99 of the 172 defined records
+cite more than one span — so a definition can end up assembled from original
+v1.0 wording plus a sentence typed at v1.2, with one approval covering both.
+Three shapes were possible: one trust block per record; a stamp on every
+citation, with the record's level derived as the weakest; or split by what
+each thing actually is.
+
+**RULED by Nick, 2026-08-07: split by what each thing is.**
+
+- **Assurance is per record**, because approval is one human act covering the
+  definition as a whole. Repeating it per citation would duplicate one fact
+  across five lines and invite the copies to drift.
+- **Lineage is per span**, because where wording came from genuinely varies
+  citation by citation. A per-record lineage label would have to describe the
+  weakest citation, and honesty about mixed origins is what the split is for.
+
+Neither half has to lie, which the record-level-only shape could not manage.
+A consequence worth naming: a citation into text the *tool* wrote becomes
+legal and clearly labelled rather than a rule violation, which is what
+unblocks provenance after run 1.
+
+**As built.** `origin: corpus | authored` on every span; an `assurance` block
+of `author` / `approved_by` / `pr` on every record, `null` exactly when
+`definition` is `null`. All 359 records migrated: 597 spans `corpus`, 172
+assurance blocks, 187 nulls. `author: assistant` reflects step 3.3's assembly
+under C2; `approved_by` and `pr` start `null` because every record on `main`
+is `status: candidate` — the gap is left visible rather than assumed away, and
+`assurance-unapproved` refuses `approved`/`published` without a named human.
+Whether a definition is human-approved is computed from `approved_by`, never
+stored, following the rule that keeps `placement` computed.
 
 ## Decision 3 — no marking for approved additions
 
@@ -259,9 +296,15 @@ ruled.
    eight of which fail without the change. The real `U` plan re-executes
    byte-identically and still reports `unexplained: 0`, so the golden is
    untouched.
-2. **Decision 2** — the record schema: `assurance` block, version-stamped
+2. ~~**Decision 2** — the record schema: `assurance` block, version-stamped
    spans, `orphan` re-scoped in `concepts/README.md`. Migration across 359
-   records, `detangle validate` extended, the rubric and §D9/§D10 amended.
+   records, `detangle validate` extended, the rubric and §D9/§D10 amended.~~
+   **Done 2026-08-07.** `SPAN_ORIGINS` / `ASSURANCE_FIELDS` in `records/load.py`,
+   `check_assurance` and the `span-origin` check in `records/checks.py`, 14
+   tests, all 359 records migrated, `concepts/README.md` and §D9's provenance
+   note rewritten. Terms changed: 0 — a citation added to an unchanged
+   definition is not a term change (rubric §8b), which is why one PR is within
+   `param-max-terms-changed-per-PR`.
 3. **Decisions 1 and 3 in the normative documents** — C2, C5, criterion 7, and
    the `param-overview-max-words` re-measurement (227 → 206 for the `U`
    golden). Documentation only; no code.

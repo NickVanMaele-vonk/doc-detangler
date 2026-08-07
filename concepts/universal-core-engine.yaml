@@ -13,15 +13,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:2d88e3e22d86912a98438dc1de2894dfd020843b2d9590d1dbaf01c5417929b3
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.1 The Analytical Question"
     para_hash: sha256:6d714ffd440abcdf98cd6be3dffb844cdd89deb5fe3a88cf63323bc8dd2a3fb1
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - mtsam-analytical-layer
 flags: [A]

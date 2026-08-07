@@ -19,15 +19,21 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "Front matter"
     para_hash: sha256:3dc52441de05271052b25fe9c9d4fe62e7e051e26647f9282d15f06f891e5ab1
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:f0767104d9d9254f299cb80699dd52e53fb9b766645447239465ee0f5c91ec6f
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - alert
   - universal-core-engine

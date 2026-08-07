@@ -10,9 +10,11 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:27823ec049e31190172e5842ba37e998b680d7740addb474d03cd85748e38cdd
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

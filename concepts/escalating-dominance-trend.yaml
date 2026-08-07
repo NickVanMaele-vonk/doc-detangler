@@ -10,15 +10,18 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "II.1 Pipeline Overview"
     para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/prototype-BC17.md
     section: "§0.1 Master glossary — every abbreviation spelled out"
     para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    origin: corpus
     verified_against:
       git_blob: 36ad20437886a1883a547599a368c28c794b179a
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan, P]
 conflict: null

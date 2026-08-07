@@ -12,15 +12,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:57501d0d8e273fad20c3612f1899b1bc72e929d5015133aaf025104a1519e677
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:899fd545102ba5aa32e51cb63edd008ae0809be5e7b021e94e8bf8f106608dfe
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - signal
 flags: []

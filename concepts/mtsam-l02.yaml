@@ -12,9 +12,14 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
     para_hash: sha256:a5581fbe6787662948e04177a574a2270f5971b2d2f230ff24de134763ce65c9
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - mtsam-l-data-limitation-register
 flags: []

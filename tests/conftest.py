@@ -79,6 +79,7 @@ BASE_RECORD = {
     "used_in": ["U"],
     "definition": "A widget is a device that emits SB-01 alerts",
     "source": [],
+    "assurance": {"author": "assistant", "approved_by": None, "pr": None},
     "depends_on": [],
     "flags": [],
     "conflict": None,
@@ -121,11 +122,14 @@ class MiniRepo:
                 return block_hash(normalise(block))
         raise AssertionError(f"no block contains {needle!r}")
 
-    def span(self, needle: str, doc: str = "samples/mini.md") -> dict:
+    def span(
+        self, needle: str, doc: str = "samples/mini.md", origin: str = "corpus"
+    ) -> dict:
         return {
             "doc": doc,
             "section": "1.1 The Only Section",
             "para_hash": self.para_hash(needle, doc),
+            "origin": origin,
             "verified_against": {"git_blob": self.blob(doc), "stated_version": None},
         }
 
@@ -134,6 +138,10 @@ class MiniRepo:
         data.update(overrides)
         if not data["source"]:
             data["source"] = [self.span("A widget is a device")]
+        # Assurance tracks the definition: a record with nothing to vouch for
+        # must not claim an author (ADR-004 Decision 2).
+        if data["definition"] is None and "assurance" not in overrides:
+            data["assurance"] = None
         path = self.root / "concepts" / f"{data['id']}.yaml"
         path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
         return path

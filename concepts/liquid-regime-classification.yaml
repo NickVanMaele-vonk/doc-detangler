@@ -20,27 +20,35 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.2 Liquid Regime Classification for Sovereign Bonds"
     para_hash: sha256:62ba0fd504911b9eb5d3d520c4f91d7fb1fd2b769504b23ee2429dd9bdb25e42
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.2 Liquid Regime Classification for Sovereign Bonds"
     para_hash: sha256:00a27341102a5026c0703d259e687dcb66ebf2dfed818d3372223e1e059209cc
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.2 Liquid Regime Classification for Sovereign Bonds"
     para_hash: sha256:4dff97f22d08f05d3f5c9e9fc8f90a6723ccd6604651abc7075fcf6840f2bce8
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.2 Liquid Regime Classification for Sovereign Bonds"
     para_hash: sha256:6bc0c17bf9c8e6dbe947aa0d46d2eb768fec4f7b7d1dc3e40abb33d0d63f5ab9
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - classification
   - emt-threshold

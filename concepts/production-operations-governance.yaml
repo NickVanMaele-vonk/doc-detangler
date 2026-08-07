@@ -15,9 +15,14 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "Front matter"
     para_hash: sha256:385922492a0a886c90787a1972e6a11b279c700ab2207a1c54958defbde7af06
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - degraded-mode-doctrine
   - mtsam-calibration-layer

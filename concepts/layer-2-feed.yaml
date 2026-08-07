@@ -10,15 +10,18 @@ source:
   - doc: samples/blueprint-SBSP-shortened.md
     section: "A.4.3.2 CICI and the Three-Position Data Types"
     para_hash: sha256:fbd3b6cd675a12443e3c8558ed56247c3bb6bd8efe9aa4b90c3274afc0dbc1e7
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
   - doc: samples/blueprint-SBSP-shortened.md
     section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
     para_hash: sha256:415098bc8d39b35527902e83bb2313a9e9f8186cbf3062ff89754da582e59052
+    origin: corpus
     verified_against:
       git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
       stated_version: null
+assurance: null
 depends_on: []
 flags: [orphan]
 conflict: null

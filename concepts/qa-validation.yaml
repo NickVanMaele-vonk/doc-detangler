@@ -16,15 +16,21 @@ source:
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:27823ec049e31190172e5842ba37e998b680d7740addb474d03cd85748e38cdd
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
   - doc: samples/blueprint-UCE-shortened.md
     section: "I.2 Core Design Principles"
     para_hash: sha256:ed835a3e89cb0f841f8b1edd98f94dc68c27c1d2452f7371a3fa2ac229eb060e
+    origin: corpus
     verified_against:
       git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
       stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
 depends_on:
   - behavioural-scenario-library
   - medium-structured-review
