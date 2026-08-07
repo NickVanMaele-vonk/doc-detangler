@@ -73,6 +73,11 @@ def cmd_validate(args: argparse.Namespace) -> int:
     registry = config.registry()
     findings.extend(record_checks.check_cross_record(records))
     findings.extend(record_checks.check_placement(records, registry))
+    findings.extend(
+        record_checks.check_approval_batches(
+            records, int(config.param("max-definitions-per-approval"))
+        )
+    )
 
     index = BlockIndex(root=root)
     blobs = record_checks.GitBlobs(root)

@@ -1,8 +1,8 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 2, 2b, 3 and 9 RULED** by Nick, 2026-08-07. Decisions
-4–8 are **PROPOSED** — each carries a recommendation and each can be ruled
-independently. Decisions 2/2b and 9 are built; 1 and 3 are rulings whose
+**Status: Decisions 1, 2, 2b, 3, 4 and 9 RULED** by Nick, 2026-08-07. Decisions
+5–8 are **PROPOSED** — each carries a recommendation and each can be ruled
+independently. Decisions 2/2b, 4 and 9 are built; 1 and 3 are rulings whose
 normative-document edits are partly outstanding (build step 3). Decisions 2
 and 9 amend signed-off material and say so explicitly.
 
@@ -203,9 +203,21 @@ that there are none", because "a definition assembled from six real usages is
 a different object from one composed out of background knowledge". Decision 1
 promotes that from advisory to load-bearing.
 
-**Recommendation:** a `param-max-definitions-per-approval`, set from the first
-real drafting round rather than guessed now, following the precedent that
-unset parameters are absent from `detangle.toml` rather than defaulted.
+**RULED by Nick, 2026-08-07, and built: `param-max-definitions-per-approval`
+= 50, set now.** The recommendation was to declare the parameter and leave the
+number to the first real drafting round, following the precedent that unset
+parameters are absent from `detangle.toml` rather than defaulted. Nick set it
+immediately instead, so the cap protects the first batch rather than the
+second — the first bulk drafting round is the one most likely to be large, and
+a cap that arrives after it has run has missed its moment. 50 sits between the
+25-comment review budget and the 200-term change budget, the two figures that
+already bound a reviewable PR from either side.
+
+**As built.** `approval-batch` in `detangle validate` groups defined records by
+`assurance.pr` and reports any group over the cap. `pr: null` is not a batch —
+it means nobody has approved yet, which is where all 359 records sit today, so
+the check fires on nothing until approvals start. It is set-wide by
+construction: a narrowed run would see part of a batch and under-count it.
 
 ## Decision 5 — campaign mode is repeatable
 
@@ -311,6 +323,9 @@ ruled.
 4. **Decisions 5–8** — repeatable campaign mode, the freeze-window rule, the
    cadence change, and the wording/position rule, with the position lint last
    because it is the only one needing new code.
+
+Decision 4 was built alongside step 2, since `approval-batch` reads the
+`assurance.pr` that step introduced.
 
 **Not in scope here.** The drift lint that would accept a hand-typed
 definition into a record does not exist, so today a definition typed into
