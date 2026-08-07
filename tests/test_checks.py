@@ -6,6 +6,7 @@ from conftest import BASE_RECORD
 
 from detangle.config import DocumentRegistry
 from detangle.records.checks import (
+    check_approval_batches,
     check_assurance,
     check_cross_record,
     check_invariants,
@@ -356,3 +357,39 @@ def test_an_authored_span_is_legal():
     second, so an authored span is honest data rather than a violation.
     """
     assert check_schema(make(source=[_span(origin="authored")]), REGISTRY) == []
+
+
+# --- approval batches (ADR-004 Decision 4) ---------------------------------
+
+
+def _approved(n: int, pr: int | None) -> list[Record]:
+    return [
+        make(id=f"term-{i}", assurance={"author": "assistant",
+                                        "approved_by": "Nick", "pr": pr})
+        for i in range(n)
+    ]
+
+
+def test_an_approval_within_the_cap_passes():
+    assert check_approval_batches(_approved(50, 120), 50) == []
+
+
+def test_an_approval_over_the_cap_is_reported():
+    findings = check_approval_batches(_approved(51, 120), 50)
+    assert checks(findings) == ["approval-batch"]
+    assert findings[0].where == "PR 120"
+    assert "51 definitions" in findings[0].message
+
+
+def test_batches_are_counted_per_pr():
+    records = _approved(40, 120) + _approved(40, 121)
+    assert check_approval_batches(records, 50) == []
+
+
+def test_unapproved_records_are_not_a_batch():
+    """`pr: null` is where all 359 records sit today — nobody has approved yet."""
+    assert check_approval_batches(_approved(200, None), 50) == []
+
+
+def test_a_record_without_assurance_is_skipped():
+    assert check_approval_batches([make(definition=None, assurance=None)], 1) == []

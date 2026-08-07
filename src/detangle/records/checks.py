@@ -34,6 +34,7 @@ from .spans import WHITESPACE, BlockIndex, block_hash, normalise, split_blocks
 #: un-judged.
 CHECKS = frozenset(
     {
+        "approval-batch",
         "assurance-shape",
         "assurance-unapproved",
         "conflict-flag",
@@ -342,6 +343,53 @@ def check_assurance(rec: Record) -> list[Finding]:
                 f"status {rec.data.get('status')!r} asserts a human signed "
                 "this definition off, but approved_by is null — approval must "
                 "be a real act (ADR-004 Decision 1)",
+            )
+        )
+    return out
+
+
+def check_approval_batches(records: list[Record], cap: int) -> list[Finding]:
+    """No approval covers more definitions than one human can verify.
+
+    ADR-004 Decision 4, ruled by Nick 2026-08-07 at
+    ``param-max-definitions-per-approval`` = 50. Decision 1 makes assurance the
+    only thing carrying definitional strength, which holds exactly as long as
+    approval is a real act — 187 drafted definitions merged in one PR would
+    launder AI text through a rubber stamp, and every one of them would then
+    read as human-approved.
+
+    An approval is identified by the PR it happened in, so the batch is every
+    record sharing an ``assurance.pr``. Records with no PR recorded are not a
+    batch and are not counted: ``pr: null`` means nobody has approved this yet,
+    which is where all 359 records sit today.
+
+    Set-wide by construction — a narrowed run would see part of a batch and
+    under-count it — so this runs over the whole record set like the other
+    cross-record checks, never over ``--paths``.
+    """
+    batches: dict[int, list[Record]] = {}
+    for rec in records:
+        block = rec.data.get("assurance")
+        if not isinstance(block, dict):
+            continue
+        pr = block.get("pr")
+        if isinstance(pr, int):
+            batches.setdefault(pr, []).append(rec)
+
+    out: list[Finding] = []
+    for pr, members in sorted(batches.items()):
+        if len(members) <= cap:
+            continue
+        out.append(
+            error(
+                "approval-batch",
+                f"PR {pr}",
+                f"{len(members)} definitions share this approval, over "
+                f"param-max-definitions-per-approval ({cap}) — assurance "
+                "carries the definitional strength, so an approval nobody "
+                "could have verified is worth nothing (ADR-004 Decision 4). "
+                f"Split it: {', '.join(sorted(r.id for r in members)[:5])}, "
+                f"and {len(members) - 5} more",
             )
         )
     return out
@@ -793,6 +841,7 @@ def check_source_blocks_current(index: BlockIndex, docs: list[str]) -> list[Find
 __all__ = [
     "GitBlobs",
     "block_hash",
+    "check_approval_batches",
     "check_assurance",
     "check_conflict_quotes",
     "check_cross_record",
