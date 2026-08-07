@@ -504,3 +504,11 @@ release-cadence run passes the full harness.
 - After every code change: concrete list of functional tests to verify.
 - Documentation updated after every completed feature.
 - No hard-coded values; if required data does not exist yet, stop and ask.
+- **A re-run freezes the documents it touches** (ADR-004 Decision 6, Nick
+  2026-08-07). While a re-run is in flight, no other PR merges to those
+  files. A reorder plan addresses blocks by content hash and is pinned to one
+  source blob, so any merged edit invalidates every open plan — and a run
+  moves nearly every block, so a concurrent edit conflicts with almost
+  anything. The freeze is scheduling, not a limitation to work around: the
+  alternative is not concurrent editing that works, but a plan silently
+  addressing text that has moved. Automatic plan rebasing is backlog B-8.

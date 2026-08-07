@@ -1,9 +1,9 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 2, 2b, 3, 4, 5 and 9 RULED** by Nick, 2026-08-07.
-Decisions 6–8 are **PROPOSED** — each carries a recommendation and each can be
-ruled independently. Decisions 2/2b, 4, 5 and 9 are applied; 1 and 3 are
-rulings whose normative-document edits are partly outstanding (build step 3).
+**Status: Decisions 1, 2, 2b, 3, 4, 5, 6 and 9 RULED** by Nick, 2026-08-07.
+Decisions 7 and 8 are **PROPOSED** — each carries a recommendation and each
+can be ruled independently. Decisions 2/2b, 4, 5, 6 and 9 are applied; 1 and
+3 are rulings whose normative-document edits are partly outstanding (step 3).
 Decisions 2, 5 and 9 amend signed-off material and say so explicitly.
 
 ## Context
@@ -248,9 +248,26 @@ That is correct behaviour — a plan addresses blocks by hash — but it means a
 re-run and ordinary editing cannot overlap. A re-run also moves every block,
 so a concurrent edit conflicts textually with essentially everything.
 
-**Recommendation:** an operating rule, not code — a re-run freezes the
-documents it touches — plus a plan-staleness message that says so rather than
-only reporting the mismatch. This will bite on the first cycle.
+**RULED by Nick, 2026-08-07: an operating rule, not code** — a re-run freezes
+the documents it touches — plus a plan-staleness message that says so rather
+than only reporting the mismatch.
+
+Automatic plan rebasing (re-resolving block hashes against the moved source)
+was considered and put on the backlog rather than built. It would remove the
+coordination cost, but it has a case with no correct answer: where the edit
+*changed* a block rather than moving it, the plan's intent for that block may
+no longer make sense, so rebasing would need to fall back to this rule anyway.
+Building it before the constraint has actually been felt risks solving the
+imagined version of the problem.
+
+**The rule.** While a re-run is in flight, the documents it touches take no
+other merges. It is a deliberate act of bounded duration, so freezing three
+files for it is ordinary scheduling — and the alternative is not "concurrent
+editing works" but "the plan silently addresses text that has moved".
+
+**As built.** `plan-blob-stale` now names the likely cause and the rule. The
+finding stays a warning, mirroring `git-blob-stale`: a moved source means
+re-verify, not that the plan is wrong.
 
 ## Decision 7 — verification cadence follows the re-run, not the release tag
 

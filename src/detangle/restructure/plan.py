@@ -263,7 +263,12 @@ def validate_plan(
                 "plan-blob-stale",
                 f"{rel}:pinned_blob",
                 f"plan pinned {plan.pinned_blob}, HEAD is {head_blob} — the "
-                "source moved; re-verify the plan against it",
+                "source moved, so this plan's block hashes address a version "
+                "that no longer exists; re-verify the plan against it. If a "
+                "docs PR merged while this run was in flight, that is the "
+                "cause: a re-run freezes the documents it touches, because a "
+                "run moves nearly every block and a plan addresses blocks by "
+                "hash (ADR-004 Decision 6)",
             )
         )
 
