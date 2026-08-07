@@ -943,6 +943,21 @@ and by AI agents — and every such edit is guarded, not forbidden.
   a direct edit. The moved/derived/added provenance marking of criterion 7
   applies to tool restructuring runs, not to ordinary steady-state body
   edits — those are governed by this criterion.
+- **Wording goes in the markdown; position goes in the plan** (ADR-004
+  Decision 8, Nick 2026-08-07). A fix typed into a document survives a
+  re-run when it changes *words* — `restructure` moves blocks verbatim — and
+  does not survive when it changes *where text sits*, because a reorder plan
+  governs position and puts the block back. The two files hold different
+  facts: the document is authoritative about every word, which criterion 5's
+  token parity enforces independently, and the plan is authoritative about
+  order, and only while a run executes. Moving a paragraph by hand is
+  editing the order through the file that owns the wording, so the change
+  never reaches the surface that carries it. This used to fail **silently**,
+  which is the worst way for it to fail; `plan-position-conflict` now
+  reports each hand-moved block and emits the plan line that would ratify
+  the move. It is a warning, never a block: placement is a claim, so
+  detection is automatic and the disposition is a human's — the same
+  division as a body edit proposing a `depends_on` edge (D10 element 4).
 - **Tiered cadence:** this lint runs on every PR; the full losslessness
   harness (criterion 4) runs at `param-full-verify-cadence` — **every
   re-run**, and additionally at any release tag (ADR-004 Decision 7). A

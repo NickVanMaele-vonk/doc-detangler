@@ -150,6 +150,18 @@ and authors nothing. Two guarantees it enforces on every run:
   document. Words that are in neither the output nor a declared drop, and
   words the output invents, are findings. Nothing is repaired: the
   disposition is a plan edit, and that is a human's.
+- **A block moved by hand is reported, not silently undone** (ADR-004
+  Decision 8). Fixes typed into the markdown split in two, and only one kind
+  survives a re-run: wording fixes are carried through, because blocks move
+  verbatim, while a paragraph you relocate by hand is put back, because the
+  plan governs position. The rule is **wording goes in the markdown,
+  position goes in the plan**, and `plan-position-conflict` makes breaking
+  it visible — a **warning**, carrying the plan line that would ratify the
+  move. It fires only on already-structured input (a document carrying
+  `sec:` markers, which is what a previous run emits); run 1 reorders nearly
+  everything by design, so there is nothing to contradict. A hand-move is a
+  proposal, exactly as a body edit proposing a `depends_on` edge is:
+  detection is automatic, the disposition is a human's.
 
 The run also accounts for itself. `--report <dir>` writes the criterion-8f
 self-report — `move-map.md` (every block, where it went, what was done to it,

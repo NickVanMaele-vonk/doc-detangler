@@ -1,11 +1,11 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 2, 2b, 3, 4, 5, 6, 7 and 9 RULED** by Nick, 2026-08-07.
-Decision 8 is **PROPOSED** — it carries a recommendation and can be ruled
-independently. Decisions 2/2b, 4, 5, 6, 7 and 9 are applied; 1 and 3 are
-rulings whose normative-document edits are partly outstanding (step 3).
-Decisions 2, 5 and 9 amend signed-off material and say so explicitly;
-Decision 7 sets a parameter that was only ever a proposal.
+**Status: every decision RULED** by Nick, 2026-08-07 — 1, 2, 2b, 3, 4, 5, 6, 7,
+8 and 9. Decisions 2/2b, 4, 5, 6, 7, 8 and 9 are applied; 1 and 3 are rulings
+whose normative-document edits are partly outstanding (step 3). Decisions 2, 5
+and 9 amend signed-off material and say so explicitly; Decision 7 sets a
+parameter that was only ever a proposal; Decision 8 is the only one that
+needed new code.
 
 ## Context
 
@@ -358,15 +358,90 @@ not exist yet, and this is its specification.
 
 ## Decision 8 — wording goes in the markdown, position goes in the plan
 
+**RULED by Nick, 2026-08-07, and built: state the rule, detect the collision,
+and propose the plan amendment that would ratify it.**
+
 Findings fixed by typing into the markdown split in two, and only one kind
 survives a re-run. **Wording fixes survive**: `restructure` moves blocks
 verbatim. **Position fixes do not**: the plan governs placement, so a
 definition moved by hand is moved back on the next run. The failure is silent,
-which is the worst way for it to fail.
+which is the worst way for it to fail — you meet the same problem again three
+versions later.
 
-**Recommendation:** state the rule in the DoD, and consider a lint that
-detects a block whose position in the source contradicts the plan and says
-which of the two to edit.
+### What "the plan" is, and what it is authoritative over
+
+Nick asked how a reorder plan could be more authoritative than the document
+itself. It is not, and the original framing here was wrong.
+
+First, a naming collision this project created: **`plan/`** is the directory
+of normative documents, while **a reorder plan** is `eval/golden/uce.plan.yaml`.
+This decision is about the second.
+
+A reorder plan contains **no document text**. It is 237 lines for a
+3,473-word document: a list of section headings, and one line per source
+block saying which section it lands in, addressed by `para_hash`. Every word
+stays in the document.
+
+So the two files hold different facts rather than rival copies of one. The
+**document is authoritative about every word**, and that is enforced, not
+merely intended: criterion 5's token parity compares the word multiset in
+against the word multiset out, both directions, and the run refuses to write
+a document that fails. A plan is *structurally incapable* of changing a word.
+The **plan is authoritative about order**, and only while a run executes —
+between runs it is not read, not consulted, and guards nothing; the drift
+lint guards the document.
+
+Nor does a re-run override a hand-move. The run reads your document and gets
+your block with your words; it places it where the plan says. Nothing is
+overridden — the *placement instruction* simply came from a file you did not
+edit. Which reframes the whole problem: **moving a paragraph by hand is
+editing the order through the surface that owns the wording.**
+
+### The ruling: detect, and propose
+
+Three options were put. **A** — write the rule down and stop — relies on
+remembering, against a failure you cannot see. **C as first drafted** — let
+the document win — was wrong, and would make the plan non-authoritative,
+which is the foundation ADR-002 rests on; two people moving the same block in
+opposite directions would have no resolution.
+
+Nick ruled the third shape, **C′**, which follows the project's own existing
+pattern: when a body edit implies a new `depends_on` edge, the tool
+**proposes** the change and waits, because an edge is a claim. A hand-moved
+block is the same shape — a placement is a claim. So the run reports the
+disagreement and emits the plan line that would ratify it; a human merges it
+or does not. Strictly better than the bare lint of option B, which detects and
+then makes you hand-write the fix, for the same detection cost.
+
+**As built.** `src/detangle/restructure/position.py`, wired into
+`cmd_restructure` and into the 8f report:
+
+- `plan-position-conflict`, a **warning**, one per drifted block, carrying
+  the paste-ready assignment line and pointing at the assignment index to
+  replace. Deliberately not named `…-drift`: every member of
+  `registers.NOT_WAIVABLE` is an `<artifact>-drift`/`-missing` pair for a
+  hand-edited derived file, and this is the opposite kind of thing — leaving
+  the plan to stand is a real disposition, so it is waivable.
+- **Silent on unstructured input.** Run 1 reorders nearly every block by
+  design, so "source order disagrees with the plan" is true almost everywhere
+  and means nothing. The check reads each block's *current* section from the
+  `<!-- sec:… -->` marker a previous run stamped; with no markers there is no
+  prior placement to contradict. Head-section blocks precede any marker and
+  are attributed to the plan's `kind: head` section.
+- **A repeated block needs every copy misplaced.** Identical blocks exist —
+  the four bare-rule blocks are the live example — so a hash maps to the set
+  of sections it sits under, and one correctly-placed copy clears it.
+- **It is an 8f cluster**, so the 8c comment budget counts it. A comment the
+  tool cannot see is one it would count wrong (Nick, 2026-08-05).
+
+One limit, recorded because the tool must not pretend otherwise: a hand-move
+and an ordinary reorder are indistinguishable here. It reports *what*
+disagrees and what the plan line would be; it never claims to know why.
+
+**Behaviour-preserving on everything that exists today.** The real `U` source
+carries no `sec:` markers, so the real run is byte-identical to `main`'s —
+document and all three report artifacts — and still reports 9 clusters,
+`unexplained: 0`.
 
 ## Decision 9 — token parity ignores markers
 
@@ -429,8 +504,12 @@ ruled.
    `param-full-verify-cadence` set in `detangle.toml` and the rubric, plan
    step 7.5 added for the run version record, 10.6 and criterion 4 updated,
    ADR-003 Decision 5 annotated where it awaited this parameter.
-   Documentation only; the harness it specifies is Phase 7. Decision 8
-   remains.
+   Documentation only; the harness it specifies is Phase 7. **Decision 8 done
+   the same day** — `restructure/position.py`, `plan-position-conflict` wired
+   into the command and into the 8f cluster list, 13 tests, the rule written
+   into criterion 9 and the README. Behaviour-preserving: the real `U` run is
+   byte-identical to its predecessor, document and report both, because the
+   check is silent on unstructured input.
 
 Decision 4 was built alongside step 2, since `approval-batch` reads the
 `assurance.pr` that step introduced.
