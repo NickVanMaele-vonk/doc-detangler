@@ -1060,11 +1060,39 @@ directly, and the record-to-source provenance is raw line numbers, which the
 first reorder silently invalidates. Six gaps were identified; the six design
 elements below close them.
 
-**1. Two operating modes.** The **detangle run** (Phases 5–9) is a campaign:
-full restructure, full verification. The **steady-state guard** is the
-permanent mode afterwards: an incremental check that runs on every ordinary
-docs PR via branch policy. Both modes are deliverables; a tool that only
-detangles once solves half the problem.
+**1. Three operating modes** (two when adopted; **amended 2026-08-07** by
+ADR-004 Decision 5, ruled by Nick).
+
+- The **initial campaign** (Phases 5–9): full restructure, full verification,
+  over raw tangled input.
+- The **re-run**: the campaign again, over input the tool has already
+  structured. Amendment; see below.
+- The **steady-state guard**: the permanent mode between campaigns, an
+  incremental check that runs on every ordinary docs PR via branch policy.
+
+All three are deliverables; a tool that only detangles once solves half the
+problem.
+
+**Why the re-run is its own mode and not the campaign repeated.** The
+operating cycle Nick stated on 2026-08-07 runs the campaign several times,
+fixing findings between runs, with other people editing the documents
+concurrently. Run N+1's input is therefore run N's *output*, which differs
+from raw input in ways the first campaign never met: it carries tool-stamped
+`sec:` and `concept:` markers, definitions anchored to records, and a reorder
+plan pinned to a source blob that any merged edit invalidates.
+
+Those differences are not cosmetic, and treating them as "the campaign, again"
+means finding them one at a time in production, each looking like a defect.
+Two were found that way already: token parity counted markers as source words
+that the tool re-emits rather than copies (Decision 9), and the plan's
+blob pin makes a re-run and ordinary editing mutually exclusive (Decision 6).
+Naming the mode gives such rules somewhere to attach.
+
+The alternative considered was declaring re-runs out of scope, so that all
+evolution after the first campaign happens through incremental editing under
+the guard. Rejected: it contradicts the stated operating cycle, and it would
+make the tool a one-shot instrument whose every later improvement had to be
+done by hand.
 
 **2. Two-layer addressing — stamped IDs for identity, hashes for change
 detection (scheme agreed with Nick 2026-07-23).** Line numbers appear

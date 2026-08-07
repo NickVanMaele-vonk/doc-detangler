@@ -1,10 +1,10 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1, 2, 2b, 3, 4 and 9 RULED** by Nick, 2026-08-07. Decisions
-5–8 are **PROPOSED** — each carries a recommendation and each can be ruled
-independently. Decisions 2/2b, 4 and 9 are built; 1 and 3 are rulings whose
-normative-document edits are partly outstanding (build step 3). Decisions 2
-and 9 amend signed-off material and say so explicitly.
+**Status: Decisions 1, 2, 2b, 3, 4, 5 and 9 RULED** by Nick, 2026-08-07.
+Decisions 6–8 are **PROPOSED** — each carries a recommendation and each can be
+ruled independently. Decisions 2/2b, 4, 5 and 9 are applied; 1 and 3 are
+rulings whose normative-document edits are partly outstanding (build step 3).
+Decisions 2, 5 and 9 amend signed-off material and say so explicitly.
 
 ## Context
 
@@ -227,9 +227,17 @@ guard** between them. The re-run is not the initial campaign repeated — its
 input carries markers, section IDs and record-anchored definitions that the
 first run's input did not.
 
-**Recommendation: adopt**, amending D10 element 1. The alternative — declaring
-re-runs out of scope and requiring all evolution to happen through incremental
-editing — contradicts the stated operating cycle and is not recommended.
+**RULED by Nick, 2026-08-07: adopt**, amending D10 element 1. The alternative
+— declaring re-runs out of scope and requiring all evolution to happen through
+incremental editing — contradicts the stated operating cycle and would make the
+tool a one-shot instrument whose every later improvement had to be done by
+hand.
+
+**Recorded in:** research-memo §D10 element 1 (rewritten as three modes, with
+the reason the re-run is not the campaign repeated), plan §1 and the 4.2a row.
+Two rules already attach to the new mode — Decision 9's marker exclusion and
+Decision 6's freeze window — which is the point of naming it: without it, each
+would have been found in production looking like a defect.
 
 ## Decision 6 — a re-run is a freeze window
 

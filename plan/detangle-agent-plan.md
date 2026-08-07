@@ -37,13 +37,17 @@ adding a side document is a config edit, never a code change. This
 generalizes the per-document rulings of 2026-07-22 (`A`) and 2026-07-26
 (`P`) into a rule.
 
-**The output is a living document set, and the tool has two operating
-modes.** After delivery the set keeps evolving: the glossary is completed
-over time, and users or AI agents may reorder the core documents or add
-clarifying paragraphs. The **detangle run** (Phases 5–9) restructures once;
-the **steady-state guard** (Phase 10) then keeps the evolving bodies in sync
-with each other and with the evolving glossary on every subsequent docs PR.
-Decision D10 (research-memo §D10) records the design.
+**The output is a living document set, and the tool has three operating
+modes** (two until ADR-004 Decision 5, Nick 2026-08-07). After delivery the
+set keeps evolving: the glossary is completed over time, and users or AI
+agents may reorder the core documents or add clarifying paragraphs. The
+**initial campaign** (Phases 5–9) restructures raw tangled input; a **re-run**
+is the campaign again over input the tool has already structured, which the
+real operating cycle does several times as findings get fixed; the
+**steady-state guard** (Phase 10) keeps the evolving bodies in sync with each
+other and with the evolving glossary on every ordinary docs PR between
+campaigns. Decision D10 (research-memo §D10) records the design and the
+amendment.
 
 ## 2. Constraints (non-negotiable)
 
@@ -335,7 +339,7 @@ Model/effort recommendation: Opus/high
 |------|-------------|
 | 4.1 | **D9 — canonical home of a definition: DECIDED ontology-first (signed off 2026-07-22).** Structured concept records (one file per concept) are the source of truth; `glossary.md`/`index.md`/`concept-graph.mmd` are generated views with source-map anchors enabling a deterministic comment→edit round-trip; document bodies stay on the moved/derived/added model. **Amended 2026-08-04** (see research-memo §D9 amendment): the records stay canonical for the *ontology*, but definition prose is canonical in the document that defines it — `glossary.md` becomes the fourth editable document — and `concept-graph.mmd` is not generated at all, the Mermaid render being produced per concept on demand. Vector/graph DBs rejected as the truth store; NetworkX supplies the algorithms. Fold the C9/C10 framing into the rubric when Phase 3 starts. See research-memo §D9. |
 | 4.2 | **D7 — runtime: DECIDED Python (signed off 2026-07-22).** Python-first ecosystem (MiniCheck checkpoints, NetworkX, pandoc filters, `azure-devops` SDK); Node would need ONNX conversion for the verifier. Did not gate Phase 3. See research-memo D7. |
-| 4.2a | **D10 — continuous change: ADOPTED (2026-07-23, at Nick's direction).** The set is a living document set; the tool ships two operating modes — the one-shot detangle run and a steady-state guard on every subsequent docs PR. Hash-stable provenance anchors, incremental drift lint, derived-artifact regeneration, `manifest.yaml`, term lifecycle + waiver register, tiered verification cadence. Delivered as Phase 10; schema fields land in Phase 3. See research-memo §D10. |
+| 4.2a | **D10 — continuous change: ADOPTED (2026-07-23, at Nick's direction).** The set is a living document set; the tool ships three operating modes — the initial campaign, the re-run over already-structured input (ADR-004 Decision 5, 2026-08-07), and a steady-state guard on every ordinary docs PR between them. Hash-stable provenance anchors, incremental drift lint, derived-artifact regeneration, `manifest.yaml`, term lifecycle + waiver register, tiered verification cadence. Delivered as Phase 10; schema fields land in Phase 3. See research-memo §D10. |
 | 4.3 | **DECIDED — candidate B now, C later (ADR-001 Decision 1, approved 2026-07-30).** The deliverable is a Python package `detangle` with a CLI; the Claude-skill wrapper is deferred to Phase 9.2 and explicitly not built now. Candidate A is ruled out by Phase 10: branch policy invokes a process, not a chat session, so a skill cannot be the artifact. The package is required under all three candidates — "hybrid" only adds a `SKILL.md` that shells out to the same CLI — so the CLI contract (ADR-001 Decision 2) keeps it wrapper-ready and the deferral costs no rework. |
 | 4.4 | **DONE.** Decision recorded with rationale in `plan/adr-001-form-factor.md`, accepted 2026-07-30: Decision 1 form factor, 2 CLI contract, 3 repo layout and approved tooling, 4 build order (`validate` → `graph` → `generate`), 5 `concept-graph.yaml` is derived, 6 cycle dispositions live in `registers/cycles.yaml`, 7 the assistant builds the whole toolchain. |
 
