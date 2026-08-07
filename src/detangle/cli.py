@@ -26,6 +26,7 @@ from .records import load as records_load
 from .registers import load_cycles, load_waivers
 from .restructure import execute as restructure_execute
 from .restructure import parity as restructure_parity
+from .restructure import position as restructure_position
 from .restructure import report as restructure_report
 
 
@@ -229,6 +230,7 @@ def cmd_restructure(args: argparse.Namespace) -> int:
         restructure.CHECKS
         | restructure_execute.CHECKS
         | restructure_parity.CHECKS
+        | restructure_position.CHECKS
         | restructure_report.CHECKS
         | records_load.CHECKS
         | registers.WAIVER_CHECKS
@@ -260,6 +262,15 @@ def cmd_restructure(args: argparse.Namespace) -> int:
         parity = restructure_parity.measure(plan, source, rendered)
         findings.extend(restructure_parity.check(parity, plan.rel))
 
+        # ADR-004 Decision 8: a block a human moved by hand is put back by
+        # this run, so say so and offer the plan line that would ratify the
+        # move. A warning, never an error — placement is a claim and the
+        # disposition is a human's, exactly as for a proposed `depends_on`
+        # edge. Silent on unstructured input, where the plan reorders nearly
+        # everything by design.
+        drifts = restructure_position.measure(plan, source)
+        findings.extend(restructure_position.check(drifts, plan.rel))
+
         # The 8f self-report is built on every run, not only when it is
         # written: the 8c budget counts the clusters it found, and a run that
         # buries its reviewer is over budget whether or not files were asked
@@ -274,6 +285,7 @@ def cmd_restructure(args: argparse.Namespace) -> int:
             registry.placements[plan.doc],
             limit,
             blob=plan.pinned_blob or head,
+            drifts=drifts,
         )
         budget = restructure_report.check_budget(built, limit, plan.rel)
         findings.extend(budget)

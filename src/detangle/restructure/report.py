@@ -37,6 +37,10 @@ from .execute import parse_blocks
 from .parity import EXPLAINED, Parity
 from .plan import Plan
 
+# The function, not the module: `_forward_references` binds a loop variable
+# named `position`, which would shadow a module import.
+from .position import cluster_body
+
 #: See ``records.checks.CHECKS`` for why every module declares its slugs.
 CHECKS = frozenset({"comment-budget", "report-drift", "report-missing"})
 
@@ -477,8 +481,15 @@ def build(
     placement: str,
     limit,
     blob: str | None = None,
+    drifts: list | None = None,
 ) -> Report:
-    """The three artifacts plus the cluster list the budget check reads."""
+    """The three artifacts plus the cluster list the budget check reads.
+
+    ``drifts`` are the hand-moved blocks ``position.measure`` found. They are
+    a cluster like any other because the 8c budget counts PR comments, and a
+    comment the tool cannot see is one it would count wrong (Nick,
+    2026-08-05). Empty on unstructured input, so run 1 is unaffected.
+    """
     clusters: list[Cluster] = []
 
     forms = sorted({str(a.get("form", "")) for a in plan.additions})
@@ -541,6 +552,14 @@ def build(
                     f"in `{COUNTS}`. This is a `token-parity` finding, not a "
                     "note: the plan or the renderer has to change."
                 ),
+            )
+        )
+
+    if drifts:
+        clusters.append(
+            Cluster(
+                title="Blocks moved by hand, which this run moved back",
+                body=cluster_body(drifts),
             )
         )
 
