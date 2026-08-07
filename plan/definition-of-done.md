@@ -465,6 +465,18 @@ glossary:
   make the comparison fail by construction (2026-08-05). This
   check is deliberately independent of the Phase 7 claim mapping, because a
   claim can map correctly and still have lost its modality or its qualifier.
+- **Tool-stamped markers are not words** (ADR-004 Decision 9, Nick,
+  2026-08-07). Every HTML comment the tool stamps — `sec:`, `concept:`,
+  `AI addition:`, `omitted` — is removed before the multisets are built.
+  `para_hash` has always ignored them, pandoc's plain writer dropping raw
+  HTML, and the two measures must agree about what content is. The exposure
+  is the re-run: once a run's input is the previous run's marked output,
+  every marker is a *source* token this check would demand back, while the
+  renderer re-emits its own from the plan and the records rather than
+  copying them. **Visible text still counts, the `[AI addition]` tag
+  included** — pandoc keeps visible text, so keeping it here is what
+  agreement requires, and it is what "ink on the page counts"
+  (`param-overview-max-words`, 2026-08-05) already says.
 - **Status:** buildable from Phase 6; specified now.
 
 ## 6. Reference and metadata integrity

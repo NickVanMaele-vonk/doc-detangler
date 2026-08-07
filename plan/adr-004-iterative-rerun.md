@@ -1,9 +1,9 @@
 # ADR-004 — Iterative re-run operation and the assurance model
 
-**Status: Decisions 1 and 3 RULED** by Nick, 2026-08-07. Decisions 2, 4–9 are
-**PROPOSED** — each carries a recommendation, each can be ruled independently,
-and nothing below is built. Decisions 2 and 9 amend signed-off material and
-say so explicitly.
+**Status: Decisions 1, 3 and 9 RULED** by Nick, 2026-08-07. Decisions 2 and
+4–8 are **PROPOSED** — each carries a recommendation and each can be ruled
+independently. Decision 9 is built; nothing else below is. Decisions 2 and 9
+amend signed-off material and say so explicitly.
 
 ## Context
 
@@ -221,27 +221,44 @@ which of the two to edit.
 
 ## Decision 9 — token parity ignores markers
 
+**RULED by Nick, 2026-08-07, and built.**
+
 `para_hash` treats a marker as metadata; token parity treats it as content
 (both measured above). The disagreement bites in exactly this cycle: once
 v1.1 is the input to run 2, its markers are *source tokens*, so criterion 5
 requires the output to reproduce them — while the tool re-emits its own
-markers from the plan and records, which need not match token-for-token.
+markers from the plan and records, as authored parts the parity check never
+counts. The result would be a wall of findings about hidden comments, none of
+them about lost wording.
 
-**Recommendation:** strip HTML comments and the visible `[AI addition]` tag
-before counting tokens, aligning parity with the `para_hash` normalisation, so
-a marker is metadata under both. Decision 3 removes the visible tag anyway,
-which disposes of half the exposure. The alternative — requiring re-runs to
-preserve marker identity exactly — makes criterion 5 fail on a marker rename,
-which measures the wrong thing.
+**Ruled:** HTML comments are removed before tokens are counted, so a marker is
+metadata under both measures. The alternative — requiring re-runs to preserve
+marker identity exactly — makes criterion 5 fail on a marker rename, which
+measures the wrong thing.
+
+**One narrowing from the recommendation as first written.** It proposed
+stripping the visible `[AI addition]` tag as well, on the ground that this
+aligns parity with the `para_hash` normalisation. It does not: pandoc's plain
+writer drops *raw HTML*, not visible text, so the tag is content under
+`para_hash` and stripping it would create a fresh disagreement rather than
+close one. The 2026-08-05 "ink on the page counts" ruling says the same. So
+only the comment goes; visible text still counts. Decision 3 removes the tag
+from approved additions anyway, which leaves unreviewed AI text as its only
+remaining user.
+
+Amends criterion 5's verification method, where the exclusion is recorded.
 
 ## Consequences
 
 Build steps, in order, each its own PR. Nothing starts before its decision is
 ruled.
 
-1. **Decision 9** — strip markers in `tokens.py`, with tests over a marked and
-   unmarked copy of the same block. Smallest, and unblocks any re-run
-   experiment.
+1. ~~**Decision 9** — strip markers in `tokens.py`, with tests over a marked
+   and unmarked copy of the same block.~~ **Done 2026-08-07.** `COMMENT` in
+   `restructure/tokens.py`, nine tests in `tests/test_restructure_tokens.py`,
+   eight of which fail without the change. The real `U` plan re-executes
+   byte-identically and still reports `unexplained: 0`, so the golden is
+   untouched.
 2. **Decision 2** — the record schema: `assurance` block, version-stamped
    spans, `orphan` re-scoped in `concepts/README.md`. Migration across 359
    records, `detangle validate` extended, the rubric and §D9/§D10 amended.
