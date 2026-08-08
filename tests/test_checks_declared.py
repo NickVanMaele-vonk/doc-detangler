@@ -27,6 +27,7 @@ from detangle.restructure import plan as restructure_plan
 from detangle.restructure import position as restructure_position
 from detangle.restructure import report as restructure_report
 from detangle.verify import splits as verify_splits
+from detangle.verify import structure as verify_structure
 from detangle.views import glossary
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "detangle"
@@ -48,6 +49,7 @@ DECLARED = {
     "restructure/position.py": restructure_position.CHECKS,
     "restructure/report.py": restructure_report.CHECKS,
     "verify/splits.py": verify_splits.CHECKS,
+    "verify/structure.py": verify_structure.CHECKS,
     "views/glossary.py": glossary.CHECKS,
 }
 
