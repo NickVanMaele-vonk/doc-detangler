@@ -55,6 +55,7 @@ Two rules keep the two apart:
 | Two operating modes (D10) | **Three** — campaign, re-run, steady-state guard | ADR-004 D5, Nick 2026-08-07 |
 | The waiver register is Phase 10 work (D10 el. 6) | **Built in Phase 3, step 3.9** as `registers/waivers.yaml` | Nick 2026-08-03 |
 | Markdown parsing via panflute / Lua filters (§3) | **Neither.** `pandoc -t json` as a subprocess, AST walked in plain Python | ADR-001 approved tooling |
+| An addition is marked one way, for good (§2.9, D4) | **Two states.** A draft carries the comment plus a visible `[AI addition]` tag; approval removes the tag and keeps the comment, which gains `approved-by` and `pr` | ADR-004 D3 as amended, Nick 2026-08-08 |
 
 The approved dependency list is the hard boundary behind most of these: Python
 ≥ 3.11, `pytest`, `ruff`, `PyYAML`, `networkx`, and `pandoc` as a subprocess.
