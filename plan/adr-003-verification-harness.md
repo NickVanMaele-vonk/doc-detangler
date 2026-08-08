@@ -86,6 +86,33 @@ decomposer version *and* the override file's blob are recorded in every
 report, and our figures never compare against published FActScore
 numbers.
 
+**Where the register lives — ruled by Nick, 2026-08-07:
+`registers/claim-splits.yaml`.** One file for the whole set. It is canonical
+data whose provenance is a PR thread rather than a corpus span, which is
+exactly the rule that governs `registers/`, and claim ids already carry their
+document (`U:hash8:occ:n`), so a per-document view is a filter rather than a
+fact the file layout has to supply. The alternatives considered were one
+register per document (keeps a document's rulings together, but `registers/`
+has a clean one-file-per-concern shape) and a file beside the reorder plan in
+`eval/golden/` (groups the two human-approved data artifacts, but puts
+canonical data under the evaluation set, and the splits outlive the golden).
+`detangle verify` reads it on every run; `split-parse` and `split-schema` join
+`register-parse` in `registers.NOT_WAIVABLE`, since a malformed register must
+not excuse itself, and a target that matches nothing raises `split-stale`
+(warn), scoped to the documents the run decomposed.
+
+**Open, discovered while wiring it: how a split reaches the output.** Coverage
+compares a source decomposition against an output one, so a source claim split
+into two only matches if the output claim is split the same way. Propagating
+an entry by rebasing its id onto the output does not work — measured on the
+`U` golden, **4 of 84 source blocks keep their `para_hash` through the
+restructure**, because a block re-emitted with `sec:`/`concept:` markers hashes
+differently — so 95% of entries would be silently inert, failing as residue
+rather than as a missed override. The rule that would work anchors on the
+claim's **text**, which is what a split is a ruling about; that is a design
+decision, so overrides apply to the source only until it is ruled and the parts
+of a split claim land in the residue, where they would have landed unsplit.
+
 ## Decision 2 — coverage: match first, score the residue — **RULED**
 
 **Ruled by Nick, 2026-08-07.** Stage 1 is built (build step 2); stage 2 waits
@@ -325,13 +352,23 @@ Build steps, in order, each its own PR:
    blob (claim count reproduces 289 or the difference is explained in
    the PR). The shortened inputs are expected to need few or no
    overrides; the full documents are where the override path earns its
-   keep.
+   keep. **The register's home is ruled** (2026-08-07):
+   `registers/claim-splits.yaml`, seeded empty, read by `detangle verify` and
+   recorded in its report by blob.
 2. Deterministic match + structure checks (Decisions 2 stage 1, 4) inside
    `detangle verify`; no model dependency yet. **Done as two libraries:** the
    matcher (204/270 on the golden) and the concept-before-use scan (1 finding,
    1 exemption over `glossary.md` + the `U` golden). Both wait on Decision 5
    for the command that runs them.
-3. The scored residue (Decisions 2 stage 2, 3): the `[verify]` extra, the
-   pinned checkpoint, coverage + fabrication scoring, the report.
-4. Seeded-error tests (Decision 6), then the `U` dry-run and the
-   threshold re-baseline proposal (Decision 7).
+3. `detangle verify` itself (Decision 5), **deterministic by default and
+   built**: it runs three of the four stages, writes the report with the step
+   7.5 version record, and states the absence of the fourth three ways — the
+   stage table, `fabrication: NOT CHECKED` in the summary, and the
+   `coverage-unscored` warn. The claim-split register is wired in with it.
+4. The scored residue (Decisions 2 stage 2, 3) behind `--use-inference`: the
+   `[verify]` extra, the pinned checkpoint, coverage + fabrication scoring.
+   **Deferred** — backlog B-9, to be picked up with Decision 3.
+5. Seeded-error tests (Decision 6), then the `U` dry-run and the
+   threshold re-baseline proposal (Decision 7). Note what step 4's deferral
+   costs here: the invented-claim limb of Decision 6's done-when cannot be
+   met by the deterministic build at all.

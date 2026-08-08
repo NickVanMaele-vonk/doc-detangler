@@ -76,6 +76,9 @@ class Version:
 @dataclass
 class Report:
     commit: str
+    #: Claim-split entries the run loaded (ADR-003 Decision 1). Recorded
+    #: because the decomposer moves the scores and its overrides move with it.
+    overrides: int = 0
     versions: list[Version] = field(default_factory=list)
     coverage: dict[str, Coverage] = field(default_factory=dict)
     structure: Structure | None = None
@@ -104,6 +107,18 @@ def check_unscored(report: Report) -> list[Finding]:
     return out
 
 
+def _overrides(count: int) -> str:
+    """Say the register was read even when it had nothing to say.
+
+    Zero overrides and no register at all produce identical claim lists, and
+    only one of them means a human ruled nothing yet. The blob in the version
+    table settles which; this line makes a reader look for it.
+    """
+    if not count:
+        return "no claim-split overrides (the register is empty)"
+    return f"{count} claim-split override{'' if count == 1 else 's'} applied"
+
+
 def _stage_table() -> list[str]:
     lines = ["| Step | Stage | This run |", "|---|---|---|"]
     for step, name, ran in STAGES:
@@ -128,7 +143,7 @@ def render(report: Report) -> str:
         "command. -->",
         "",
         f"Run at commit `{report.commit}`, decomposer `{DECOMPOSER_VERSION}`, "
-        "no claim-split overrides applied (the register's home is not ruled).",
+        f"{_overrides(report.overrides)}.",
         "",
         "## What this run checked",
         "",

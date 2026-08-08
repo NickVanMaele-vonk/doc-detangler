@@ -23,6 +23,12 @@ graph = "concept-graph.yaml"
 # `index.md` and `concept-graph.mmd` are absent until step 3.6 writes them.
 glossary = "glossary.md"
 
+# The claim-split register (ADR-003 Decision 1; home ruled by Nick 2026-08-07).
+# Canonical human rulings whose provenance is a PR thread, so it sits in
+# `registers/` with the other three. Read by `detangle verify`; an absent file
+# is the normal empty state, not an error.
+claim-splits = "registers/claim-splits.yaml"
+
 [documents]
 # The two input sets (Nick, 2026-08-05). `components` is the detangle set:
 # the documents being restructured, the only ones C9 counts for placement and

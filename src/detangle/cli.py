@@ -380,8 +380,17 @@ def cmd_verify(args: argparse.Namespace) -> int:
     cg, graph_findings = graph.build(records, register)
     findings.extend(graph_findings)
 
+    # ADR-003 Decision 1's override data (home ruled by Nick 2026-08-07). A
+    # malformed register cannot excuse itself, so its findings are errors and
+    # the run must not proceed on a partial read.
+    splits_path = config.path("claim-splits")
+    overrides, split_findings = verify.load_splits(splits_path)
+    findings.extend(split_findings)
+    if split_findings:
+        return report(findings, args.json, {"blocked": f"{splits_path.name} unusable"})
+
     blobs = record_checks.GitBlobs(root)
-    built = verify_report.Report(commit=blobs.commit())
+    built = verify_report.Report(commit=blobs.commit(), overrides=len(overrides))
 
     def _version(code: str, role: str, path: Path) -> None:
         rel = str(path.relative_to(root)) if path.is_absolute() else str(path)
@@ -393,9 +402,17 @@ def cmd_verify(args: argparse.Namespace) -> int:
                 role=role,
                 rel=rel,
                 blob=blobs.live(rel),
-                committed=not blobs.worktree_differs(rel),
+                committed=blobs.committed(rel),
             )
         )
+
+    # The register is a version of the run like any document it read: the
+    # decomposer's output moves with it, so a report that names the blob is
+    # reproducible and one that does not is not (research-memo §2.8). An
+    # absent register is the normal empty state, so it gets no row.
+    splits_rel = str(splits_path.relative_to(root))
+    if splits_path.is_file():
+        _version("claim-splits", "override register", Path(splits_rel))
 
     # The glossary is read first and is part of the reading order, so its
     # absence would silently make every forward-reference verdict wrong.
@@ -407,6 +424,8 @@ def cmd_verify(args: argparse.Namespace) -> int:
         )
     ]
 
+    scanned: set[str] = set()
+    unused: set[str] = set()
     for code in registry.components:
         if code not in outputs:
             continue
@@ -416,19 +435,28 @@ def cmd_verify(args: argparse.Namespace) -> int:
         source_text = (root / source_rel).read_text(encoding="utf-8")
         output_text = outputs[code].read_text(encoding="utf-8")
 
-        source = verify.decompose(source_text, code)
+        # Overrides apply to the source only — see `splits.for_document` for
+        # the measurement that says why the output side needs a ruling first.
+        source = verify.decompose(
+            source_text, code, verify.for_document(overrides, code)
+        )
         output = verify.decompose(output_text, f"{code}-out")
         built.coverage[code] = verify.match(source, output)
         reading.append(verify_structure.Document(code, output_text))
 
+        scanned.add(code)
+        unused |= set(source.unused_splits)
+
     built.structure = verify_structure.scan(reading, cg)
     findings.extend(verify_structure.check(built.structure))
     findings.extend(verify_report.check_unscored(built))
+    findings.extend(verify.stale_splits(overrides, scanned, unused, splits_rel))
 
     ran = (
         records_load.CHECKS
         | registers.CYCLE_CHECKS
         | BUILD_CHECKS
+        | verify.SPLIT_CHECKS
         | verify_structure.CHECKS
         | verify_report.CHECKS
         | registers.WAIVER_CHECKS
@@ -438,6 +466,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
         "commit": built.commit,
         "documents": ", ".join(sorted(outputs)),
         "reading order": " → ".join(d.code for d in reading),
+        "claim-split overrides": built.overrides,
         "placed verbatim": sum(len(c.matched) for c in built.coverage.values()),
         "unscored": built.unscored,
         "forward references": len(built.structure.forward),

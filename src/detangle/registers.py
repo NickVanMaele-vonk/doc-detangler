@@ -175,8 +175,9 @@ def _check_entry(entry: CycleEntry, where: str) -> list[Finding]:
     return []
 
 
-#: Checks no entry can reach. ``register-parse`` and the ``waiver-*`` hygiene
-#: checks, because a malformed register must not excuse itself — and the drift
+#: Checks no entry can reach. ``register-parse``, the claim-split register's
+#: ``split-parse``/``split-schema``, and the ``waiver-*`` hygiene checks,
+#: because a malformed register must not excuse itself — and the drift
 #: checks, because a waiver defers a problem somebody has to solve later, and a
 #: derived file disagreeing with its source is not one: regenerating it is a
 #: single command. C6 and ADR-001 Decision 5 make "never hand-edit a generated
@@ -184,6 +185,8 @@ def _check_entry(entry: CycleEntry, where: str) -> list[Finding]:
 NOT_WAIVABLE = frozenset(
     {
         "register-parse",
+        "split-parse",
+        "split-schema",
         "graph-drift",
         "graph-missing",
         "glossary-drift",

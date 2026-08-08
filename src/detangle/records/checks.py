@@ -133,6 +133,22 @@ class GitBlobs:
         """
         return _git(self.root, "hash-object", rel_doc)
 
+    def committed(self, rel_doc: str) -> bool:
+        """Whether the bytes on disk are exactly what HEAD records.
+
+        ``worktree_differs`` serves the record checks, where the document is
+        always tracked and an untracked path is a real error. A run record has
+        to describe files that legitimately are not committed yet — the
+        freshly restructured output is the normal case, and so is a register
+        added in the PR being verified — so an untracked file answers False
+        here rather than raising.
+        """
+        proc = subprocess.run(
+            ["git", "-C", str(self.root), "cat-file", "-e", f"HEAD:{rel_doc}"],
+            capture_output=True,
+        )
+        return proc.returncode == 0 and not self.worktree_differs(rel_doc)
+
     def worktree_differs(self, rel_doc: str) -> bool:
         """True when the file on disk is not what HEAD records.
 
