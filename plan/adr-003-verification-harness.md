@@ -1,10 +1,19 @@
 # ADR-003 — Verification harness design (Phase 7)
 
-**Status: partly ruled** — Decisions 1 (2026-08-06), 2, 4 and 5 (all
-2026-08-07) are ruled by Nick and built. **Decision 3 is deferred**, not
+**Status: partly ruled** — Decisions 1 (2026-08-06; its register's home ruled
+2026-08-07, `registers/claim-splits.yaml`), 2, 4 and 5 (all 2026-08-07) are
+ruled by Nick and built. **Decision 3 is deferred**, not
 declined (Nick, 2026-08-07): the model path waits behind `--use-inference`,
 parked as backlog B-9, and the dependency is not installed until that flag is
-wanted. Decisions 6 and 7 are still proposals. The working agreement says Nick approves before
+wanted. Decisions 6 and 7 are still proposals.
+
+**Two things the build left open for Nick.** The single live `forward-use`
+finding is a **sense collision, not a structural defect** — `gate` is a record
+whose bare surface is the English word, and the hit is in `glossary.md`'s own
+generated banner. It is deliberately not suppressed: the disposition is a
+ruling (the 2026-07-30 word-overload ruling says a bare overloaded word gets
+no head record; a waiver is the alternative). And how an approved claim split
+reaches the restructured output is unruled — backlog B-10. The working agreement says Nick approves before
 any code is written. Decisions carry a recommendation each, and any one can be
 ruled differently without reopening the others.
 

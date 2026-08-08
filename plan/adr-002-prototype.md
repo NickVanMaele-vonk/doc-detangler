@@ -1,9 +1,16 @@
 # ADR-002 — Prototype design (Phase 6)
 
-**Status: PROPOSED** — nothing below is built; the working agreement says
-Nick approves before any code is written. Decisions carry a recommendation
-each; approving this document sets them, and any decision can be ruled
-differently without reopening the others.
+**Status: APPROVED and BUILT** — all five decisions approved by Nick
+2026-08-05 (PR #101). All four build steps in §Consequences are merged:
+the plan schema and loader (#102), the execution engine (#104), the
+criterion-5 `token-parity` check (#105) and the generated 8f self-report
+(#106). The engine's machine run of the real plan reproduces the approved
+golden, held as a test. Decision 4's comparison was written the same day
+(`eval/prototype-comparison.md`) and the three golden-side defects it found
+are ruled and applied; ADR-004 Decision 8 later added
+`plan-position-conflict` to the command. **6.2 does not close here** — it
+waits on the `param-low-confidence-threshold` re-baseline, which needs the
+Phase 7 dry-run, because under Decision 1 this command scores nothing.
 
 ## Context
 
@@ -107,12 +114,15 @@ Phase 9.1, as the plan already says.
 ## Consequences
 
 - No new dependency; the approved tooling list stands.
-- The build order inside Phase 6: (1) plan schema + loader + validation,
-  (2) `restructure` execution + self-report, (3) token-parity check,
-  (4) the 6.2 comparison run, recorded in `eval/`.
-- `CHECKS` grows new slugs (`plan-incomplete`, `token-parity`, …) declared
-  per module as `tests/test_checks_declared.py` requires; waivability to be
-  decided per slug when built (drift-style checks stay non-waivable).
+- The build order inside Phase 6, **all merged**: (1) plan schema + loader +
+  validation (#102), (2) `restructure` execution (#104), (3) token-parity
+  check (#105) and the 8f self-report (#106), (4) the 6.2 comparison run,
+  recorded in `eval/prototype-comparison.md`.
+- `CHECKS` grew the slugs the build needed — `plan-incomplete`,
+  `token-parity`, `plan-position-conflict` and the rest — declared per module
+  as `tests/test_checks_declared.py` requires. As foreseen, the drift-style
+  ones are non-waivable: `restructure-drift`/`-missing` and
+  `report-drift`/`-missing` are in `registers.NOT_WAIVABLE`.
 - The Claude-skill wrapper (ADR-001 candidate C) is unaffected: what it
   would wrap later is exactly the plan-authoring workflow Decision 1
   keeps outside the tool.

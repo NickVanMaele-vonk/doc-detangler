@@ -73,7 +73,11 @@ If one term appears in more than one input document, then:
 | `./plan/definition-of-done.md` | Rubric for "logically structured, human-readable": 8 criteria, parameters, non-goals, per-phase applicability *(Phase 1 — approved)* |
 | `./plan/research-memo.md` | Standards to follow and open-source components to reuse, with coverage gaps stated; carries the decision register D1–D10 *(Phase 2 — complete, all decisions signed off)* |
 | `./plan/adr-001-form-factor.md` | Form factor and toolchain layout: Python package + CLI, CLI contract, repo layout, build order *(Phase 4.3/4.4 — accepted 2026-07-30)* |
-| `src/detangle/` | The toolchain: `validate`, `graph`, `generate` and `restructure` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6) |
+| `./plan/adr-002-prototype.md` | Phase 6 prototype: the reorder plan is **data**, `detangle restructure` executes it and authors nothing *(approved 2026-08-05 — all four build steps merged)* |
+| `./plan/adr-003-verification-harness.md` | Phase 7 losslessness harness: decomposition, coverage, fabrication, structure *(Decisions 1, 2, 4, 5 ruled and built; 3 deferred to backlog B-9; 6 and 7 proposals)* |
+| `./plan/adr-004-iterative-rerun.md` | The operating model: the detangle run is a repeatable campaign, and **assurance** rather than corpus anchoring carries definitional strength *(all decisions ruled 2026-08-07; the normative-document edits for Decisions 1 and 3 are outstanding)* |
+| `./plan/backlog.md` | Parked candidate work, `B-n`. Non-normative — nothing in it is approved or scheduled |
+| `src/detangle/` | The toolchain: `validate`, `graph`, `generate`, `restructure` and `verify` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6); `verify` runs deterministically and its two model-dependent stages are **not built** (backlog B-9) |
 | `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
@@ -87,9 +91,16 @@ If one term appears in more than one input document, then:
 
 ## Status
 
-Phases 1, 2, 4 and 5 complete; Phase 3 nearly so and **Phase 6 in progress**
-(`plan/adr-002-prototype.md`, approved 2026-08-05 — three of 6.1's four build
-steps merged, the 6.2 comparison outstanding).
+Phases 1, 2, 4 and 5 complete; Phase 3 nearly so; **Phase 6 all but closed**
+(`plan/adr-002-prototype.md`, approved 2026-08-05 — all four of 6.1's build
+steps merged and the 6.2 comparison written, but 6.2 stays open until
+`param-low-confidence-threshold` is re-baselined, which needs Phase 7); and
+**Phase 7 in progress** (`plan/adr-003-verification-harness.md` — four of
+seven decisions ruled and built, the model-dependent half deferred).
+`plan/adr-004-iterative-rerun.md`, ruled in full on 2026-08-07, resets the
+operating model: the detangle run is a **repeatable campaign**, not a one-off,
+and **assurance** — who wrote a claim and who approved it — rather than corpus
+anchoring is what carries definitional strength.
 Rubric approved (`plan/definition-of-done.md`);
 research memo delivered (`plan/research-memo.md`) across three rounds. The
 gating architecture decisions were signed off 2026-07-22: runtime is
@@ -108,8 +119,8 @@ Phase 3 data is essentially complete — **359 concept records** under
 dispositioned, and the criterion-3 reference terms and cycle rulings in
 `registers/`.
 
-All three ADR-001 commands are built — `restructure` came later, with Phase 6
-(below). **`detangle validate`** replaces the
+All three ADR-001 commands are built — `restructure` came later with Phase 6
+and `verify` with Phase 7, both below. **`detangle validate`** replaces the
 throwaway per-PR scripts with a tested implementation of the record-set
 integrity checks. **`detangle graph`** builds the concept graph from the
 records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
