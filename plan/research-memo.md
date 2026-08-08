@@ -1,11 +1,11 @@
 # Phase 2 — Research Memo
 
-**Status:** Rounds 1–3 complete. D1–D9 all decided — D7 (runtime) and D9
-(ontology-first) signed off by Nick 2026-07-22. Phase 2 closed.
-D10 (continuous change / steady-state operation) added 2026-07-23 from
-Nick's post-delivery use case — see §D10.
+**Status:** Rounds 1–3 complete; Phase 2 closed. D1–D10 all decided and signed
+off. Several have since been **amended** — see the supersession table below
+before acting on anything in this file.
 **Phase:** 2.1 / 2.2
-**Last updated:** 2026-07-23
+**Last updated:** 2026-08-08 (supersession pass; the research findings
+themselves are unchanged from 2026-07-23)
 **Method:** fan-out web research with adversarial verification (2 of 3
 refutations kill a claim).
 - **Round 1:** 21 sources, 100 candidate claims, 25 verified → 21 confirmed,
@@ -23,6 +23,45 @@ pipeline. It is not a procurement exercise: we are building the tool.
 > single-source, not adversarially verified)** returned reusable method for
 > the two load-bearing gaps and resolved C5/C6 — see the round-3 addendum
 > and §4.
+
+## How to read this file
+
+It is a **research memo**: a record of what was found, what was refuted, and
+what was decided in Phase 2. The findings and refutations stand as written and
+are still worth citing. What has moved on is some of the *build intent* — which
+component gets used, and what the tool actually emits.
+
+Two rules keep the two apart:
+
+- **A finding is durable.** §1.1's paraphrase/long-range bias, §2.3's refutation
+  of a standards basis for criterion 1, §5's refuted claims: all still true, all
+  still load-bearing.
+- **A build intent is not.** Where a later ADR or ruling overtook one, it is
+  struck or annotated **in place** with the date and the authority. Nothing was
+  deleted, because a component we chose and then set aside is worth knowing
+  about when the question comes back.
+
+### Supersession table — read before relying on any build intent here
+
+| What this memo says | What is true now | Authority |
+|---|---|---|
+| MiniCheck does fabrication checking (D4, §2.9) | **Not in use.** The harness runs deterministically; every model stage waits behind `--use-inference`, unbuilt | ADR-003 D3 (deferred 2026-08-07), backlog B-9 |
+| Vale does term/acronym rules (D5, §2.7) | **Not in use and not approved tooling.** Nothing in `src/` invokes it | ADR-001 (approved tooling list) |
+| A `concept-graph.mmd` is generated and committed (D2, §2.4, §3, D10 el. 4) | **No such file.** The Mermaid render is per concept, on demand, and **unbuilt** | Nick 2026-08-04; backlog B-6 |
+| `glossary.md` is a generated view (D9) | **The fourth editable document.** Its definitions are canonical in the file | D9 amendment, Nick 2026-08-04 |
+| `glossary.md` is guarded by `generate --check` | **Unguarded.** The gate was withdrawn; the drift lint that replaces it does not exist | Nick 2026-08-04; see the D9 amendment timing note |
+| Provenance anchors carry line numbers (§2.11, D9 round-trip) | **Line numbers are provenance nowhere.** Spans are `(doc, section, para_hash, verified_against)` | D10 element 2 |
+| `manifest.yaml` carries a generation timestamp (D10 el. 5) | **No timestamp.** A blob is the version; a clock makes a report irreproducible | ADR-003 step 7.5 |
+| Two operating modes (D10) | **Three** — campaign, re-run, steady-state guard | ADR-004 D5, Nick 2026-08-07 |
+| The waiver register is Phase 10 work (D10 el. 6) | **Built in Phase 3, step 3.9** as `registers/waivers.yaml` | Nick 2026-08-03 |
+| Markdown parsing via panflute / Lua filters (§3) | **Neither.** `pandoc -t json` as a subprocess, AST walked in plain Python | ADR-001 approved tooling |
+
+The approved dependency list is the hard boundary behind most of these: Python
+≥ 3.11, `pytest`, `ruff`, `PyYAML`, `networkx`, and `pandoc` as a subprocess.
+MiniCheck, Vale, KeyBERT, panflute, PyTorch and `transformers` are all outside
+it, and adding any of them needs Nick's approval first (ADR-001).
+
+For what the tool actually does today, read `plan/ARCHITECTURE.md`.
 
 ## Round 2 addendum (2026-07-21)
 
@@ -137,9 +176,11 @@ Three things we hoped a standard would settle — one is settled, two are not:
 
 Not a strong finding, but every reusable component verified in this round is
 either Python (MiniCheck, language_tool_python) or a Go binary invoked as a
-subprocess (Vale). Nothing here argues for Node/TypeScript. Treat as a lean,
-not a decision — the term-extraction and graph libraries that would most
-inform this were not researched.
+subprocess (Vale). Nothing here argues for Node/TypeScript. ~~Treat as a lean,
+not a decision~~ — **decided: D7, signed off by Nick 2026-07-22.** Round 2
+supplied the deciding argument (Node needs ONNX conversion for the verifier);
+the term-extraction and graph libraries that would most inform this were still
+not researched when it was called.
 
 ---
 
@@ -215,14 +256,20 @@ should stop expecting external validation for them. The nearest candidate
 foundations — Information Mapping and the prerequisite-graph literature — were
 not researched (see gaps).
 
-### 2.4 SKOS — concept-scheme serialisation **(model adopted; serialisation is a YAML edge list with a Mermaid render, not Turtle — see D2)**
+### 2.4 SKOS — concept-scheme serialisation **(model adopted; serialisation is a YAML edge list, not Turtle — see D2)**
 
 > **Decision D2 overrides the serialisation recommendation below.** We keep
 > the SKOS concept *model* and the project-local dependency edge, but serialise
-> as a plain-text edge list (`concept-graph.yaml`) with a Mermaid render
-> (`concept-graph.mmd`), not Turtle — both generated from the concept records,
-> which are the source of truth (D9). The SKOS-limits findings (no dependency
-> edge, cycles permitted) still hold and still fall to us to handle.
+> as a plain-text edge list (`concept-graph.yaml`), not Turtle — generated from
+> the concept records, whose `depends_on` edges are canonical (D9). The
+> SKOS-limits findings (no dependency edge, cycles permitted) still hold and
+> still fall to us to handle.
+>
+> **Amended 2026-08-04 (Nick): no `concept-graph.mmd` is committed.** D2 as
+> written paired the edge list with a whole-set Mermaid render. The set renders
+> as a large tangle plus loose dots, so the render is produced **per concept, on
+> demand** (`detangle graph --mmd <id>`) instead — designed, and **not built**
+> (backlog B-6). Do not expect a `.mmd` file anywhere in the repo.
 
 
 SKOS is a W3C Recommendation (18 Aug 2009, Miles & Bechhofer), not superseded.
@@ -292,10 +339,16 @@ Two hard caveats:
 
 ### 2.7 Style checking components
 
+> **Not in use as of 2026-08-08.** D5 approved Vale for term/acronym rules, but
+> Vale is **not on ADR-001's approved tooling list** and nothing in `src/`
+> invokes it. The decision stands as a decision; treat "reuse" below as *may be
+> reused once approved*, not as a description of the build. Adding it needs
+> Nick's approval like any other new dependency.
+
 | Component | Licence | Self-host | Verdict |
 |---|---|---|---|
-| **Vale** | MIT | Yes — offline by design | **Reuse**, as a subprocess |
-| **language_tool_python** | **GPL-3.0-only** | Yes — local Java server | Caution: copyleft |
+| **Vale** | MIT | Yes — offline by design | **Reuse** (approved D5, **unbuilt**), as a subprocess |
+| **language_tool_python** | **GPL-3.0-only** | Yes — local Java server | Rejected (D6) |
 
 **Vale** is verified at the artifact, not the marketing page: MIT
 (`vale-cli/vale`), actively maintained (v3.15.1, 2026-06-12; 192 releases;
@@ -331,6 +384,13 @@ Two findings with direct operational consequences:
    and subclaim counts. Therefore: **fix and version the decomposer**, record
    it in the verification report, and treat our numbers as **internally
    comparable only** — never against published FActScore figures.
+
+   *This finding is why ADR-003 Decision 1 made the decomposer deterministic
+   rather than an LLM call: a fixed decomposer is one whose numbers are
+   reproducible by construction. It also predicts the measurement gap we hit —
+   the harness counts more claims on the pinned source blob than the Phase 5
+   hand count found, because the two decompose different texts. Neither is
+   wrong; they are not comparable, exactly as this warns.*
 2. **The criteria are a human rubric with no mechanical guarantee.** The
    authors warn there is "no mechanism to guarantee they are reflected in the
    output" of an LLM decomposer. Atomicity is never formally defined.
@@ -338,6 +398,20 @@ Two findings with direct operational consequences:
 *Sources:* [arXiv:2403.11903](https://arxiv.org/html/2403.11903), [ACL Anthology](https://aclanthology.org/2024.starsem-1.13/); follow-on work: [Optimizing Decomposition for Optimal Claim Verification (ACL 2025)](https://aclanthology.org/2025.acl-long.254), DnDScore ([arXiv:2412.13175](https://arxiv.org/abs/2412.13175))
 
 ### 2.9 MiniCheck — the one strong reusable verification component **(reuse, with eyes open)**
+
+> **Deferred, not declined (ADR-003 Decision 3, Nick 2026-08-07).** MiniCheck
+> needs PyTorch and `transformers`, both outside ADR-001's approved tooling, so
+> `detangle verify` ships **deterministic**: exact normalised-text matching,
+> with the residue reported unscored rather than model-scored. Every MiniCheck
+> stage waits behind `--use-inference` (backlog B-9).
+>
+> The consequence to carry, because a clean run must not be misread: the
+> deterministic harness **cannot check for invented text**, and says so —
+> `fabrication: NOT CHECKED` in the summary, the stages that did not run printed
+> in the report's stage table, and a `coverage-unscored` warning naming how many
+> claims the run declined to rule on. §1.1 below is why the deterministic stage
+> is a correctness property and not just a cost saving: every claim matched
+> exactly is one that never reaches a model in its documented worst regime.
 
 The best-verified component in this round.
 
@@ -381,7 +455,9 @@ MiniCheck and Vale.
   `topological_sort`, and `simple_cycles` / `find_cycle` /
   `is_directed_acyclic_graph` — the detector our ISO 704 §6.5.2 cycle policy
   needs. Believed BSD-3, mature, widely used. **Strongest of the batch;
-  verify licence/maintenance in C2.** Caveat carried from our own criterion 1:
+  verify licence/maintenance in C2.** — **Resolved: adopted.** NetworkX is on
+  ADR-001's approved tooling list and `detangle graph` is built on it. Caveat
+  carried from our own criterion 1:
   a topological sort yields a *total* order, but document order need only be
   *consistent with* the graph's partial order — use NetworkX for the sort and
   cycle detection, not as "topo-sort = document order".
@@ -432,6 +508,15 @@ exposure:
   classification: business-concept
 ```
 
+> **The sketch above is the externally-suggested shape, not our schema.** Two
+> differences matter. Its span is a **line range**, which D10 element 2 later
+> ruled out outright — line numbers are provenance nowhere, because the first
+> reorder silently invalidates them. Real spans are
+> `(doc, section, para_hash, verified_against.git_blob)`. And its `definition`
+> is a nested object; ours is a flat field holding a derived copy of the text
+> the definition site owns (D9 amendment). Read the block for the *idea*, and
+> `plan/ARCHITECTURE.md` for the schema.
+
 **Why it is attractive:** if the concept record is canonical, three rules we
 currently specify separately fall out for free —
 
@@ -461,7 +546,10 @@ the document. The workable shape is **two layers**:
 canonical home of a definition become the **concept record** (glossary
 generated from it), or stay the **authored `glossary.md`**? This changes how
 the single-definition rule (C9) and the verification anchors are framed. Listed
-in §7 as an open item; not decided here.
+in §7 as an open item; not decided here. — **Decided as D9 (2026-07-22), then
+amended (2026-08-04) to a third answer neither option named:** the record owns
+the *ontology*, and the **definition site** owns the definition prose,
+`glossary.md` included. See §D9 and its amendment.
 
 **Candidate command decomposition** (also from this tool; a Phase 4 skeleton,
 each step independently testable):
@@ -476,27 +564,37 @@ Keep it, but split `regenerate-docs` into `generate-definition-views` (layer
 one, regenerated) and `restructure-bodies` (layer two, moved/derived/added),
 per the boundary above.
 
+> **What the command surface became.** Five commands, not eleven: `validate`,
+> `graph` (build + `--check` + `--impact`/`--requires`), `generate`,
+> `restructure` (executes a reorder plan, ADR-002), `verify` (the losslessness
+> harness, ADR-003). The sketch's stages survive as stages *inside* those, and
+> `create-pr-comments` is still Phase 8. Keep the decomposition as a way of
+> thinking about the pipeline, not as a list of binaries to build.
+
 ---
 
 ## 3. Per-stage mapping
 
-| Stage | Standard / technique | Component to reuse | We build |
-|---|---|---|---|
-| Term extraction | — | **KeyBERT** (MIT; deps carry own licences) — one datapoint, rest not researched | unknown |
-| Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter |
-| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | generated `concept-graph.yaml` edge list + generated `concept-graph.mmd` render (the records are canonical), local dependency edge |
-| Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` (unverified); qSKOS/Skosify | exception path + disposition flow |
-| Markdown parsing / structure | — | **pandoc JSON AST** via panflute/Lua (R3); **Marko/mistune ruled out — no grid-table support** | section-move logic on the AST |
-| Topological ordering | **none — refuted** | **NetworkX** `topological_sort` (unverified) | consistent-with-partial-order logic (not a total order) |
-| Reorder planning | none | — | **all of it** |
-| LLM rewriting | ASD-STE100 technique | Vale (MIT) — term/acronym rules only, **not** ordering | rewriter |
-| Concept-before-use (C1) | **RefD / prerequisite-graph literature** (R3, low-confidence, licences unchecked) | none — Vale confirmed it cannot | ordering algorithm (RefD baseline + topo sort) |
-| Claim decomposition | **Wanner et al.** atomicity/coverage/coherence | — | decomposer, fixed + versioned |
-| Fabrication checking | — | **MiniCheck** (repo Apache-2.0; **use MIT Flan-T5-Large / DeBERTa-v3-Large, not CC BY-NC 7B**) | wrapper, sentence splitting |
-| Coverage checking | **bidirectional RTM** framing (ISO 29148, R3) | **none exists** | per-claim IDs + MiniCheck run in reverse |
-| Precision preservation (C7) | — | — | token-multiset diff |
-| Index generation | — | — | trivial |
-| PR integration | Azure DevOps REST 7.1 thread model | **`azure-devops` Python SDK `GitClient`** (MIT, R3) | finding→thread mapping; branch policy is the merge gate |
+The **Built** column was added 2026-08-08 and is the one to trust; the first
+three columns are the Phase 2 research position, kept as written.
+
+| Stage | Standard / technique | Component to reuse | We build | **Built (2026-08-08)** |
+|---|---|---|---|---|
+| Term extraction | — | **KeyBERT** (MIT; deps carry own licences) — one datapoint, rest not researched | unknown | Done **by hand**, not by a library — steps 3.1–3.3. KeyBERT never adopted |
+| Definition drafting | **ISO 704 §6.2/§6.3** intensional template | — | definition-shape linter | Assembled by hand per C2; the linter is the `definition-token` proxy check in `validate` |
+| Graph serialisation | **SKOS** model, **Mermaid**-compatible view (D2) | Mermaid tooling (round 2) | generated `concept-graph.yaml` edge list ~~+ generated `concept-graph.mmd` render~~ (the records are canonical), local dependency edge | `detangle graph` → `concept-graph.yaml`. **No `.mmd`** (B-6) |
+| Cycle detection | **ISO 704 §6.5.2 + §6.4.4** substitution | **NetworkX** `simple_cycles`/`find_cycle` ~~(unverified)~~ | exception path + disposition flow | Built on NetworkX; dispositions in `registers/cycles.yaml`. qSKOS/Skosify never used |
+| Markdown parsing / structure | — | **pandoc JSON AST** ~~via panflute/Lua~~ (R3); **Marko/mistune ruled out — no grid-table support** | section-move logic on the AST | `pandoc -t json` as a subprocess, AST walked in plain Python. **No panflute, no Lua** |
+| Topological ordering | **none — refuted** | **NetworkX** `topological_sort` ~~(unverified)~~ | consistent-with-partial-order logic (not a total order) | Built; drives glossary order and `--requires` |
+| Reorder planning | none | — | **all of it** | ADR-002: the plan is **data** a human approves, executed by `detangle restructure`. The tool authors nothing |
+| LLM rewriting | ASD-STE100 technique | Vale (MIT) — term/acronym rules only, **not** ordering | rewriter | **Not built, and the shape changed** — there is no rewriter. Restructuring moves blocks verbatim |
+| Concept-before-use (C1) | **RefD / prerequisite-graph literature** (R3, low-confidence, licences unchecked) | none — Vale confirmed it cannot | ~~ordering algorithm (RefD baseline + topo sort)~~ | Topological order over `depends_on` + the `forward-use` check across the whole reading order (ADR-003 D4). **RefD never used** |
+| Claim decomposition | **Wanner et al.** atomicity/coverage/coherence | — | decomposer, fixed + versioned | ADR-003 D1: deterministic, from one whole-document pandoc parse. It **flags** what it cannot split; the split lands in `registers/claim-splits.yaml` |
+| Fabrication checking | — | **MiniCheck** (repo Apache-2.0; **use MIT Flan-T5-Large / DeBERTa-v3-Large, not CC BY-NC 7B**) | wrapper, sentence splitting | **NOT CHECKED.** Deferred behind `--use-inference` (ADR-003 D3, B-9). The report says so explicitly |
+| Coverage checking | **bidirectional RTM** framing (ISO 29148, R3) | **none exists** | ~~per-claim IDs + MiniCheck run in reverse~~ | Per-claim hash-anchored IDs + exact normalised-text matching; the residue is reported **unscored**, not model-scored |
+| Precision preservation (C7) | — | — | token-multiset diff | Built as the criterion-5 `token-parity` check inside `restructure` |
+| Index generation | — | — | trivial | Not built — waits on the document bodies (step 3.6) |
+| PR integration | Azure DevOps REST 7.1 thread model | **`azure-devops` Python SDK `GitClient`** (MIT, R3) | finding→thread mapping; branch policy is the merge gate | Not built (Phase 8). Development runs on **GitHub** with `protect-main` as the branch policy |
 
 ---
 
@@ -536,6 +634,18 @@ gaps (C3 coverage-checker field, C1 term-extraction sweep) are best resolved
 during Phase 3/6 against the real corpus, not by more desk research. Verify
 the round-3 leads (especially G2 licences and the RTM framing) when they are
 actually implemented.
+
+**How that turned out (2026-08-08).** The recommendation held, and the two
+load-bearing gaps closed by *not needing* what was missing. Term extraction was
+done by hand across steps 3.1–3.3, so the C1 library sweep never had to happen.
+Criterion 1 was built from topological order plus a forward-use check rather
+than from RefD, so G2's licences were never in the path. The C3 coverage-checker
+field stayed unresearched and stayed irrelevant, because the coverage direction
+was built deterministically — which is also why the field's absence never bit.
+
+The one lead that did get used is **G1's bidirectional RTM framing**: every
+claim carries an ID, an unlinked source claim is a drop, an unlinked output
+element is an addition. That is the shape of `detangle verify`.
 
 ---
 
@@ -581,34 +691,42 @@ actually implemented.
 | # | Decision | Recommendation | **Nick's decision** |
 |---|---|---|---|
 | D1 | Adopt ISO 704 for definition shape and cycle policy? | Yes | **Yes** |
-| D2 | Concept-graph serialisation | SKOS/Turtle + local edge | **SKOS concept model, but a Mermaid-compatible file format** — see below |
+| D2 | Concept-graph serialisation | SKOS/Turtle + local edge | **SKOS concept model, but a Mermaid-compatible file format** — see below. **Amended 2026-08-04:** the whole-set `concept-graph.mmd` is withdrawn — per concept, on demand, and unbuilt (B-6). The `concept-graph.yaml` edge list is unaffected |
 | D3 | Adopt TBX for the glossary? | No | **No** |
-| D4 | Reuse MiniCheck for fabrication checking? | Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B | **Confirmed by Nick 2026-07-21** — MIT checkpoint only |
-| D5 | Reuse Vale for mechanical style checking? | Yes for term/acronym rules; it CANNOT do concept-before-use, which we build | **Confirmed by Nick 2026-07-21** |
+| D4 | Reuse MiniCheck for fabrication checking? | Yes — via the MIT MiniCheck-Flan-T5-Large or DeBERTa-v3-Large checkpoint, not the CC BY-NC 7B | **Confirmed by Nick 2026-07-21** — MIT checkpoint only. **Deferred 2026-08-07** (ADR-003 D3): it needs PyTorch and `transformers`, outside ADR-001's approved tooling, so it waits behind `--use-inference` (B-9) and `detangle verify` ships deterministic |
+| D5 | Reuse Vale for mechanical style checking? | Yes for term/acronym rules; it CANNOT do concept-before-use, which we build | **Confirmed by Nick 2026-07-21.** **Unbuilt as of 2026-08-08** and not on ADR-001's approved tooling list — adding it needs approval |
 | D6 | Accept GPL-3.0-only `language_tool_python`? | Defer | **No** |
 | D7 | Runtime | Python | **Python — signed off by Nick 2026-07-22** (Python-first ecosystem; Node needs ONNX conversion for the verifier) |
 | D8 | Second research round for the gaps? | Yes | **Yes** — launched 2026-07-21 (run `wiw1vdh4y`) |
 | D9 | Canonical home of a definition: concept record (glossary generated) vs authored `glossary.md`? | Ontology-first, definition layer only; structured plain-text records as truth, views generated, anchored comment→edit round-trip — full note below | **Signed off by Nick 2026-07-22** — see §D9. **Amended 2026-08-04:** the definition site owns the definition. All 172 definitions become body-canonical, `glossary.md` included — it becomes the fourth editable document rather than a generated view — with the record's `definition` field a derived copy everywhere, conditional on generated start/end markers making the lift deterministic. The record still owns the ontology: identity, placement, provenance, `depends_on`. See §D9 amendment. **Amended 2026-08-05:** two input sets — the read-only reference set may supply definitions, lifted with provenance; see §Two input sets |
-| D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10. **Element 4 reaffirmed 2026-08-04:** `depends_on` stays canonical; a body edit proposes edge changes and waits for a human ruling |
+| D10 | How does the set stay coherent under continuous post-delivery change (glossary completed over time; bodies reordered/extended by humans and AI agents)? | Two operating modes (detangle run + steady-state guard); hash-stable provenance anchors; derived artifacts regenerated, never hand-maintained; set-level version manifest; term lifecycle — full note below | **Adopted 2026-07-23 at Nick's direction** (the continuous-change use case is a stated requirement) — see §D10. **Element 4 reaffirmed 2026-08-04:** `depends_on` stays canonical; a body edit proposes edge changes and waits for a human ruling. **Amended 2026-08-07** (ADR-004 D5): **three** operating modes, the re-run being its own. **Element 5 amended** (ADR-003 step 7.5): the manifest carries no timestamp. **Element 6 pulled forward** to step 3.9: the waiver register is built |
 
-### D2 — SKOS model, Mermaid-compatible rendering
+### D2 — SKOS model, and why the Mermaid half was withdrawn
 
 Adopt the SKOS *concept model* — concepts, plus our project-local "definition
 of X uses term Y" dependency edge, which SKOS itself does not define. The
-graph is serialised as a plain-text edge list, `concept-graph.yaml`, and
+graph is serialised as a plain-text edge list, `concept-graph.yaml`. ~~and
 rendered to `concept-graph.mmd`, which displays natively in Azure DevOps and
-GitHub. Turtle is rejected: it needs extra tooling to display.
+GitHub.~~ Turtle is rejected: it needs extra tooling to display.
 
 The edge list stays a separate data file rather than collapsing into a single
 Mermaid-native artifact, because it carries typed edges — concept→concept
 dependency edges and section→concept usage edges — and cycle dispositions,
 none of which Mermaid syntax can express.
 
-Both files are generated, in the chain records → `concept-graph.yaml` →
-`concept-graph.mmd`. The concept records are the source of truth (D9): the
-edge list is a roll-up of their canonical `depends_on` plus usage edges
-derived from the bodies (D10, C11). Neither file is hand-edited; hand-edits
-are caught byte-wise by the regenerate-and-compare guard and fail CI.
+`concept-graph.yaml` is generated from the records: the edge list is a roll-up
+of their canonical `depends_on` plus usage edges derived from the bodies
+(D10, C11). It is never hand-edited; hand-edits are caught byte-wise by
+`detangle graph --check` and fail CI.
+
+**Amended 2026-08-04 (Nick) — the Mermaid half of D2 is withdrawn.** No
+`concept-graph.mmd` is committed. Rendering the whole set produces a large
+tangle plus a scatter of unconnected nodes, which answers no question anyone
+asks; one concept's neighbourhood is two or three boxes, eight one step out. So
+the render becomes per concept and on demand, `detangle graph --mmd <id>`. This
+also amends C6 and the D2 row in the decision table. **The half that removes
+the file is done; the half that replaces it is not** — there is no `--mmd` flag
+and no Mermaid rendering anywhere in the package (backlog B-6).
 
 ### D6 — note on the reasoning
 
@@ -633,6 +751,13 @@ Definitions are the canonical data; `glossary.md`, `index.md`, and
 restructured source text tracked as moved / derived / added (§2.11's two-layer
 boundary).
 
+> **Two of those three did not survive.** `glossary.md` became an editable
+> document (the amendment below) and `concept-graph.mmd` is not committed at all
+> (D2 amendment). `index.md` is still a generated view. What survives intact is
+> the part the rest of this section argues for: the **ontology** — identity,
+> placement, provenance, `depends_on` — is canonical in the records, and that is
+> what makes C9/C10/C11 structural. It was never the prose that did that work.
+
 **Why, not mainly tokens — provability.** If prose is canonical, every
 structural guarantee (defined-before-use, single-definition-site, index,
 cycles, orphans, impact analysis) rests on an LLM re-parse of prose: fuzzy,
@@ -656,11 +781,12 @@ and git-reviewable (C6). Therefore:
   conflicts across versions, and "edit one definition" = change one flat field.
 - **Algorithms:** **NetworkX** in memory at runtime (topo sort, `simple_cycles`,
   reachability) — every query a graph DB would give, no server.
-- **Views:** generated `index.md`; `glossary.md` authored from 2026-08-04
-  (D9 amendment); the Mermaid render produced on demand per concept by
-  `detangle graph --mmd <id>` rather than committed as a whole-set file
-  (Nick, 2026-08-04 — 359 nodes is a tangle, one concept's neighbourhood
-  is two or three boxes).
+- **Views:** generated `index.md` (**not built** — it waits on the document
+  bodies, step 3.6); `glossary.md` authored from 2026-08-04 (D9 amendment);
+  the Mermaid render produced on demand per concept by `detangle graph --mmd
+  <id>` rather than committed as a whole-set file (Nick, 2026-08-04 — the
+  whole set is a tangle, one concept's neighbourhood is two or three boxes).
+  **`--mmd` is designed and unbuilt** (backlog B-6).
 - **Rejected as the truth store:** *vector DB* — wrong tool; embeddings are
   fuzzy/lossy and cannot topologically sort or guarantee defined-before-use
   (legitimate only as an *extraction-time* synonym/duplicate helper in Phase 3).
@@ -675,8 +801,18 @@ decision, not an afterthought:
 
 1. **Source-map anchors.** The generator emits, on every human-visible block,
    a machine anchor back to `record-id + field`, e.g.
-   `<!-- gen:concept=exposure field=definition src=blueprint-UCE.md#L190-L225 -->`.
+   ~~`<!-- gen:concept=exposure field=definition src=blueprint-UCE.md#L190-L225 -->`~~.
    Reviewers never see them; they make the return trip exact.
+
+   **The `src=…#L190-L225` part of that sketch is wrong and was never built**
+   (D10 element 2, and the last bullet of this list already says so): line
+   numbers are provenance nowhere. The markers actually emitted are
+   `<!-- concept:<id> -->` before a glossary entry, and
+   `<!-- concept:<id>:start -->` / `:end` around a definition block in a
+   document body. The record's own `source:` block carries the span as
+   `(doc, section, para_hash, verified_against.git_blob)`. The anchoring *idea*
+   — walk up from a comment to the enclosing marker, get an exact record — is
+   what survives, and it works better without the offsets.
 2. **Resolve location — deterministic, no LLM.** A PR comment pins to a line;
    walk up to the enclosing `gen:` marker → exact record + field. No guessing
    which part of the truth the comment touches.
@@ -712,6 +848,11 @@ precision comes from the source map, not the AI.
   `glossary.md`; they populate concept records and **generate** the glossary,
   index, and mermaid. The build-early requirement: the view-generator (with
   anchors) must exist before the first review, so reviewers always see markdown.
+  — **Half true in the event.** Step 3.5 generated `glossary.md` exactly as
+  described, and that file is now the **seed** a human edits rather than a view
+  that gets regenerated (amendment below). Step 3.6's `index.md` is still
+  pending and its Mermaid half was cancelled. The build-early requirement was
+  met and was the right call.
 - **Rubric framing.** C9 (single definition site) and C10 (index generated)
   become structural properties of the record set; the verification anchors
   (C7 precision, C2 fabrication) attach to each record's `source` span. Fold in
@@ -829,12 +970,24 @@ measure is untouched: the 187 undefined terms have nothing to mirror.
 
 **Timing — prospective, and deliberately so.** The direction flips per
 document as each one comes to exist, and for the glossary when the drift lint
-that will guard it exists. Today `glossary.md` is generated and held by
-`detangle generate --check`, a byte comparison; dropping that guard before
-the lint replaces it would leave the file with no guard at all. Until then
-every definition lives in its record, the first golden body is seeded from
-those records, and the committed `glossary.md` is the seed for the editable
-one.
+that will guard it exists. Until then every definition lives in its record, the
+first golden body is seeded from those records, and the committed `glossary.md`
+is the seed for the editable one.
+
+> **Correction (2026-08-08) — the glossary is unguarded today, not guarded.**
+> This paragraph originally argued that `glossary.md` was "held by `detangle
+> generate --check`, a byte comparison", and that dropping that guard before the
+> lint replaced it would leave the file with no guard at all. That is what
+> happened: byte-comparing a file humans edit is incoherent, so **`generate
+> --check` was withdrawn as a CI gate** and never entered `ci.yml`. It still
+> exists as a command.
+>
+> So the live position is: a human edit to `glossary.md` is mirrored into no
+> record and checked by nothing, and re-running `detangle generate` would
+> rewrite the file in full and discard every edit — which is why the command
+> refuses to overwrite (exit `2`) without `--force`. That refusal is the only
+> protection the file has. **Building the drift lint is what closes this**, and
+> it is also what unblocks the fourth CI gate.
 
 #### Provenance and authorship of definitions (Nick, 2026-08-04)
 
@@ -1175,8 +1328,8 @@ is not wired into branch policy until all of them pass. See Phase 10.7.
 **4. Canonical vs derived edges — usage is derived.** Definition dependency
 edges (`depends_on`, "definition of X uses term Y") are **canonical data** in
 the concept records. Usage edges ("section S uses term X"), first-use links
-in the bodies, `index.md`, `concept-graph.mmd`, the section map
-`state/section-map.yaml` (element 2), and the manifest (element 5)
+in the bodies, `index.md`, ~~`concept-graph.mmd`~~, `concept-graph.yaml`, the
+section map `state/section-map.yaml` (element 2), and the manifest (element 5)
 are **derived artifacts**: regenerated from the bodies and records on every
 change, never hand-maintained, and covered by the regenerate-and-compare
 guard. Anything order- or location-sensitive rots if authored; the reorder
@@ -1217,7 +1370,11 @@ ruling. The detection is automatic; the disposition is Nick's.
 
 **5. Set-level version manifest.** A generated `manifest.yaml` binds the
 set: per-document version, record-set revision, dependency-graph hash,
-derived-artifact hashes, generation timestamp. It answers "is this doc set
+derived-artifact hashes, ~~generation timestamp~~ — **no timestamp, amended
+2026-08-07 by ADR-003 step 7.5**: a blob *is* the version, the commit and the
+blobs date the artifact, and a clock would make it irreproducible and break
+byte comparison. Record the git blob of every document read, plus the commit.
+It answers "is this doc set
 coherent?" mechanically. The failure mode is already live in the corpus (MCL
 applies to UCE v28 while SBSP cites v30; MCL's title says v21, its changelog
 v22) — under continuous change it multiplies. Records carry the source-doc
@@ -1233,6 +1390,13 @@ completion, C9's "no term left undefined" is an **end-state invariant**: a
 pattern already used for cycles) records known, ticketed orphans and
 conflicts with an owner, so the lint distinguishes accepted debt from new
 regressions — new violations always flag; waived ones don't re-fire.
+**Built early, in Phase 3 step 3.9 rather than Phase 10** (Nick, 2026-08-03):
+`registers/waivers.yaml` was needed as soon as `detangle validate` became a
+required CI gate, because three accepted source defects would otherwise have
+kept the gate permanently red. Two rules ruled with it and worth carrying: a
+waived finding is **printed and counted but excluded from the exit code**, and
+`review_by` is recorded but **not enforced**, because an expiry check would make
+CI's verdict turn on wall-clock time.
 Verification runs in two tiers: the cheap structural lint on every PR
 (element 3); the full C1/C2/C7 harness at `param-full-verify-cadence`, not on
 every edit. **That cadence was set on 2026-08-07** (ADR-004 Decision 7) to
@@ -1260,7 +1424,8 @@ body edits are governed by the lint, not by provenance marking.
   retrofits multiply. Step 3.7 is reframed per element 4.
 - **New Phase 10 (steady-state operation)** delivers the guard: two-layer
   addressing and staleness check, drift lint as branch policy,
-  derived-artifact regeneration, manifest, lifecycle and waiver register,
+  derived-artifact regeneration, manifest, lifecycle and ~~waiver register~~
+  (pulled forward to step 3.9),
   tiered cadence, and the seeded lint test suite (10.7) — the tests are part
   of the deliverable, and the guard is not wired into branch policy until
   they pass. It reuses Phase 8's PR plumbing.
@@ -1276,20 +1441,42 @@ body edits are governed by the lint, not by provenance marking.
 and never merges (C4 unchanged). Regeneration applies only to the derived
 artifacts enumerated in element 4.
 
-### What is now settled for Phase 4 / build
+### What was settled for Phase 4 / build
 
-Adopt ISO 704 (D1). SKOS concept model + Mermaid-compatible render:
-generated `concept-graph.yaml` edge list and generated `concept-graph.mmd`
-render, both derived from the concept records, which are the source of truth
-(D2). No TBX (D3). Reuse **MiniCheck** for fabrication checking, MIT
-Flan-T5-Large / DeBERTa-v3-Large checkpoint only (D4, confirmed). Reuse
-**Vale** for term/acronym rules only, not concept-before-use (D5, confirmed).
-No `language_tool_python` (D6). Runtime is **Python** (D7, signed off
-2026-07-22). Definition layer is **ontology-first** — structured plain-text
-concept records as the source of truth, `glossary.md`/`index.md`/`.mmd`
-generated as anchored views, comment→edit round-trip per §D9 (D9, signed off
-2026-07-22). The set is a **living document set**: two operating modes, with
-a steady-state guard on every subsequent docs PR, hash-stable provenance
-anchors, derived artifacts regenerated, a version manifest, and a term
-lifecycle per §D10 (D10, adopted 2026-07-23). Phase 4's architecture-gate
-decisions are closed; Phase 3 is unblocked.
+*As written 2026-07-23, with the corrections that followed. Phase 4 is long
+closed; this paragraph now reads as the entry point into what each decision
+became.*
+
+Adopt ISO 704 (D1) — **unchanged, and still the basis for definition shape and
+the cycle policy.** SKOS concept model: generated `concept-graph.yaml` edge
+list, derived from the concept records, whose `depends_on` edges are canonical
+(D2) — **the whole-set `concept-graph.mmd` render is withdrawn** (Nick,
+2026-08-04; per-concept and on demand instead, unbuilt, B-6). No TBX (D3) —
+unchanged. ~~Reuse **MiniCheck** for fabrication checking~~ (D4) — **deferred
+behind `--use-inference`**, so the harness ships deterministic and reports
+`fabrication: NOT CHECKED` (ADR-003 D3, B-9). ~~Reuse **Vale** for term/acronym
+rules~~ (D5) — **approved but unbuilt**, and not on ADR-001's tooling list. No
+`language_tool_python` (D6) — unchanged. Runtime is **Python** (D7, signed off
+2026-07-22) — unchanged, and the package is `detangle` with a CLI (ADR-001).
+
+Definition layer is **ontology-first** (D9, signed off 2026-07-22), **amended
+2026-08-04**: the records own the *ontology* — identity, placement, provenance,
+`depends_on` — while the **definition site owns the definition prose**,
+`glossary.md` included, which is the fourth editable document rather than a
+generated view. `index.md` remains a generated view and is not built yet. The
+comment→edit round-trip stands, anchored on emitted `concept:` markers rather
+than the line-range sketch in §D9.
+
+The set is a **living document set** (D10, adopted 2026-07-23): ~~two~~ **three**
+operating modes — campaign, re-run, steady-state guard (ADR-004 D5,
+2026-08-07) — with a steady-state guard on every subsequent docs PR,
+hash-stable provenance anchors, derived artifacts regenerated, a version
+manifest **without a timestamp** (ADR-003 step 7.5), and a term lifecycle.
+
+**What later ADRs added that Phase 2 could not have known.** ADR-002 made the
+reorder plan **data** a human approves rather than a judgement the tool makes.
+ADR-003 built the harness deterministically and ruled that the decomposer
+**flags rather than guesses**. ADR-004 reset the operating model to a
+**repeatable campaign** and moved definitional strength from corpus anchoring to
+**assurance** — who wrote a claim and who approved it — which matters because
+`samples/` was itself AI-drafted and not closely reviewed.
