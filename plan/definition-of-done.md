@@ -142,7 +142,7 @@ the rubric can be signed off without silently pre-committing to numbers.
 | `param-max-terms-changed-per-PR` | **200** (set) | Maximum terms a single PR may change. See 8b. **Raised from 25 to 200 on 2026-08-05** (Nick): the from-scratch build changes terms in far larger batches than steady state — the golden output for `U` alone is in scope for 155 terms — and a cap sized for steady-state edits would split that into seven PRs whose intermediate states leave terms defined twice or not at all, which 8b itself calls a failure. **Confirmed by the 5.3 baseline** (`eval/review-load.md`): 35 measured for the `U` golden; the glossary at 155 is the largest unit the build needs. |
 | `param-max-definitions-per-approval` | **50** (set) | Maximum definitions one approval may cover — how many records may share an `assurance.pr`. **Set 2026-08-07** (Nick), with ADR-004 Decision 4. Under Decision 1 assurance carries all the definitional strength, so approval has to be a real act: 187 drafted definitions bulk-approved in one PR would launder AI text through a rubber stamp. Nick set the number now rather than waiting for the first drafting round, so the cap protects the very first batch. It sits between the 25-comment review budget and the 200-term change budget, the two figures that bound a reviewable PR from either side. Enforced by `approval-batch` in `detangle validate`. |
 | `param-max-comments-per-PR` | **25** (set) | Maximum blocking PR comments; a run producing more does not open a PR — it fails and reports (8c). **Set 2026-08-05 from the 5.3 baseline** (`eval/review-load.md`): the `U` golden produced 9 aggregated clusters for a whole-document restructure, and the term cap forces PRs to roughly per-document scope, so 25 gives every real run 2.5–3× headroom. |
-| `param-overview-max-words` | 400 | Maximum length of the required opening overview. **What counts, ruled 2026-08-05** (Nick): every word the reader meets in the section, including the visible `[AI addition]` marker that opens an authored one — ink on the page counts toward how long a text is, even when the tool wrote it. Raised at step 6.2, where the `U` golden's hand count of 214 reproduced as neither the prose alone (206) nor the whole section (227). |
+| `param-overview-max-words` | 400 | Maximum length of the required opening overview. **What counts, ruled 2026-08-05** (Nick): every word the reader meets in the section, including the visible `[AI addition]` marker that opens an authored one — ink on the page counts toward how long a text is, even when the tool wrote it. Raised at step 6.2, where the `U` golden's hand count of 214 reproduced as neither the prose alone (206) nor the whole section (227). **The principle is unchanged by ADR-004 Decision 3 as amended (2026-08-08); the figure moves with the state.** An approved addition has no visible tag, so its overview loses the blockquote's 21 words and the same `U` text measures 206. The golden stays at **227**: it renders unapproved tool output, and a renderer cannot know approval state. |
 | `param-claim-granularity` | one claim per source sentence; one claim per table cell carrying an independent assertion | Governs criterion 4. |
 | `param-false-positive-tolerance` | none | Every flag needs a disposition, but "false positive" is a valid disposition. |
 | `param-manual-reviewer` | Nick, optionally Ivo for domain accuracy | Adjudicator for the manual criteria. |
@@ -499,7 +499,11 @@ glossary:
   copying them. **Visible text still counts, the `[AI addition]` tag
   included** — pandoc keeps visible text, so keeping it here is what
   agreement requires, and it is what "ink on the page counts"
-  (`param-overview-max-words`, 2026-08-05) already says.
+  (`param-overview-max-words`, 2026-08-05) already says. The tag counts only
+  while it is there: an approved addition keeps its comment and loses its
+  blockquote (criterion 7, ADR-004 Decision 3 as amended 2026-08-08), so on a
+  re-run the comment is stripped as any other and the blockquote is simply
+  absent from both sides. Neither state needs a special case here.
 - **Status:** buildable from Phase 6; specified now.
 
 ## 6. Reference and metadata integrity
@@ -678,13 +682,21 @@ hand, an unwritten definition fails criterion 3's end-state invariant, and
 the source corpus was itself AI-assisted, so the bar would have been higher
 for the fix than it ever was for the original.
 
-**Authored text never acquires a source span.** It becomes fully part of the
-document, but a `para_hash` asserts *the business wrote this wording at this
-revision*, which for authored text is false. If tool output could acquire
-one, the next version would read it as evidence the term had been defined all
-along. The absence of the hash is the mechanism — nothing has to remember to
-mark anything — and it is why `flags: [orphan]` survives an authored
-definition.
+**Authored text carries a real span into the version it entered at**
+(ADR-004 Decisions 1 and 2, Nick 2026-08-07). This reverses the earlier rule
+that authored text never acquires a `para_hash`. That rule read the hash as
+asserting *the business wrote this wording at this revision* and concluded it
+was false for authored text — but it was doing two jobs with one field, and
+Decision 1 rules the second one wrong. The hash records **lineage**: which text,
+which version. Whether anyone vouches for it is `assurance`, a separate field,
+and the two no longer share a mechanism.
+
+What the old rule protected against still has to be handled, and Decision 2
+handles it: without recorded lineage, run N+1 traces every claim to run N's
+output — inventions included — and the fabrication check proves nothing from
+generation 2 onward. `origin: corpus | authored` on the span is what keeps the
+two apart. `flags: [orphan]` survives an authored definition as before, and
+means only "the detangle set never defined this".
 
 **Provenance is asserted against a content hash, and breaking it demotes.**
 Change a definition's text and any provenance claim attached to it is
@@ -695,7 +707,11 @@ it does not block**. Demotion never over-claims, and blocking makes people
 stop fixing typos. The general rule: the guard may weaken a provenance claim
 on its own; it may never strengthen one.
 
-Marking format:
+**Marking format — an addition has two states** (ADR-004 Decision 3 as amended,
+Nick 2026-08-08). Approval removes the visible tag and keeps the machine-readable
+marker.
+
+*Drafted, not yet approved:*
 
 ```markdown
 <!-- AI addition:start -->
@@ -703,8 +719,34 @@ Marking format:
 <!-- AI addition:end -->
 ```
 
+*Reviewed and approved* — the blockquote goes, the comment gains the approver
+and the PR:
+
+```markdown
+<!-- AI addition:start approved-by="<reviewer>" pr="<link>" -->
+Plain-language new sentence text goes here.
+<!-- AI addition:end -->
+```
+
 - The marker string is exactly `AI addition:start` / `AI addition:end`, and
   the visible tag is exactly `[AI addition]`. Both are **case-sensitive**.
+- **Why the comment survives approval.** For a definition, AI authorship is
+  recorded in the record's `assurance.author`. But assurance is per *concept
+  record*, and the largest Category C text in the set — criterion 2's required
+  overview — is a section, not a concept, so it has no record and no assurance
+  block. The comment is that text's only in-document authorship trace. Keeping
+  it costs nothing: `tokens.COMMENT` strips every HTML comment before counting
+  (ADR-004 Decision 9), so it is invisible to criterion 5 and to the re-run
+  cycle alike.
+- **Why the visible tag goes.** Under Decision 1 approved text is equivalent to
+  human-written and should read as ordinary document text. The blockquote is
+  what a reader meets; the comment is not.
+- **Who performs the transition is not settled**, and the tool may not assume
+  it: dropping the blockquote deletes words, so it falls outside the
+  word-preserving exception that lets the guard edit a body at all. Today a
+  human makes the edit in the approving PR. See `plan/backlog.md`.
+- `approved-by` and `pr` mirror the approved-omission marker below, which
+  carries the same two attributes for the same reason.
 - **Section-level bridging:** where the addition is a whole section — most
   importantly the overview required by criterion 2 — use the section form,
   which marks the section once instead of wrapping every sentence:
@@ -750,7 +792,10 @@ Approved omissions leave a trace in the document, not only in the PR:
 
 - **Verification method:** automatic — the Phase 7 fabrication check confirms
   every non-source-traceable claim falls inside an `AI addition` block, and
-  every Category B block resolves to its `src`.
+  every Category B block resolves to its `src`. The check keys off the **HTML
+  comment**, never the visible tag, because an approved addition has only the
+  comment (Decision 3 as amended). Both states satisfy it identically; the
+  attributes are read, not required.
 - **Status:** conventions fixed now (Phase 1); automatic check from Phase 7.
 
 ## 8. Reviewability

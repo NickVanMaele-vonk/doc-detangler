@@ -497,3 +497,59 @@ the moment the Decision 7 dry-run rules the first flags, because a split claim
 would then read as coverage loss.
 
 **Depends on:** nothing. Decidable now; cheap to build once ruled.
+
+## B-11 — Two questions the marking-state ruling leaves open
+
+ADR-004 Decision 3, as amended 2026-08-08, gives a Category C addition two
+states: a draft carries the `<!-- AI addition:start … -->` comment plus a
+visible `> [AI addition]` blockquote, and approval removes the blockquote,
+keeping the comment with `approved-by` and `pr` on it. The ruling settles what
+the two states *are*. It does not settle who moves an addition between them, or
+what a later run does when it meets one. Both are decisions about what the tool
+is allowed to do, so both are Nick's.
+
+**1. Who performs the transition.** Dropping the blockquote deletes words — 21
+of them in the `U` overview — so it is **not word-preserving**, and the guard's
+one authorised exception for editing a body in steady state (Nick, 2026-08-04)
+covers only edits machine-verified to change no words. Stamping section IDs and
+reordering glossary entries are the two authorised cases; this is neither.
+
+So today a human makes the edit by hand in the approving PR, and nothing checks
+that they did. The failure mode is quiet: an addition approved but never
+de-tagged keeps a visible `[AI addition]` banner on text that is no longer
+unreviewed, which is the opposite of what Decision 1 wants a reader to meet.
+The opposite slip is quieter still — the blockquote removed without
+`approved-by` being added — because it leaves text that looks approved and
+records no approver.
+
+Three shapes are available, in increasing cost: leave it manual and have the
+drift lint *report* the mismatch between `assurance.approved_by` and the
+in-document state; authorise the transition as a third named exception to
+word-preservation, narrow to exactly this rewrite; or make it a reviewer action
+in the Phase 8 DevOps integration, where the approval already happens. The
+first is the cheapest and needs no new authorisation, but it needs the drift
+lint, which does not exist (see the plan's Outstanding list).
+
+**2. What a re-run does with a previously-approved addition.** In the re-run
+cycle run N+1's input is run N's output, so an approved addition arrives as an
+ordinary block that happens to carry a comment. Two treatments are defensible
+and they are not equivalent:
+
+- **Assign it as source.** Parity is satisfied the ordinary way — the block is
+  on the plan's source side and the renderer emits it as `source`. This is what
+  Decision 1 implies: approved text is equivalent to human-written, so at
+  generation N+1 it simply *is* source. The comment becomes a historical note.
+- **Re-declare it as an addition.** The renderer emits it `AUTHORED`, which
+  `parity` excludes from both sides, and the comment is what makes this
+  recognisable at all.
+
+Choose neither and the failure is concrete rather than theoretical: a plan that
+assigns the block as source while the renderer re-emits it as an addition puts
+the whole overview in `token-parity`'s missing column, reported as lost wording
+when nothing was lost. The amendment makes the choice *possible* — an unmarked
+approved addition, which is what the unamended Decision 3 produced, could only
+ever be treated as source — but it does not make it decided.
+
+**Depends on:** question 1's cheapest option depends on the glossary drift
+lint. Question 2 is decidable now and costs nothing until the first re-run,
+which is the first time an approved addition appears in an input.

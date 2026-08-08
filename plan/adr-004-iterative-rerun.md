@@ -161,29 +161,88 @@ is `status: candidate` — the gap is left visible rather than assumed away, and
 Whether a definition is human-approved is computed from `approved_by`, never
 stored, following the rule that keeps `placement` computed.
 
-## Decision 3 — no marking for approved additions
+## Decision 3 — approval removes the visible tag, not the marker
 
-**RULED by Nick, 2026-08-07.** Approved additions carry no in-document marker.
-The history of additions is recoverable by git version comparison, so a marker
-duplicates it, and under Decision 1 approved text is equivalent to
-human-written and should read as ordinary document text. **Unreviewed AI text
-is unaffected and stays marked.**
+**RULED by Nick, 2026-08-07. Amended by Nick 2026-08-08** — the amendment is
+below, and it changes the ruling's mechanism while keeping its purpose. The
+original text is kept because the reasoning that survives is in it.
 
-Three consequences land with it:
+### As ruled 2026-08-07
+
+Approved additions carry no in-document marker. The history of additions is
+recoverable by git version comparison, so a marker duplicates it, and under
+Decision 1 approved text is equivalent to human-written and should read as
+ordinary document text. **Unreviewed AI text is unaffected and stays marked.**
+
+### Amendment, 2026-08-08 (Nick) — the comment survives, the visible tag goes
+
+**A Category C addition has two states**, and approval moves it from the first
+to the second:
+
+| State | HTML comment | Visible `> [AI addition]` blockquote |
+|---|---|---|
+| Drafted, not yet approved | yes | **yes** |
+| Reviewed and approved | **yes**, with `approved-by` and `pr` | no |
+
+```markdown
+<!-- AI addition:start scope="section" approved-by="…" pr="…" -->
+…body, with no visible tag…
+<!-- AI addition:end -->
+```
+
+The attribute form mirrors the approved-omission marker below, which already
+carries exactly these two attributes for exactly this reason.
+
+**What the amendment fixes.** The 2026-08-07 ruling relied on AI authorship
+being recorded somewhere else once the marker went. For a *definition* it is:
+`assurance.author` (Decision 2b). But assurance is **per concept record**, and
+the largest single piece of Category C text in the set — criterion 2's required
+overview — **is not a concept**. It has no record and no assurance block, so
+removing its marker removed the only in-document trace that AI wrote it, with
+nothing to replace it. Git diff of the run that introduced it is a weaker
+substitute than the ruling assumed: it answers "when did this appear", not "who
+authored this wording", and it degrades with every subsequent re-run.
+
+**What survives unchanged.** The reader still meets ordinary document text —
+Decision 1's point, and the second of the original ruling's two reasons — because
+the blockquote is what a reader sees and the comment is not. And the amendment
+costs nothing mechanically: `tokens.COMMENT` strips every HTML comment before
+counting (Decision 9), so the surviving marker is invisible to criterion 5 and
+to the re-run cycle alike.
+
+**Consequences, as amended:**
 
 - **It amends C5** ("bridging/explanatory additions … must be visually and
-  mechanically distinguishable from source-derived text"). C5 is signed off,
-  so this is recorded as an amendment with its rationale rather than a
-  reinterpretation.
-- **It shrinks criterion 7's ladder.** With approved additions unmarked and
-  traceable by span (Decision 2), C2's second limb — explicitly-marked
-  bridging text — has exactly one remaining user: unreviewed AI text.
-  Category A/B/C survives as the *reporting* vocabulary of the 8f self-report;
-  it stops being an in-document marking scheme for approved content.
-- **It re-measures `param-overview-max-words`.** The 2026-08-05 ruling counted
-  the `U` overview at 227 words *because* the visible `[AI addition]` tag is
-  ink on the page. With no tag the same overview measures 206. The principle
-  is unchanged and still correct; the figure moves because the ink is gone.
+  mechanically distinguishable from source-derived text"). C5 is signed off, so
+  this is recorded as an amendment with its rationale rather than a
+  reinterpretation. **The amendment is narrower than the 2026-08-07 ruling
+  required**: C5's *mechanical* limb holds always and in both states; only its
+  *visual* limb becomes conditional on approval.
+- **C2's second limb keeps both its users.** ~~With approved additions unmarked
+  and traceable by span (Decision 2), C2's second limb — explicitly-marked
+  bridging text — has exactly one remaining user: unreviewed AI text.~~
+  **Struck 2026-08-08:** approved additions are still explicitly marked, so the
+  limb covers approved and unreviewed bridging text alike. Category A/B/C
+  remains both the *reporting* vocabulary of the 8f self-report and an
+  in-document marking scheme.
+- **It re-measures `param-overview-max-words` for approved text only.** The
+  2026-08-05 ruling counted the `U` overview at 227 words *because* the visible
+  `[AI addition]` tag is ink on the page. Once approved, the same overview
+  measures 206 — the whole blockquote is 21 words. The principle is unchanged
+  and still correct; the figure moves because the ink is gone.
+
+  **This does not reach `eval/golden/uce.md` (Nick, 2026-08-08).** The golden is
+  a rendering of *tool output*, which is unapproved by construction: the
+  prototype must reproduce it byte-identically from a plan, and a renderer
+  cannot know approval state. The golden keeps its visible tag, and **227 stays
+  its correct figure**. 206 is a property of a live document after a human has
+  approved the addition in it.
+
+**What the amendment does not settle**, recorded in `plan/backlog.md` rather
+than assumed: which actor performs the transition — dropping the blockquote
+deletes 21 words, so it is **not** word-preserving and the guard may not do it
+under the standing prohibition — and what a re-run does with a
+previously-approved addition block it meets in its input.
 
 **Scope.** The ruling covers *additions*. The approved-omission marker
 `<!-- omitted src=… approved-by=… pr=… -->` is not an addition and is not
@@ -492,9 +551,19 @@ ruled.
    note rewritten. Terms changed: 0 — a citation added to an unchanged
    definition is not a term change (rubric §8b), which is why one PR is within
    `param-max-terms-changed-per-PR`.
-3. **Decisions 1 and 3 in the normative documents** — C2, C5, criterion 7, and
+3. ~~**Decisions 1 and 3 in the normative documents** — C2, C5, criterion 7, and
    the `param-overview-max-words` re-measurement (227 → 206 for the `U`
-   golden). Documentation only; no code.
+   golden). Documentation only; no code.~~ **Done 2026-08-08**, and it amended
+   Decision 3 on the way: writing "approved additions carry no marker" into
+   criterion 7 exposed that non-definition bridging text has no `assurance`
+   block to fall back on, so the ruling became *the comment survives, the
+   visible tag goes*. C5's amendment narrowed to its visual limb, C2's second
+   limb kept both users, and criterion 7's "authored text never acquires a
+   source span" paragraph — which Decision 1 overturns and which already
+   contradicted the preamble step 2 added — was replaced. The re-measurement to
+   206 applies to approved live text and **not** to the golden, which renders
+   unapproved tool output; documentation only, no code and no `eval/` change,
+   exactly as scoped.
 4. **Decisions 5–8** — repeatable campaign mode, the freeze-window rule, the
    cadence change, and the wording/position rule, with the position lint last
    because it is the only one needing new code. Decision 5 done 2026-08-07
