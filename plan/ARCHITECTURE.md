@@ -426,8 +426,12 @@ a human wrote in v1.0, which matters here because `samples/` was itself
 AI-drafted and not closely reviewed. Two consequences already in code and
 config: approved additions are **not** marked (D3 — git already records the
 history, so an in-document marker duplicates it; unreviewed AI text stays
-marked), and `param-full-verify-cadence` is **every re-run**, not every release
-tag, because a tag is the thing Nick expects to forget.
+marked), and `param-full-verify-cadence` is **every re-run, with release tags an
+additional trigger**. It moved *off* "every release tag" as the sole trigger
+because a tag is the thing Nick expects to forget, while a re-run is deliberate
+and is exactly the moment the proof is wanted — but tags were kept alongside, so
+nothing that ran before now runs less often. (`definition-of-done.md` parameter
+table and plan step 10.6 are authoritative on this.)
 
 ## 10. Record-authoring conventions (learned in practice, steps 3.3–3.4)
 
