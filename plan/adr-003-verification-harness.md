@@ -1,9 +1,10 @@
 # ADR-003 — Verification harness design (Phase 7)
 
-**Status: PROPOSED** — nothing below is built; the working agreement says
-Nick approves before any code is written. Decisions carry a recommendation
-each; approving this document sets them, and any decision can be ruled
-differently without reopening the others.
+**Status: partly ruled** — Decisions 1 (2026-08-06) and 2 (2026-08-07) are
+ruled by Nick and built; 3–7 are still proposals and nothing in them is
+built. The working agreement says Nick approves before any code is written.
+Decisions carry a recommendation each, and any one can be ruled differently
+without reopening the others.
 
 ## Context
 
@@ -83,7 +84,10 @@ decomposer version *and* the override file's blob are recorded in every
 report, and our figures never compare against published FActScore
 numbers.
 
-## Decision 2 — coverage: match first, score the residue
+## Decision 2 — coverage: match first, score the residue — **RULED**
+
+**Ruled by Nick, 2026-08-07.** Stage 1 is built (build step 2); stage 2 waits
+on Decision 3's dependency approval.
 
 Coverage (7.2) maps every detangle-set claim to an output location or flags
 an omission. G1's bidirectional traceability frame applies: every source
@@ -104,6 +108,43 @@ Claims scoring below the threshold are findings for human review; merges
 and relocations get report entries per criterion 4's pass condition.
 Coverage runs over the detangle set only (C1) and is evaluated set-wide,
 not per file.
+
+**Why stage 1 is a correctness property, not an optimisation.** A claim whose
+wording provably did not change must not be able to fail. §1.1 records that
+grounded-factuality metrics degrade on heavily reordered text, and the
+restructure reorders by construction — so the fewer claims reach the model,
+the less of the guarantee rests on its weakest regime.
+
+**As built (build step 2, `src/detangle/verify/coverage.py`).** Stage 1
+matches one source claim to one output claim on exact equality of the
+decomposer's normalised text, and nothing looser. Its matches carry confidence
+1.0 and no human reviews them, so the rule has to be incapable of being wrong;
+a claim left in the residue costs one model call, a claim placed wrongly costs
+the guarantee. Repeated text matches as a multiset — two identical source
+claims need two identical output claims, and the second is a merge survivor
+for stage 2, not a second hit on one location. Order is ignored; the choice
+among identical output claims is the first still free in output order, so a
+re-run reproduces the mapping. The module raises **no findings**: a residue
+claim is not an omission, it is a claim stage 1 declined to rule on, so
+`omission` belongs to the module that scores it.
+
+**Two looser rules were measured and declined**, both held as live probes in
+`tests/test_verify_coverage.py` so the numbers stay checkable. Case-folding
+gains nothing at all on the golden, so strictness is free and a criterion-5
+casing defect stays visible. Run-concatenation — one source claim equal to a
+run of consecutive output claims, and the reverse — is deterministic too, so
+the argument against it is yield: 9 claims out of 66.
+
+**The measured rate is 204 of 270 source claims, 75.6%**, against the golden
+and the pinned `U` blob. That is below the 268-of-289 quoted above for the
+same reason PR #116 recorded for the decomposer's own 270-vs-289: the 5.3
+figures were counted by hand from the golden, where the 7 OCR page-split rows
+are already rejoined and their repeated header fragments deduplicated, while
+the machine sees the raw shards. The 66 residue claims are those fragments
+plus the version-history table, which the golden renders as prose — one grid
+cell becoming several sentences. Both are criterion-4 relocations, which is
+exactly what stage 2 exists to rule on. The claim-split register closes part
+of the gap as entries land by PR.
 
 ## Decision 3 — fabrication: MiniCheck per D4, as an optional extra
 
@@ -192,7 +233,10 @@ Build steps, in order, each its own PR:
    overrides; the full documents are where the override path earns its
    keep.
 2. Deterministic match + structure checks (Decisions 2 stage 1, 4) inside
-   `detangle verify`; no model dependency yet.
+   `detangle verify`; no model dependency yet. **Half done:** the matcher is
+   built and measured (204/270 on the golden). The structure half waits on
+   Decision 4, and the command itself on Decision 5, so the matcher lands as
+   a library first and is wired in when they are ruled.
 3. The scored residue (Decisions 2 stage 2, 3): the `[verify]` extra, the
    pinned checkpoint, coverage + fabrication scoring, the report.
 4. Seeded-error tests (Decision 6), then the `U` dry-run and the
