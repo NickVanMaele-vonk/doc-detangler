@@ -111,7 +111,16 @@ subject to the phase-dependent applicability rules in
   done** until re-verified.
 - **Set version binding (D10):** a generated `manifest.yaml` binds the whole
   set — per-document version, record-set revision, dependency-graph hash,
-  derived-artifact hashes, generation timestamp. Each concept record carries
+  derived-artifact hashes, and the **git blob of every document in the set
+  plus the commit** (~~generation timestamp~~, **amended 2026-08-08**). A blob
+  *is* the version: the commit and the blobs date the manifest, while a clock
+  would make it irreproducible and would break the byte comparison that guards
+  every derived artifact — the same reason `concept-graph.yaml` cannot carry
+  one, stated under criterion 9's `state/notices.md` note. The version record
+  lives in the verification report today (plan step 7.5, ADR-003) because the
+  harness is Phase 7 and the manifest is Phase 10; ADR-004 rules that the
+  manifest **absorbs** it when it lands, which is what this amendment applies.
+  Each concept record carries
   the source version its provenance span was verified against
   (`verified_against`), making version skew machine-checkable.
 - **"Done" is a recurring state, not a one-time event (D10).** The set keeps
@@ -1002,7 +1011,7 @@ A violation here is blocking regardless of any other criterion passing.
 - Define the same term in two places, or leave a term defined nowhere.
 - Merge a PR, resolve a PR comment, or approve its own omissions.
 - Hand-edit a generated artifact (`index.md`, usage edges, first-use links,
-  `concept-graph.mmd`, `state/section-map.yaml`, `manifest.yaml`) — or
+  `concept-graph.yaml`, `state/section-map.yaml`, `manifest.yaml`) — or
   auto-"fix" a document body in steady state: the guard comments, humans
   decide. (The stamping commit is the sole exception, and it is
   machine-verified to touch only `sec:` markers.)
