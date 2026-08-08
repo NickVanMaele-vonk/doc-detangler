@@ -357,8 +357,39 @@ candidates need the document bodies, and `review_by` dates falling due are
 available today from `registers/waivers.yaml`. Unguarded means no
 `--check`, no drift pair in `NOT_WAIVABLE`, and no CI job.
 
+**Extended 2026-08-08 (Nick): findings awaiting a human disposition are an
+entry class, and the one that justifies building this.** ARCHITECTURE §7's
+three channels do not cover them — findings block, waivers defer a problem
+that already has a ruling, notices inform — so a finding that is **live,
+undispositioned, and non-blocking** falls through all three. That is not a
+rare corner: `detangle verify` is deliberately not a CI gate (ADR-003
+Decision 5, reaffirmed by ADR-004 Decision 7) precisely because every check
+it raises awaits a human, which means **nobody sees any of them unless they
+run the command**. The live example is the `forward-use` finding on `gate` in
+the glossary's generated banner — a sense collision, the record being a
+business term where the banner uses the English word — visible today only in
+a verification report nothing schedules.
+
+Filing such a finding as a waiver is wrong and must not be the workaround: a
+waiver records a disposition, so filing one asserts a ruling nobody made, and
+`waiver-stale` would fire the moment the finding was actually ruled. Writing
+them into a normative document by hand is equally wrong — the roster is
+recomputed every run, so a hand-copied list is a derived artifact maintained
+by hand, which is what B-2 exists to stop. `state/notices.md` fits because it
+is generated (never stale), committed (a new entry appears in the PR diff,
+which a green CI log cannot achieve) and unguarded (it can never turn a
+non-defect into a red build).
+
+So the generator reads the findings a command raised, subtracts those a
+waiver already disposes of, and writes the remainder. Scoping question that
+comes with it: a notices file generated from `verify` costs a full harness
+run, which is `param-full-verify-cadence` work, not per-PR work — so either
+the generator runs at that cadence for the `verify`-sourced entries and more
+often for the cheap ones, or notices carry the cadence they were last
+refreshed at. Decide with the "which command generates it" question above.
+
 **Depends on:** nothing hard. Demotion candidates want Phase 5 bodies; the
-waiver review dates do not.
+waiver review dates and the `verify` findings do not.
 
 ---
 

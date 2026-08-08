@@ -305,6 +305,14 @@ carry what is worth knowing but is not a defect (`state/notices.md`, ruled
 
 A notice raised as a finding would make "nothing is broken" a red build, which
 is the trap that already caught the glossary overview gap and `code_quality`.
+
+**A fourth case falls through all three, and has no channel yet:** a finding
+that is live, **undispositioned**, and non-blocking. It cannot be a waiver —
+a waiver records a ruling, so filing one asserts a decision nobody made — and
+it cannot be a blocking finding, because `detangle verify` is deliberately not
+a gate (§9). Today such findings are visible only to whoever runs the command.
+`state/notices.md` is where they land once it exists; backlog B-7 carries the
+scope and the cadence question that comes with it.
 `state/notices.md` is committed, so new entries appear in the PR diff, and
 **unguarded**, because a stale notices file must never block a PR. It carries a
 "generated from commit X at time Y" header — visible age instead of enforcement,
@@ -426,8 +434,12 @@ a human wrote in v1.0, which matters here because `samples/` was itself
 AI-drafted and not closely reviewed. Two consequences already in code and
 config: approved additions are **not** marked (D3 — git already records the
 history, so an in-document marker duplicates it; unreviewed AI text stays
-marked), and `param-full-verify-cadence` is **every re-run**, not every release
-tag, because a tag is the thing Nick expects to forget.
+marked), and `param-full-verify-cadence` is **every re-run, with release tags an
+additional trigger**. It moved *off* "every release tag" as the sole trigger
+because a tag is the thing Nick expects to forget, while a re-run is deliberate
+and is exactly the moment the proof is wanted — but tags were kept alongside, so
+nothing that ran before now runs less often. (`definition-of-done.md` parameter
+table and plan step 10.6 are authoritative on this.)
 
 ## 10. Record-authoring conventions (learned in practice, steps 3.3–3.4)
 

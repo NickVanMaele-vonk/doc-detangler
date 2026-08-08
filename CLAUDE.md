@@ -15,16 +15,23 @@ Use the following places as master system:
 - future to do's: `plan/backlog.md`
 - architecture decision record (ADR): `plan/adr-*.md`
 - tool architecture: `plan/ARCHITECTURE.md`
+- list of chronological steps of how to build, i.e., project plan: `plan/detangle-agent-plan.md`
 
-Do not restate in this file what those own. In particular: no session logs, no
-counts a command can compute (backlog B-2), no design rationale that belongs in
-`plan/ARCHITECTURE.md`.
+Do not restate in this file what the other files own. 
+In particular: no session logs, no counts a command can compute (backlog B-2), no design rationale that belongs in `plan/ARCHITECTURE.md`, no list of software building steps.
 
 ## What this repository is
 
 Detangle — an agent/pipeline that turns convoluted markdown specifications
-into a logically structured five-document set. The repo holds the normative
-specification (`plan/`), a read-only set of examples (sometimes calles "source corpus") (`samples/`), the canonical Phase 3 data (`concepts/`, `registers/`), in-progress working artifacts (`work/`), the Phase 5 evaluation set (`eval/`), and — from ADR-001 onward — the toolchain itself under `src/detangle/`.
+into a logically structured five-document set. 
+
+The repo holds 
+- the normative specification (`plan/`), 
+- a read-only set of examples (sometimes calles "source corpus") (`samples/`),
+- the canonical Phase 3 data (`concepts/`, `registers/`), 
+- in-progress working artifacts (`work/`), 
+- the Phase 5 evaluation set (`eval/`), 
+- the toolchain itself under `src/detangle/` 
 
 **Form factor (ADR-001, approved 2026-07-30):** a Python package `detangle`
 with a CLI. The Claude-skill wrapper is candidate C staged, deferred to
@@ -95,7 +102,8 @@ policy reads `1` as a completed run that found things. Full table in the README.
 gate that failed. `verify` is deliberately **not** a gate (ADR-003 D5,
 reaffirmed by ADR-004 D7): every check it raises awaits a human disposition, so
 blocking merge on one turns a review prompt into a hard stop. It runs at
-`param-full-verify-cadence` — every re-run — not per PR.
+`param-full-verify-cadence` — every re-run, release tags additionally — not
+per PR.
 
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
@@ -109,7 +117,7 @@ or to the record set itself — `detangle graph --check` fails otherwise.
 
 | File | Role |
 |------|------|
-| `plan/detangle-agent-plan.md` | 10 phases, constraints **C1–C12**, sequencing rationale, working agreements |
+| `plan/detangle-agent-plan.md` | 10 phases, constraints **C1–C12**, sequencing rationale, working agreements — and the `Status` header plus **Outstanding** list, which own where the build stands and what is next |
 | `plan/definition-of-done.md` | The rubric: **criteria 1–9**, parameters (`param-*`), non-goals, per-phase applicability |
 | `plan/research-memo.md` | Phase 2 research and the **decision register D1–D10** (§7), with full rationale notes for D9 and D10 |
 
@@ -151,42 +159,17 @@ structural. The load-bearing ideas, so you know when to go there:
 - **Working with the corpus** — criterion 5 verbatim reproduction, and why
   `samples/` cannot be untracked (§11).
 
-## Current state
+## Current state and working agreements
 
-Phases 1, 2, 4 and 5 are closed. Phase 3's data work is done; steps 3.6
-(`index.md`) and 3.7 stay blocked behind Phase 5's document bodies, so neither
-is the next thing to work on. Phase 6 is all but closed on ADR-002 — all build
-steps merged and the 6.2 comparison written — but **6.2 stays open** until
-`param-low-confidence-threshold` is re-baselined against the first artifact
-carrying a mapping score. Phase 7 is in progress on ADR-003: Decisions 1, 2, 4
-and 5 are ruled and built, 3 is deferred (backlog B-9), 6 and 7 are proposals.
+Both live in **`plan/detangle-agent-plan.md`**, which owns the build sequence:
+its `Status` header for where each phase stands, its **Outstanding** list for
+what is next, and its **Working agreements** section for how to work. Read them
+at the start of a session — do not work from a status written anywhere else.
 
-**Outstanding, in rough order:**
-
-1. **ADR-004 build step 3** — write Decisions 1 and 3 into C2, C5 and criterion
-   7, including the `param-overview-max-words` re-measurement from 227 to 206.
-2. **Awaiting Nick's disposition:** the one live `forward-use` finding, on
-   `gate` in the glossary's own generated banner — a sense collision (the record
-   is a business term; the banner uses the English word), deliberately not
-   suppressed. And the claim-split flags on `U`, none ruled yet;
-   `registers/claim-splits.yaml` is empty.
-3. **Unbuilt, with a ruling behind them:** the glossary drift lint (which is
-   what unblocks the fourth CI gate), `graph --mmd` (B-6), the
-   `state/notices.md` generator (B-7).
-
-For counts — records, defined terms, placement split, edges — run `detangle
-validate` or `detangle graph` rather than trusting a number written down
-anywhere. For what landed when, read the PRs.
-
-## Working agreements (from the plan, applies to all phases)
-
-- Design decisions are proposed by the assistant; Nick approves before any
-  code is written.
-- Small sequential steps; verify each before starting the next.
-- Never investigate and change in the same step.
-- After every code change: a concrete list of functional tests to verify.
-- Documentation updated after every completed feature.
-- No hard-coded values; if required data does not exist yet, stop and ask.
+Two things that section will tell you and are worth knowing before you open it:
+the agreements bind every phase (including *never investigate and change in the
+same step*, and *a re-run freezes the documents it touches*), and counts are
+never to be trusted from prose — run `detangle validate` or `detangle graph`.
 
 ## Hard prohibitions
 
