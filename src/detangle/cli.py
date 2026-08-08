@@ -13,7 +13,7 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, registers, restructure, tables, views
+from . import __version__, graph, registers, restructure, tables, verify, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_FINDINGS, EXIT_USAGE, UsageError, report
 from .graph import emit
@@ -28,6 +28,8 @@ from .restructure import execute as restructure_execute
 from .restructure import parity as restructure_parity
 from .restructure import position as restructure_position
 from .restructure import report as restructure_report
+from .verify import report as verify_report
+from .verify import structure as verify_structure
 
 
 def _selected(records, root: Path, paths: list[str]):
@@ -336,6 +338,121 @@ def cmd_restructure(args: argparse.Namespace) -> int:
     return max(code, EXIT_FINDINGS) if blocked and code == EXIT_CLEAN else code
 
 
+def _outputs(pairs: list[str], registry) -> dict[str, Path]:
+    """Parse ``--output CODE=PATH`` into a mapping, rejecting unknown codes."""
+    out: dict[str, Path] = {}
+    for pair in pairs:
+        code, _, path = pair.partition("=")
+        if not code or not path:
+            raise UsageError(f"--output wants CODE=PATH, got {pair!r}")
+        if code not in registry.components:
+            raise UsageError(
+                f"{code!r} is not a detangle-set document; only these are "
+                f"restructured and verified: {', '.join(registry.components)}"
+            )
+        if code in out:
+            raise UsageError(f"--output {code} given twice")
+        out[code] = Path(path)
+    return out
+
+
+def cmd_verify(args: argparse.Namespace) -> int:
+    """The losslessness harness — ADR-003 Decision 5, ruled by Nick 2026-08-07.
+
+    Deterministic by default, and today that is the only mode: the scored
+    stages wait behind ``--use-inference``, which is backlog work. The command
+    therefore has to be loud about what it did not do, or a clean exit reads as
+    a proof it never produced. That is the job of the report's stage table and
+    of the ``coverage-unscored`` finding.
+
+    Not a CI gate (Decision 5, reaffirmed with ADR-004 Decision 7): every check
+    here awaits a human disposition, so blocking merge on one converts a review
+    prompt into a hard stop.
+    """
+    root = find_root(Path(args.root) if args.root else None)
+    config = Config.load(root, Path(args.config) if args.config else None)
+    registry = config.registry()
+    outputs = _outputs(args.output, registry)
+
+    records, findings = load_records(config.directory("concepts"), root)
+    register, cycle_findings = load_cycles(config.directory("registers"), root)
+    findings.extend(cycle_findings)
+    cg, graph_findings = graph.build(records, register)
+    findings.extend(graph_findings)
+
+    blobs = record_checks.GitBlobs(root)
+    built = verify_report.Report(commit=blobs.commit())
+
+    def _version(code: str, role: str, path: Path) -> None:
+        rel = str(path.relative_to(root)) if path.is_absolute() else str(path)
+        if not (root / rel).is_file():
+            raise UsageError(f"{rel} does not exist; nothing to verify")
+        built.versions.append(
+            verify_report.Version(
+                code=code,
+                role=role,
+                rel=rel,
+                blob=blobs.live(rel),
+                committed=not blobs.worktree_differs(rel),
+            )
+        )
+
+    # The glossary is read first and is part of the reading order, so its
+    # absence would silently make every forward-reference verdict wrong.
+    glossary = config.path("glossary")
+    _version("glossary", "glossary", glossary)
+    reading = [
+        verify_structure.Document(
+            "glossary", glossary.read_text(encoding="utf-8")
+        )
+    ]
+
+    for code in registry.components:
+        if code not in outputs:
+            continue
+        source_rel = registry.paths[code]
+        _version(code, "detangle set (source)", Path(source_rel))
+        _version(code, "output", outputs[code])
+        source_text = (root / source_rel).read_text(encoding="utf-8")
+        output_text = outputs[code].read_text(encoding="utf-8")
+
+        source = verify.decompose(source_text, code)
+        output = verify.decompose(output_text, f"{code}-out")
+        built.coverage[code] = verify.match(source, output)
+        reading.append(verify_structure.Document(code, output_text))
+
+    built.structure = verify_structure.scan(reading, cg)
+    findings.extend(verify_structure.check(built.structure))
+    findings.extend(verify_report.check_unscored(built))
+
+    ran = (
+        records_load.CHECKS
+        | registers.CYCLE_CHECKS
+        | BUILD_CHECKS
+        | verify_structure.CHECKS
+        | verify_report.CHECKS
+        | registers.WAIVER_CHECKS
+    )
+
+    summary: dict = {
+        "commit": built.commit,
+        "documents": ", ".join(sorted(outputs)),
+        "reading order": " → ".join(d.code for d in reading),
+        "placed verbatim": sum(len(c.matched) for c in built.coverage.values()),
+        "unscored": built.unscored,
+        "forward references": len(built.structure.forward),
+        "exempt": len(built.structure.exempt),
+        "fabrication": "NOT CHECKED — deterministic run, no model",
+    }
+    if args.report:
+        verify_report.write(built, Path(args.report))
+        summary["report"] = args.report
+
+    findings, waived = _waived(config, root, findings, ran)
+    summary["waived"] = len(waived)
+    return report(findings, args.json, summary, waived)
+
+
 def _query(cg, args: argparse.Namespace) -> int:
     """Reachability lookups. Read-only: they never write the graph."""
     node = args.impact or args.requires
@@ -473,6 +590,36 @@ def build_parser() -> argparse.ArgumentParser:
         help="do not write; fail if the committed output differs from a re-execution",
     )
     restructure_cmd.set_defaults(func=cmd_restructure)
+
+    verify_cmd = sub.add_parser(
+        "verify",
+        help="run the losslessness harness over the restructured documents",
+        description=(
+            "Checks the output against the source (ADR-003): every claim that "
+            "moved verbatim is placed deterministically, and no term is used "
+            "before its definition across the reading order. Runs "
+            "DETERMINISTICALLY — it does NOT check for invented text, and it "
+            "does not score claims whose wording changed. Those need a model, "
+            "which waits behind --use-inference (backlog B-9). Not a CI gate."
+        ),
+    )
+    verify_cmd.add_argument(
+        "--output",
+        action="append",
+        required=True,
+        metavar="CODE=PATH",
+        help="a restructured document to verify, e.g. U=eval/golden/uce.md; "
+        "repeatable",
+    )
+    verify_cmd.add_argument(
+        "--report", help="path for the verification report; omitted, none is written"
+    )
+    verify_cmd.add_argument("--json", action="store_true", help="machine-readable")
+    verify_cmd.add_argument("--config", help="config file (default: detangle.toml)")
+    verify_cmd.add_argument(
+        "--root", help="repository root (default: nearest ancestor)"
+    )
+    verify_cmd.set_defaults(func=cmd_verify)
     return parser
 
 

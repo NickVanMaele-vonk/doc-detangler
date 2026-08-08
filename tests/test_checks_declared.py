@@ -26,6 +26,7 @@ from detangle.restructure import parity as restructure_parity
 from detangle.restructure import plan as restructure_plan
 from detangle.restructure import position as restructure_position
 from detangle.restructure import report as restructure_report
+from detangle.verify import report as verify_report
 from detangle.verify import splits as verify_splits
 from detangle.verify import structure as verify_structure
 from detangle.views import glossary
@@ -48,6 +49,7 @@ DECLARED = {
     "restructure/plan.py": restructure_plan.CHECKS,
     "restructure/position.py": restructure_position.CHECKS,
     "restructure/report.py": restructure_report.CHECKS,
+    "verify/report.py": verify_report.CHECKS,
     "verify/splits.py": verify_splits.CHECKS,
     "verify/structure.py": verify_structure.CHECKS,
     "views/glossary.py": glossary.CHECKS,

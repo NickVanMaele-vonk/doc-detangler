@@ -182,6 +182,40 @@ restructure may raise (`param-max-comments-per-PR`), and a comment it cannot
 see is one it would count wrong. Over budget, the run reports and writes no
 document.
 
+A fifth command, **`detangle verify`**, arrived with Phase 7 (ADR-003): it is
+the losslessness harness that constraints C1/C2 rest on. It decomposes the
+source and the output into claims, places every claim that moved verbatim, and
+checks that no term is used before its definition across the whole reading
+order — glossary → UCE → SBSP → MCL, not each document alone, because C9
+should make a cross-document forward reference impossible and an empty result
+is the proof it did.
+
+**It runs deterministically, and it says so loudly** (Nick, 2026-08-07). Two of
+the four Phase 7 stages need a model and are deferred behind a
+`--use-inference` flag that is backlog B-9: the scored coverage residue and the
+fabrication check. So the command **cannot say whether the output contains
+invented text**, and a run that exited `0` while skipping that would read as a
+proof it never produced — the same trap as reading exit `2` as "no findings".
+Three things prevent it: the report prints every stage including the ones that
+did not run, the `--json` summary carries `fabrication: NOT CHECKED`, and a
+`coverage-unscored` warning names, per document, how many claims the run
+declined to rule on. That warning is one per document rather than one per
+claim (rubric §8d) and is waivable, because nothing is wrong — work is
+outstanding.
+
+`--report <path>` writes the verification report, which carries the **step 7.5
+version record**: the git blob of every document the run read, plus the commit.
+A blob is the version — immutable, retrievable with `git show` however many
+revisions follow — so a report from three re-runs ago still names exactly the
+bytes it was talking about, and the next run has a baseline. `manifest.yaml`
+(step 10.4) absorbs this when it exists. There is no timestamp in the report,
+deliberately: the commit and the blobs date the run, and a clock would make it
+irreproducible.
+
+`verify` is **not a CI gate** (ADR-003 Decision 5, reaffirmed with ADR-004
+Decision 7). Every check it raises awaits a human disposition, so blocking a
+merge on one converts a review prompt into a hard stop.
+
 ## Running it
 
 `pandoc` must be on `PATH` — the `para_hash` scheme is defined in terms of its
@@ -209,6 +243,12 @@ python3 -m venv .venv
 .venv/bin/detangle restructure --plan … --out … --report work/report/
                                        # also write the 8f self-report
 .venv/bin/detangle restructure --plan … --out … --check   # re-execute and compare
+
+.venv/bin/detangle verify --output U=eval/golden/uce.md
+                                       # the Phase 7 harness, deterministic
+.venv/bin/detangle verify --output U=… --report work/verification.md
+                                       # also write the 7.5 version record
+                                       # (--use-inference is backlog B-9)
 
 .venv/bin/python -m pytest             # tests
 .venv/bin/ruff check .                 # lint

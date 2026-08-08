@@ -1,8 +1,10 @@
 # ADR-003 — Verification harness design (Phase 7)
 
-**Status: partly ruled** — Decisions 1 (2026-08-06), 2 and 4 (both
-2026-08-07) are ruled by Nick and built; 3, 5, 6 and 7 are still proposals
-and nothing in them is built. The working agreement says Nick approves before
+**Status: partly ruled** — Decisions 1 (2026-08-06), 2, 4 and 5 (all
+2026-08-07) are ruled by Nick and built. **Decision 3 is deferred**, not
+declined (Nick, 2026-08-07): the model path waits behind `--use-inference`,
+parked as backlog B-9, and the dependency is not installed until that flag is
+wanted. Decisions 6 and 7 are still proposals. The working agreement says Nick approves before
 any code is written. Decisions carry a recommendation each, and any one can be
 ruled differently without reopening the others.
 
@@ -146,7 +148,19 @@ cell becoming several sentences. Both are criterion-4 relocations, which is
 exactly what stage 2 exists to rule on. The claim-split register closes part
 of the gap as entries land by PR.
 
-## Decision 3 — fabrication: MiniCheck per D4, as an optional extra
+## Decision 3 — fabrication: MiniCheck per D4, as an optional extra — **DEFERRED**
+
+**Nick, 2026-08-07:** run deterministically by default for now; add a
+`--use-inference` flag to the backlog which invokes a model; the installation
+of PyTorch and `transformers` is postponed to the moment that flag is
+activated. So this decision is neither approved nor refused — it comes back
+when B-9 is picked up, and nothing below is built.
+
+What that costs while it waits is recorded in B-9 and stated in every
+verification report: C2's first limb is not machine-checked at all, and on the
+`U` golden 66 of 270 source claims come back unresolved rather than placed.
+Phase 7's done-when cannot be met on the invented-claim limb until it lands.
+
 
 Fabrication (7.3) traces each output claim to either input set or confirms
 it is marked bridging text. Mechanics:
@@ -223,7 +237,35 @@ edge there is no judgment in the detection — the reader either has the
 definition by then or does not — but a forward reference someone decides to
 live with can be deferred with its reasoning written down.
 
-## Decision 5 — one new command: `detangle verify`, not a per-PR gate
+## Decision 5 — one new command: `detangle verify`, not a per-PR gate — **RULED**
+
+**Ruled by Nick, 2026-08-07**, in the form of the timing question the built
+stages forced: ship it now, deterministic by default. Built.
+
+The open question was not whether `verify` is a gate — that was settled with
+ADR-004 Decision 7 — but whether the command waits for the model. Three
+candidates: wait and build once; ship deterministic-only with the absence
+reported; ship behind a flag that makes the limitation opt-in. The third is
+worst, because it puts the honest label on the user's command line instead of
+in the artifact, and a report read next month carries no trace of what it
+skipped.
+
+**As built.** `detangle verify --output CODE=PATH [--report PATH]` runs 7.1,
+7.2 stage 1 and 7.4 over the reading order, and states the absence of the rest
+three ways: the report's stage table prints every stage including the two that
+did not run, the summary carries `fabrication: NOT CHECKED`, and
+`coverage-unscored` names per document how many claims the run declined to
+rule on. The last is a **warn** and waivable — nothing is wrong with the
+document, work is outstanding — and is one finding per document, not one per
+claim (rubric §8d). Without it a deterministic run over a clean document would
+exit `0`, which reads as a proof the command did not produce.
+
+The report carries the step 7.5 version record and **no timestamp**: the commit
+and the blobs date the run, and a clock would make it irreproducible. The
+claim-split register is **not** wired in, because its home is still unruled —
+so the decomposer runs with no overrides, which is the state the 270-claim
+figure was measured in.
+
 
 `detangle verify` runs 7.1→7.4 over the output set and writes the
 verification report committed alongside the documents. Same contract as
