@@ -17,11 +17,13 @@ with the steps rather than beside them.
 2. **Step 3.7, extraction half** — unblocked for `U` by the golden
    (Nick, 2026-08-08). The dead-entry sweep and step 3.6 still wait for all
    three bodies.
-3. **Awaiting Nick's disposition** — the one live `forward-use` finding, on
-   `gate` in the glossary's own generated banner: a sense collision, the
-   record being a business term where the banner uses the English word,
-   deliberately not suppressed. And the claim-split flags on `U`, none ruled;
-   `registers/claim-splits.yaml` is empty.
+3. **Live findings awaiting a disposition** — run `detangle verify --report`;
+   the roster is generated, so it is never enumerated here (backlog B-2).
+   Claim-split flags need no listing either: `registers/claim-splits.yaml` is
+   their designed home and its entries are 1:1 with live flags, so an empty
+   register against live flags is the register working. Making these visible
+   without running a command is backlog B-7, since `verify` is deliberately
+   not a CI gate (ADR-003 D5).
 4. **Ruled but unbuilt** — the glossary drift lint, which is what unblocks the
    fourth CI gate (see step 3.5); `detangle graph --mmd` (backlog B-6); the
    `state/notices.md` generator (backlog B-7).

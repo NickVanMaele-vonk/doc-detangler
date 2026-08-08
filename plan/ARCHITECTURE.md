@@ -305,6 +305,14 @@ carry what is worth knowing but is not a defect (`state/notices.md`, ruled
 
 A notice raised as a finding would make "nothing is broken" a red build, which
 is the trap that already caught the glossary overview gap and `code_quality`.
+
+**A fourth case falls through all three, and has no channel yet:** a finding
+that is live, **undispositioned**, and non-blocking. It cannot be a waiver —
+a waiver records a ruling, so filing one asserts a decision nobody made — and
+it cannot be a blocking finding, because `detangle verify` is deliberately not
+a gate (§9). Today such findings are visible only to whoever runs the command.
+`state/notices.md` is where they land once it exists; backlog B-7 carries the
+scope and the cadence question that comes with it.
 `state/notices.md` is committed, so new entries appear in the PR diff, and
 **unguarded**, because a stale notices file must never block a PR. It carries a
 "generated from commit X at time Y" header — visible age instead of enforcement,
