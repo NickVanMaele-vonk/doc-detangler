@@ -4,6 +4,7 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 .venv/
+*:Zone.Identifier
 
 # Claude Code runtime artifacts. `.claude/workflows/deep-research.js` was swept
 # into commit ab4d571 by a `git add -A` and was the repo's only JavaScript, which
