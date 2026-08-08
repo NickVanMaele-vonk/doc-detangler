@@ -7,6 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Answer factually and concisely in plain English. 
 - Save tokens: avoid multiple hits against the same text, use scratchpads to optimize your token use. 
 
+## Git operations
+Before you push to remote, always verify which remote branches exist. Do not work from memory or from your own history - users may have merged PRs since you last pushed them. 
+
 ## Interaction with other knowledge stores
 Use the following places as master system:  
 - historical state of this project: git (pull requests and commits) 
