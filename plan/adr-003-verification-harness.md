@@ -1,10 +1,10 @@
 # ADR-003 — Verification harness design (Phase 7)
 
-**Status: partly ruled** — Decisions 1 (2026-08-06) and 2 (2026-08-07) are
-ruled by Nick and built; 3–7 are still proposals and nothing in them is
-built. The working agreement says Nick approves before any code is written.
-Decisions carry a recommendation each, and any one can be ruled differently
-without reopening the others.
+**Status: partly ruled** — Decisions 1 (2026-08-06), 2 and 4 (both
+2026-08-07) are ruled by Nick and built; 3, 5, 6 and 7 are still proposals
+and nothing in them is built. The working agreement says Nick approves before
+any code is written. Decisions carry a recommendation each, and any one can be
+ruled differently without reopening the others.
 
 ## Context
 
@@ -162,7 +162,10 @@ it is marked bridging text. Mechanics:
   hash, downloaded and cached, never committed. The core package and the
   existing three CI gates stay exactly as they are.
 
-## Decision 4 — structure: concept-before-use from the graph
+## Decision 4 — structure: concept-before-use from the graph — **RULED**
+
+**Ruled by Nick, 2026-08-07**, together with the scope question below. Built
+as `src/detangle/verify/structure.py`.
 
 7.4 is deterministic and mostly built: topological order from
 `concept-graph.yaml` (networkx), checked against each document's actual
@@ -170,6 +173,55 @@ definition and first-use order, with a definition block's own text counting
 as a use (the 2026-08-05 ruling) and the accepted cycle's entry point
 honoured from `registers/cycles.yaml`. New code is the document-side
 reader, not the graph side.
+
+**What counts as a use — the question that needed ruling.** The definition
+side was settled; the document side was not, and the golden's second defect
+(2026-08-05) was exactly a miscount of it. Three candidates:
+
+- **A — every occurrence anywhere.** Maximum recall, but headings and
+  navigation count, so the check reports forward references that are
+  artifacts of furniture. Noise that trains a reviewer to ignore it.
+- **B — the edge-matching discipline, over the blocks the decomposer walks.**
+  The rules the closing pass proved on 402 edges (PRs #54–#58): case-sensitive
+  for codes, case-insensitive with plurals for phrases, token boundaries so
+  `MTSAM` never matches inside `MTSAM-L01`, occurrence-level containment
+  suppression. Headings, grid rules and marker-only blocks drop out.
+- **C — only inside decomposed claims.** Tidier — one notion of "text that
+  says something" for the whole harness — but blind: the decomposer yields no
+  claim from a fragment with no terminal punctuation, so a cell reading
+  `Gate: CQT` is a use the reader meets and the check never sees.
+
+**Ruled: B.** It gets C's furniture exclusion without C's blind spot, and it
+reuses a discipline that has already survived contact with this corpus.
+
+**Scope is the whole reading order** (glossary → UCE → SBSP → MCL), not each
+document alone. C9 should make a cross-document forward reference structurally
+impossible, so the result ought to be empty — and an empty result is the proof
+that C9 held rather than an assumption that it did.
+
+**A definition block's own text counts as a use** is not a special case in the
+implementation: a definition block is prose, so it is scanned like any other.
+A section heading is not, which is what the 2026-08-05 miscount got wrong.
+
+**As built and measured.** Over the two output documents that exist —
+`glossary.md` and the `U` golden — 113 definition sites (78 glossary, 35 in
+the golden), **one** forward reference and **one** exemption. The exemption is
+the accepted cycle's bridging reference, recognised from `registers/cycles.yaml`
+and not raised: criterion 1 clause 2 working. Everything else is clean, which
+is the C9 evidence.
+
+The one finding is a **sense collision, not a structural defect**: the
+glossary's generated banner says `detangle generate --check` was withdrawn "as
+a CI gate", and `gate` is a record whose bare surface is the English word.
+`param-false-positive-tolerance` is "none", so it needs a disposition — the
+2026-07-30 word-overload ruling says a bare overloaded word gets no head
+record, which would remove the surface; a waiver is the alternative. Pinned in
+`tests/test_verify_structure.py` so the number cannot drift while it waits.
+
+`forward-use` is an **error**, and waivable. Unlike a proposed `depends_on`
+edge there is no judgment in the detection — the reader either has the
+definition by then or does not — but a forward reference someone decides to
+live with can be deferred with its reasoning written down.
 
 ## Decision 5 — one new command: `detangle verify`, not a per-PR gate
 
@@ -233,10 +285,10 @@ Build steps, in order, each its own PR:
    overrides; the full documents are where the override path earns its
    keep.
 2. Deterministic match + structure checks (Decisions 2 stage 1, 4) inside
-   `detangle verify`; no model dependency yet. **Half done:** the matcher is
-   built and measured (204/270 on the golden). The structure half waits on
-   Decision 4, and the command itself on Decision 5, so the matcher lands as
-   a library first and is wired in when they are ruled.
+   `detangle verify`; no model dependency yet. **Done as two libraries:** the
+   matcher (204/270 on the golden) and the concept-before-use scan (1 finding,
+   1 exemption over `glossary.md` + the `U` golden). Both wait on Decision 5
+   for the command that runs them.
 3. The scored residue (Decisions 2 stage 2, 3): the `[verify]` extra, the
    pinned checkpoint, coverage + fabrication scoring, the report.
 4. Seeded-error tests (Decision 6), then the `U` dry-run and the
