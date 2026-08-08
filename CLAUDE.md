@@ -21,7 +21,10 @@ onward — the toolchain itself under `src/detangle/`.
 with a CLI. The Claude-skill wrapper is candidate C staged, deferred to
 Phase 9.2, and explicitly not built now. Approved tooling: Python ≥ 3.11,
 `pytest`, `ruff`, `PyYAML`, `networkx`, and `pandoc` invoked as a subprocess.
-Anything beyond that list still needs approval before use.
+Anything beyond that list still needs approval before use — which is exactly
+why the Phase 7 harness runs deterministically: its model stages would need
+PyTorch and `transformers`, so they wait behind `--use-inference` (ADR-003
+Decision 3, deferred by Nick 2026-08-07; backlog B-9).
 
 ## Commands
 
@@ -37,7 +40,8 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/python -m pytest             # tests/
 .venv/bin/ruff check .                 # lint
 .venv/bin/detangle validate            # ADR-001 D4's three, all built; a
-                                       # fourth, restructure, came with 6.1
+                                       # fourth, restructure, came with 6.1,
+                                       # and a fifth, verify, with Phase 7
 .venv/bin/detangle graph               # built; rewrites concept-graph.yaml
 .venv/bin/detangle graph --check       # regenerate-and-compare guard, for CI
 .venv/bin/detangle graph --impact <id> # what depends on this definition
@@ -55,6 +59,19 @@ python3 -m venv .venv                  # system python is externally-managed
                                        # also write the 8f self-report:
                                        # move-map.md, counts.md, exceptions.md
 .venv/bin/detangle restructure … --check   # re-execute and byte-compare
+.venv/bin/detangle verify --output U=<doc.md>
+                                       # the Phase 7 losslessness harness
+                                       # (ADR-003); --output CODE=PATH once
+                                       # per document, detangle set only.
+                                       # DETERMINISTIC: it does NOT check for
+                                       # invented text — that stage needs a
+                                       # model and waits behind
+                                       # --use-inference (backlog B-9)
+.venv/bin/detangle verify … --report <path>
+                                       # write the verification report: stage
+                                       # table, the 7.5 blob version record,
+                                       # coverage, forward references, and
+                                       # the roster of unplaced claims
 ```
 
 `.venv/` is gitignored. `detangle validate` replaces the throwaway per-PR
@@ -66,7 +83,11 @@ findings". Any unexpected exception exits `2`, never `1`, because branch
 policy reads `1` as a completed run that found things. Full table in the
 README; `validate` and `graph --check` are separate gates, and
 `.github/workflows/ci.yml` runs each as its own job — alongside tests and lint
-— on every PR to `main`, so a red run names the gate that failed.
+— on every PR to `main`, so a red run names the gate that failed. `verify` is
+deliberately **not** a gate (ADR-003 D5, reaffirmed by ADR-004 D7): every
+check it raises awaits a human disposition, so blocking merge on one turns a
+review prompt into a hard stop. It runs at `param-full-verify-cadence` —
+every re-run — not per PR.
 
 Branch naming follows the areas above (`plan/add-section-ids`,
 `work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
@@ -414,6 +435,64 @@ and the front section holds 7 definitions rather than 6. No exception is
 recorded because none is needed. The blast radius beyond `U` is
 **unmeasured** — `restructure --report`'s forward-reference cluster is what
 detects the rest, so `S` and `M` get measured, not assumed.
+
+**Phase 7 is in progress**, on ADR-003 (`plan/adr-003-verification-harness.md`).
+Decisions 1, 2, 4 and 5 are ruled and built; **Decision 3 is deferred, not
+declined**; 6 and 7 are still proposals.
+
+- **Decision 1 — the decomposer flags, it never guesses** (Nick, 2026-08-06).
+  Deterministic backbone from one whole-document pandoc parse, not a
+  per-block one: the corpus is full of multiline tables whose rows are
+  blank-line separated, and a per-block parse shatters them (38 cells where
+  the hand count found 266). Claim ids are hash-anchored — `doc:hash8:occ:n`,
+  never line numbers. Judgment lands as data in `registers/claim-splits.yaml`
+  (home ruled 2026-08-07); the LLM pass is a workflow that produces a PR, not
+  a runtime dependency. On the pinned `U` blob: **270 claims**, not the 5.3
+  hand count of 289, because the hand count worked from the golden where
+  page-split rows are rejoined and repeated headers deduplicated. 44 flags,
+  none ruled.
+- **Decision 2 — match first, score the residue.** Stage 1 is exact
+  normalised-text identity at confidence 1.0, and it is a **correctness
+  property, not an optimisation**: §1.1 records that grounded-factuality
+  metrics degrade on heavily reordered text, which is what a restructure
+  produces, so the fewer claims reach a model the less of the guarantee rests
+  on its weakest regime. Measured, then declined: case-folding gains **0**
+  claims, run-concatenation gains **9 of 66** — both held as live probes in
+  tests rather than as claims in a comment. On the golden: **204 of 270
+  placed** (75.6%), 66 residue, 155 output claims unexplained.
+- **Decision 4 — a use is scoped to the whole reading order**, glossary → U →
+  S → M, not per document: C9 should make a cross-document forward reference
+  impossible, so an empty result is the *proof* it held. One live
+  `forward-use` finding, on **`gate` in the glossary's own generated banner**
+  — a sense collision (the record is a business term; the banner uses the
+  English word), **awaiting Nick's disposition** and deliberately not
+  suppressed. One exemption, the accepted cycle's bridging reference.
+- **Decision 5 — `detangle verify` runs deterministically** (Nick,
+  2026-08-07). It cannot say whether the output contains invented text, and a
+  clean exit that skipped the fabrication check would read as a proof it
+  never produced — the same trap as reading exit `2` as "no findings". Three
+  mitigations: the report's stage table prints the stages that did **not**
+  run, the summary carries `fabrication: NOT CHECKED`, and
+  `coverage-unscored` (warn, one per document, per rubric §8d) names how many
+  claims the run declined to rule on.
+- **Step 7.5 — a blob is the version.** The report records the git blob of
+  every document the run read plus the commit, and **no timestamp**: the
+  commit and the blobs date it, and a clock would make it irreproducible.
+  `manifest.yaml` (10.4) absorbs this later.
+
+**ADR-004 is ruled in full** (Nick, 2026-08-07) and resets the operating
+model: the detangle run is a **repeatable campaign**, not a one-off, and
+**assurance** — who wrote a claim, who approved it — rather than corpus
+anchoring is what carries definitional strength. Text a human writes in v1.2
+is as strong as text a human wrote in v1.0, which matters here because
+`samples/` was itself AI-drafted and not closely reviewed. Two consequences
+already in the code and config: approved additions are **not** marked
+(Decision 3 — git already records the history, so an in-document marker
+duplicates it; unreviewed AI text stays marked), and
+`param-full-verify-cadence` is **every re-run**, not every release tag,
+because a tag is the thing Nick expects to forget. Build step 3 — writing
+Decisions 1 and 3 into C2, C5 and criterion 7, including the
+`param-overview-max-words` re-measurement from 227 to 206 — is **outstanding**.
 
 - `work/term-extraction/blueprint-*.terms.yaml` — raw per-document extraction,
   LLM-assisted, headers state it is **not yet human-reviewed**. Its line
