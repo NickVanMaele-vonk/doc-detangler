@@ -663,6 +663,18 @@ Beyond those already stated above.
   section IDs: marking that depends on a human remembering to write
   `<!-- AI addition:start -->` is marking that goes missing exactly where it
   mattered.
+- **The marker survives approval; the visible tag does not** (ADR-004 Decision 3
+  as amended, Nick 2026-08-08). An approved addition reads as ordinary document
+  text, which is Decision 1's point, but keeps its HTML comment — because for a
+  *definition* AI authorship lives in `assurance.author`, and criterion 2's
+  required overview is a section rather than a concept, so it has no record and
+  no assurance block. Removing its comment would leave no in-document trace at
+  all. Keeping it is free: every HTML comment is stripped before counting
+  (Decision 9), so criterion 5 and the re-run cycle never see it. Who performs
+  the transition is unsettled — dropping the blockquote deletes words, so it
+  falls outside the word-preserving exception ruled above — and sits in the
+  backlog as B-11, alongside what a re-run does with an approved addition it
+  meets in its input.
 - **The `definition-token` check is a proxy for C2, not C2.** C2 is claim-level,
   checked by the Phase 7 harness, and has two limbs: every claim traces to the
   source **or is explicitly marked as bridging text**. The record-layer check is
@@ -680,7 +692,11 @@ Beyond those already stated above.
   on, and a one-line diff points at one record.
 - **Ink on the page counts** toward a text's length even when the tool wrote it —
   the visible `[AI addition]` tag included. Written into the rubric beside
-  `param-overview-max-words`.
+  `param-overview-max-words`. The principle survives Decision 3's amendment
+  intact; only the ink moves. An approved addition has no tag, so the `U`
+  overview measures 206 once approved and 227 as the tool emits it — which is
+  why `eval/golden/uce.md` keeps 227: a renderer cannot know approval state, so
+  the golden necessarily renders the unapproved form.
 - **Sections are counted as a reader meets them** — headed sections. A headless
   `head` block still appears in the move-map's Section IDs table, so nothing is
   hidden.

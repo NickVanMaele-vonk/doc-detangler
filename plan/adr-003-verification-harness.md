@@ -201,9 +201,13 @@ Phase 7's done-when cannot be met on the invented-claim limb until it lands.
 Fabrication (7.3) traces each output claim to either input set or confirms
 it is marked bridging text. Mechanics:
 
-- Output claims inside generated bridging markers (`[AI addition]`,
+- Output claims inside generated bridging markers (`<!-- AI addition:start -->`,
   overview blocks) are exempt from tracing and reported as Category C —
-  that is C2's second limb, not a hole in the first.
+  that is C2's second limb, not a hole in the first. **The exemption keys off
+  the HTML comment, not the visible tag** (ADR-004 D3 as amended 2026-08-08):
+  an approved addition has only the comment, and keying off `[AI addition]`
+  would drop it out of the exemption the moment it was approved — turning every
+  approved addition into a fabrication candidate.
 - Everything else is matched deterministically first (stage 1 above,
   reversed), then scored against the **union of both input sets** —
   lifted definitions resolve into `A`/`P` by design (`mts-spa` precedent).
