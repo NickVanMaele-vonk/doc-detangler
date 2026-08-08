@@ -390,3 +390,44 @@ emits a diff for a human to apply. The second fits ADR-002's rule that the
 plan is data a human owns.
 
 **Depends on:** one real re-run, to know how often this actually bites.
+
+---
+
+## B-9 — `detangle verify --use-inference`, the scored half of the harness
+
+**Raised:** 2026-08-07 (Nick), ruling on ADR-003 Decision 5.
+
+**The gap.** `detangle verify` runs deterministically: it places every claim
+that moved verbatim, and it checks concept-before-use across the reading
+order. Two of the four Phase 7 stages need a model and are absent — the scored
+coverage residue (7.2b) and the fabrication check (7.3). So C2's first limb,
+"every output claim traces to one of the input sets", is not machine-checked
+at all today, and on the `U` golden 66 of 270 source claims are reported
+unresolved rather than placed.
+
+**What it would do.** Add a `--use-inference` flag that scores the residue and
+the unexplained output claims with the D4 checkpoint — MiniCheck, MIT
+checkpoint only (Nick, 2026-07-21). Deterministic stays the default, so the
+common path never loads a model.
+
+**Why it was not built.** Nick's ruling of 2026-08-07: run deterministically
+for now, and postpone the dependency to the moment the flag is actually
+wanted. ADR-003 **Decision 3 is therefore deferred rather than declined** —
+the extras group `detangle[verify]` carrying pinned `transformers` + `torch`,
+with the checkpoint pinned by revision hash, downloaded and cached, never
+committed. ADR-001's tooling list does not cover it, so it needs approval
+before any of it is written.
+
+**What has to be decided first.** Decision 3 itself. Two things ride on it
+that are worth deciding together: whether the checkpoint download may happen
+on first use or must be a separate deliberate step (the command is documented
+as "no network"), and what `verify` does when the extra is not installed —
+today's answer would be to say so and stay deterministic, never to fail.
+
+**Consequences while it waits.** `verify` raises `coverage-unscored` per
+document so a run cannot come back clean about claims it never ruled on, and
+the verification report's stage table prints the two absent stages rather than
+omitting them. Phase 7's done-when — catching a deleted, an invented and a
+weakened claim — cannot be met on the invented-claim limb until this lands.
+
+**Depends on:** Decision 3 being ruled.

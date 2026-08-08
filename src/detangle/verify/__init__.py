@@ -8,6 +8,8 @@ The `detangle verify` command composes these once Decision 5 is ruled.
 
 from .claims import DECOMPOSER_VERSION, Anomaly, Claim, Decomposition, decompose
 from .coverage import VERBATIM, Coverage, Match, match
+from .report import CHECKS as REPORT_CHECKS
+from .report import Report, Version
 from .splits import CHECKS as SPLIT_CHECKS
 from .splits import SplitEntry, load_splits
 from .structure import CHECKS as STRUCTURE_CHECKS
@@ -24,7 +26,10 @@ __all__ = [
     "decompose",
     "match",
     "SPLIT_CHECKS",
+    "REPORT_CHECKS",
+    "Report",
     "STRUCTURE_CHECKS",
+    "Version",
     "Document",
     "ForwardUse",
     "Position",

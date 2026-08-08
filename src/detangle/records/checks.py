@@ -120,6 +120,19 @@ class GitBlobs:
             self._head[rel_doc] = _git(self.root, "rev-parse", f"HEAD:{rel_doc}")
         return self._head[rel_doc]
 
+    def commit(self) -> str:
+        """The commit this run read from — half of the step 7.5 record."""
+        return _git(self.root, "rev-parse", "HEAD")
+
+    def live(self, rel_doc: str) -> str:
+        """The blob id of the bytes on disk, tracked or not.
+
+        ``head`` fails on an untracked file; this always answers, which is what
+        a run record needs — it must name the bytes it actually read even when
+        they are not committed yet (plan step 7.5).
+        """
+        return _git(self.root, "hash-object", rel_doc)
+
     def worktree_differs(self, rel_doc: str) -> bool:
         """True when the file on disk is not what HEAD records.
 
@@ -127,8 +140,7 @@ class GitBlobs:
         the two must agree for a para_hash result to mean anything.
         """
         if rel_doc not in self._dirty:
-            live = _git(self.root, "hash-object", rel_doc)
-            self._dirty[rel_doc] = live != self.head(rel_doc)
+            self._dirty[rel_doc] = self.live(rel_doc) != self.head(rel_doc)
         return self._dirty[rel_doc]
 
 
