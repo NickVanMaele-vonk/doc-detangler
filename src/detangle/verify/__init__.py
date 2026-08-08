@@ -11,7 +11,7 @@ from .coverage import VERBATIM, Coverage, Match, match
 from .report import CHECKS as REPORT_CHECKS
 from .report import Report, Version
 from .splits import CHECKS as SPLIT_CHECKS
-from .splits import SplitEntry, load_splits
+from .splits import SplitEntry, for_document, load_splits, stale_splits
 from .structure import CHECKS as STRUCTURE_CHECKS
 from .structure import Document, ForwardUse, Position, Structure, scan
 
@@ -36,5 +36,7 @@ __all__ = [
     "Structure",
     "scan",
     "SplitEntry",
+    "for_document",
     "load_splits",
+    "stale_splits",
 ]

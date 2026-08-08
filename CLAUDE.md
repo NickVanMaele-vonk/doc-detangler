@@ -179,7 +179,7 @@ there.
 
 `registers/` holds canonical data that is **not** a corpus term: human
 rulings whose provenance is a PR thread and a standards clause, not a source
-span. Three registers exist:
+span. Four registers exist:
 
 - `registers/cycles.yaml` — cycle dispositions and entry points
   (criterion 1). Entries are 1:1 with live cycles in the graph; a cycle
@@ -202,6 +202,7 @@ span. Three registers exist:
   and the false alarm would block a required gate. Each module declares the
   checks it raises in a `CHECKS` constant, kept honest by
   `tests/test_checks_declared.py`. Not waivable: `register-parse`, the
+  `split-parse`/`split-schema` and the
   `waiver-*` checks — a malformed register must not excuse itself — and the
   **drift** checks, one pair per derived artifact (`graph-drift`,
   `graph-missing`, `glossary-drift`, `glossary-missing`,
@@ -214,6 +215,19 @@ span. Three registers exist:
   not a third severity: everything left live still blocks. Do **not** file
   an accepted cycle here (ADR-001 D6): that is an approval and permanent,
   and a waiver is a deferral.
+- `registers/claim-splits.yaml` — approved claim boundaries (ADR-003 D1;
+  home ruled by Nick 2026-08-07). Where the decomposer will not guess how to
+  split a damaged span it **flags** it, and the split a human approved lands
+  here for `detangle verify` to execute — the reorder-plan pattern one level
+  down, which is how the harness applies judgment without calling a model.
+  One file for the whole set: claim ids carry their document (`U:hash8:occ:n`),
+  so the per-document view is a filter. Entries and live flags stay 1:1
+  (`split-stale`, warn), scoped to the documents a run decomposed. Overrides
+  apply to the **source only**: rebasing an entry onto the restructured
+  output is inert — 4 of 84 `U` blocks keep their `para_hash` through the
+  restructure — so how a split propagates to the output is unruled and the
+  parts land in the coverage residue meanwhile. **Empty today**: 44 flags on
+  `U`, none ruled, dispositioned by the Decision 7 dry-run.
 
 Registers are canonical inputs to generation, never generated. Do not put a
 register under `concepts/`: records are loaded as `concepts/*.yaml`, and a

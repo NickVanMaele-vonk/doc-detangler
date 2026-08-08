@@ -136,3 +136,48 @@ def test_the_residue_roster_lists_every_unplaced_claim(rendered):
 def test_the_report_names_the_decomposer_version(rendered):
     """§2.8: the decomposer moves the scores, so every report records it."""
     assert f"decomposer `{verify_report.DECOMPOSER_VERSION}`" in rendered
+
+
+# -- the claim-split register (home ruled by Nick 2026-08-07) ----------------
+
+
+def test_the_register_is_read_and_counted_even_when_empty(real):
+    """Zero overrides and no register at all give identical claim lists.
+
+    Only one of those two means nobody has ruled yet, so the run says which.
+    """
+    _, payload = real
+    assert payload["summary"]["claim-split overrides"] == 0
+
+
+def test_the_report_records_the_register_as_a_version_of_the_run(rendered):
+    """The overrides move the claim list, so the report names the blob."""
+    assert "| `registers/claim-splits.yaml` | override register |" in rendered
+    assert "no claim-split overrides (the register is empty)" in rendered
+
+
+def test_a_malformed_register_blocks_the_run_and_cannot_be_waived(tmp_path):
+    """It is not a partial read: nothing downstream may proceed on one."""
+    config = tmp_path / "detangle.toml"
+    config.write_text(
+        (ROOT / "detangle.toml")
+        .read_text(encoding="utf-8")
+        .replace(
+            'claim-splits = "registers/claim-splits.yaml"',
+            'claim-splits = "detangle.toml"',  # real file, not a register
+        ),
+        encoding="utf-8",
+    )
+    buffer = StringIO()
+    with redirect_stdout(buffer):
+        code = main(
+            [
+                "verify", "--root", str(ROOT), "--json", "--config", str(config),
+                "--output", f"U={GOLDEN}",
+            ]
+        )
+    payload = json.loads(buffer.getvalue())
+    assert code == EXIT_FINDINGS
+    assert [f["check"] for f in payload["findings"]] == ["split-parse"]
+    assert payload["waived"] == []
+    assert "placed verbatim" not in payload["summary"]

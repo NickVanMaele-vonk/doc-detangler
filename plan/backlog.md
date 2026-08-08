@@ -431,3 +431,38 @@ omitting them. Phase 7's done-when — catching a deleted, an invented and a
 weakened claim — cannot be met on the invented-claim limb until this lands.
 
 **Depends on:** Decision 3 being ruled.
+
+---
+
+## B-10 — how an approved claim split reaches the restructured output
+
+**Raised:** 2026-08-07, while wiring `registers/claim-splits.yaml` into
+`detangle verify`.
+
+**The gap.** Coverage compares a decomposition of the *source* against a
+decomposition of the *output*. An approved split divides one source claim into
+two, so those two only place if the corresponding output claim is split the
+same way. Nothing does that today: overrides apply to the source only, and the
+parts of a split claim fall to the coverage residue — the same place they
+would have landed unsplit, so the entry buys nothing at stage 1.
+
+**Why the obvious rule fails.** Rebasing an entry's id onto the output
+(`U:hash8:occ:n` → `U-out:hash8:occ:n`) looks mechanical and is almost always
+inert: **4 of 84 `U` source blocks keep their `para_hash` through the
+restructure**, because a block re-emitted with `sec:` and `concept:` markers
+hashes differently. 95% of entries would silently do nothing, and the failure
+would present as an ordinary residue claim rather than as a missed override —
+the worst shape for it to fail in.
+
+**The shape of the fix.** Anchor propagation on the claim's *text* rather than
+its id: an output claim whose text equals the un-split source claim is split
+identically. That is what a split is a ruling about, it stays deterministic,
+and it degrades safely — a claim the restructure reworded does not match, so
+it goes to the residue, where a reworded claim belongs anyway. It is a design
+decision about what an entry means, so it is Nick's.
+
+**Cost while it waits.** Zero today: the register is empty. It becomes real
+the moment the Decision 7 dry-run rules the first flags, because a split claim
+would then read as coverage loss.
+
+**Depends on:** nothing. Decidable now; cheap to build once ruled.

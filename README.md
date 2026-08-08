@@ -79,7 +79,7 @@ If one term appears in more than one input document, then:
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
-| `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3) and `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) *(Phase 3)* |
+| `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3), `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) and `claim-splits.yaml` (approved claim boundaries the decomposer would not guess at, ADR-003 Decision 1 — home ruled by Nick 2026-08-07, empty until the Decision 7 dry-run rules the flags) *(Phase 3, Phase 7)* |
 | `concept-graph.yaml` | Concept dependency + usage edge list (SKOS concept model). Written by `detangle graph` from the concept records and registers, which are the source of truth; never hand-edited *(dependency edges built; usage edges arrive with the bodies in Phase 5)* |
 | *(no `concept-graph.mmd`)* | A whole-set diagram would be one 238-node tangle plus 108 loose dots, so none is committed *(Nick, 2026-08-04)*. The replacement — `detangle graph --mmd <id>`, printing one concept's neighbourhood to paste into a PR comment where GitHub and Azure DevOps render it natively — is **designed, not built**: the flag does not exist and nothing in the package renders Mermaid *(backlog B-6)* |
 | *(no `state/notices.md`)* | Things worth knowing that are not defects — demotion candidates, review dates falling due, authoring debts — are to be generated into `state/notices.md`, committed so new entries show in the PR diff, and deliberately **unguarded**: a stale notices file must never block a PR *(Nick, 2026-08-04)*. **Designed, not built**: no generator exists and no `state/` directory is committed *(backlog B-7)* |
@@ -212,6 +212,16 @@ bytes it was talking about, and the next run has a baseline. `manifest.yaml`
 deliberately: the commit and the blobs date the run, and a clock would make it
 irreproducible.
 
+Where the decomposer cannot confidently split a span it **flags** it rather
+than guessing, and the approved split lands in `registers/claim-splits.yaml`
+(ADR-003 Decision 1; home ruled by Nick 2026-08-07). Judgment is data, reviewed
+by PR and executed by the tool — the reorder-plan pattern one level down, and
+the reason `verify` calls no model even when it is applying human judgment.
+The register is read on every run and its blob goes into the report, because
+the overrides move the claim list as surely as the decomposer version does.
+It is empty today: the decomposer raises 44 flags on `U` and none has been
+ruled, which the Decision 7 dry-run does.
+
 `verify` is **not a CI gate** (ADR-003 Decision 5, reaffirmed with ADR-004
 Decision 7). Every check it raises awaits a human disposition, so blocking a
 merge on one converts a review prompt into a hard stop.
@@ -309,8 +319,9 @@ Each module declares the checks it raises in a `CHECKS` constant, and
 `tests/test_checks_declared.py` reads the slugs back out of the source so the
 declaration cannot drift.
 
-Two families cannot be waived. `register-parse` and the `waiver-*` checks,
-because a malformed register must not excuse itself. And the drift checks —
+Two families cannot be waived. `register-parse`, the claim-split register's
+`split-parse` and `split-schema`, and the `waiver-*` checks, because a
+malformed register must not excuse itself. And the drift checks —
 `graph-drift`, `graph-missing`, `glossary-drift`, `glossary-missing`,
 `restructure-drift`, `restructure-missing`, `report-drift`, `report-missing` —
 because a waiver defers work somebody must do later, and regenerating a derived

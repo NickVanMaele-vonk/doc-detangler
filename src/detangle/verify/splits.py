@@ -28,7 +28,13 @@ An entry replaces exactly one machine artifact:
 Targets use the decomposer's hash-anchored IDs, never line numbers (D10).
 Entries and live flags are meant to stay 1:1, like every register: an entry
 whose target no longer exists is surfaced by ``Decomposition.unused_splits``
-and will be raised as a stale-entry finding by the `verify` command.
+and raised as ``split-stale`` by the `verify` command.
+
+The register lives at ``registers/claim-splits.yaml`` — one file for the whole
+set, ruled by Nick on 2026-08-07. It is canonical data whose provenance is a
+PR thread rather than a corpus span, which is the rule that governs what goes
+in ``registers/``; claim ids already carry their document, so a per-document
+view is a filter rather than a fact the file shape has to supply.
 """
 
 from __future__ import annotations
@@ -38,10 +44,10 @@ from pathlib import Path
 
 import yaml
 
-from ..findings import Finding, error
+from ..findings import Finding, error, warn
 
 #: See ``records.checks.CHECKS`` for why every module declares its slugs.
-CHECKS = frozenset({"split-parse", "split-schema"})
+CHECKS = frozenset({"split-parse", "split-schema", "split-stale"})
 
 CLAIM_ID_PARTS = (4, 5)  # doc:hash8:occ:n and doc:hash8:occ:n/i
 BLOCK_KEY_PARTS = 3  # doc:hash8:occ
@@ -158,4 +164,65 @@ def load_splits(path: Path) -> tuple[list[SplitEntry], list[Finding]]:
     return entries, findings
 
 
-__all__ = ["CHECKS", "SplitEntry", "load_splits"]
+def for_document(entries: list[SplitEntry], code: str) -> list[SplitEntry]:
+    """The entries targeting document ``code``.
+
+    **Source side only, and that is a live gap.** Every flag the decomposer
+    raises is on a source document, so this is where entries are authored; but
+    coverage compares a source decomposition against an *output* one, and a
+    source claim split into two only matches if the output claim is split the
+    same way. Propagating an entry by rebasing its id onto the output does not
+    work: measured on the `U` golden, 4 of 84 source blocks keep their
+    ``para_hash`` through the restructure, because a block re-emitted with
+    section and concept markers hashes differently. So 95% of entries would be
+    silently inert on the output side — worse than not trying, since the
+    failure looks like a residue claim rather than a missed override.
+
+    The rule that would work anchors on the claim's **text** rather than its
+    id, which is what a split is really a ruling about. That is a design
+    decision, not an implementation detail, so it is Nick's: until it is
+    ruled, an entry splits the source and the parts fall to the residue, which
+    is the same place they would have landed unsplit.
+    """
+    return [e for e in entries if e.target.partition(":")[0] == code]
+
+
+def stale_splits(
+    entries: list[SplitEntry], scanned: set[str], unused: set[str], rel: str
+) -> list[Finding]:
+    """Entries this run proved dead, so a ruling and its target stay 1:1.
+
+    Scoped to the documents the run decomposed, for the reason waiver
+    staleness is scoped to the checks the running command owns: a `verify`
+    over ``U`` alone cannot prove an ``S`` entry dead, and the false alarm
+    would land on a register a human curates by hand.
+
+    A warn, not an error. The register is not malformed and no document is
+    wrong — a target moved, which is what happens when the source is corrected
+    (backlog B-1) or the flagging heuristics are recalibrated.
+    """
+    out: list[Finding] = []
+    for entry in entries:
+        doc = entry.target.partition(":")[0]
+        if doc not in scanned or entry.target not in unused:
+            continue
+        out.append(
+            warn(
+                "split-stale",
+                f"{rel}:{entry.target}",
+                f"no {entry.scope} `{entry.target}` in {doc}: the split is "
+                "ruled but its target has moved. Re-anchor it against the "
+                "current decomposition or delete it — a register's entries "
+                "and its live targets stay 1:1",
+            )
+        )
+    return out
+
+
+__all__ = [
+    "CHECKS",
+    "SplitEntry",
+    "for_document",
+    "load_splits",
+    "stale_splits",
+]

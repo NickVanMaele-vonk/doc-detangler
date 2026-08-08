@@ -11,12 +11,16 @@ import subprocess
 from collections import Counter
 from pathlib import Path
 
+from detangle.registers import is_waivable
 from detangle.verify.claims import (
     DECOMPOSER_VERSION,
     decompose,
     split_sentences,
 )
-from detangle.verify.splits import SplitEntry, load_splits
+from detangle.verify.splits import SplitEntry, for_document, load_splits, stale_splits
+
+#: The register's home, ruled by Nick 2026-08-07 — one file for the whole set.
+REL = "registers/claim-splits.yaml"
 
 #: eval/README.md's pinned blob for `U`. If the B-1 source correction lands,
 #: this blob changes and the golden re-baseline updates it here in the same
@@ -230,6 +234,50 @@ splits:
     entries, findings = load_splits(path)
     assert len(entries) == 1
     assert [f.check for f in findings] == ["split-schema"]
+
+
+# -- scoping and staleness (register home ruled by Nick 2026-08-07) ----------
+
+
+def test_entries_are_selected_by_the_document_their_target_names():
+    entries = [
+        _entry(target="U:1a2b3c4d:0:2", into=("U.",)),
+        _entry(target="S:1a2b3c4d:0:2", into=("S.",)),
+        _entry(target="M:1a2b3c4d:0", scope="block", into=("M.",)),
+    ]
+    assert [e.target for e in for_document(entries, "U")] == ["U:1a2b3c4d:0:2"]
+    assert [e.target for e in for_document(entries, "M")] == ["M:1a2b3c4d:0"]
+    assert for_document(entries, "A") == []
+
+
+def test_a_target_that_matched_nothing_is_stale():
+    entry = _entry(target="U:deadbeef:0:1", into=("Never matches.",))
+    findings = stale_splits([entry], {"U"}, {"U:deadbeef:0:1"}, REL)
+    assert [f.check for f in findings] == ["split-stale"]
+    assert findings[0].severity == "warn"
+    assert findings[0].where == f"{REL}:U:deadbeef:0:1"
+
+
+def test_a_document_this_run_did_not_read_cannot_have_a_stale_entry():
+    """The waiver-stale precedent: only the run that could see it may judge it.
+
+    A `verify` over `U` alone says nothing about an `S` entry, and the false
+    alarm would land on a register a human curates by hand.
+    """
+    entry = _entry(target="S:deadbeef:0:1", into=("Not read this run.",))
+    assert stale_splits([entry], {"U"}, {"S:deadbeef:0:1"}, REL) == []
+
+
+def test_an_entry_that_fired_is_not_stale():
+    entry = _entry(target="U:1a2b3c4d:0:2", into=("Fired.",))
+    assert stale_splits([entry], {"U"}, set(), REL) == []
+
+
+def test_a_malformed_register_cannot_excuse_itself():
+    """`split-parse`/`split-schema` join `register-parse` in NOT_WAIVABLE."""
+    assert not is_waivable("split-parse")
+    assert not is_waivable("split-schema")
+    assert is_waivable("split-stale")  # a moved target is real, deferrable work
 
 
 # -- the build-step gate: the pinned `U` blob --------------------------------
