@@ -75,12 +75,17 @@ GLOSSARY_PLACEMENT = "glossary"
 #: banner sentence *describing* the marker can never be one.
 MARKER = re.compile(r"^<!--\s*concept:([a-z0-9][a-z0-9-]*):(start|end)\s*-->$")
 
-#: Any full-line HTML comment — apparatus inside a block, stripped from prose.
-COMMENT_LINE = re.compile(r"^<!--.*-->$")
+#: Any HTML comment span — apparatus, stripped from prose before matching.
+#: DOTALL because a human's comment may span lines within a block; non-greedy
+#: so ``a <!-- x --> b <!-- y --> c`` loses only the comments, never the text
+#: between them. (A comment spanning a *blank line* spans blocks and cannot
+#: be stripped here — the same limit the verify scanner has.)
+COMMENT_SPAN = re.compile(r"<!--.*?-->", re.DOTALL)
 
 ALIASES_PREFIX = "**Also known as:**"
 GAP_NOTE_PREFIX = "> **Not defined in the corpus.**"
-BRIDGING_PREFIXES = ("<!-- bridging:", "> **Forward reference")
+BRIDGING_MARKER = "<!-- bridging:"
+BRIDGING_FALLBACK = "> **Forward reference"
 
 #: Wrap width for the folded ``definition: >-`` scalar: 77-character lines at
 #: 2-space indent, the style every existing record carries.
@@ -102,14 +107,9 @@ class Entry:
 
     @property
     def prose(self) -> str:
-        """The definition text: blocks minus comment lines, whitespace-flat."""
-        lines = [
-            line
-            for block in self.prose_blocks
-            for line in block.splitlines()
-            if not COMMENT_LINE.match(line.strip())
-        ]
-        return " ".join(" ".join(lines).split())
+        """The definition text: blocks minus comment spans, whitespace-flat."""
+        text = " ".join(COMMENT_SPAN.sub(" ", block) for block in self.prose_blocks)
+        return " ".join(text.split())
 
 
 @dataclass
@@ -131,11 +131,16 @@ class Intent:
 
 
 def _classify(block: str) -> str:
-    """What a block inside an entry is, judged with marker lines stripped."""
+    """What a block inside an entry is, judged with comment spans stripped.
+
+    The bridging note is recognised by its marker before stripping — the
+    marker is the generated identity (criterion 1 clause 2), the blockquote
+    prefix only a fallback for a hand-repaired note that lost it.
+    """
+    if BRIDGING_MARKER in block:
+        return "bridging"
     lines = [
-        line
-        for line in block.splitlines()
-        if line.strip() and not COMMENT_LINE.match(line.strip())
+        line for line in COMMENT_SPAN.sub(" ", block).splitlines() if line.strip()
     ]
     first = lines[0].strip() if lines else ""
     if not first:
@@ -146,7 +151,7 @@ def _classify(block: str) -> str:
         return "aliases"
     if first.startswith(GAP_NOTE_PREFIX):
         return "gap-note"
-    if any(first.startswith(p) for p in BRIDGING_PREFIXES):
+    if first.startswith(BRIDGING_FALLBACK):
         return "bridging"
     return "prose"
 

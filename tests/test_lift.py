@@ -192,6 +192,22 @@ def test_deleting_prose_mirrors_null_and_drops_the_owned_span(mini_repo, capsys)
     assert [s["origin"] for s in data["source"]] == ["corpus"]
 
 
+def test_a_multiline_comment_in_an_entry_is_not_prose(mini_repo, capsys):
+    """GHAS review on PR #138: comments are stripped as spans, not lines, so
+    a comment spanning lines inside a block cannot leak into the lift."""
+    noted = GLOSSARY.replace(
+        "A widget is a device that emits SB-01 alerts",
+        "A widget <!-- reviewer\nnote spanning lines --> is a device that "
+        "emits <!-- inline --> SB-01 alerts",
+    )
+    seed(mini_repo, noted)
+    code, payload = run(mini_repo, "--check", capsys=capsys)
+    # Comment innards gone, the text around the inline comment kept — the
+    # prose equals the record's definition, so there is nothing to lift.
+    assert code == EXIT_CLEAN
+    assert payload["findings"] == []
+
+
 def test_a_changed_heading_is_flagged_never_written(mini_repo, capsys):
     seed(mini_repo, GLOSSARY.replace("## widget", "## Widget (Device)"))
     code, payload = run(mini_repo, capsys=capsys)
