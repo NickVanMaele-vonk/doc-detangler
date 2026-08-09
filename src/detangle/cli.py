@@ -13,7 +13,7 @@ import sys
 import traceback
 from pathlib import Path
 
-from . import __version__, graph, registers, restructure, tables, verify, views
+from . import __version__, graph, lift, registers, restructure, tables, verify, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_FINDINGS, EXIT_USAGE, UsageError, report
 from .graph import emit
@@ -237,6 +237,66 @@ def cmd_generate(args: argparse.Namespace) -> int:
     summary = {
         **glossary.summary,
         "checked" if args.check else "wrote": rel,
+        "waived": len(waived),
+    }
+    return report(findings, args.json, summary, waived)
+
+
+def cmd_lift(args: argparse.Namespace) -> int:
+    """The glossary drift lint (D9 amendment) — the fourth CI gate.
+
+    ``glossary.md`` is canonical for its definition prose; each record holds a
+    derived copy. A write run mirrors edited prose into the records (plus the
+    mechanical lineage span, ADR-004); ``--check`` reports every record the
+    mirror would change, which is the gate `generate --check` could not be —
+    byte-comparing a human-edited file is incoherent, comparing the derived
+    copy against it is not.
+    """
+    root = find_root(Path(args.root) if args.root else None)
+    config = Config.load(root, Path(args.config) if args.config else None)
+
+    records, findings = load_records(config.directory("concepts"), root)
+    register, register_findings = load_cycles(config.directory("registers"), root)
+    findings.extend(register_findings)
+    concept_graph, build_findings = graph.build(records, register)
+    findings.extend(build_findings)
+
+    glossary_path = config.path("glossary")
+    rel = str(glossary_path.relative_to(root))
+    if not glossary_path.is_file():
+        raise UsageError(
+            f"{rel} does not exist — there is nothing to lift; "
+            "`detangle generate` seeds it"
+        )
+
+    entries, parse_findings = lift.parse_entries(
+        glossary_path.read_text(encoding="utf-8"), rel
+    )
+    findings.extend(parse_findings)
+    intents, compare_findings = lift.compare(
+        entries, concept_graph, rel, lift.glossary_blob(root, rel)
+    )
+    findings.extend(compare_findings)
+
+    lifted: list[str] = []
+    if args.check:
+        findings.extend(lift.check(intents))
+    else:
+        for intent in intents:
+            write_findings = lift.write_record(intent)
+            findings.extend(write_findings)
+            if not write_findings:
+                lifted.append(intent.record.id)
+
+    ran = lift.CHECKS | records_load.CHECKS | registers.CYCLE_CHECKS
+    ran |= BUILD_CHECKS | registers.WAIVER_CHECKS
+    findings, waived = _waived(config, root, findings, ran)
+
+    summary = {
+        "entries": len(entries),
+        "drift" if args.check else "lifted": len(intents)
+        if args.check
+        else ", ".join(lifted) or "nothing — records already current",
         "waived": len(waived),
     }
     return report(findings, args.json, summary, waived)
@@ -626,6 +686,31 @@ def build_parser() -> argparse.ArgumentParser:
         help="overwrite an existing glossary.md, discarding any human edits",
     )
     generate.set_defaults(func=cmd_generate)
+
+    lift_cmd = sub.add_parser(
+        "lift",
+        help="mirror glossary.md edits into the concept records",
+        description=(
+            "The glossary drift lint (ruling of 2026-08-04): definition "
+            "prose is canonical in glossary.md, and each record carries a "
+            "derived copy. Lifts edited prose between the concept markers "
+            "into the record's definition field, maintaining the authored "
+            "lineage span (ADR-004); assurance stays a human's to write. "
+            "--check reports every record the mirror would change instead "
+            "of writing, and is the fourth CI gate. Ontology drift — a "
+            "heading or alias line disagreeing with the record — is always "
+            "reported, never written."
+        ),
+    )
+    lift_cmd.add_argument("--json", action="store_true", help="machine-readable")
+    lift_cmd.add_argument("--config", help="config file (default: detangle.toml)")
+    lift_cmd.add_argument("--root", help="repository root (default: nearest ancestor)")
+    lift_cmd.add_argument(
+        "--check",
+        action="store_true",
+        help="do not write; fail if any record differs from what a lift would write",
+    )
+    lift_cmd.set_defaults(func=cmd_lift)
 
     restructure_cmd = sub.add_parser(
         "restructure",

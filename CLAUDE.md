@@ -67,6 +67,14 @@ python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/detangle generate            # seeded glossary.md; refuses to
                                        # overwrite it (exit 2) — --force only
 .venv/bin/detangle generate --check    # read-only compare against a regeneration
+.venv/bin/detangle lift                # mirror glossary.md edits into the
+                                       # records: definition prose + the
+                                       # authored lineage span. Assurance is
+                                       # never written — a lifted definition
+                                       # with no author is a finding a human
+                                       # resolves in the same PR
+.venv/bin/detangle lift --check        # report what a lift would change;
+                                       # the fourth CI gate
 .venv/bin/detangle restructure --plan <plan.yaml> --out <doc.md>
                                        # execute a reorder plan (ADR-002);
                                        # refuses to write from a plan with an
@@ -100,9 +108,9 @@ error. **`0` and `1` are verdicts; `2` is the absence of one** — never read `2
 as "no findings". Any unexpected exception exits `2`, never `1`, because branch
 policy reads `1` as a completed run that found things. Full table in the README.
 
-`.github/workflows/ci.yml` runs three jobs on every PR to `main` — tests+lint,
-`validate`, and `graph --check` — each as its own job, so a red run names the
-gate that failed. `verify` is deliberately **not** a gate (ADR-003 D5,
+`.github/workflows/ci.yml` runs four jobs on every PR to `main` — tests+lint,
+`validate`, `graph --check`, and `lift --check` — each as its own job, so a
+red run names the gate that failed. `verify` is deliberately **not** a gate (ADR-003 D5,
 reaffirmed by ADR-004 D7): every check it raises awaits a human disposition, so
 blocking merge on one turns a review prompt into a hard stop. It runs at
 `param-full-verify-cadence` — every re-run, release tags additionally — not

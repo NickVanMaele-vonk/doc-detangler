@@ -57,7 +57,9 @@ def test_entries_follow_the_graph_not_the_alphabet(mini_repo, capsys):
     mini_repo.write_record(id="omega", term="omega", **GLOSSARY)
     run(mini_repo, capsys=capsys)
     body = text(mini_repo)
-    assert body.index("<!-- concept:omega -->") < body.index("<!-- concept:alpha -->")
+    assert body.index("<!-- concept:omega:start -->") < body.index(
+        "<!-- concept:alpha:start -->"
+    )
 
 
 def test_a_document_placed_record_is_not_in_the_glossary(mini_repo, capsys):
@@ -96,12 +98,17 @@ def test_aliases_are_recorded_in_the_entry(mini_repo, capsys):
     assert "**Also known as:** thingummy, WDG" in text(mini_repo)
 
 
-def test_every_entry_carries_its_record_id_as_a_marker(mini_repo, capsys):
-    """D9's comment round-trip: the anchor is a marker, never a line offset."""
+def test_every_entry_is_delimited_by_its_record_id_markers(mini_repo, capsys):
+    """D9's comment round-trip, plus the lift's delimiters: start before the
+    heading, end after the entry's last line — the bodies' scheme."""
     mini_repo.write_record(**GLOSSARY)
     run(mini_repo, capsys=capsys)
     body = text(mini_repo)
-    assert body.index("<!-- concept:widget -->") < body.index("## widget")
+    assert (
+        body.index("<!-- concept:widget:start -->")
+        < body.index("## widget")
+        < body.index("<!-- concept:widget:end -->")
+    )
 
 
 def test_the_accepted_cycle_marks_its_forward_reference(mini_repo, capsys):
@@ -120,9 +127,12 @@ def test_the_accepted_cycle_marks_its_forward_reference(mini_repo, capsys):
     _, payload = run(mini_repo, capsys=capsys)
     assert payload["summary"]["forward_refs"] == 1
     body = text(mini_repo)
-    assert body.index("<!-- concept:beta -->") < body.index("<!-- concept:alpha -->")
+    beta = body.index("<!-- concept:beta:start -->")
+    assert beta < body.index("<!-- concept:alpha:start -->")
     marker = body.index("<!-- bridging:forward-ref -->")
-    assert body.index("<!-- concept:beta -->") < marker < body.index("concept:alpha")
+    # The bridging note is entry apparatus, inside beta's own delimiters.
+    assert beta < marker < body.index("<!-- concept:beta:end -->")
+    assert marker < body.index("concept:alpha")
     assert "`ab-contrast`" in body
 
 

@@ -87,9 +87,11 @@ subject to the phase-dependent applicability rules in
   structural guarantees would rest on re-parsing prose, the failure D9 exists
   to prevent. Markers are stamped by the tool, never written by an author.
 
-  Prospective: the direction flips per document as each comes to exist, and
-  for the glossary when the drift lint that guards it exists. Until then every
-  definition lives in its record and the committed `glossary.md` is the seed.
+  Prospective: the direction flips per document as each comes to exist. For
+  the glossary it flipped on 2026-08-08, when the drift lint was built:
+  `detangle lift` mirrors edited prose into the record's derived copy (with
+  the mechanical `authored` lineage span; assurance stays a human's), and
+  `lift --check` gates CI. For `U`, `S` and `M` it still waits on the bodies.
 - **The glossary is subject to this rubric.** As the first document of the
   set it must satisfy all eight content criteria (1–8) itself, with the
   modifications noted per criterion; criterion 9 applies to the set's

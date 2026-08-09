@@ -77,10 +77,10 @@ If one term appears in more than one input document, then:
 | `./plan/adr-003-verification-harness.md` | Phase 7 losslessness harness: decomposition, coverage, fabrication, structure *(Decisions 1, 2, 4, 5 ruled and built; 3 deferred to backlog B-9; 6 and 7 proposals)* |
 | `./plan/adr-004-iterative-rerun.md` | The operating model: the detangle run is a repeatable campaign, and **assurance** rather than corpus anchoring carries definitional strength *(all decisions ruled 2026-08-07; the normative-document edits for Decisions 1 and 3 are outstanding)* |
 | `./plan/backlog.md` | Parked candidate work, `B-n`. Non-normative — nothing in it is approved or scheduled |
-| `src/detangle/` | The toolchain: `validate`, `graph`, `generate`, `restructure` and `verify` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6); `verify` runs deterministically and its two model-dependent stages are **not built** (backlog B-9) |
-| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check` — one job per gate *(built)*. The fourth gate will be the Phase 10 drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent |
+| `src/detangle/` | The toolchain: `validate`, `graph`, `generate`, `lift`, `restructure` and `verify` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated and since 2026-08-08 is mirrored into the records by `lift`; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6); `verify` runs deterministically and its two model-dependent stages are **not built** (backlog B-9) |
+| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check`, `detangle lift --check` — one job per gate *(built)*. The fourth gate is the glossary drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent — `lift --check` compares the records' derived copies against it instead |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
-| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it becomes the **fourth editable document**: humans edit it directly, the records mirror its definitions, and the guard reorders it when an edit breaks topological order — effective once the drift lint that guards it exists |
+| `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it is the **fourth editable document**: humans edit it directly and `detangle lift` mirrors its definitions into the records, guarded by `lift --check` in CI (built 2026-08-08). The guard's *reorder* of an out-of-order entry remains Phase 10; today `lift-order` flags it for a human |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
 | `concepts/` | Canonical concept records — one YAML file per corpus-derived business term, and nothing else *(Phase 3)* |
 | `registers/` | Canonical data that is not a corpus term: `cycles.yaml` (cycle dispositions, criterion 1), `reference-terms.md` (regulator- and industry-owned terms, criterion 3), `waivers.yaml` (findings dispositioned but not yet fixable, step 3.9) and `claim-splits.yaml` (approved claim boundaries the decomposer would not guess at, ADR-003 Decision 1 — home ruled by Nick 2026-08-07, empty until the Decision 7 dry-run rules the flags) *(Phase 3, Phase 7)* |
@@ -127,16 +127,23 @@ records' canonical `depends_on`, rolls up `registers/cycles.yaml`, and writes
 the derived `concept-graph.yaml` — reading order, cycles, orphans, dead
 entries, and reachability queries for impact analysis. **`detangle generate`**
 seeded `glossary.md` from the records in that graph's topological order, with
-a `<!-- concept:<id> -->` marker before every entry so a comment resolves to
-the record behind it (D9).
+every entry delimited by `concept:<id>:start`/`:end` markers (the bodies'
+scheme, restamped 2026-08-08) so a comment resolves to the record behind it
+(D9) and the lift knows where a definition's prose ends.
 
 That file is now the starting point rather than the output: from 2026-08-04
 `glossary.md` is the fourth **editable** document, its 78 definitions
-canonical in the file and mirrored back into the records. So `generate`
-**refuses to overwrite it** — a second run would discard human edits that
-nothing else holds a copy of, and the drift lint that would mirror them into
-the records does not exist yet. `--check` still compares, and `--force`
-re-seeds deliberately (it will be needed when B-1 rewrites the corpus). `index.md` still
+canonical in the file and mirrored back into the records. The mirror is
+**`detangle lift`** (built 2026-08-08): it lifts edited prose between an
+entry's markers into the record's derived `definition` field, maintains the
+mechanical lineage span — `origin: authored`, anchored by the prose's
+`para_hash` and the glossary's git blob (ADR-004) — and never writes
+assurance, ontology (`term`, `aliases`), or `depends_on`: a lifted definition
+with no named author, or a heading/alias line contradicting its record, is a
+finding a human resolves in the same PR. `lift --check` reports what a lift
+would change and is the fourth CI gate. `generate` still **refuses to
+overwrite** the file — a re-seed discards human edits deliberately, `--force`
+only (it will be needed when B-1 rewrites the corpus). `index.md` still
 needs the document bodies, which carry the definition site of the other 94
 defined terms (criterion 4). The Mermaid render is no longer a file at all —
 it became an on-demand command, since 359 nodes never made a readable
@@ -259,6 +266,9 @@ python3 -m venv .venv
                                        # overwrite it (exit 2) unless --force
 .venv/bin/detangle generate --check    # read-only: compare against a regeneration
 
+.venv/bin/detangle lift                # mirror glossary.md edits into the records
+.venv/bin/detangle lift --check        # CI: fail while the two disagree
+
 .venv/bin/detangle restructure --plan eval/golden/uce.plan.yaml \
                     --out work/uce.md   # execute a reorder plan (ADR-002)
 .venv/bin/detangle restructure --plan … --out … --report work/report/
@@ -345,7 +355,7 @@ open, which is why a waived finding is still printed on every run.
 
 ### In branch policy
 
-`.github/workflows/ci.yml` runs three gates on every PR to `main`, one job
+`.github/workflows/ci.yml` runs four gates on every PR to `main`, one job
 each, so a red run names which gate failed and each can be marked required
 separately:
 
@@ -354,24 +364,28 @@ separately:
 | `tests and lint` | `ruff check .`, `python -m pytest` | the toolchain itself |
 | `detangle validate` | `detangle validate --json` | the **canonical** records against `samples/` — spans, blob ids, verbatim definition runs, conflict quotes, links, edge targets, one definition site — less whatever `registers/waivers.yaml` covers |
 | `detangle graph --check` | `detangle graph --check --json` | the **derived** `concept-graph.yaml` against the canonical records and registers |
+| `detangle lift --check` | `detangle lift --check --json` | `glossary.md` against the records' **derived** definition copies — plus entry order, marker hygiene, and ontology drift (a heading or alias line contradicting its record) |
 
-A fourth job, `detangle generate --check`, was designed to guard
-`glossary.md` the same way, and the command is built. It is **not** in the
-workflow, and after Nick's ruling of 2026-08-04 it will not be: the glossary
-becomes a human-edited document, and byte-comparing a file people edit is
-incoherent. A drift lint replaces it — new orphans, inline redefinitions,
-broken topological order, placement crossings — and that lint is what
-eventually becomes the fourth gate.
+The fourth gate was originally designed as `detangle generate --check`, and
+that command is still built. It is **not** in the workflow, and after Nick's
+ruling of 2026-08-04 it never will be: the glossary is a human-edited
+document, and byte-comparing a file people edit is incoherent. The glossary
+drift lint replaced it (2026-08-08): instead of comparing the file against a
+regeneration, `lift --check` compares the records' derived copies against the
+canonical file — the same regenerate-and-compare idea, pointed the direction
+the D9 amendment turned it. The body-facing drift checks — new orphans,
+inline redefinitions, placement crossings — remain Phase 10 work and arrive
+with the bodies.
 
-The validate and graph gates are separate and neither runs the other; chaining them in
-one process would collapse two independent verdicts into one exit code. Order
-does not matter — they share no state and `--check` never writes. Neither
-subsumes the other: records can be individually sound while the committed
+The gates are separate and none runs another; chaining them in
+one process would collapse independent verdicts into one exit code. Order
+does not matter — they share no state and `--check` never writes. None
+subsumes another: records can be individually sound while the committed
 graph is stale, and a byte-identical graph says nothing about whether a
 definition still matches its source paragraph.
 
-`validate` needs `pandoc`, because `para_hash` is *defined* as a hash of
-pandoc's plain-text rendering — its version is part of the provenance
+`validate` and `lift` need `pandoc`, because `para_hash` is *defined* as a
+hash of pandoc's plain-text rendering — its version is part of the provenance
 contract, so the workflow echoes it. `graph --check` reads YAML only and needs
 no pandoc.
 

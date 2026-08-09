@@ -319,13 +319,13 @@ def test_the_real_reading_order_holds_except_one_known_collision():
     limb 2 did its job: no definition in `U` is needed before the glossary
     that precedes it.
 
-    The one finding is a **sense collision, not a structural defect**: the
-    glossary's generated banner says `detangle generate --check` was withdrawn
-    "as a CI gate", and `gate` is a record whose bare surface is the English
-    word. Its disposition is Nick's — the 2026-07-30 word-overload ruling says
-    a bare overloaded word gets no head record, which would remove the surface;
-    the alternative is a waiver. Pinned here so the number cannot drift while
-    it waits.
+    A third result used to be pinned here: a sense collision, where the
+    banner's phrase "withdrawn as a CI gate" matched the record `gate`, whose
+    bare surface is the English word. The 2026-08-08 banner rewrite (for the
+    lift) removed the phrase, which resolves that collision without a ruling
+    — the forward list is now genuinely empty. If a bare "gate" ever appears
+    in prose again the collision returns, and its disposition is still
+    Nick's (word-overload ruling, 2026-07-30).
     """
     result = scan(
         [
@@ -335,9 +335,7 @@ def test_the_real_reading_order_holds_except_one_known_collision():
         live_graph(),
     )
     assert len(result.defined_at) == 113  # 78 glossary + 35 in the golden
-    assert [(f.concept, f.used_at.doc) for f in result.forward] == [
-        ("gate", "glossary")
-    ]
+    assert [(f.concept, f.used_at.doc) for f in result.forward] == []
     assert [f.concept for f in result.exempt] == ["identity-driven-coordination"]
     assert result.exempt[0].inside == "liquidity-driven-reaction"
     assert len(result.no_site) == 59  # 172 defined, less the 113 sited

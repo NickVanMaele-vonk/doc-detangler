@@ -55,11 +55,14 @@ def real() -> tuple[int, dict]:
     return code, json.loads(buffer.getvalue())
 
 
-def test_the_golden_run_reports_both_known_findings(real):
+def test_the_golden_run_reports_the_known_finding(real):
+    """`coverage-unscored` alone: the once-pinned `forward-use` was the
+    banner's "CI gate" phrase colliding with the record `gate`, and the
+    2026-08-08 banner rewrite removed the phrase (test_verify_structure)."""
     code, payload = real
     assert code == EXIT_FINDINGS
     checks = sorted(f["check"] for f in payload["findings"])
-    assert checks == ["coverage-unscored", "forward-use"]
+    assert checks == ["coverage-unscored"]
 
 
 def test_the_summary_says_fabrication_was_not_checked(real):
@@ -73,7 +76,7 @@ def test_the_summary_carries_the_measured_numbers(real):
     summary = payload["summary"]
     assert summary["placed verbatim"] == 204
     assert summary["unscored"] == 66
-    assert summary["forward references"] == 1
+    assert summary["forward references"] == 0
     assert summary["exempt"] == 1
     assert summary["reading order"] == "glossary → U"
 

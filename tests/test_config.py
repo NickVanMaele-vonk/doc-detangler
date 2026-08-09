@@ -33,9 +33,14 @@ def test_the_registry_resolves_both_input_sets(mini_repo):
     """Two input sets (Nick, 2026-08-05): components and references."""
     registry = Config.load(mini_repo.root).registry()
     assert registry.reference_docs == {"samples/analytical.md"}
+    # The glossary registers as a span target — authored wording is canonical
+    # in it (D9 amendment), so a lifted span may cite it — but it joins
+    # neither input set: not restructured, not counted, not a reference.
     assert registry.registered_docs == registry.component_docs | {
-        "samples/analytical.md"
+        "samples/analytical.md",
+        "glossary.md",
     }
+    assert registry.role("glossary.md") == "glossary"
     assert registry.placement_values == ("glossary", "UCE", "SBSP", "MCL")
     assert registry.flags == ("orphan", "conflict", "A")
     assert registry.role("samples/mini.md") == "component"

@@ -451,9 +451,9 @@ def check_span_docs(rec: Record, registry: DocumentRegistry) -> list[Finding]:
                 error(
                     "span-doc-unknown",
                     rec.where(where),
-                    f"{doc!r} is not registered in detangle.toml [documents] "
-                    "— spans may only cite the detangle set or the reference "
-                    "set",
+                    f"{doc!r} is not registered in detangle.toml — spans may "
+                    "only cite the detangle set, the reference set, or the "
+                    "glossary (authored wording's definition site)",
                 )
             )
     return out
