@@ -15,6 +15,7 @@ import networkx as nx
 from ..findings import Finding, error, warn
 from ..records import Record
 from ..registers import CycleEntry, CycleRegister
+from .usage import UsageEdge
 
 #: See ``records.checks.CHECKS``.
 CHECKS = frozenset(
@@ -39,6 +40,13 @@ class ConceptGraph:
     records: dict[str, Record]
     register: CycleRegister
     cycles: list[tuple[str, ...]] = field(default_factory=list)
+    #: Usage edges from the bodies in `[bodies]` (step 3.7), plus what was
+    #: scanned to get them — `bodies` maps scanned code → path, `components`
+    #: names the full detangle set so the emitted file can state which
+    #: components have no body yet.
+    usage: list[UsageEdge] = field(default_factory=list)
+    bodies: dict[str, str] = field(default_factory=dict)
+    components: tuple[str, ...] = ()
 
     # -- derived views -----------------------------------------------------
 
@@ -79,9 +87,22 @@ class ConceptGraph:
 
         The impact-analysis question of Phase 3.7: if this definition changes,
         which definitions have to be re-read? Answered against the dependency
-        edges; usage edges widen it to document sections once bodies exist.
+        edges; ``using_sections`` widens it to document sections.
         """
         return sorted(nx.ancestors(self.graph, node))
+
+    def using_sections(self, node: str) -> list[str]:
+        """Stamped sections whose prose uses ``node`` or anything it impacts.
+
+        The other half of the impact question: a definition change is re-read
+        not only in the definitions that depend on it but in every section
+        that uses one of them. Empty until the section's body is registered
+        in ``[bodies]``.
+        """
+        affected = set(self.impact(node)) | {node}
+        return sorted(
+            {f"{e.doc}#{e.section}" for e in self.usage if e.term in affected}
+        )
 
     def requires(self, node: str) -> list[str]:
         """Everything that must be defined before ``node`` can be read."""
@@ -124,7 +145,11 @@ class ConceptGraph:
 
 
 def build(
-    records: list[Record], register: CycleRegister
+    records: list[Record],
+    register: CycleRegister,
+    usage: list[UsageEdge] | None = None,
+    bodies: dict[str, str] | None = None,
+    components: tuple[str, ...] = (),
 ) -> tuple[ConceptGraph, list[Finding]]:
     """Assemble the graph and report what only the graph can see.
 
@@ -158,7 +183,15 @@ def build(
                 )
 
     cycles = _live_cycles(graph)
-    cg = ConceptGraph(graph=graph, records=by_id, register=register, cycles=cycles)
+    cg = ConceptGraph(
+        graph=graph,
+        records=by_id,
+        register=register,
+        cycles=cycles,
+        usage=sorted(set(usage or [])),
+        bodies=dict(bodies or {}),
+        components=tuple(components),
+    )
     findings.extend(check_cycles(cg))
     return cg, findings
 

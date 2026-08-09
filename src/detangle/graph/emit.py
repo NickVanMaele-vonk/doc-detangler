@@ -35,12 +35,34 @@ HEADER = """\
 # one unit and its entry point placed first (criterion 1, clause 2).
 """
 
-USAGE_NOTE = """\
-  # Usage edges (C11, step 3.7) are extracted from the five document bodies,
-  # which do not exist until Phase 5. Empty is the correct value now, not a
-  # placeholder: the extraction that fills it is the same one the steady-state
-  # drift lint re-runs on every later body edit (D10).
-"""
+def _usage_note(bodies: dict[str, str], components: tuple[str, ...]) -> str:
+    """The provenance comment above the usage list — states scan coverage.
+
+    A component with no registered body contributes no edges, and that
+    absence must be legible in the file itself: absent is not empty, and the
+    set-wide dead-entry sweep stays off until every component has a body
+    (step 3.7, the sweep's blocker).
+    """
+    lines = [
+        "  # Usage edges (C11, step 3.7): which stamped section of which",
+        "  # component body uses which term. Prose only — text inside",
+        "  # concept definition blocks is excluded, because a definition's",
+        "  # uses are its record's canonical depends_on (Nick, 2026-08-08).",
+        "  # Extracted from the bodies in detangle.toml [bodies]; derived",
+        "  # data (D10), regenerated on every run, never hand-maintained.",
+    ]
+    if bodies:
+        scanned = ", ".join(f"{c}={bodies[c]}" for c in sorted(bodies))
+        lines.append(f"  # Scanned: {scanned}.")
+    absent = sorted(set(components) - set(bodies))
+    if absent:
+        lines.append(
+            f"  # No body yet: {', '.join(absent)} — absent, not empty; the"
+        )
+        lines.append(
+            "  # dead-entry sweep waits until every component has a body."
+        )
+    return "\n".join(lines) + "\n"
 
 
 def render(cg: ConceptGraph) -> str:
@@ -66,6 +88,10 @@ def render(cg: ConceptGraph) -> str:
     edges = [
         {"from": u, "to": v} for u, v in sorted(cg.graph.edges())
     ]
+    usage = [
+        {"doc": e.doc, "section": e.section, "term": e.term}
+        for e in sorted(set(cg.usage))
+    ]
     nodes = [
         {
             "id": rid,
@@ -84,7 +110,7 @@ def render(cg: ConceptGraph) -> str:
         "counts": {
             "nodes": len(nodes),
             "dependency_edges": len(edges),
-            "usage_edges": 0,
+            "usage_edges": len(usage),
             "cycles": len(cycles),
             "orphans": len(orphans),
             "undefined": len(cg.undefined()),
@@ -100,8 +126,8 @@ def render(cg: ConceptGraph) -> str:
     parts = [HEADER, _dump(head), "\nedges:\n  dependency:\n"]
     parts.append(_dump(edges, indent=4) if edges else "    []\n")
     parts.append("  usage:\n")
-    parts.append(USAGE_NOTE)
-    parts.append("    []\n")
+    parts.append(_usage_note(cg.bodies, cg.components))
+    parts.append(_dump(usage, indent=4) if usage else "    []\n")
     return "".join(parts)
 
 

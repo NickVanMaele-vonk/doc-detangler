@@ -120,6 +120,35 @@ class Config:
             raise UsageError(f"{CONFIG_NAME}: [documents] has no {key!r} list")
         return codes
 
+    def bodies(self) -> dict[str, str]:
+        """``[bodies]``: component code → restructured body path (step 3.7).
+
+        The extraction source for the graph's usage edges. Only bodies that
+        exist are listed; an absent entry is the normal "no body yet" state,
+        not an error — the emitted graph states which components were scanned
+        and which have no body. Keys must be component codes: reference
+        documents are read-only and never scanned (C12).
+        """
+        section = self.data.get("bodies")
+        if section is None:
+            return {}
+        if not isinstance(section, dict):
+            raise UsageError(f"{CONFIG_NAME}: [bodies] is not a table")
+        components = set(self._codes("components"))
+        out: dict[str, str] = {}
+        for code, path in section.items():
+            if code not in components:
+                raise UsageError(
+                    f"{CONFIG_NAME}: [bodies] names {code!r}, which is not a "
+                    "component code — only the detangle set has bodies to scan"
+                )
+            if not isinstance(path, str):
+                raise UsageError(
+                    f"{CONFIG_NAME}: [bodies] {code} wants a path string"
+                )
+            out[code] = path
+        return out
+
     def registry(self) -> DocumentRegistry:
         """The two input sets (Nick, 2026-08-05), validated as a closed whole.
 
