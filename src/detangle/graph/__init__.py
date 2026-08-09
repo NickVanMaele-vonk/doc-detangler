@@ -8,5 +8,6 @@ check is stated in. Reading order is therefore a topological sort of the
 
 from .build import ConceptGraph, build
 from .emit import render
+from .usage import UsageEdge
 
-__all__ = ["ConceptGraph", "build", "render"]
+__all__ = ["ConceptGraph", "UsageEdge", "build", "render"]

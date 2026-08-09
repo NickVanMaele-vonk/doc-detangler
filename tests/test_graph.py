@@ -254,7 +254,12 @@ def test_cli_impact_query(mini_repo, capsys):
     chain(mini_repo)
     code, payload = run(mini_repo, "--impact", "gamma", capsys=capsys)
     assert code == EXIT_CLEAN
-    assert payload == {"node": "gamma", "impact": ["alpha", "beta"], "count": 2}
+    assert payload == {
+        "node": "gamma",
+        "impact": ["alpha", "beta"],
+        "count": 2,
+        "using_sections": [],
+    }
 
 
 def test_a_query_never_writes_the_graph(mini_repo, capsys):

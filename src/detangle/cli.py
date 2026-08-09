@@ -17,6 +17,7 @@ from . import __version__, graph, registers, restructure, tables, verify, views
 from .config import Config, find_root
 from .findings import EXIT_CLEAN, EXIT_FINDINGS, EXIT_USAGE, UsageError, report
 from .graph import emit
+from .graph import usage as graph_usage
 
 # `graph` re-exports the *function* `build`, which shadows the submodule.
 from .graph.build import CHECKS as BUILD_CHECKS
@@ -122,7 +123,35 @@ def cmd_graph(args: argparse.Namespace) -> int:
     register, register_findings = load_cycles(config.directory("registers"), root)
     findings.extend(register_findings)
 
-    concept_graph, build_findings = graph.build(records, register)
+    bodies = config.bodies()
+    usage_edges: list[graph_usage.UsageEdge] = []
+    if bodies:
+        index, index_findings = graph_usage.build_index(records)
+        findings.extend(index_findings)
+        known = {rec.id for rec in records}
+        for code in sorted(bodies):
+            body_path = root / bodies[code]
+            if not body_path.is_file():
+                raise UsageError(
+                    f"[bodies] {code} = {bodies[code]!r}: no such file"
+                )
+            body_edges, body_findings = graph_usage.extract(
+                body_path.read_text(encoding="utf-8"),
+                code,
+                index,
+                known,
+                bodies[code],
+            )
+            usage_edges.extend(body_edges)
+            findings.extend(body_findings)
+
+    concept_graph, build_findings = graph.build(
+        records,
+        register,
+        usage=usage_edges,
+        bodies=bodies,
+        components=tuple(config.registry().components),
+    )
     findings.extend(build_findings)
 
     if args.impact or args.requires:
@@ -131,7 +160,7 @@ def cmd_graph(args: argparse.Namespace) -> int:
     out_path = config.path("graph")
     rel = str(out_path.relative_to(root))
     ran = records_load.CHECKS | registers.CYCLE_CHECKS | BUILD_CHECKS
-    ran |= registers.WAIVER_CHECKS
+    ran |= registers.WAIVER_CHECKS | graph_usage.CHECKS
     if args.check:
         ran |= emit.CHECKS
         findings.extend(emit.check_current(concept_graph, out_path, rel))
@@ -144,6 +173,7 @@ def cmd_graph(args: argparse.Namespace) -> int:
     summary = {
         "nodes": concept_graph.graph.number_of_nodes(),
         "edges": concept_graph.graph.number_of_edges(),
+        "usage_edges": len(concept_graph.usage),
         "cycles": len(cycles),
         "orphans": len(concept_graph.orphans()),
         "dead_entries": len(concept_graph.dead_entries()),
@@ -483,23 +513,34 @@ def cmd_verify(args: argparse.Namespace) -> int:
 
 
 def _query(cg, args: argparse.Namespace) -> int:
-    """Reachability lookups. Read-only: they never write the graph."""
+    """Reachability lookups. Read-only: they never write the graph.
+
+    ``--impact`` also lists the stamped sections using the concept or any
+    definition it impacts (step 3.7) — the sections a definition change
+    makes re-readable, not just the definitions. ``--requires`` is about
+    reading order, where usage plays no part.
+    """
     node = args.impact or args.requires
     if node not in cg.records:
         raise UsageError(f"no concept record with id {node!r}")
     result = cg.impact(node) if args.impact else cg.requires(node)
     direction = "impact" if args.impact else "requires"
+    sections = cg.using_sections(node) if args.impact else None
     if args.json:
-        json.dump(
-            {"node": node, direction: result, "count": len(result)},
-            sys.stdout,
-            indent=2,
-        )
+        payload = {"node": node, direction: result, "count": len(result)}
+        if sections is not None:
+            payload["using_sections"] = sections
+        json.dump(payload, sys.stdout, indent=2)
         sys.stdout.write("\n")
     else:
         for rid in result:
             print(rid)
-        print(f"{len(result)} concepts", file=sys.stderr)
+        for ref in sections or []:
+            print(ref)
+        tail = f"{len(result)} concepts"
+        if sections is not None:
+            tail += f", {len(sections)} using sections"
+        print(tail, file=sys.stderr)
     return EXIT_CLEAN
 
 
@@ -547,7 +588,10 @@ def build_parser() -> argparse.ArgumentParser:
     query.add_argument(
         "--impact",
         metavar="ID",
-        help="list the concepts whose definitions transitively depend on ID",
+        help=(
+            "list the concepts whose definitions transitively depend on ID, "
+            "plus the body sections using any of them"
+        ),
     )
     query.add_argument(
         "--requires",

@@ -56,6 +56,16 @@ U = "UCE"
 S = "SBSP"
 M = "MCL"
 
+[bodies]
+# Restructured component bodies, code → path: the extraction source for the
+# graph's usage edges (C11, step 3.7). Only bodies that exist are listed — an
+# absent entry is the normal "no body yet" state, which the emitted graph
+# states rather than defaulting. U's first real body is the approved golden
+# (Nick, 2026-08-08). Repoint an entry when the live document lands, and
+# regenerate concept-graph.yaml in the same PR (`graph --check` guards it).
+# Reference codes may not appear: reference documents are never scanned.
+U = "eval/golden/uce.md"
+
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value
 # there is normative, this file is the machine-readable copy.

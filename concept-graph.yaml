@@ -16,7 +16,7 @@ generator: detangle graph
 counts:
   nodes: 359
   dependency_edges: 402
-  usage_edges: 0
+  usage_edges: 230
   cycles: 1
   orphans: 185
   undefined: 187
@@ -2828,8 +2828,702 @@ edges:
     - from: venue-arbitrage
       to: mts-spa
   usage:
-  # Usage edges (C11, step 3.7) are extracted from the five document bodies,
-  # which do not exist until Phase 5. Empty is the correct value now, not a
-  # placeholder: the extraction that fills it is the same one the steady-state
-  # drift lint re-runs on every later body edit (D10).
-    []
+  # Usage edges (C11, step 3.7): which stamped section of which
+  # component body uses which term. Prose only — text inside
+  # concept definition blocks is excluded, because a definition's
+  # uses are its record's canonical depends_on (Nick, 2026-08-08).
+  # Extracted from the bodies in detangle.toml [bodies]; derived
+  # data (D10), regenerated on every run, never hand-maintained.
+  # Scanned: U=eval/golden/uce.md.
+  # No body yet: M, S — absent, not empty; the
+  # dead-entry sweep waits until every component has a body.
+    - doc: U
+      section: u-03d2b71e
+      term: cco
+    - doc: U
+      section: u-03d2b71e
+      term: fp-code
+    - doc: U
+      section: u-03d2b71e
+      term: human-intervention-checkpoint
+    - doc: U
+      section: u-03d2b71e
+      term: methodology-lead
+    - doc: U
+      section: u-03d2b71e
+      term: signal
+    - doc: U
+      section: u-2f87db53
+      term: 22-step-analytical-pipeline
+    - doc: U
+      section: u-2f87db53
+      term: alert
+    - doc: U
+      section: u-2f87db53
+      term: amendment-uce-amd-bvr-001
+    - doc: U
+      section: u-2f87db53
+      term: amplifier-suppressor-assessment
+    - doc: U
+      section: u-2f87db53
+      term: assessment-basis
+    - doc: U
+      section: u-2f87db53
+      term: bci-levels
+    - doc: U
+      section: u-2f87db53
+      term: behaviour-category-taxonomy
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-causality-indicator
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-causality-principle
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-concern-framework
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-concern-layer
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-episode-consolidation
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-objective-assessment
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-persistence-layer
+    - doc: U
+      section: u-2f87db53
+      term: behavioural-scenario-library
+    - doc: U
+      section: u-2f87db53
+      term: behaviouralconcern
+    - doc: U
+      section: u-2f87db53
+      term: campaign
+    - doc: U
+      section: u-2f87db53
+      term: campaign-role
+    - doc: U
+      section: u-2f87db53
+      term: causality-confidence-layer
+    - doc: U
+      section: u-2f87db53
+      term: classification
+    - doc: U
+      section: u-2f87db53
+      term: contextual-convergence-score
+    - doc: U
+      section: u-2f87db53
+      term: contextual-directionality-logic
+    - doc: U
+      section: u-2f87db53
+      term: convergence
+    - doc: U
+      section: u-2f87db53
+      term: convergence-quality-score
+    - doc: U
+      section: u-2f87db53
+      term: convergence-quality-tier
+    - doc: U
+      section: u-2f87db53
+      term: crs
+    - doc: U
+      section: u-2f87db53
+      term: daf
+    - doc: U
+      section: u-2f87db53
+      term: degraded-mode-doctrine
+    - doc: U
+      section: u-2f87db53
+      term: detection-signal-taxonomy
+    - doc: U
+      section: u-2f87db53
+      term: ecil-supplemental-specification
+    - doc: U
+      section: u-2f87db53
+      term: escalation-likelihood-score
+    - doc: U
+      section: u-2f87db53
+      term: escalationreadiness
+    - doc: U
+      section: u-2f87db53
+      term: event-cascade-object
+    - doc: U
+      section: u-2f87db53
+      term: event-driven-information-behaviour
+    - doc: U
+      section: u-2f87db53
+      term: event-materiality-scoring
+    - doc: U
+      section: u-2f87db53
+      term: event-object-schema
+    - doc: U
+      section: u-2f87db53
+      term: evidence-confidence
+    - doc: U
+      section: u-2f87db53
+      term: evidence-hierarchy
+    - doc: U
+      section: u-2f87db53
+      term: explanation-framework
+    - doc: U
+      section: u-2f87db53
+      term: external-context-intelligence-layer
+    - doc: U
+      section: u-2f87db53
+      term: false-negative-governance
+    - doc: U
+      section: u-2f87db53
+      term: follower-rule
+    - doc: U
+      section: u-2f87db53
+      term: gate
+    - doc: U
+      section: u-2f87db53
+      term: gate-failure-cause-distinction
+    - doc: U
+      section: u-2f87db53
+      term: generic-alert-primitives
+    - doc: U
+      section: u-2f87db53
+      term: historical-quote-lifecycle-dataset
+    - doc: U
+      section: u-2f87db53
+      term: holistic-output-schema
+    - doc: U
+      section: u-2f87db53
+      term: intent-score
+    - doc: U
+      section: u-2f87db53
+      term: intraday-behavioural-event-builder
+    - doc: U
+      section: u-2f87db53
+      term: iscore
+    - doc: U
+      section: u-2f87db53
+      term: isgo
+    - doc: U
+      section: u-2f87db53
+      term: mm-safeharbour
+    - doc: U
+      section: u-2f87db53
+      term: mts-associated-markets
+    - doc: U
+      section: u-2f87db53
+      term: mtsam-analytical-layer
+    - doc: U
+      section: u-2f87db53
+      term: mtsam-calibration-layer
+    - doc: U
+      section: u-2f87db53
+      term: mtsam-l-data-limitation-register
+    - doc: U
+      section: u-2f87db53
+      term: mtsam-l08
+    - doc: U
+      section: u-2f87db53
+      term: nfil
+    - doc: U
+      section: u-2f87db53
+      term: nim-mar
+    - doc: U
+      section: u-2f87db53
+      term: no-data-no-risk-principle
+    - doc: U
+      section: u-2f87db53
+      term: os-bc
+    - doc: U
+      section: u-2f87db53
+      term: os-u-disclosure-requirements
+    - doc: U
+      section: u-2f87db53
+      term: outcome-score
+    - doc: U
+      section: u-2f87db53
+      term: participant-history
+    - doc: U
+      section: u-2f87db53
+      term: pir-amplifier-only-rule
+    - doc: U
+      section: u-2f87db53
+      term: price-impact-gate
+    - doc: U
+      section: u-2f87db53
+      term: priorityscore
+    - doc: U
+      section: u-2f87db53
+      term: production-operations-governance
+    - doc: U
+      section: u-2f87db53
+      term: qa-mar
+    - doc: U
+      section: u-2f87db53
+      term: qa-validation
+    - doc: U
+      section: u-2f87db53
+      term: quote-behaviour-baseline-engine
+    - doc: U
+      section: u-2f87db53
+      term: raaf
+    - doc: U
+      section: u-2f87db53
+      term: rcs-mar
+    - doc: U
+      section: u-2f87db53
+      term: reasonable-suspicion-assessment
+    - doc: U
+      section: u-2f87db53
+      term: regime-transition-intelligence
+    - doc: U
+      section: u-2f87db53
+      term: regulatory-risk-factor
+    - doc: U
+      section: u-2f87db53
+      term: risk-archetype
+    - doc: U
+      section: u-2f87db53
+      term: rsaengine
+    - doc: U
+      section: u-2f87db53
+      term: rsn-trigger-fields
+    - doc: U
+      section: u-2f87db53
+      term: sb-13
+    - doc: U
+      section: u-2f87db53
+      term: scl
+    - doc: U
+      section: u-2f87db53
+      term: scs
+    - doc: U
+      section: u-2f87db53
+      term: sdail
+    - doc: U
+      section: u-2f87db53
+      term: signal
+    - doc: U
+      section: u-2f87db53
+      term: signal-integrity-summary
+    - doc: U
+      section: u-2f87db53
+      term: six-level-progressive-deployment-model
+    - doc: U
+      section: u-2f87db53
+      term: sovereign-bond-sector-pack
+    - doc: U
+      section: u-2f87db53
+      term: ssf-df
+    - doc: U
+      section: u-2f87db53
+      term: statistical-governance-and-calibration-assurance
+    - doc: U
+      section: u-2f87db53
+      term: stor-reporting-intelligence-layer
+    - doc: U
+      section: u-2f87db53
+      term: summary-principle
+    - doc: U
+      section: u-2f87db53
+      term: supervisory-challenge-pack
+    - doc: U
+      section: u-2f87db53
+      term: three-level-review
+    - doc: U
+      section: u-2f87db53
+      term: three-level-suspicion-taxonomy
+    - doc: U
+      section: u-2f87db53
+      term: universal-core-engine
+    - doc: U
+      section: u-2f87db53
+      term: volume-materiality-index
+    - doc: U
+      section: u-2f87db53
+      term: xs-mar
+    - doc: U
+      section: u-43d38f1e
+      term: 22-step-analytical-pipeline
+    - doc: U
+      section: u-43d38f1e
+      term: ads
+    - doc: U
+      section: u-43d38f1e
+      term: alert
+    - doc: U
+      section: u-43d38f1e
+      term: anonymous-quote-driven-market-structure
+    - doc: U
+      section: u-43d38f1e
+      term: attribution-confidence
+    - doc: U
+      section: u-43d38f1e
+      term: auto-close
+    - doc: U
+      section: u-43d38f1e
+      term: batch
+    - doc: U
+      section: u-43d38f1e
+      term: behaviour-centric-reweighting
+    - doc: U
+      section: u-43d38f1e
+      term: behavioural-distinctiveness-score
+    - doc: U
+      section: u-43d38f1e
+      term: behavioural-drift-score
+    - doc: U
+      section: u-43d38f1e
+      term: behavioural-episode-consolidation
+    - doc: U
+      section: u-43d38f1e
+      term: behavioural-persistence-layer
+    - doc: U
+      section: u-43d38f1e
+      term: causality-confidence-layer
+    - doc: U
+      section: u-43d38f1e
+      term: cf
+    - doc: U
+      section: u-43d38f1e
+      term: classification
+    - doc: U
+      section: u-43d38f1e
+      term: collusion-assessment
+    - doc: U
+      section: u-43d38f1e
+      term: collusion-override-path
+    - doc: U
+      section: u-43d38f1e
+      term: contextual-convergence-score
+    - doc: U
+      section: u-43d38f1e
+      term: contradicts-pattern
+    - doc: U
+      section: u-43d38f1e
+      term: convergence
+    - doc: U
+      section: u-43d38f1e
+      term: convergence-quality-score
+    - doc: U
+      section: u-43d38f1e
+      term: convergence-quality-tier
+    - doc: U
+      section: u-43d38f1e
+      term: coordination-classification-tier
+    - doc: U
+      section: u-43d38f1e
+      term: counterfactual-strength
+    - doc: U
+      section: u-43d38f1e
+      term: cross-window-persistence-score
+    - doc: U
+      section: u-43d38f1e
+      term: cwps-intra
+    - doc: U
+      section: u-43d38f1e
+      term: daf
+    - doc: U
+      section: u-43d38f1e
+      term: dependency-score
+    - doc: U
+      section: u-43d38f1e
+      term: derisking-assessment
+    - doc: U
+      section: u-43d38f1e
+      term: domain-independence-filter
+    - doc: U
+      section: u-43d38f1e
+      term: ecil-event
+    - doc: U
+      section: u-43d38f1e
+      term: enrichment-gate
+    - doc: U
+      section: u-43d38f1e
+      term: escalating-dominance-trend
+    - doc: U
+      section: u-43d38f1e
+      term: escalation-likelihood-score
+    - doc: U
+      section: u-43d38f1e
+      term: escalationreadiness
+    - doc: U
+      section: u-43d38f1e
+      term: explanation-fragility-score
+    - doc: U
+      section: u-43d38f1e
+      term: explanation-framework
+    - doc: U
+      section: u-43d38f1e
+      term: explanationfailure
+    - doc: U
+      section: u-43d38f1e
+      term: external-context-intelligence-layer
+    - doc: U
+      section: u-43d38f1e
+      term: gate
+    - doc: U
+      section: u-43d38f1e
+      term: intent-score
+    - doc: U
+      section: u-43d38f1e
+      term: intentfactor
+    - doc: U
+      section: u-43d38f1e
+      term: internal-abuse-pathway
+    - doc: U
+      section: u-43d38f1e
+      term: intraday-behavioural-event
+    - doc: U
+      section: u-43d38f1e
+      term: intraday-behavioural-event-builder
+    - doc: U
+      section: u-43d38f1e
+      term: iscore
+    - doc: U
+      section: u-43d38f1e
+      term: kill-switch
+    - doc: U
+      section: u-43d38f1e
+      term: level-0
+    - doc: U
+      section: u-43d38f1e
+      term: market-wide-behavioural-reference
+    - doc: U
+      section: u-43d38f1e
+      term: medium-investigate
+    - doc: U
+      section: u-43d38f1e
+      term: medium-structured-review
+    - doc: U
+      section: u-43d38f1e
+      term: minimum-evidence-requirement
+    - doc: U
+      section: u-43d38f1e
+      term: mtsam-calibration-layer
+    - doc: U
+      section: u-43d38f1e
+      term: multi-day-conditioning-score
+    - doc: U
+      section: u-43d38f1e
+      term: mwbr-anomalous
+    - doc: U
+      section: u-43d38f1e
+      term: mwbr-metric
+    - doc: U
+      section: u-43d38f1e
+      term: mwbr-score-levels
+    - doc: U
+      section: u-43d38f1e
+      term: no-benign-explanation-challenge
+    - doc: U
+      section: u-43d38f1e
+      term: non-compensatory-architecture
+    - doc: U
+      section: u-43d38f1e
+      term: outcome-persistence-layer
+    - doc: U
+      section: u-43d38f1e
+      term: outcome-score
+    - doc: U
+      section: u-43d38f1e
+      term: participant-history
+    - doc: U
+      section: u-43d38f1e
+      term: participant-interaction
+    - doc: U
+      section: u-43d38f1e
+      term: pattern-gate
+    - doc: U
+      section: u-43d38f1e
+      term: persistence-gate
+    - doc: U
+      section: u-43d38f1e
+      term: priorityscore
+    - doc: U
+      section: u-43d38f1e
+      term: quote-behaviour-risk-score
+    - doc: U
+      section: u-43d38f1e
+      term: quote-domain-signal
+    - doc: U
+      section: u-43d38f1e
+      term: regulatory-risk-factor
+    - doc: U
+      section: u-43d38f1e
+      term: scs
+    - doc: U
+      section: u-43d38f1e
+      term: signal
+    - doc: U
+      section: u-43d38f1e
+      term: six-indicators
+    - doc: U
+      section: u-43d38f1e
+      term: sovereign-bond-dealer-market
+    - doc: U
+      section: u-43d38f1e
+      term: sovereign-bond-sector-pack
+    - doc: U
+      section: u-43d38f1e
+      term: structural-relationship-score
+    - doc: U
+      section: u-43d38f1e
+      term: three-tier-escalation-modifier
+    - doc: U
+      section: u-61b5f491
+      term: intent-score
+    - doc: U
+      section: u-8b56eed5
+      term: ai-hard-controls
+    - doc: U
+      section: u-8b56eed5
+      term: behavioural-concern-framework
+    - doc: U
+      section: u-8b56eed5
+      term: behavioural-scenario-library
+    - doc: U
+      section: u-8b56eed5
+      term: causality-confidence-layer
+    - doc: U
+      section: u-8b56eed5
+      term: classification
+    - doc: U
+      section: u-8b56eed5
+      term: contextual-suppression-gate
+    - doc: U
+      section: u-8b56eed5
+      term: convergence
+    - doc: U
+      section: u-8b56eed5
+      term: convergence-quality-tier
+    - doc: U
+      section: u-8b56eed5
+      term: daf
+    - doc: U
+      section: u-8b56eed5
+      term: dependency-score
+    - doc: U
+      section: u-8b56eed5
+      term: derisking-assessment
+    - doc: U
+      section: u-8b56eed5
+      term: domain-independence-filter
+    - doc: U
+      section: u-8b56eed5
+      term: early-disposal-layer
+    - doc: U
+      section: u-8b56eed5
+      term: evidence-hierarchy
+    - doc: U
+      section: u-8b56eed5
+      term: explanation-trace
+    - doc: U
+      section: u-8b56eed5
+      term: gate
+    - doc: U
+      section: u-8b56eed5
+      term: holistic-output-schema
+    - doc: U
+      section: u-8b56eed5
+      term: intent-score
+    - doc: U
+      section: u-8b56eed5
+      term: level-0
+    - doc: U
+      section: u-8b56eed5
+      term: market-wide-behavioural-reference
+    - doc: U
+      section: u-8b56eed5
+      term: medium-structured-review
+    - doc: U
+      section: u-8b56eed5
+      term: minimum-necessary-escalation
+    - doc: U
+      section: u-8b56eed5
+      term: outcome-score
+    - doc: U
+      section: u-8b56eed5
+      term: pattern-gate
+    - doc: U
+      section: u-8b56eed5
+      term: persistence-gate
+    - doc: U
+      section: u-8b56eed5
+      term: priorityscore
+    - doc: U
+      section: u-8b56eed5
+      term: qa-validation
+    - doc: U
+      section: u-8b56eed5
+      term: regulatory-risk-factor
+    - doc: U
+      section: u-8b56eed5
+      term: replayobject
+    - doc: U
+      section: u-8b56eed5
+      term: signal
+    - doc: U
+      section: u-8b56eed5
+      term: signal-integrity-summary
+    - doc: U
+      section: u-8b56eed5
+      term: structural-relationship-score
+    - doc: U
+      section: u-8b56eed5
+      term: universal-core-engine
+    - doc: U
+      section: u-a48738c9
+      term: 22-step-analytical-pipeline
+    - doc: U
+      section: u-a48738c9
+      term: intent-score
+    - doc: U
+      section: u-a48738c9
+      term: mtsam-analytical-layer
+    - doc: U
+      section: u-a48738c9
+      term: mtsam-calibration-layer
+    - doc: U
+      section: u-a48738c9
+      term: sovereign-bond-sector-pack
+    - doc: U
+      section: u-a48738c9
+      term: universal-core-engine
+    - doc: U
+      section: u-b30dd7df
+      term: alert
+    - doc: U
+      section: u-b30dd7df
+      term: behavioural-intelligence-overlay
+    - doc: U
+      section: u-b30dd7df
+      term: intent-score
+    - doc: U
+      section: u-b30dd7df
+      term: signal
+    - doc: U
+      section: u-b30dd7df
+      term: sovereign-bond-sector-pack
+    - doc: U
+      section: u-b30dd7df
+      term: universal-core-engine
+    - doc: U
+      section: u-db14c483
+      term: intent-score
+    - doc: U
+      section: u-db14c483
+      term: mtsam-analytical-layer
+    - doc: U
+      section: u-db14c483
+      term: mtsam-calibration-layer
+    - doc: U
+      section: u-db14c483
+      term: pattern-gate
+    - doc: U
+      section: u-db14c483
+      term: sovereign-bond-sector-pack
+    - doc: U
+      section: u-db14c483
+      term: universal-core-engine

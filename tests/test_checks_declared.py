@@ -19,6 +19,7 @@ import pytest
 
 from detangle import registers, tables
 from detangle.graph import emit
+from detangle.graph import usage as graph_usage
 from detangle.records import checks as record_checks
 from detangle.records import load as records_load
 from detangle.restructure import execute as restructure_execute
@@ -44,6 +45,7 @@ DECLARED = {
     "tables.py": tables.CHECKS,
     "graph/build.py": graph_build.CHECKS,
     "graph/emit.py": emit.CHECKS,
+    "graph/usage.py": graph_usage.CHECKS,
     "restructure/execute.py": restructure_execute.CHECKS,
     "restructure/parity.py": restructure_parity.CHECKS,
     "restructure/plan.py": restructure_plan.CHECKS,
