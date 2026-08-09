@@ -17,6 +17,7 @@ from pathlib import Path
 
 import pytest
 
+from detangle import lift as lift_module
 from detangle import registers, tables
 from detangle.graph import emit
 from detangle.graph import usage as graph_usage
@@ -46,6 +47,7 @@ DECLARED = {
     "graph/build.py": graph_build.CHECKS,
     "graph/emit.py": emit.CHECKS,
     "graph/usage.py": graph_usage.CHECKS,
+    "lift.py": lift_module.CHECKS,
     "restructure/execute.py": restructure_execute.CHECKS,
     "restructure/parity.py": restructure_parity.CHECKS,
     "restructure/plan.py": restructure_plan.CHECKS,

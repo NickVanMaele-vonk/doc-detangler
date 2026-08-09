@@ -34,6 +34,11 @@ class DocumentRegistry:
     references: tuple[str, ...]
     paths: dict[str, str]
     placements: dict[str, str]
+    #: The glossary's own path, from ``[paths]``. Registered because it is the
+    #: fourth document of the set: authored wording is canonical in it (D9
+    #: amendment, 2026-08-04), so a lifted record's ``authored`` span cites it
+    #: — a span target, never an input-set member.
+    glossary: str | None = None
 
     @property
     def component_docs(self) -> set[str]:
@@ -45,7 +50,8 @@ class DocumentRegistry:
 
     @property
     def registered_docs(self) -> set[str]:
-        return self.component_docs | self.reference_docs
+        docs = self.component_docs | self.reference_docs
+        return docs | {self.glossary} if self.glossary else docs
 
     @property
     def placement_values(self) -> tuple[str, ...]:
@@ -63,6 +69,8 @@ class DocumentRegistry:
             return "component"
         if path in self.reference_docs:
             return "reference"
+        if path == self.glossary:
+            return "glossary"
         return "unregistered"
 
 
@@ -197,11 +205,13 @@ class Config:
                 "component codes — nothing is placed in a reference document"
             )
 
+        glossary = self.data.get("paths", {}).get("glossary")
         return DocumentRegistry(
             components=tuple(components),
             references=tuple(references),
             paths=dict(docs),
             placements={c: str(placements[c]) for c in components},
+            glossary=str(glossary) if isinstance(glossary, str) else None,
         )
 
     def component_docs(self) -> set[str]:

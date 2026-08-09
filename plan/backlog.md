@@ -527,8 +527,11 @@ drift lint *report* the mismatch between `assurance.approved_by` and the
 in-document state; authorise the transition as a third named exception to
 word-preservation, narrow to exactly this rewrite; or make it a reviewer action
 in the Phase 8 DevOps integration, where the approval already happens. The
-first is the cheapest and needs no new authorisation, but it needs the drift
-lint, which does not exist (see the plan's Outstanding list).
+first is the cheapest and needs no new authorisation, but it needs the
+**body-facing** drift lint: the mismatch lives between a body's in-document
+tag state and `assurance.approved_by`. The glossary half of the lint was
+built 2026-08-08 (`detangle lift`), but it reads only `glossary.md`; the lint
+that walks the bodies remains Phase 10 work.
 
 **2. What a re-run does with a previously-approved addition.** In the re-run
 cycle run N+1's input is run N's output, so an approved addition arrives as an
@@ -550,6 +553,7 @@ when nothing was lost. The amendment makes the choice *possible* — an unmarked
 approved addition, which is what the unamended Decision 3 produced, could only
 ever be treated as source — but it does not make it decided.
 
-**Depends on:** question 1's cheapest option depends on the glossary drift
-lint. Question 2 is decidable now and costs nothing until the first re-run,
+**Depends on:** question 1's cheapest option depends on the body-facing
+drift lint (Phase 10; the glossary lift of 2026-08-08 does not read bodies).
+Question 2 is decidable now and costs nothing until the first re-run,
 which is the first time an approved addition appears in an input.

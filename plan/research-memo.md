@@ -49,7 +49,7 @@ Two rules keep the two apart:
 | Vale does term/acronym rules (D5, §2.7) | **Not in use and not approved tooling.** Nothing in `src/` invokes it | ADR-001 (approved tooling list) |
 | A `concept-graph.mmd` is generated and committed (D2, §2.4, §3, D10 el. 4) | **No such file.** The Mermaid render is per concept, on demand, and **unbuilt** | Nick 2026-08-04; backlog B-6 |
 | `glossary.md` is a generated view (D9) | **The fourth editable document.** Its definitions are canonical in the file | D9 amendment, Nick 2026-08-04 |
-| `glossary.md` is guarded by `generate --check` | **Unguarded.** The gate was withdrawn; the drift lint that replaces it does not exist | Nick 2026-08-04; see the D9 amendment timing note |
+| `glossary.md` is guarded by `generate --check` | **Guarded by the lift instead** (2026-08-08). `generate --check` was withdrawn — byte-comparing a human-edited file is incoherent; `detangle lift --check` compares the records' derived copies against the file and gates CI | Nick 2026-08-04 and 2026-08-08; see the D9 amendment timing note |
 | Provenance anchors carry line numbers (§2.11, D9 round-trip) | **Line numbers are provenance nowhere.** Spans are `(doc, section, para_hash, verified_against)` | D10 element 2 |
 | `manifest.yaml` carries a generation timestamp (D10 el. 5) | **No timestamp.** A blob is the version; a clock makes a report irreproducible | ADR-003 step 7.5 |
 | Two operating modes (D10) | **Three** — campaign, re-run, steady-state guard | ADR-004 D5, Nick 2026-08-07 |
@@ -989,6 +989,15 @@ is the seed for the editable one.
 > refuses to overwrite (exit `2`) without `--force`. That refusal is the only
 > protection the file has. **Building the drift lint is what closes this**, and
 > it is also what unblocks the fourth CI gate.
+>
+> **Closed later the same day (2026-08-08).** The drift lint is built:
+> `detangle lift` mirrors edited definition prose into the records' derived
+> copies (with a mechanical `authored` lineage span per ADR-004; assurance
+> stays a human's to write, and its absence is a finding), and
+> `detangle lift --check` entered `ci.yml` as the fourth gate. The window this
+> correction describes — an editable file guarded by nothing — was open from
+> 2026-08-04 to 2026-08-08 and saw no human edit: the seed was still
+> byte-identical to the records when the lint first ran.
 
 #### Provenance and authorship of definitions (Nick, 2026-08-04)
 

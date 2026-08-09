@@ -60,19 +60,26 @@ They are what keeps the lift deterministic; without them the structural
 guarantees would rest on re-parsing prose, the exact failure D9 exists to
 prevent.
 
-It is **prospective**: it takes effect per document as each comes to exist, and
-for the glossary when the drift lint that guards it exists. Until then
-`glossary.md` is a **seed** that `detangle generate` wrote once, and **nothing
-guards it** — `generate --check` exists as a command but was withdrawn as a CI
-gate, so an edit to the file is mirrored nowhere and checked by nothing.
-Re-running `detangle generate` would rewrite the file in full and discard every
-human edit; the command therefore refuses to overwrite (exit `2`) without
+It is **prospective**: it takes effect per document as each comes to exist —
+and for the glossary it took effect on 2026-08-08, when the drift lint was
+built. `detangle lift` mirrors edited prose between an entry's markers into
+the record's derived `definition` field and maintains the mechanical lineage
+span (`origin: authored`, anchored by the prose's `para_hash` and the
+glossary's git blob — ADR-004 made lineage exactly this mechanical);
+`lift --check` is the fourth CI gate. What the lift never writes: assurance
+(authored wording with no named author is a finding a human resolves in the
+same PR), and ontology — a heading or alias line disagreeing with the
+record's `term`/`aliases` is flagged, because the record owns those fields.
+Re-running `detangle generate` would still rewrite the file in full and
+discard every human edit; the command refuses to overwrite (exit `2`) without
 `--force`.
 
 ### What the seeded glossary renders, and why
 
-Entries in the graph's topological order, one `<!-- concept:<id> -->` marker
-before every heading (so a PR comment resolves to the record behind it), and a
+Entries in the graph's topological order, each delimited by
+`concept:<id>:start`/`:end` markers — the bodies' scheme (restamped
+2026-08-08, word-preserving), so a PR comment resolves to the record behind
+it and the lift's extent is delimited rather than inferred — and a
 sources table binding each corpus document to the git blob its spans were
 verified against. Two things beyond the approved design points, both required by
 rubric criteria the glossary is itself subject to: **aliases** per entry
@@ -738,10 +745,11 @@ which is the common case, and why the UI matters.
 Not backlog items (those are `plan/backlog.md`, B-n) — these are unruled design
 questions with no phase.
 
-1. **The glossary drift lint.** `generate --check` cannot be a CI gate:
-   byte-comparing a file humans edit is incoherent. It becomes a drift lint that
-   mirrors human edits back into the records, and the fourth gate stays out of
-   `ci.yml` until that lint exists. Until then `glossary.md` is unguarded (§2).
+1. ~~**The glossary drift lint.**~~ **Resolved 2026-08-08** — built as
+   `detangle lift [--check]`; two rulings closed the design the same day: the
+   tool lifts and `--check` gates (the record's definition copy is derived
+   data, C12), and lineage is maintained mechanically while assurance stays a
+   human's to write (ADR-004). The fourth gate is in `ci.yml`. See §2.
 2. **Guarding the committed views generally** — regenerate-and-compare, banner,
    CI redirect message naming the record to edit.
 3. **Provenance schema shape** — field names, and whether authored text sits in

@@ -1,4 +1,4 @@
-# Branch policy for `main`. Three independent gates, one job each, so a red
+# Branch policy for `main`. Four independent gates, one job each, so a red
 # run names which one failed and each can be marked required separately.
 #
 # Exit codes are the contract (ADR-001 Decision 2, README "Exit codes"):
@@ -109,3 +109,29 @@ jobs:
       # generated artifact" (ADR-001 Decision 5) enforceable rather than
       # aspirational.
       - run: detangle graph --check --json
+
+  lift:
+    name: detangle lift --check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # The lift anchors authored wording by `para_hash`, which is defined as
+      # a hash of pandoc's plain-text rendering — same pin, same reasoning as
+      # the validate job above (backlog B-3).
+      - name: Install pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+        timeout-minutes: 5
+        with:
+          pandoc-version: "3.1.3"
+      - run: pandoc --version | head -1
+      - run: pip install -e .
+      # The fourth gate (step 3.5 note (a), built 2026-08-08): glossary.md is
+      # canonical for definition prose and each record carries a derived copy,
+      # so an edit to the file without `detangle lift` in the same PR — or a
+      # heading/alias line contradicting its record — fails here.
+      - run: detangle lift --check --json

@@ -24,11 +24,12 @@ Three consequences shape the code:
   notes, markers — but never domain prose (C2). So the overview is a marked
   gap rather than a summary, and an undefined term gets a note saying so
   rather than a definition.
-- **Anchors are emitted markers, never line offsets** (D9, D10). A
-  ``<!-- concept:<id> -->`` marker precedes every heading, so a PR comment on
-  this file resolves to the nearest preceding marker and hence to the record
-  that produced the entry. A regeneration reorders entries; line numbers
-  would rot on the first reorder.
+- **Anchors are emitted markers, never line offsets** (D9, D10). Every entry
+  is delimited by ``<!-- concept:<id>:start -->`` / ``:end`` markers — the
+  bodies' scheme — so a PR comment on this file resolves to the nearest
+  preceding marker and hence to the record that produced the entry, and the
+  lift (``detangle lift``) knows exactly where a definition's prose ends. A
+  regeneration reorders entries; line numbers would rot on the first reorder.
 
 Definitions and alias lists are emitted on a single physical line each, not
 wrapped. Wrapping would reflow a whole paragraph when one word changes, and
@@ -61,11 +62,12 @@ definition is canonical in the document that defines it, and the concept
 record (`concepts/*.yaml`) holds a derived copy. So a definition below is
 edited here, in place, and its record follows.
 
-That ruling is not yet enforced. The drift lint that would keep this file and
-the records in step does not exist, and `detangle generate --check` was
-withdrawn as a CI gate because byte-comparing a file humans edit is
-incoherent. Until the lint is built, an edit here is mirrored nowhere and
-checked by nothing.
+That ruling is enforced by the lift (built 2026-08-08): `detangle lift`
+mirrors an edited definition into its record's derived copy, and
+`detangle lift --check` runs in CI, so the file and the records cannot
+silently disagree. Edit a definition between its markers; the heading and
+the "Also known as" line belong to the record (`term`, `aliases`) and are
+changed there, never here.
 
 Re-running `detangle generate` REWRITES this file in full and discards every
 human edit. It has done its job as the seeder.
@@ -74,9 +76,15 @@ Entry order is topological (`param-glossary-order`), taken from the concept
 graph and the cycle register (`registers/cycles.yaml`), so the file reads
 start to finish without meeting an undefined term.
 
-Each entry is preceded by a `<!-- concept:<id> -->` marker naming the record
-it came from, so a comment on this file resolves to that record without any
-line offset being involved (D10).
+Each entry sits between concept markers — `concept:<id>:start` and
+`concept:<id>:end`, each in its own HTML comment — naming the record it came
+from, so a comment on this file resolves to that record without any line
+offset being involved (D10), and the lift knows exactly where a definition's
+prose ends. Anything written outside the markers belongs to this file alone
+and is mirrored nowhere.
+
+(No literal marker is spelled out above: a closing comment bracket inside
+this banner would end it early and leak the rest as visible text.)
 -->
 """
 
@@ -208,9 +216,19 @@ def render(
 
 
 def _entry(cg: ConceptGraph, rid: str, forward: list[tuple[str, str]]) -> str:
-    """One glossary entry: marker, heading, aliases, definition or note."""
+    """One glossary entry, delimited: start marker, apparatus, prose, end.
+
+    The ``:start``/``:end`` pair is the same scheme the document bodies carry
+    (D9) — the DoD names these delimiters as what keeps the lift into the
+    record deterministic. The end marker closes the whole entry, bridging
+    notes included, attached to the last line rather than floated as its own
+    block so it never becomes a block of its own in the ``para_hash`` split.
+    """
     record = cg.records[rid]
-    lines = [f"<!-- concept:{rid} -->\n", f"## {record.data.get('term') or rid}\n"]
+    lines = [
+        f"<!-- concept:{rid}:start -->\n",
+        f"## {record.data.get('term') or rid}\n",
+    ]
 
     aliases = [str(a) for a in record.get_list("aliases")]
     if aliases:
@@ -227,6 +245,7 @@ def _entry(cg: ConceptGraph, rid: str, forward: list[tuple[str, str]]) -> str:
         if source == rid:
             lines.append("\n")
             lines.append(_forward_note(cg, source, target))
+    lines.append(f"<!-- concept:{rid}:end -->\n")
     return "".join(lines)
 
 
@@ -297,6 +316,10 @@ def _sources(
     for rid in order:
         for span in cg.records[rid].get_list("source"):
             if not isinstance(span, dict):
+                continue
+            # A lifted definition's authored span cites this file itself; a
+            # document is not one of its own sources, so it gets no row.
+            if span.get("doc") == rel:
                 continue
             verified = span.get("verified_against")
             blob = verified.get("git_blob") if isinstance(verified, dict) else None
