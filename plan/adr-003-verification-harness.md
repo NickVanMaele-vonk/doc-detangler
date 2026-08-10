@@ -352,7 +352,7 @@ tests: the harness must flag all three, and the weakened-claim seed must
 be caught even though token-parity (criterion 5) would also catch it —
 the harness is measured on its own, not behind the restructure check.
 
-## Decision 7 — scope: `U` dry-run, then the re-baseline closes 6.2
+## Decision 7 — scope: `U` dry-run, then the re-baseline closes 6.2 — **RULED, amended**
 
 Like ADR-002 Decision 5: the dry-run is `U` only — the golden triple
 against the pinned blob — with `S` and `M` left to 9.1. The dry-run's
@@ -360,6 +360,28 @@ confidence distribution goes to Nick with a proposed threshold; ruling it
 re-baselines `param-low-confidence-threshold` in the rubric and closes
 6.2. Nothing from the run is committed except the verification report and
 the rubric edit.
+
+**Ruled by Nick, 2026-08-10, with one amendment.** The proposal assumed a
+confidence distribution, but the deterministic build scores nothing: stage
+1 places claims at 1.0 by text identity or declines to rule, so no
+distribution exists until Decision 3's model stage lands (backlog B-9).
+The ruling splits the proposal accordingly:
+
+- **The dry-run ran now** and its verification report is committed as
+  `eval/verify-U.md` — the step 7.5 baseline the next run compares
+  against: 204 of 270 placed verbatim, 66 unscored, 0 forward references,
+  1 exemption, fabrication NOT CHECKED, exit `1` on the single
+  `coverage-unscored` warn.
+- **The threshold re-baseline waits for B-9's first scored run**, and 6.2
+  stays open with it. The rubric's mandate — re-baseline against the
+  first real distribution — is untouched; `param-low-confidence-threshold`
+  stays 0.80 provisional, exactly as the rubric labels it. No rubric edit
+  is made now, because there is no evidence to edit it on.
+
+With this, all seven decisions of this ADR are disposed: 1, 2, 4, 5, 6
+and 7 ruled, 3 deferred to B-9. What B-9 inherits from Decision 7 is the
+second half only: score the residue, bring the distribution and a proposed
+threshold to Nick, re-baseline the parameter, close 6.2.
 
 ## Consequences
 
@@ -391,4 +413,7 @@ Build steps, in order, each its own PR:
    dry-run and the threshold re-baseline proposal (Decision 7). Note what
    step 4's deferral costs here: the invented-claim limb of Decision 6's
    done-when cannot be
-   met by the deterministic build at all.
+   met by the deterministic build at all. **The dry-run ran 2026-08-10**
+   (Decision 7 ruled amended, report committed as `eval/verify-U.md`); the
+   re-baseline proposal moved to B-9 with the scoring it needs. This closes
+   the build list — everything left of this ADR lives in B-9.
