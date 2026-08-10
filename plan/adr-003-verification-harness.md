@@ -335,7 +335,13 @@ command: the report records the git blob of every document in both input
 sets plus the commit (plan step 7.5), which identifies the set a run
 verified and gives the next run its baseline.
 
-## Decision 6 — the seeded-error test seeds into reordered output
+## Decision 6 — the seeded-error test seeds into reordered output — **RULED**
+
+**Ruled by Nick, 2026-08-10**, accepted as proposed: the invented-claim limb
+stays open until B-9 lands. Built (`tests/test_verify_seeded.py`) — the
+deleted and weakened seeds are caught and named in the residue roster; the
+invented seed is narrowed to the unexplained set and its fabrication verdict
+is held as a strict xfail that B-9's build rewrites under `--use-inference`.
 
 The done-when requires catching a deleted claim, an invented claim, and a
 weakened claim (threshold change + `must`→`should`, per C7). Per §1.1
@@ -381,7 +387,8 @@ Build steps, in order, each its own PR:
 4. The scored residue (Decisions 2 stage 2, 3) behind `--use-inference`: the
    `[verify]` extra, the pinned checkpoint, coverage + fabrication scoring.
    **Deferred** — backlog B-9, to be picked up with Decision 3.
-5. Seeded-error tests (Decision 6), then the `U` dry-run and the
-   threshold re-baseline proposal (Decision 7). Note what step 4's deferral
-   costs here: the invented-claim limb of Decision 6's done-when cannot be
+5. Seeded-error tests (Decision 6) — **built, 2026-08-10** — then the `U`
+   dry-run and the threshold re-baseline proposal (Decision 7). Note what
+   step 4's deferral costs here: the invented-claim limb of Decision 6's
+   done-when cannot be
    met by the deterministic build at all.
