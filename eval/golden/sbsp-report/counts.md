@@ -13,7 +13,7 @@ headed or not, is listed in the Section IDs table of the move-map.
 | Measure | Count |
 |---|---|
 | Sections | 6 |
-| Bytes | 60125 |
+| Bytes | 60127 |
 | Definition blocks | 32 |
 | Category C additions | 1 |
 | — words in them | 223 |

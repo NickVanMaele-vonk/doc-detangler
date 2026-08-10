@@ -297,7 +297,7 @@ class _Table:
         header = ((self.header or []) + [""] * width)[:width]
         out = [
             Part(
-                text="| " + " | ".join(header) + " |",
+                text="| " + " | ".join(c.replace("|", "\\|") for c in header) + " |",
                 origin=self.header_origin,
                 kind="table-header",
                 blocks=(self.header_block,) if self.header_block else (),
@@ -315,7 +315,9 @@ class _Table:
             padded = (row + [""] * width)[:width]
             out.append(
                 Part(
-                    text="| " + " | ".join(padded) + " |",
+                    text="| "
+                    + " | ".join(c.replace("|", "\\|") for c in padded)
+                    + " |",
                     origin=SOURCE,
                     kind="table-row",
                     blocks=(block,),
@@ -478,10 +480,15 @@ def render(plan: Plan, records: list[Record], source: str) -> Render:
                 # — the archetype and change-log grids open with content.
                 flush_table()
                 for cells in first.grid_rows or []:
-                    filled = [c for c in cells if c.strip()]
-                    if not filled:
+                    paras = [
+                        p
+                        for c in cells
+                        for p in c.split("\n\n")
+                        if p.strip()
+                    ]
+                    if not paras:
                         continue
-                    head = clean(filled[0], hashes[0]).strip("*").strip()
+                    head = clean(paras[0], hashes[0]).strip("*").strip()
                     out.parts.append(
                         Part(
                             text=f"**{head}**\n",
@@ -491,17 +498,16 @@ def render(plan: Plan, records: list[Record], source: str) -> Render:
                             section=section.id,
                         )
                     )
-                    for cell in filled[1:]:
-                        for para in cell.split("\n\n"):
-                            out.parts.append(
-                                Part(
-                                    text=clean(para, hashes[0]) + "\n",
-                                    origin=SOURCE,
-                                    kind="grid-body",
-                                    blocks=(hashes[0],),
-                                    section=section.id,
-                                )
+                    for para in paras[1:]:
+                        out.parts.append(
+                            Part(
+                                text=clean(para, hashes[0]) + "\n",
+                                origin=SOURCE,
+                                kind="grid-body",
+                                blocks=(hashes[0],),
+                                section=section.id,
                             )
+                        )
                 continue
             if hint == "part-row":
                 lines = [
@@ -521,9 +527,10 @@ def render(plan: Plan, records: list[Record], source: str) -> Render:
                     # a source block further down, and the tool does not write
                     # column names of its own.
                     table = _Table()
-                table.rows.append(
-                    ([m.group(2), clean(m.group(3), hashes[0])], hashes[0])
-                )
+                # A banner may put its em-dash between number and title; the
+                # dash is furniture either side of the cell boundary.
+                title = clean(m.group(3), hashes[0]).lstrip("-–—").strip()
+                table.rows.append(([m.group(2), title], hashes[0]))
                 continue
             if hint == "note-italic":
                 flush_table()
