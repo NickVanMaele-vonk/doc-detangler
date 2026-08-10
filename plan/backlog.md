@@ -459,7 +459,17 @@ today's answer would be to say so and stay deterministic, never to fail.
 document so a run cannot come back clean about claims it never ruled on, and
 the verification report's stage table prints the two absent stages rather than
 omitting them. Phase 7's done-when — catching a deleted, an invented and a
-weakened claim — cannot be met on the invented-claim limb until this lands.
+weakened claim — cannot be met on the invented-claim limb until this lands:
+that limb is a strict xfail in `tests/test_verify_seeded.py` (ADR-003
+Decision 6, ruled 2026-08-10), and building this item rewrites that test to
+run under `--use-inference`.
+
+**Inherited from ADR-003 Decision 7** (ruled amended, 2026-08-10): the first
+scored run produces the confidence distribution that goes to Nick with a
+proposed threshold; that ruling re-baselines `param-low-confidence-threshold`
+in the rubric and closes Phase 6.2. The deterministic dry-run and its
+committed report (`eval/verify-U.md`) are done; the re-baseline is this
+item's exit criterion, not Phase 7's.
 
 **Depends on:** Decision 3 being ruled.
 
