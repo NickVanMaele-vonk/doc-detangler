@@ -16,7 +16,7 @@ generator: detangle graph
 counts:
   nodes: 359
   dependency_edges: 402
-  usage_edges: 460
+  usage_edges: 677
   cycles: 1
   orphans: 185
   undefined: 187
@@ -2834,9 +2834,658 @@ edges:
   # uses are its record's canonical depends_on (Nick, 2026-08-08).
   # Extracted from the bodies in detangle.toml [bodies]; derived
   # data (D10), regenerated on every run, never hand-maintained.
-  # Scanned: S=eval/golden/sbsp.md, U=eval/golden/uce.md.
-  # No body yet: M — absent, not empty; the
-  # dead-entry sweep waits until every component has a body.
+  # Scanned: M=eval/golden/mcl.md, S=eval/golden/sbsp.md, U=eval/golden/uce.md.
+    - doc: M
+      section: m-62d51646
+      term: anonymous-quote-driven-market-structure
+    - doc: M
+      section: m-62d51646
+      term: intent-score
+    - doc: M
+      section: m-62d51646
+      term: mts-associated-markets
+    - doc: M
+      section: m-62d51646
+      term: mtsam-calibration-layer
+    - doc: M
+      section: m-62d51646
+      term: sovereign-bond-sector-pack
+    - doc: M
+      section: m-62d51646
+      term: surveillance-gap
+    - doc: M
+      section: m-62d51646
+      term: universal-core-engine
+    - doc: M
+      section: m-6c1a3dba
+      term: behaviouralconcern
+    - doc: M
+      section: m-6c1a3dba
+      term: bivm
+    - doc: M
+      section: m-6c1a3dba
+      term: calibration-target
+    - doc: M
+      section: m-6c1a3dba
+      term: cco-assessment
+    - doc: M
+      section: m-6c1a3dba
+      term: classification
+    - doc: M
+      section: m-6c1a3dba
+      term: driver-code
+    - doc: M
+      section: m-6c1a3dba
+      term: escalationreadiness
+    - doc: M
+      section: m-6c1a3dba
+      term: evidenceconfidence
+    - doc: M
+      section: m-6c1a3dba
+      term: intent-score
+    - doc: M
+      section: m-6c1a3dba
+      term: market-wide-behavioural-reference
+    - doc: M
+      section: m-6c1a3dba
+      term: mts-associated-markets
+    - doc: M
+      section: m-6c1a3dba
+      term: mtsam-calibration-layer
+    - doc: M
+      section: m-6c1a3dba
+      term: mwbr-anomalous
+    - doc: M
+      section: m-6c1a3dba
+      term: reasonable-suspicion-assessment
+    - doc: M
+      section: m-6c1a3dba
+      term: review-action-mapping
+    - doc: M
+      section: m-6c1a3dba
+      term: sovereign-bond-sector-pack
+    - doc: M
+      section: m-6c1a3dba
+      term: three-output-integration
+    - doc: M
+      section: m-6c1a3dba
+      term: universal-core-engine
+    - doc: M
+      section: m-71fdf1cf
+      term: absence-of-contemporaneous-exogenous-cause
+    - doc: M
+      section: m-71fdf1cf
+      term: ai-governance-prohibitions
+    - doc: M
+      section: m-71fdf1cf
+      term: alert
+    - doc: M
+      section: m-71fdf1cf
+      term: architectural-separation-principle
+    - doc: M
+      section: m-71fdf1cf
+      term: behavioural-episode-consolidation
+    - doc: M
+      section: m-71fdf1cf
+      term: behavioural-intelligence-overlay
+    - doc: M
+      section: m-71fdf1cf
+      term: behavioural-persistence-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: block-trade-behavioural-analysis
+    - doc: M
+      section: m-71fdf1cf
+      term: campaign
+    - doc: M
+      section: m-71fdf1cf
+      term: causality-confidence-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: cco
+    - doc: M
+      section: m-71fdf1cf
+      term: classification
+    - doc: M
+      section: m-71fdf1cf
+      term: close-window
+    - doc: M
+      section: m-71fdf1cf
+      term: closed-justified
+    - doc: M
+      section: m-71fdf1cf
+      term: contradicts-pattern
+    - doc: M
+      section: m-71fdf1cf
+      term: convergence
+    - doc: M
+      section: m-71fdf1cf
+      term: convergence-dimension
+    - doc: M
+      section: m-71fdf1cf
+      term: convergence-gate
+    - doc: M
+      section: m-71fdf1cf
+      term: core-regulatory-position
+    - doc: M
+      section: m-71fdf1cf
+      term: derisking-standards
+    - doc: M
+      section: m-71fdf1cf
+      term: downstream-exposure
+    - doc: M
+      section: m-71fdf1cf
+      term: enhancement-roadmap
+    - doc: M
+      section: m-71fdf1cf
+      term: escalationreadiness
+    - doc: M
+      section: m-71fdf1cf
+      term: evidence-hierarchy
+    - doc: M
+      section: m-71fdf1cf
+      term: external-context-intelligence-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: five-layer-architecture
+    - doc: M
+      section: m-71fdf1cf
+      term: five-pillar-fsma-argument
+    - doc: M
+      section: m-71fdf1cf
+      term: intent-score
+    - doc: M
+      section: m-71fdf1cf
+      term: isgo
+    - doc: M
+      section: m-71fdf1cf
+      term: language-governance
+    - doc: M
+      section: m-71fdf1cf
+      term: lookback-30d
+    - doc: M
+      section: m-71fdf1cf
+      term: marking-the-close-triad
+    - doc: M
+      section: m-71fdf1cf
+      term: mm-safeharbour
+    - doc: M
+      section: m-71fdf1cf
+      term: mts-associated-markets
+    - doc: M
+      section: m-71fdf1cf
+      term: mts-mid
+    - doc: M
+      section: m-71fdf1cf
+      term: mts-spa
+    - doc: M
+      section: m-71fdf1cf
+      term: mtsam-calibration-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: mtsam-l01
+    - doc: M
+      section: m-71fdf1cf
+      term: mtsam-l05
+    - doc: M
+      section: m-71fdf1cf
+      term: mtsam-l07
+    - doc: M
+      section: m-71fdf1cf
+      term: non-compensatory-architecture
+    - doc: M
+      section: m-71fdf1cf
+      term: non-filing-documentation-package
+    - doc: M
+      section: m-71fdf1cf
+      term: otc-bilateral-trading
+    - doc: M
+      section: m-71fdf1cf
+      term: participant-order-flow-profile
+    - doc: M
+      section: m-71fdf1cf
+      term: pattern-gate
+    - doc: M
+      section: m-71fdf1cf
+      term: pre-stress-liquidity-withdrawal
+    - doc: M
+      section: m-71fdf1cf
+      term: pre-suspension-window
+    - doc: M
+      section: m-71fdf1cf
+      term: primary-dealer
+    - doc: M
+      section: m-71fdf1cf
+      term: primary-signal-generation-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: qbli
+    - doc: M
+      section: m-71fdf1cf
+      term: quote-behaviour-baseline-engine
+    - doc: M
+      section: m-71fdf1cf
+      term: quote-behaviour-contextual-confidence-layer
+    - doc: M
+      section: m-71fdf1cf
+      term: quote-behaviour-risk-score
+    - doc: M
+      section: m-71fdf1cf
+      term: quote-intelligence-architecture
+    - doc: M
+      section: m-71fdf1cf
+      term: rd01
+    - doc: M
+      section: m-71fdf1cf
+      term: rd02
+    - doc: M
+      section: m-71fdf1cf
+      term: rd03
+    - doc: M
+      section: m-71fdf1cf
+      term: rd04
+    - doc: M
+      section: m-71fdf1cf
+      term: rdcs
+    - doc: M
+      section: m-71fdf1cf
+      term: replayable-audit
+    - doc: M
+      section: m-71fdf1cf
+      term: risk-based-prioritisation
+    - doc: M
+      section: m-71fdf1cf
+      term: rt-rd-alert-taxonomies
+    - doc: M
+      section: m-71fdf1cf
+      term: rt01
+    - doc: M
+      section: m-71fdf1cf
+      term: rt02
+    - doc: M
+      section: m-71fdf1cf
+      term: rt04
+    - doc: M
+      section: m-71fdf1cf
+      term: rt05
+    - doc: M
+      section: m-71fdf1cf
+      term: rt08
+    - doc: M
+      section: m-71fdf1cf
+      term: rt22
+    - doc: M
+      section: m-71fdf1cf
+      term: sb-01
+    - doc: M
+      section: m-71fdf1cf
+      term: scl
+    - doc: M
+      section: m-71fdf1cf
+      term: signal
+    - doc: M
+      section: m-71fdf1cf
+      term: sovereign-bond-dealer-market
+    - doc: M
+      section: m-71fdf1cf
+      term: sovereign-bond-sector-pack
+    - doc: M
+      section: m-71fdf1cf
+      term: supervisory-challenge-pack
+    - doc: M
+      section: m-71fdf1cf
+      term: supervisory-defensible-escalation-package
+    - doc: M
+      section: m-71fdf1cf
+      term: universal-core-engine
+    - doc: M
+      section: m-b7d82c27
+      term: alert
+    - doc: M
+      section: m-b7d82c27
+      term: alert-abstraction-layer
+    - doc: M
+      section: m-b7d82c27
+      term: analytical-perimeter
+    - doc: M
+      section: m-b7d82c27
+      term: anonymity-attribution-basis
+    - doc: M
+      section: m-b7d82c27
+      term: anonymity-attribution-narrative
+    - doc: M
+      section: m-b7d82c27
+      term: anonymous-quote-driven-market-structure
+    - doc: M
+      section: m-b7d82c27
+      term: auction-window
+    - doc: M
+      section: m-b7d82c27
+      term: automated-narrative-generation
+    - doc: M
+      section: m-b7d82c27
+      term: behavioural-episode-consolidation
+    - doc: M
+      section: m-b7d82c27
+      term: behavioural-persistence-layer
+    - doc: M
+      section: m-b7d82c27
+      term: behavioural-primitive
+    - doc: M
+      section: m-b7d82c27
+      term: block-trade
+    - doc: M
+      section: m-b7d82c27
+      term: block-trade-threshold
+    - doc: M
+      section: m-b7d82c27
+      term: bt-06
+    - doc: M
+      section: m-b7d82c27
+      term: bund
+    - doc: M
+      section: m-b7d82c27
+      term: calibration-change-register
+    - doc: M
+      section: m-b7d82c27
+      term: cco
+    - doc: M
+      section: m-b7d82c27
+      term: classification
+    - doc: M
+      section: m-b7d82c27
+      term: client-portfolio-order-flow-intelligence
+    - doc: M
+      section: m-b7d82c27
+      term: close-window-start-minutes
+    - doc: M
+      section: m-b7d82c27
+      term: convergence-quality-score
+    - doc: M
+      section: m-b7d82c27
+      term: coordination-classification-tier
+    - doc: M
+      section: m-b7d82c27
+      term: correlated-instrument-pair
+    - doc: M
+      section: m-b7d82c27
+      term: cross-instrument-context-intelligence
+    - doc: M
+      section: m-b7d82c27
+      term: cross-market-convergence-score
+    - doc: M
+      section: m-b7d82c27
+      term: cross-venue-surveillance-feed
+    - doc: M
+      section: m-b7d82c27
+      term: cross-window-persistence-score
+    - doc: M
+      section: m-b7d82c27
+      term: crs
+    - doc: M
+      section: m-b7d82c27
+      term: dominance-population-size
+    - doc: M
+      section: m-b7d82c27
+      term: dominance-threshold-pct
+    - doc: M
+      section: m-b7d82c27
+      term: downstream-exposure
+    - doc: M
+      section: m-b7d82c27
+      term: enhancement-roadmap
+    - doc: M
+      section: m-b7d82c27
+      term: explanation-trace
+    - doc: M
+      section: m-b7d82c27
+      term: external-context-intelligence-layer
+    - doc: M
+      section: m-b7d82c27
+      term: four-level-observability-framework
+    - doc: M
+      section: m-b7d82c27
+      term: futures-activity-elevated
+    - doc: M
+      section: m-b7d82c27
+      term: futures-position-intelligence
+    - doc: M
+      section: m-b7d82c27
+      term: historical-quote-lifecycle-dataset
+    - doc: M
+      section: m-b7d82c27
+      term: historical-stor-linkage
+    - doc: M
+      section: m-b7d82c27
+      term: identity-driven-coordination
+    - doc: M
+      section: m-b7d82c27
+      term: instrument-cluster
+    - doc: M
+      section: m-b7d82c27
+      term: intent-score
+    - doc: M
+      section: m-b7d82c27
+      term: ipi
+    - doc: M
+      section: m-b7d82c27
+      term: isgo
+    - doc: M
+      section: m-b7d82c27
+      term: isgo-02
+    - doc: M
+      section: m-b7d82c27
+      term: liquidity-driven-reaction
+    - doc: M
+      section: m-b7d82c27
+      term: liquidity-removal
+    - doc: M
+      section: m-b7d82c27
+      term: lite-data-mode
+    - doc: M
+      section: m-b7d82c27
+      term: mandatory-assess
+    - doc: M
+      section: m-b7d82c27
+      term: market-making-explanation-category
+    - doc: M
+      section: m-b7d82c27
+      term: market-wide-behavioural-reference
+    - doc: M
+      section: m-b7d82c27
+      term: medium-investigate
+    - doc: M
+      section: m-b7d82c27
+      term: methodology-lead
+    - doc: M
+      section: m-b7d82c27
+      term: modelconfidence
+    - doc: M
+      section: m-b7d82c27
+      term: mts-associated-markets
+    - doc: M
+      section: m-b7d82c27
+      term: mts-spa
+    - doc: M
+      section: m-b7d82c27
+      term: mts-trades
+    - doc: M
+      section: m-b7d82c27
+      term: mtsam-api-stack
+    - doc: M
+      section: m-b7d82c27
+      term: mtsam-l01
+    - doc: M
+      section: m-b7d82c27
+      term: mtsam-l07
+    - doc: M
+      section: m-b7d82c27
+      term: mtsam-l10
+    - doc: M
+      section: m-b7d82c27
+      term: mtsam-l11
+    - doc: M
+      section: m-b7d82c27
+      term: multi-day-conditioning-score
+    - doc: M
+      section: m-b7d82c27
+      term: oat
+    - doc: M
+      section: m-b7d82c27
+      term: off-the-run
+    - doc: M
+      section: m-b7d82c27
+      term: os-liquidity-unmeasurable
+    - doc: M
+      section: m-b7d82c27
+      term: otc-bilateral-trading
+    - doc: M
+      section: m-b7d82c27
+      term: otc-positions-repo-intelligence
+    - doc: M
+      section: m-b7d82c27
+      term: participant-interaction
+    - doc: M
+      section: m-b7d82c27
+      term: participant-liquidity-contribution-score
+    - doc: M
+      section: m-b7d82c27
+      term: pi09
+    - doc: M
+      section: m-b7d82c27
+      term: pre-event-positioning-analysis
+    - doc: M
+      section: m-b7d82c27
+      term: primary-dealer
+    - doc: M
+      section: m-b7d82c27
+      term: priorityscore
+    - doc: M
+      section: m-b7d82c27
+      term: qml
+    - doc: M
+      section: m-b7d82c27
+      term: quote-behaviour-baseline-engine
+    - doc: M
+      section: m-b7d82c27
+      term: quote-behaviour-risk-score
+    - doc: M
+      section: m-b7d82c27
+      term: quote-depth-share-position
+    - doc: M
+      section: m-b7d82c27
+      term: quote-domain-signal
+    - doc: M
+      section: m-b7d82c27
+      term: quote-event
+    - doc: M
+      section: m-b7d82c27
+      term: quote-intelligence-architecture
+    - doc: M
+      section: m-b7d82c27
+      term: quote-withdrawal
+    - doc: M
+      section: m-b7d82c27
+      term: rd01
+    - doc: M
+      section: m-b7d82c27
+      term: rd02
+    - doc: M
+      section: m-b7d82c27
+      term: rd03
+    - doc: M
+      section: m-b7d82c27
+      term: rd04
+    - doc: M
+      section: m-b7d82c27
+      term: rd05
+    - doc: M
+      section: m-b7d82c27
+      term: rd06
+    - doc: M
+      section: m-b7d82c27
+      term: regulatory-risk-factor
+    - doc: M
+      section: m-b7d82c27
+      term: removal-register
+    - doc: M
+      section: m-b7d82c27
+      term: rt01
+    - doc: M
+      section: m-b7d82c27
+      term: rt02
+    - doc: M
+      section: m-b7d82c27
+      term: rt04
+    - doc: M
+      section: m-b7d82c27
+      term: rt05
+    - doc: M
+      section: m-b7d82c27
+      term: rt08
+    - doc: M
+      section: m-b7d82c27
+      term: sb-05
+    - doc: M
+      section: m-b7d82c27
+      term: sb-08
+    - doc: M
+      section: m-b7d82c27
+      term: sb-26
+    - doc: M
+      section: m-b7d82c27
+      term: sb-28
+    - doc: M
+      section: m-b7d82c27
+      term: sb-29
+    - doc: M
+      section: m-b7d82c27
+      term: sb-30
+    - doc: M
+      section: m-b7d82c27
+      term: sd02
+    - doc: M
+      section: m-b7d82c27
+      term: sf-issuance
+    - doc: M
+      section: m-b7d82c27
+      term: signal
+    - doc: M
+      section: m-b7d82c27
+      term: sovereign-bond-sector-pack
+    - doc: M
+      section: m-b7d82c27
+      term: spread-rationality-indicator
+    - doc: M
+      section: m-b7d82c27
+      term: spread-widening
+    - doc: M
+      section: m-b7d82c27
+      term: statistical-specificity-confirmed
+    - doc: M
+      section: m-b7d82c27
+      term: structural-relationship-score
+    - doc: M
+      section: m-b7d82c27
+      term: supervisory-challenge-pre-emption
+    - doc: M
+      section: m-b7d82c27
+      term: supports-explanation
+    - doc: M
+      section: m-b7d82c27
+      term: surveillance-gap
+    - doc: M
+      section: m-b7d82c27
+      term: surveillance-gap-flag
+    - doc: M
+      section: m-b7d82c27
+      term: unified-enriched-event-object
+    - doc: M
+      section: m-b7d82c27
+      term: universal-core-engine
+    - doc: M
+      section: m-f0449e6b
+      term: intent-score
     - doc: S
       section: s-3f57d431
       term: alert

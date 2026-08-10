@@ -66,6 +66,7 @@ M = "MCL"
 # Reference codes may not appear: reference documents are never scanned.
 U = "eval/golden/uce.md"
 S = "eval/golden/sbsp.md"
+M = "eval/golden/mcl.md"
 
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value

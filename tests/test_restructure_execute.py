@@ -234,3 +234,33 @@ def test_grid_list_renders_every_row_and_drops_nothing():
     assert "**SB-01**" in text
     assert "One" in text and "Two" in text
     assert rendered.drops == []
+
+
+def test_the_real_m_plan_reproduces_the_m_golden():
+    """The step 9.1 bar for the third document, completing the set."""
+    from detangle.config import Config
+    from detangle.records import load_records
+    from detangle.restructure import load_plan
+    from detangle.restructure.execute import execute
+
+    root = Path(__file__).resolve().parents[1]
+    Config.load(root)
+    plan, findings = load_plan(root / "eval" / "golden" / "mcl.plan.yaml", root)
+    assert findings == []
+    records, _ = load_records(root / "concepts", root)
+    source = (root / "samples" / "blueprint-MCL-shortened.md").read_text(
+        encoding="utf-8"
+    )
+    text = execute(plan, records, source)
+    golden = (root / "eval" / "golden" / "mcl.md").read_text(encoding="utf-8")
+
+    assert re.findall(r"<!-- sec:(m-[0-9a-f]{8}) -->", text) == re.findall(
+        r"<!-- sec:(m-[0-9a-f]{8}) -->", golden
+    )
+    def_pattern = r"<!-- concept:([a-z0-9-]+):start -->\n(.*?)\n<!-- concept"
+    assert re.findall(def_pattern, text, re.S) == re.findall(
+        def_pattern, golden, re.S
+    )
+    gold_tokens, ours = _tokens(golden), _tokens(text)
+    assert not (gold_tokens - ours), dict(gold_tokens - ours)
+    assert not (ours - gold_tokens), dict(ours - gold_tokens)
