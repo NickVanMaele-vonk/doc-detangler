@@ -471,24 +471,58 @@ def render(plan: Plan, records: list[Record], source: str) -> Render:
                                 )
                             )
                 continue
+            if hint == "grid-list":
+                # A grid table as a headed list, dropping nothing: the first
+                # non-empty cell of each row is the head, every other cell a
+                # paragraph. Unlike `history-list` this assumes no header row
+                # — the archetype and change-log grids open with content.
+                flush_table()
+                for cells in first.grid_rows or []:
+                    filled = [c for c in cells if c.strip()]
+                    if not filled:
+                        continue
+                    head = clean(filled[0], hashes[0]).strip("*").strip()
+                    out.parts.append(
+                        Part(
+                            text=f"**{head}**\n",
+                            origin=SOURCE,
+                            kind="grid-head",
+                            blocks=(hashes[0],),
+                            section=section.id,
+                        )
+                    )
+                    for cell in filled[1:]:
+                        for para in cell.split("\n\n"):
+                            out.parts.append(
+                                Part(
+                                    text=clean(para, hashes[0]) + "\n",
+                                    origin=SOURCE,
+                                    kind="grid-body",
+                                    blocks=(hashes[0],),
+                                    section=section.id,
+                                )
+                            )
+                continue
             if hint == "part-row":
                 lines = [
                     ln for ln in first.raw.splitlines() if not RULE_LINE.match(ln)
                 ]
-                content = WS.sub(" ", " ".join(lines)).strip()
-                m = re.match(r"PART\s+(\S+)\s+(.*)$", content)
+                # Emphasis is presentation, not content: some banners are
+                # bold, and the row carries the words either way.
+                content = WS.sub(" ", " ".join(lines)).replace("**", "").strip()
+                m = re.match(r"(PART|SECTION)\s+(\S+)\s+(.*)$", content)
                 if not m:
                     raise UsageError(f"part-row block does not parse: {content!r}")
-                # "PART" is the banner's own label; the row keeps the part
-                # number and its title.
-                drop("PART", "part-row-label", hashes[0])
+                # "PART"/"SECTION" is the banner's own label; the row keeps
+                # the part number and its title.
+                drop(m.group(1), "part-row-label", hashes[0])
                 if table is None:
                     # Headerless on purpose: the index table's real header is
                     # a source block further down, and the tool does not write
                     # column names of its own.
                     table = _Table()
                 table.rows.append(
-                    ([m.group(1), clean(m.group(2), hashes[0])], hashes[0])
+                    ([m.group(2), clean(m.group(3), hashes[0])], hashes[0])
                 )
                 continue
             if hint == "note-italic":
@@ -511,9 +545,16 @@ def render(plan: Plan, records: list[Record], source: str) -> Render:
             if not tabular:
                 flush_table()
                 for h in hashes:
+                    # Rule lines glued to a prose block are the same table
+                    # furniture the tabular path drops.
+                    body = "\n".join(
+                        ln
+                        for ln in parsed[h].raw.splitlines()
+                        if not RULE_LINE.match(ln)
+                    )
                     out.parts.append(
                         Part(
-                            text=clean(parsed[h].raw, h) + "\n",
+                            text=clean(body, h) + "\n",
                             origin=SOURCE,
                             kind="prose",
                             blocks=(h,),

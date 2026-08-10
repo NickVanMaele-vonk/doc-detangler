@@ -1,0 +1,213 @@
+# Machine-readable reorder plan for S — ADR-002 Decision 2, produced for
+# step 9.1. The stage-A judgment as data, executed by `detangle
+# restructure`; blocks addressed by para_hash, never line numbers (D10).
+doc: S
+pinned_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+sections:
+  - {id: head, title: "Document identity", kind: head}
+  - {id: s-a879be67, title: "Overview", kind: generated}
+  - {id: s-a1fbd09a, title: "Terms defined in this document", kind: generated}
+  - {id: s-3f57d431, title: "1. What this Sector Pack is", kind: content}
+  - {id: s-7466306a, title: "2. Sovereign bond market context (Section A)", kind: content}
+  - {id: s-7095176e, title: "3. Belgian sovereign bond risk universe (Section A.6)", kind: content}
+  - {id: s-51e0b874, title: "4. Document control", kind: content}
+assignments:
+  - {block: sha256:c66cf5b4dc5ff37ad8253db02305fcc504df83f249e6be8797584f0ea54e7074, section: head}  # b0 VERIDICT INTELLIGENCE
+  - {block: sha256:41a30940ec0169de203b886d94acf977f5d4a73530c05b6a275e1af9463453d7, section: head}  # b1 Sovereign Government Bond
+  - {block: sha256:2a258c6700970cf21e95bd2e87eb75dcdc220475bee49368d4c6aa9d7b0d3d20, section: head}  # b2 Sector Intelligence Pack
+  - {block: sha256:d091bb4cf2f508c83a8ff71a10e434a8ea8e78738bb2ac277a3a9c104e59ecb6, section: head}  # b3 MAR Intelligence  Fixed Income Market Abuse Detectio
+  - {block: sha256:7cf8cfccdcb5829f5a909695d82ac19b6be581d49a61e098b108dc7a4ef2b68f, section: head}  # b4 Document 2 of 3
+  - {block: sha256:3dc52441de05271052b25fe9c9d4fe62e7e051e26647f9282d15f06f891e5ab1, section: s-3f57d431}  # b5 ----------------------------------------------------
+  - block: sha256:b03c626c124a717f804a18c7d024bd3c4bc4e3197fcd35a9011975153fc2ca64  # b20 ----------------------------------------------------
+    section: s-7466306a
+    subheading: '### A.1 Structural characteristics governing detection'
+  - {block: sha256:223dcd93c912f614d8c0b4af0428262480e223299d380862804f7f404ffa2140, section: s-7466306a}  # b22 ----------------------------------------------------
+  - {block: sha256:7f9567d43084f13b1d3df844f549f450961399c1334baedc902c234d2547b3ea, section: s-7466306a}  # b23 Concentrated dealer network (typically 1020 primary 
+  - {block: sha256:104538add1bf447473617b7bb9d258ea3ba3b6bcb09a935fdfe0ca6205e4d9a7, section: s-7466306a}  # b24 High-value reference prices The closing price feeds 
+  - {block: sha256:6e835a4f85710a9e5ef25a2f7b9cf78ce118fb833850cff662b89b625dc9bfd2, section: s-7466306a}  # b25 Primary market issuance windows Sovereign bond issua
+  - {block: sha256:f7d220c9d090ebee403ac4b97a236ff976263bc6f80927c41f60824292aaee0c, section: s-7466306a}  # b26 Absence of price movement  absence of manipulation I
+  - {block: sha256:09ddf6ebde66c1524a71fa15fcb1278f922eacaa5c7901d65843d0565752c3bf, section: s-7466306a}  # b27 Repo market linkage Cash sovereign bond manipulation
+  - block: sha256:62ba0fd504911b9eb5d3d520c4f91d7fb1fd2b769504b23ee2429dd9bdb25e42  # b29 ----------------------------------------------------
+    section: s-7466306a
+    subheading: '### A.2 Liquid regime classification for sovereign bonds'
+  - {block: sha256:00a27341102a5026c0703d259e687dcb66ebf2dfed818d3372223e1e059209cc, section: s-7466306a}  # b30 THIN Spread 1.53 historical median; depth 50%80% of 
+  - {block: sha256:4dff97f22d08f05d3f5c9e9fc8f90a6723ccd6604651abc7075fcf6840f2bce8, section: s-7466306a}  # b31 ILLIQUID Spread >3 historical median; depth <50% of 
+  - {block: sha256:6bc0c17bf9c8e6dbe947aa0d46d2eb768fec4f7b7d1dc3e40abb33d0d63f5ab9, section: s-7466306a}  # b32 STRESSED Sovereign spread widening >50bps in session
+  - block: sha256:88bc6ac0df9a7e6273942e25989b65da58686f2d04d2d712ebd7ae4afc3f1057  # b34 ----------------------------------------------------
+    section: s-7466306a
+    subheading: '### A.3 Anonymous quote-driven market structure — analytical implications'
+  - {block: sha256:71bd0250a546b403305e354dc6e230fd9d285e337b239c0f28523646bf1436a8, section: s-7466306a}  # b36 The analytical consequences of anonymous quoting are
+  - {block: sha256:6d825f35a8c6e7b25a7b50f402b61d4dd79d7eaffdfc63086b8fcec8dc8056e2, section: s-7466306a}  # b37 ----------------------------------------------------
+  - {block: sha256:065167c57a7cf65a9f4a0a6dc26d8b5eb7987a70a269455fa172f0eb3da6face, section: s-7466306a}  # b38 Quote reaction interpretation A participant widening
+  - {block: sha256:29bfa1568d1beba560fa2bb9787a8d76a2dc47782659b462da0796dc7334fd9e, section: s-7466306a}  # b39 Signalling hypothesis evidential standard Quote sign
+  - {block: sha256:e1645c687b2734383dfbe8e44006e7f9160201e991ea89846fa2c249cb7bc163, section: s-7466306a}  # b40 ModelConfidence assignment ModelConfidence assessed 
+  - {block: sha256:2e2e768904476f482680f84e7c3f1237457a60bc86260068befba076dc48b606, section: s-7466306a}  # b41 Supervisory challenge readiness Interaction-based qu
+  - block: sha256:efd0c75bbcb20a0bbf1c8b550a17702be73e6db6ee537d4bfa3d3f09778dd038  # b43 The single most important analytical distinction in 
+    section: s-7466306a
+    subheading: '### A.3.1 Identity-driven coordination vs liquidity-driven reaction'
+  - {block: sha256:13b6f1171ead6dc3870ee70c263d52b973b60d39a72bff0ccf3f2383b789d2e1, section: s-7466306a}  # b44 ----------------------------------------------------
+  - {block: sha256:9af06ebd0163625391e9344287d50c42be1952d1e95e9bf43899f13912c27ec0, section: s-7466306a}  # b45 Identity-driven coordination Participant B deliberat
+  - {block: sha256:7ef109ec8429808498523c9cb58f730bbbbd01d0fc80a7fc9b519c27d4a52e9e, section: s-7466306a}  # b46 ----------------------------------------------------
+  - block: sha256:f8ee0ec413bfc8dcc8d1125c6db4f82507a91db5cc1c6dea09656b6165011e53  # b49 In anonymous interdealer electronic sovereign bond m
+    section: s-7466306a
+    subheading: '### A.3.2 Quote behaviour without trade execution — standalone manipulation in anonymous markets'
+  - {block: sha256:b3ae34bc5e81f71b11f197cdad2e0553db321eb3e5015e1cd85a8fba91695907, section: s-7466306a}  # b50 This is analytically critical because: conventional 
+  - block: sha256:7ccda5822c316d3ce595518e570cd05929d3d34df91d198956e655bdced54907  # b52 OTC bilateral trading in sovereign bond markets is t
+    section: s-7466306a
+    subheading: '### A.4 Cross-instrument and external context intelligence — observability framework and OTC analytical hypotheses'
+  - {block: sha256:524f86641e8837b3d5c0b7fc840c82388561b75a8c14a46063d67e6613aa44bf, section: s-7466306a}  # b53 ----------------------------------------------------
+  - {block: sha256:49c3c27b177abf8ae3ee57d34bf2500f8e6d9fdd53c655cc375d84cb5510776f, section: s-7466306a}  # b55 ----------------------------------------------------
+  - {block: sha256:f46709350040facd3893704d6c98215cba3f299a85cae931e04815dee3320cb8, section: s-7466306a}  # b56 Off-Platform Price Conditioning Participant quotes a
+  - {block: sha256:b2298b5bc63e8f0c6ade4e99ebb92bd3be7b44fb94da1db036aa099475c747d8, section: s-7466306a}  # b57 Bilateral Execution Following Anonymous Quote Pressu
+  - {block: sha256:cd33f7e5bdc577438b704d99e7cce68ea7b19584c943b0e74c93e4fda2d1354d, section: s-7466306a}  # b58 Venue Arbitrage Participant identifies a price discr
+  - block: sha256:7c1c374aa1686c2293139d0a3bb3dd354f44bf70da19e49e6f89701b4bc2c721  # b60 Cross-instrument and cross-venue intelligence is not
+    section: s-7466306a
+    subheading: '### A.4.1 Four-level observability framework'
+  - {block: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f, section: s-7466306a}  # b61 ----------------------------------------------------
+  - {block: sha256:6fd9b9d54d216ad86c12e6b2ef3bc449a71e980b90ade8b8c8c310c146de5dad, section: s-7466306a}  # b62 Level 2  MTS + Public Market Context (Observable wit
+  - {block: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5, section: s-7466306a}  # b63 Level 3  Behavioural Cross-Venue Hypothesis (Analyti
+  - {block: sha256:b1a92d61e944b47588d3cd10c641d3204ddcec515aec1bc2c2a21379ca149e74, section: s-7466306a}  # b64 Level 4  True Cross-Venue Surveillance (Outside MTSA
+  - {block: sha256:5f042237cf4ac1ed894639cd76822a1233ccfdf82ca09b86b0d4c5463ac37384, section: s-7466306a}  # b65 MTSAM operational priority: the highest value will c
+  - block: sha256:e3498bb704c14c1e59328c73c14da7f398ae69f2cc0650d04ab9ad51870c7892  # b67 ------------------------------------ Analytical Prin
+    section: s-7466306a
+    subheading: '### A.4.2 Cross-venue analytical framework — OTC bilateral detection'
+  - {block: sha256:a5581fbe6787662948e04177a574a2270f5971b2d2f230ff24de134763ce65c9, section: s-7466306a}  # b68 No-data-cannot-confirm-no-cross-venue-manipulation T
+  - {block: sha256:c50813de371a3d7e43bf1d72610f87766ae39c04ca14bfb93b6524d0f99729b0, section: s-7466306a}  # b69 OTC bilateral as partial confirmation layer Where OT
+  - {block: sha256:72533e3effcdbb46486155129709d61c963f445a6195b239c94b7497ee79a9f5, section: s-7466306a}  # b70 Participant identity bridging requirement Cross-venu
+  - {block: sha256:9f591e651c776f5e61e085f167d480d3a3d06d743a4c41b17cd66168f7f66800, section: s-7466306a}  # b71 Behavioural divergence scoring Where cross-venue div
+  - block: sha256:415098bc8d39b35527902e83bb2313a9e9f8186cbf3062ff89754da582e59052  # b77 The A.4.1 Four-Level Observability Framework correct
+    section: s-7466306a
+    subheading: '### A.4.3 Cross-instrument context intelligence (CICI) — Eurex public market data as ECIL enrichment'
+  - {block: sha256:ad524d6466b57a1ee26aa869d43d6f880fc5ce2456649c6f2919a973d4ce8cba, section: s-7466306a}  # b78 Epistemological position: CICI produces a Cross-Mark
+  - block: sha256:40620ed67d518a68c38bae94e62ab3567c5ea37badd4a1a7f3bbfe478b6f24a3  # b76 A.4.3.1 ECIL Amplification Auto-Validation Threshold
+    section: s-7466306a
+    subheading: '### A.4.3.1 ECIL amplification auto-validation threshold (SBSP-AMD-BVR-001)'
+  - block: sha256:9e752d5c38c8abcf9eb0029a95f0a5d9dd17e722d259bc6bb8c38cd8f9565b87  # b80 ----------------------------------------------------
+    section: s-7466306a
+    subheading: '### A.4.3.2 CICI data inputs and three-level framework'
+  - {block: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba, section: s-7466306a}  # b81 Level 2  Cash-Futures Relationship (Stronger signal.
+  - {block: sha256:8fbae0a7d02daa5d5d8d6180fc8c6dcc596f179b3a08b0b5d88027a7a85e3f4c, section: s-7466306a}  # b82 Level 3  Cross-Market Convergence Score (Advanced. B
+  - block: sha256:456e28fb58db33f0963669e53f9cbc9422a2e541caa1d383705f9acf6962afec  # b84 The CICI framework specifically addresses the freque
+    section: s-7466306a
+    subheading: '### A.4.3.3 CICI and the three-position data types'
+  - {block: sha256:ca3cfd0e13ab382083531ad6b24d689681b2ef57295866c3db1d8ae1543036ff, section: s-7466306a}  # b85 --------------------------------------------------- 
+  - {block: sha256:689dae475e36f27f49599d830c13c1a316957742d22581181cae64979c77435c, section: s-7466306a}  # b86 Participant Futures Positions (Bund futures, OAT fut
+  - {block: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37, section: s-7466306a}  # b87 Participant Repo Positions (overnight and term repo,
+  - {block: sha256:fbd3b6cd675a12443e3c8558ed56247c3bb6bd8efe9aa4b90c3274afc0dbc1e7, section: s-7466306a}  # b88 CICI operational summary: Levels 1 and 2 are achieva
+  - block: sha256:67079ef86e4b55082f2927cba4e8e80dfbd18634302a0bbfd02fb8fd05a947d1  # b91 A.6.1 Mandatory Audit Language for BVR Closures. Eve
+    section: s-7095176e
+    subheading: '### A.6.1 Mandatory audit language for BVR closures (SBSP-AMD-BVR-001)'
+  - block: sha256:712b5b3a1bd46e8cf16208e9bfcacd438f6c2a5252eb149b0d798bcba42f3a38  # b92 The table below enumerates all 35 risk archetypes id
+    section: s-7095176e
+    subheading: '### A.6.2 The 35 risk archetypes'
+  - {block: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a, section: s-7095176e, render: grid-list}  # b93 +---------------------------------------------+-----
+  - block: sha256:5035dba14a5a261f0e40da2adbc98c48ae97057a3a239d332204d740c85e120f  # b7 ----------------- Section Content ----------------- 
+    section: s-51e0b874
+    subheading: '### 4.1 Section index'
+  - {block: sha256:318a86f811ed5792cb64ec9b45f7e3c47eadcf4c42e3d18e76fa03479ec68551, section: s-51e0b874}  # b8 B  Behavioural Primitive Mapping How the Universal C
+  - {block: sha256:033a43178b51902dfd84dcd7165133bc4b4a9839b31ec6a371773d7e7a26aaa3, section: s-51e0b874}  # b9 C  Pattern Taxonomy Tier 1 Core Patterns, Tier 2 Beh
+  - {block: sha256:f9babcb531dc963dcc04c6ed4504c2be7dbb6c064e61a431158e68abbac2c4de, section: s-51e0b874}  # b10 D  Quoting Behaviour Architecture Complete specifica
+  - {block: sha256:dd46508f7b8af534c4b8066146560f43cc36753286cdf5ea32bf9010b6ff7521, section: s-51e0b874}  # b11 E  RT Alert Taxonomy Complete 25-code intraday RT al
+  - {block: sha256:e3372cbd37be2a68435d266249d8991167cbba4cd9df4d5f53b4e9dc076d545f, section: s-51e0b874}  # b12 F  RD Alert Taxonomy Complete 15-code end-of-day RD 
+  - {block: sha256:d680a9994174b8609cc753471fe5ae0771fda4732995cf8489dd42f1d107b5f1, section: s-51e0b874}  # b13 G  RTRD Cross-Pass Convergence Intraday  EOD materia
+  - {block: sha256:d4d31c612a8577adde132f1e747f6ae2e499ac378653c7f52f9c3bf5dadfaf0a, section: s-51e0b874}  # b14 H  Quote Intelligence Architecture QBRS, QBLI, QBCCL
+  - {block: sha256:e9bc15cee93a9fa7f092f93d1811f8fa0e3e113bdd7096fd8bbe006fc0c58c30, section: s-51e0b874}  # b15 I  Sovereign Bond Surveillance Doctrine Analytical d
+  - {block: sha256:dfba875ce0931df8753896416c2f95cbef053abeaa1e3b8d908e64863bde1e1c, section: s-51e0b874}  # b16 J  Explanation Framework Constraints Sovereign bond-
+  - block: sha256:589420dbf4918ec531a8a18c51cf07c3075a98c8bebe3950e4f2513e4c292d06  # b17 ----------------------------------------------------
+    section: s-51e0b874
+    render: part-row
+    subheading: '### 4.2 Section banners'
+  - {block: sha256:bfc24fe03e18eae54d1b6ff64867f402adee6c25cc9940c08dc716bc44788c9e, section: s-51e0b874, render: part-row}  # b72 ----------------------------------------------------
+noise:
+  - {block: sha256:5be59d365acb8d35446f682c6d314fffd5db5846ab8c6eb021e6bacd98a82aa0, kind: furniture}  # b6 bare rule; hash occurs 7x, one entry covers all
+  - {block: sha256:23bf254b1a13226be88b5bdad28749002f81e38f145a374826f5602d23ca8545, kind: navigation}  # b19 pseudo-heading: A.1
+  - {block: sha256:54e1c4260bd7cfc2f60d114d80d2e85672ee154895c072e6d9dcde68d5285da8, kind: navigation}  # b28 pseudo-heading: A.2
+  - {block: sha256:b4990ee64779b50a756caf14717c8e7d033102d5b5e7d25446f0e54b995c961d, kind: navigation}  # b33 pseudo-heading: A.3
+  - {block: sha256:85050f934555bacbdc4411321a122dc49e31c624767d2ba97a5472cf1b8fcdb7, kind: navigation}  # b42 pseudo-heading: A.3.1
+  - {block: sha256:200b44182ebaafeca3fb0e6b4ecb4d3ca8d2a6661f23b5ad638a83999e6a0602, kind: navigation}  # b48 pseudo-heading: A.3.2
+  - {block: sha256:8a4d8632a1d92085b51c0cbb078d1cdc8d7b34be2cf46a47543737f65334d269, kind: navigation}  # b51 pseudo-heading: A.4
+  - {block: sha256:3e53e56f29ca4f450238062f05ecf8d78fc42a1d5458fa6ef14f4df931dbb388, kind: navigation}  # b59 pseudo-heading: A.4.1
+  - {block: sha256:e6d57ce9fee7c295f5247a06370187ceed8e97286f44cada01e8bf8ffca65326, kind: navigation}  # b66 pseudo-heading: A.4.2
+  - {block: sha256:e937d040d12bf3dd1fe7eb97dec2914ff281dc47dc4e9c5463318d228cf9eb29, kind: navigation}  # b74 pseudo-heading: A.4.3 (mojibake carried in body prose)
+  - {block: sha256:0e29e8761ad0a960613cc136fd82b1fac7b44df9d3316c01216a4e13c58f6a9e, kind: navigation}  # b75 pseudo-heading: §A.4.3.1 amendment banner
+  - {block: sha256:6ea3d29819f613e6f677eb8e60e4c09116b5ac0c642fcc97354be206df04b032, kind: navigation}  # b79 pseudo-heading: A.4.3.1 (duplicate numbering in source)
+  - {block: sha256:e1181d7b2b9ac9764ff36593d20a9463157311f1316936f881856c95720f77a8, kind: navigation}  # b83 pseudo-heading: A.4.3.2
+  - {block: sha256:2740873e120d375bfc1e99a92819fb194aa82d424c077f8e73db0e4eba426904, kind: navigation}  # b89 pseudo-heading: A.6
+  - {block: sha256:cd0dd65a768ea3e88fbfcd77192e1342c0f355de046829119af152fbe7b07abb, kind: navigation}  # b90 pseudo-heading: §A.6.1 amendment banner
+definitions:
+  - {record: bt-04, section: s-a1fbd09a}
+  - {record: rt-rd-cross-pass-convergence, section: s-a1fbd09a}
+  - {record: sb-06, section: s-a1fbd09a}
+  - {record: sb-07, section: s-a1fbd09a}
+  - {record: sb-10, section: s-a1fbd09a}
+  - {record: sb-12, section: s-a1fbd09a}
+  - {record: sovereign-bond-surveillance-doctrine, section: s-a1fbd09a}
+  - {record: cash-futures-basis, section: s-7466306a}
+  - {record: cross-venue-manipulation, section: s-7466306a}
+  - {record: bilateral-execution-following-anonymous-quote-pressure, section: s-7466306a}
+  - {record: ecil-amplification, section: s-7466306a}
+  - {record: liquid-regime-classification, section: s-7466306a}
+  - {record: liquidity-migration, section: s-7466306a}
+  - {record: mtsam-l02, section: s-7466306a}
+  - {record: off-platform-price-conditioning, section: s-7466306a}
+  - {record: quote-behaviour-without-trade-execution, section: s-7466306a}
+  - {record: repo-market-linkage, section: s-7466306a}
+  - {record: systemic-consequence-uplift, section: s-7466306a}
+  - {record: three-position-data-types, section: s-7466306a}
+  - {record: venue-arbitrage, section: s-7466306a}
+  - {record: bt-01, section: s-7095176e}
+  - {record: event-context, section: s-7095176e}
+  - {record: explanation-type, section: s-7095176e}
+  - {record: sb-02, section: s-7095176e}
+  - {record: sb-03, section: s-7095176e}
+  - {record: sb-09, section: s-7095176e}
+  - {record: sb-11, section: s-7095176e}
+  - {record: sb-15, section: s-7095176e}
+  - {record: sb-16, section: s-7095176e}
+  - {record: sb-17, section: s-7095176e}
+  - {record: sb-18, section: s-7095176e}
+  - {record: sb-19, section: s-7095176e}
+additions:
+  - section: s-a879be67
+    form: ai-addition-section
+    text: |
+      > [AI addition] This section was written to introduce the document; it is
+      > not derived from a single source passage.
+
+      This document specifies the Sovereign Government Bond Sector Intelligence
+      Pack, which extends the Universal Core Engine (Document 1) for sovereign
+      bond market surveillance. It is Document 2 of 3: Document 3 calibrates the
+      set for the MTSAM interdealer market.
+
+      The document is organised general to specific. Section 1 states what this
+      Sector Pack is and the markets it covers. Section 2 holds the sovereign
+      bond market context of source Section A: the structural characteristics
+      that govern detection, the regime classification for sovereign bonds, the anonymous
+      quote-driven market structure, and the cross-instrument and external
+      context intelligence framework, including the CICI enrichment and its
+      amendment. Section 3 holds the 35-archetype risk universe reference table
+      with its mandatory audit language amendment. Section 4 holds document
+      control: the source's section index and its section banners. Terms used
+      across several sections are defined directly below this overview; terms
+      local to one section are defined at the top of that section; terms shared
+      with the other documents of the set are defined in the glossary, which is
+      read first.
+
+      This extract contains the content of source Section A only. Sections B–J
+      exist here only as one-line summaries in the section index, and Section B
+      additionally as its banner.
+exceptions:
+  - title: "Version skew carried, not harmonised"
+    where: eval/golden/sbsp-rulings.md §1
+  - title: "Amendment texts kept at their anchor points"
+    where: eval/golden/sbsp-rulings.md §2
+  - title: "Source defects carried verbatim (B-1 candidates)"
+    where: eval/golden/sbsp-rulings.md §3
+  - title: "Duplicate A.4.3.1 numbering resolved in authored headings"
+    where: eval/golden/sbsp-rulings.md §4
+  - title: "Misfiled CICI material restored to Section A"
+    where: eval/golden/sbsp-rulings.md §5
+  - title: "Interleaved BVR grouping text carried inside the SB-12 row"
+    where: eval/golden/sbsp-rulings.md §6
+  - title: "Deviation: no generated navigation"
+    where: eval/golden/sbsp-rulings.md §7

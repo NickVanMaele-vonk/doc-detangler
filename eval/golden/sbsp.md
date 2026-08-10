@@ -1,0 +1,687 @@
+**VERIDICT INTELLIGENCE**
+
+**Sovereign Government Bond**
+
+**Sector Intelligence Pack**
+
+MAR Intelligence --- Fixed Income Market Abuse Detection
+
+**Document 2 of 3**
+
+<!-- sec:s-a879be67 -->
+## Overview
+
+<!-- AI addition:start scope="section" -->
+> [AI addition] This section was written to introduce the document; it is
+> not derived from a single source passage.
+
+This document specifies the Sovereign Government Bond Sector Intelligence
+Pack, which extends the Universal Core Engine (Document 1) for sovereign
+bond market surveillance. It is Document 2 of 3: Document 3 calibrates the
+set for the MTSAM interdealer market.
+
+The document is organised general to specific. Section 1 states what this
+Sector Pack is and the markets it covers. Section 2 holds the sovereign
+bond market context of source Section A: the structural characteristics
+that govern detection, the regime classification for sovereign bonds, the anonymous
+quote-driven market structure, and the cross-instrument and external
+context intelligence framework, including the CICI enrichment and its
+amendment. Section 3 holds the 35-archetype risk universe reference table
+with its mandatory audit language amendment. Section 4 holds document
+control: the source's section index and its section banners. Terms used
+across several sections are defined directly below this overview; terms
+local to one section are defined at the top of that section; terms shared
+with the other documents of the set are defined in the glossary, which is
+read first.
+
+This extract contains the content of source Section A only. Sections B–J
+exist here only as one-line summaries in the section index, and Section B
+additionally as its banner.
+<!-- AI addition:end -->
+
+<!-- sec:s-a1fbd09a -->
+## Terms defined in this document
+
+Definitions used in more than one section of this document, in dependency
+order — a term is defined before any definition below uses it.
+
+**BT-04** (also known as: bt04_dominance_share)
+<!-- concept:bt-04:start -->
+Block-trade indicator BT-04: bt04_dominance_share ≥ 30% block notional in instrument cluster LOOKBACK_30D.
+<!-- concept:bt-04:end -->
+
+**RT–RD Cross-Pass Convergence**
+<!-- concept:rt-rd-cross-pass-convergence:start -->
+Intraday × EOD materiality scoring (RDCS), fifteen named RT–RD combinations, and the five priority combinations for sovereign bond markets.
+<!-- concept:rt-rd-cross-pass-convergence:end -->
+
+**SB-06** (also known as: Benchmark Conditioning)
+<!-- concept:sb-06:start -->
+Benchmark-family risk archetype Benchmark Conditioning; detection basis BENCHMARK_SHAPING campaign (CWPS_cross + MDCS + CLOSE_WINDOW), IPI on benchmark OLOs, BT-04 block dominance in cluster.
+<!-- concept:sb-06:end -->
+
+**SB-07** (also known as: Yield Curve Distortion)
+<!-- concept:sb-07:start -->
+Benchmark-family risk archetype Yield Curve Distortion; detection basis SD02 cross-instrument spread dislocation (5Y/10Y, 10Y/30Y), RD06 cross-instrument coordination, CROSS_WINDOW campaign.
+<!-- concept:sb-07:end -->
+
+**SB-10** (also known as: Liquidity Conditioning)
+<!-- concept:sb-10:start -->
+Liquidity-family risk archetype Liquidity Conditioning; detection basis LIQUIDITY_CONDITIONING campaign (BDS + BPL_liquidity_drift + anticipatory withdrawal ≥3 sessions), BOA=LIQUIDITY_CONDITIONING.
+<!-- concept:sb-10:end -->
+
+**SB-12** (also known as: Quote Signalling, Quote-Based Inter-Participant Signalling)
+<!-- concept:sb-12:start -->
+Quote-family risk archetype Quote Signalling; detection basis §D.5 Quote-Based Inter-Participant Signalling, CCT=IMPLICIT/EXPLICIT, full signal cycle detection, anonymity attribution framework.
+<!-- concept:sb-12:end -->
+
+**Sovereign Bond Surveillance Doctrine** (also known as: sovereign bond market doctrine)
+<!-- concept:sovereign-bond-surveillance-doctrine:start -->
+Analytical doctrine for quote-driven, liquidity-sensitive, cumulative manipulation in sovereign bond markets: manipulation is often subtle, liquidity-driven, and cumulative across the trading day. No single intraday event is typically decisive. The analytical question is not 'was this trade suspicious?' but 'did this participant's cumulative intraday behaviour combine with their EOD market position to produce a material manipulation outcome?'
+<!-- concept:sovereign-bond-surveillance-doctrine:end -->
+
+<!-- sec:s-3f57d431 -->
+## 1. What this Sector Pack is
+
+This document specifies the Sovereign Government Bond Sector Intelligence Pack --- the pattern taxonomy, alert architecture, scoring calibration, and analytical doctrine that extend the Universal Core Engine (Document 1) for sovereign bond market surveillance. It covers government bond markets broadly: OLOs, OATs, Bunds, BTPs, Gilts, and equivalent sovereign debt instruments traded on electronic venues and OTC. Institution-specific calibration for the MTSAM interdealer market is provided in Document 3.
+
+<!-- sec:s-7466306a -->
+## 2. Sovereign bond market context (Section A)
+
+**cash-futures basis** (also known as: OLO/Bund cash-futures basis)
+<!-- concept:cash-futures-basis:start -->
+Cash-futures basis = OLO implied yield − Bund futures implied yield (carry + CTD adjusted).
+<!-- concept:cash-futures-basis:end -->
+
+**cross-venue manipulation** (also known as: cross-venue behavioural inconsistency, cross-venue divergence)
+<!-- concept:cross-venue-manipulation:start -->
+A participant conditions the anonymous electronic order book through quote behaviour (creating price expectations, removing depth, signalling directionality) and then executes the profitable side of the strategy bilaterally in the OTC market — outside the electronic venue's detection perimeter.
+<!-- concept:cross-venue-manipulation:end -->
+
+**Bilateral Execution Following Anonymous Quote Pressure**
+<!-- concept:bilateral-execution-following-anonymous-quote-pressure:start -->
+Cross-venue manipulation pattern in which the participant applies anonymous quote pressure on MTS (bid-side or ask-side aggressive quoting creating one-sided depth) causing other participants to adjust their bilateral OTC pricing expectations in response to the electronic book signal; other participants execute bilaterally at prices that reflect the electronic book condition created by the suspected participant's MTS activity.
+<!-- concept:bilateral-execution-following-anonymous-quote-pressure:end -->
+
+**ECIL amplification** (also known as: ibe.ecil_amplification)
+<!-- concept:ecil-amplification:start -->
+The ECIL amplification value (ibe.ecil_amplification) participates directly in Automatic Validation as Condition 3 (§VI-A.5.3 UCE v30); the threshold of 0.20 was selected to exclude signals where macro or event context has materially amplified the analytical result.
+<!-- concept:ecil-amplification:end -->
+
+**Liquid Regime Classification**
+<!-- concept:liquid-regime-classification:start -->
+Four-regime classification of sovereign bond market conditions, each regime defined for the sovereign bond context with an EMT Threshold Adjustment: NORMAL — bid-ask spread within 1.5× historical median; order book depth within 20% of 30-day baseline; no circuit breaker or suspension events; THIN — spread 1.5×–3× historical median; depth 50%–80% of baseline; or seasonal low-liquidity period; ILLIQUID — spread >3× historical median; depth <50% of baseline; or post-suspension reopening within first 30 minutes; STRESSED — sovereign spread widening >50bps in session; confirmed macro event driving market-wide directional moves.
+<!-- concept:liquid-regime-classification:end -->
+
+**Liquidity Migration**
+<!-- concept:liquidity-migration:start -->
+Cross-venue manipulation pattern in which the participant reduces electronic quoting presence (quote withdrawal, widening spreads, depth removal from MTS order book) and increases bilateral OTC execution volume in the same instrument during the same session; OTC execution benefits from prices that the electronic venue withdrawal has influenced.
+<!-- concept:liquidity-migration:end -->
+
+**MTSAM-L02**
+<!-- concept:mtsam-l02:start -->
+MTSAM-L data limitation register entry L02: no order book — part of the absence of detailed OTC bilateral data.
+<!-- concept:mtsam-l02:end -->
+
+**Off-Platform Price Conditioning**
+<!-- concept:off-platform-price-conditioning:start -->
+Cross-venue manipulation pattern in which the participant quotes aggressively on one side of the MTS order book — not to execute electronically but to condition the price expectation of bilateral counterparties who can see the electronic book — and executes bilaterally at prices close to or better than the electronic book levels they just conditioned.
+<!-- concept:off-platform-price-conditioning:end -->
+
+**quote behaviour without trade execution**
+<!-- concept:quote-behaviour-without-trade-execution:start -->
+In anonymous interdealer electronic sovereign bond markets, manipulative behaviour may occur entirely through displayed quote behaviour — liquidity withdrawal, spread conditioning, order book influence, depth removal — without requiring or producing any executed transactions.
+<!-- concept:quote-behaviour-without-trade-execution:end -->
+
+**Repo market linkage**
+<!-- concept:repo-market-linkage:start -->
+Cash sovereign bond manipulation affecting the closing reference price feeds into repo market margins, affecting collateral availability across the financial system; repo market impact classified as systemic consequence, OS=2 automatic.
+<!-- concept:repo-market-linkage:end -->
+
+**systemic_consequence_uplift**
+<!-- concept:systemic-consequence-uplift:start -->
+RDCS receives additional +0.10 systemic_consequence_uplift where downstream_exposure includes repo margin calculations.
+<!-- concept:systemic-consequence-uplift:end -->
+
+**Three-Position Data Types**
+<!-- concept:three-position-data-types:start -->
+The three participant-level position data types the CICI framework addresses: Participant OTC Positions (bilateral bond trades, repo books, net OLO exposure), Participant Futures Positions (Bund futures, OAT futures, derivative overlay), and Participant Repo Positions (overnight and term repo, securities financing) — each FORMALLY REMOVED from operational model.
+<!-- concept:three-position-data-types:end -->
+
+**Venue Arbitrage**
+<!-- concept:venue-arbitrage:start -->
+Cross-venue manipulation pattern in which the participant identifies a price discrepancy between the electronic MTS market and bilateral OTC pricing — a discrepancy that the participant may have manufactured through electronic quote conditioning — and exploits the spread, executing bilaterally at the favourable side of the manufactured discrepancy.
+<!-- concept:venue-arbitrage:end -->
+
+### A.1 Structural characteristics governing detection
+
+**Sovereign bond market doctrine: manipulation is often subtle, liquidity-driven, and cumulative across the trading day. No single intraday event is typically decisive. The analytical question is not 'was this trade suspicious?' but 'did this participant's cumulative intraday behaviour combine with their EOD market position to produce a material manipulation outcome?'**
+
+| Market Characteristic | Detection Implication | Pack Response |
+| --- | --- | --- |
+| Quote-driven liquidity | Price formation occurs through quoting, not primarily through trade execution. Manipulation operates through order book visibility without execution. | Quote intelligence architecture (Section H) is co-primary with trade-based detection. QBRS substitutes for IScore where quote-domain patterns are dominant. |
+| Concentrated dealer network (typically 10--20 primary dealers) | Market share thresholds must be calibrated relative to the dealer population, not the full participant population. 15% of a 15-dealer market has fundamentally different analytical significance from 15% of a 500-participant equity market. | All dominance thresholds (RD02, RT14, QDSP, Intraday Dominance) calibrated relative to dealer population size. Dealer population size feeds DOMINANCE_THRESHOLD calibration. |
+| High-value reference prices | The closing price feeds repo market margins, ECB collateral haircuts, covered bond pool valuations, NAV calculations, and structured product barriers. Reference price manipulation has downstream effects that are disproportionate to the volume of activity. | Downstream exposure assessment mandatory for all RD03, RD04, RD07, RD12 signals. OS=2 automatic where downstream exposure confirmed. |
+| Primary market issuance windows | Sovereign bond issuance (syndication, auction, bookbuilding) creates the highest-sensitivity manipulation windows. Pricing manipulation during primary market activity may affect the sovereign issuer's funding cost. | QBCCL SF_issuance = 1.5 --- highest contextual sensitivity factor. External context enrichment: sovereign auction calendar Tier 1 mandatory (not Tier 2 recommended). |
+| Absence of price movement ≠ absence of manipulation | In sovereign bond markets, manipulation frequently operates through spread distortion, depth removal, and information channel signals without producing visible price movement. | OS Liquidity Impact and Information Impact dimensions are co-primary with Price Impact. OS=0 on Price Impact alone does not cap classification where Liquidity or Information Impact is present. |
+| Repo market linkage | Cash sovereign bond manipulation affecting the closing reference price feeds into repo market margins, affecting collateral availability across the financial system. | Repo market impact classified as systemic consequence. OS=2 automatic. RDCS receives additional +0.10 systemic_consequence_uplift where downstream_exposure includes repo margin calculations. |
+
+### A.2 Liquid regime classification for sovereign bonds
+
+| Regime | Definition for Sovereign Bond Context | EMT Threshold Adjustment |
+| --- | --- | --- |
+| NORMAL | Bid-ask spread within 1.5× historical median; order book depth within 20% of 30-day baseline; no circuit breaker or suspension events. | Standard calibrated thresholds apply. |
+| THIN | Spread 1.5×--3× historical median; depth 50%--80% of baseline; or seasonal low-liquidity period. | Dominance threshold reduced 20%; price deviation threshold increased 30%. Volume indicator reliability downgraded to MEDIUM. |
+| ILLIQUID | Spread >3× historical median; depth <50% of baseline; or post-suspension reopening within first 30 minutes. | Dominance threshold reduced 40%; price deviation threshold increased 50%; spread widening threshold doubled. |
+| STRESSED | Sovereign spread widening >50bps in session; confirmed macro event driving market-wide directional moves. | All EMT thresholds elevated 30%. ModelConfidence capped at MEDIUM. PFNE monitoring suspended for stressed session. |
+
+### A.3 Anonymous quote-driven market structure — analytical implications
+
+**Critical market structure characteristic: in anonymous interdealer electronic sovereign bond markets, quote activity is visible to all participants but is not immediately attributed to specific dealers. Participants react to observable liquidity conditions --- spread levels, depth at touch, order book imbalance --- without knowing the identity of the dealer posting or withdrawing. This creates a fundamental analytical distinction that must be embedded throughout the detection framework, not treated as a peripheral footnote.**
+
+The analytical consequences of anonymous quoting are not merely technical --- they are conceptually central to how quote-based manipulation is detected, attributed, and escalated in these markets. The framework must distinguish between behaviour that is observable in the anonymous order book and behaviour that is attributable to an identified participant. These are not the same thing.
+
+| Analytical Dimension | Without Anonymous Quoting Awareness | With Anonymous Quoting Awareness --- Required Approach |
+| --- | --- | --- |
+| Interaction detection (Quote-Based Inter-Participant Signalling, Reinforcement/Amplification) | Interaction patterns inferred directly from observed quote sequences --- participant A posts, participant B responds. Attribution is treated as self-evident from the order book. | Interaction attribution is probabilistic, not direct. Observable: market liquidity changed, and another participant responded. Attributable only post-session from order IDs and timestamps. ModelConfidence for interaction-based quote conclusions must be MEDIUM maximum where attribution relies on anonymous order book observation alone. |
+| Quote reaction interpretation | A participant widening spreads after another's aggressive quote is treated as prima facie evidence of reaction to that specific participant's conduct. | The same widening is equally consistent with legitimate reaction to anonymous market conditions. The framework must not assume identity-driven reaction from observable market behaviour. Liquidity-driven reaction is the default interpretation; identity-driven coordination requires additional post-session attribution evidence. |
+| Signalling hypothesis evidential standard | Quote signalling evidence (Quote-Based Inter-Participant Signalling, §D) assessed against the same evidential standard as trade-based signalling. | Explicit coordination hypotheses (CCT=EXPLICIT) require elevated evidential standard in anonymous quote environments: sustained post-session cross-participant attribution from order IDs, not solely from market-visible price-level or timing patterns. CCT defaults to IMPLICIT, not EXPLICIT, for quote-domain signalling where attribution relies on anonymous order book observation. |
+| ModelConfidence assignment | ModelConfidence assessed purely on data quality dimensions (DQS, UEEO completeness). | ModelConfidence additionally adjusted for attribution confidence: where quote-based interaction conclusions rely on anonymous order book patterns alone (no post-session order ID attribution), ModelConfidence is capped at MEDIUM regardless of data quality. Promoted to HIGH only where post-session order attribution confirms the interaction. |
+| Supervisory challenge readiness | Interaction-based quote signals presented without addressing the anonymity dimension. | Every interaction-based quote signal must include an anonymity_attribution_basis field in the explanation_trace: 'order_id_post_session' (confirmed), 'market_pattern_probabilistic' (unconfirmed), or 'trade_execution_confirmed' (strongest). Regulators will ask how signalling can be inferred from an anonymous order book --- the model must answer this question in the case record, not in response to a challenge. |
+
+### A.3.1 Identity-driven coordination vs liquidity-driven reaction
+
+The single most important analytical distinction in anonymous interdealer markets is between two types of quote behaviour that produce identical observable market patterns but have fundamentally different regulatory significance:
+
+| Behaviour Type | Mechanism | Observable Pattern | Attribution Difficulty | Regulatory Significance |
+| --- | --- | --- | --- | --- |
+| Liquidity-driven reaction | Participant B reacts to the observable change in market liquidity --- tighter spread, deeper book, or aggressive price --- created by participant A's anonymous quoting activity. B does not know A created the change; B simply responds to the market signal. | B's quotes move in the direction of A's order book impact shortly after A's quote activity. Appears as sequential quote behaviour. | LOW observable difficulty. HIGH attribution difficulty --- B's reaction to anonymous market conditions is legitimate and indistinguishable from B's reaction to A's specific identity from the order book alone. | Low. Liquidity reaction is normal market behaviour. Cannot be treated as evidence of coordination without post-session attribution confirming B tracked A specifically. |
+| Identity-driven coordination | Participant B deliberately tracks participant A's specific order activity --- using order IDs, sizes, timing patterns, or pre-arranged signals --- and responds to A's specific orders rather than to the anonymous market condition. | Identical observable pattern to liquidity-driven reaction. Only distinguishable through post-session order attribution, communication evidence, or a consistency pattern that is specific to A-B interactions and not explained by general market conditions. | LOW observable difficulty. Only distinguishable from liquidity-driven reaction through post-session analysis, statistical testing of A-B specificity, or external evidence (communication records). | HIGH. If confirmed: MAR Art. 12(2)(b) or (c). Requires convergence of statistical attribution evidence, pattern persistence across sessions, and absence of general market explanations. |
+
+**Default interpretation rule in anonymous interdealer markets: observable sequential quote behaviour where participant B's quotes move in response to observable market conditions following participant A's quote activity is classified as LIQUIDITY_DRIVEN_REACTION unless post-session order attribution or statistical specificity testing confirms identity-driven coordination. The burden of establishing identity-driven coordination is on the detection framework, not on the participant.**
+
+### A.3.2 Quote behaviour without trade execution — standalone manipulation in anonymous markets
+
+In anonymous interdealer electronic sovereign bond markets, manipulative behaviour may occur entirely through displayed quote behaviour --- liquidity withdrawal, spread conditioning, order book influence, depth removal --- without requiring or producing any executed transactions. The absence of a trade is not evidence of the absence of manipulation. The absence of an identified counterparty in the order book is not evidence that the order book was not manipulated.
+
+This is analytically critical because: conventional surveillance frameworks designed for equity markets where manipulation requires execution will systematically miss the most important manipulation vectors in anonymous sovereign bond dealer markets. The engine must assess quote behaviour as a primary --- not secondary --- detection pathway even where the suspicious activity produces no trade-level evidence at all.
+
+### A.4 Cross-instrument and external context intelligence — observability framework and OTC analytical hypotheses
+
+OTC bilateral trading in sovereign bond markets is treated in the data architecture as a capability limitation --- data is partial, timestamps may be EOD, order book is absent. This framing is operationally accurate but analytically incomplete. OTC bilateral trading is not only a surveillance constraint; it is an active manipulation vector. The fragmentation between the anonymous electronic MTS venue and the bilateral OTC component creates structural opportunities for manipulation that neither venue can detect independently.
+
+**The core cross-venue manipulation logic: a participant conditions the anonymous electronic order book through quote behaviour (creating price expectations, removing depth, signalling directionality) and then executes the profitable side of the strategy bilaterally in the OTC market --- outside the electronic venue's detection perimeter. The electronic venue sees the conditioning behaviour without the execution; the OTC bilateral reporting sees the execution without the conditioning. Neither view alone is sufficient for detection. Cross-venue behavioural inconsistency between electronic MTS activity and OTC bilateral activity is therefore an independent behavioural indicator requiring explicit analytical treatment.**
+
+| Cross-Venue Manipulation Pattern | Electronic MTS Observable | OTC Bilateral Observable | Cross-Venue Detection Logic |
+| --- | --- | --- | --- |
+| Liquidity Migration | Participant reduces electronic quoting presence (quote withdrawal, widening spreads, depth removal from MTS order book). This appears as normal quote management or potential RT08 pre-stress signal. | Participant increases bilateral OTC execution volume in the same instrument during the same session. OTC execution benefits from prices that the electronic venue withdrawal has influenced. | Cross-venue activity divergence: MTS presence declining while OTC volume increasing on the same instrument in the same session. Behavioural divergence between displayed and non-displayed liquidity environments. Detected where OTC trade data is available with intraday timestamps (MTSAM-L01 remediation required for full detection). |
+| Off-Platform Price Conditioning | Participant quotes aggressively on one side of the MTS order book --- not to execute electronically but to condition the price expectation of bilateral counterparties who can see the electronic book. | Participant executes bilaterally at prices close to or better than the electronic book levels they just conditioned. The OTC execution benefits from the price conditioning achieved through anonymous electronic quoting. | OTC execution price proximity to MTS quote price at the time of conditioning: where OTC bilateral trades are executed at prices within SD03_REVERSION_WINDOW_SECONDS of the participant's MTS quote withdrawal, and where the execution price reflects the conditioned price level, off-platform price conditioning is confirmed as a candidate pattern. |
+| Bilateral Execution Following Anonymous Quote Pressure | Participant applies anonymous quote pressure on MTS (bid-side or ask-side aggressive quoting creating one-sided depth) causing other participants to adjust their bilateral OTC pricing expectations in response to the electronic book signal. | Other participants execute bilaterally at prices that reflect the electronic book condition created by the suspected participant's MTS activity. | Third-party OTC execution response: where OTC bilateral prices from other participants shift in the direction of the suspected participant's MTS quote pressure within SIGNAL_TRANSMISSION_WINDOW_SECONDS. Cross-venue ECIL integration: where no macro event explains the price shift, the MTS conditioning is the candidate cause. |
+| Venue Arbitrage | Participant identifies a price discrepancy between the electronic MTS market and bilateral OTC pricing --- a discrepancy that the participant may have manufactured through electronic quote conditioning --- and exploits the spread. | Participant executes bilaterally at the favourable side of the manufactured discrepancy. | Cross-venue spread: |MTS_mid - OTC_execution_price| materially exceeds historical cross-venue spread distribution. Where MTS mid was influenced by participant's own electronic quoting (RT04 candidate), the OTC execution at MTS-influenced prices is the exploitation leg. |
+
+### A.4.1 Four-level observability framework
+
+Cross-instrument and cross-venue intelligence is not a binary capability. The analytical question is not "can we detect cross-venue manipulation?" but "what can we reliably observe, and what is the correct epistemological status of each observation?" The Four-Level Observability Framework provides a structured answer. Different analytical findings belong at different levels, and the ISGO language should reflect which level applies to each finding. The highest operational value for MTSAM comes from Levels 1 and 2, which are directly observable from data the model controls. Level 3 findings are analytically useful as investigative hypotheses. Level 4 is outside the MTSAM perimeter entirely.
+
+| Level | What is observable | MTSAM examples | Analytical status and ISGO language |
+| --- | --- | --- | --- |
+| Level 1 --- MTS-Only Cross-Instrument Intelligence (Directly observable. Implement.) | Cross-instrument activity within the MTS OLO universe. You have all the data. The analysis requires no additional data sources beyond what MTSAM already receives. | OLO 10Y vs OLO 15Y. OLO benchmark vs off-the-run. Belgian vs Dutch sovereign bonds within MTS. Activity in Bond A preceding activity in Bond B. Dominance in one instrument coinciding with activity in another. SD02, RD06, IPI, CROSS_WINDOW campaign type. SB-07 Yield Curve Distortion. SB-27 Cross-Instrument Conditioning. | Confirmed analytical finding. ISGO: "Cross-instrument activity pattern confirmed on instruments [A] and [B] within MTS." No qualification required. Primary operational detection domain. |
+| Level 2 --- MTS + Public Market Context (Observable with ECIL. Implement.) | MTS behaviour combined with public external market context. You do not know whether the participant traded elsewhere; you can determine whether economic incentives existed and whether behaviour was consistent with acting on external information. | ECB decisions, Belgian Debt Agency auctions, Bund futures price movements (public), sovereign spread movements (public). ECIL event calendar, MDCS conditioning vector toward known events. Pre-auction positioning analysis. SB-05, SB-06, SB-28, SB-29. Economic incentive context for SB-25 and SB-26 hypotheses. | Confirmed contextual finding. ISGO: "Behaviour occurred in a context where [economic incentive] existed. Behaviour is consistent with / inconsistent with acting on this context." ECIL AMPLIFIES_SUSPICION / CONTRADICTS_PATTERN / SUPPORTS_EXPLANATION. Primary operational context enrichment domain. |
+| Level 3 --- Behavioural Cross-Venue Hypothesis (Analytically useful. Use as investigative hypothesis and STOR narrative support.) | MTS observable behaviour is consistent with a cross-venue strategy, but the external position cannot be confirmed. The model identifies the pattern, timing, influence capability, and economic irrationality. It cannot prove the external profit. The hypothesis is useful for framing an information request even without confirmatory data. | Repeated aggressive buying → MTS price moves → participant exits. Cannot prove external profit, but pattern + timing + influence capability + economic irrationality (AOB) together support the hypothesis. SB-25 MTS conditioning / OTC exploitation. SB-26 cash bond / futures hypothesis. SB-30 RFQ front-running footprint. BOA=CROSS_VENUE_CONDITIONING. | Investigative hypothesis only. ISGO: "The observed behaviour is consistent with a cross-venue [manipulation type] hypothesis. External position data is outside the MTSAM surveillance perimeter and cannot be confirmed from available data. The MTS-observable evidence [is / is not] independently sufficient for STOR filing. An information request regarding the participant's positions at other venues during the relevant period is recommended." STOR basis: always the MTS-observable behaviour, not the hypothesis itself. |
+| Level 4 --- True Cross-Venue Surveillance (Outside MTSAM perimeter. Do not build the model around this.) | OTC positions, repo positions, futures positions, CDS positions, positions at other venues, client books. MTSAM does not have access to this information. Even many regulators do not have a consolidated real-time cross-venue view. Detecting "participant bought Bund futures and manipulated OLOs" as a confirmed finding is not achievable from MTSAM data alone. | MTSAM-L10 (Bund futures), MTSAM-L11 (RFQ order flow), OTC book positions, repo positions, CDS. All outside the surveillance perimeter. Not addressable through data remediation within MTSAM's current architecture. | Out of scope for automated detection. Where a regulator-level cross-venue investigation is initiated, MTSAM can provide the MTS-observable behavioural record as the market-side evidence package. The model does not attempt to confirm Level 4 findings. |
+
+MTSAM operational priority: the highest value will come from exploiting trades, quotes, participant behaviour, liquidity events, and behavioural persistence within the data MTSAM directly controls (Levels 1 and 2). The Tier 1 archetypes --- Quote Withdrawal, Liquidity Conditioning, Benchmark Conditioning, Adverse Outcome Behaviour, Block Trade Behaviour, Dominance Behaviour --- are all directly observable at Levels 1 and 2. Cross-venue hypotheses (Level 3) are supplementary: they provide investigative context and support information requests, but they are not the primary operational detection focus. The model is designed accordingly: Level 3 findings appear as supporting analytical context in ISGO narratives, not as primary escalation drivers.
+
+### A.4.2 Cross-venue analytical framework — OTC bilateral detection
+
+| Analytical Principle | Specification |
+| --- | --- |
+| Cross-venue behavioural inconsistency as independent indicator | Where a participant's behaviour on the MTS electronic venue and their behaviour in OTC bilateral activity are directionally inconsistent --- or where one venue shows conditioning and the other shows exploitation --- this cross-venue divergence is assessed as an independent behavioural indicator contributing to the convergence score, not merely as a data reconciliation problem. |
+| No-data-cannot-confirm-no-cross-venue-manipulation | The absence of detailed OTC bilateral data (MTSAM-L01: EOD timestamps only; MTSAM-L02: no order book) does not confirm the absence of cross-venue manipulation. It confirms that cross-venue manipulation cannot be fully assessed. The ISGO must document this limitation explicitly. Where OTC bilateral data is absent and MTS electronic conditioning signals are present, the analytical conclusion is: conditioning detected --- exploitation cannot be assessed, not: no manipulation confirmed. |
+| OTC bilateral as partial confirmation layer | Where OTC bilateral trade data IS available with intraday timestamps: OTC execution patterns serve as a partial confirmation layer for electronic venue signals. RT04 (price deviation on MTS) combined with OTC bilateral execution at the manipulated price is a stronger signal than either observation alone. The cross-venue episode_id in the UEEO links electronic and OTC events for the same participant on the same instrument on the same session. |
+| Participant identity bridging requirement | Cross-venue detection requires consistent participant identification across MTS electronic and OTC bilateral data. Where MTSAM-L03 applies (cross-venue participant ID mismatch): cross-venue analysis is degraded. LEI-based participant mapping is a prerequisite for cross-venue fragmentation detection --- this is why MTSAM-L03 is a CRITICAL remediation priority. |
+| Behavioural divergence scoring | Where cross-venue divergence is confirmed (electronic withdrawal + OTC execution, or electronic conditioning + OTC exploitation): cross_venue_divergence_confirmed=TRUE. This flag contributes to the Repetition indicator (cross-venue divergence is a form of systematic behaviour) and to the Dependency Filter assessment (MTS conditioning and OTC execution are not independent signals --- DS=1 applied where the same participant is connected to both). |
+
+### A.4.3 Cross-instrument context intelligence (CICI) — Eurex public market data as ECIL enrichment
+
+The Â§A.4.1 Four-Level Observability Framework correctly places participant futures positions (OTC books, repo books, Bund futures holdings) at Level 4 â outside the MTSAM perimeter and not buildable. What is available and fully within Level 2 (MTS + Public Market Context) is: Bund futures prices, Bund futures volumes, open interest changes, and the OLO/Bund cash-futures basis (from Eurex public data) --- plus OLO yield movements (from MTS trade data already in scope), sovereign spread movements (OLO/Bund and OLO/OAT, derivable from in-scope OLO prices and publicly available Bund/OAT prices), ECB events (from the ECIL ECB calendar, already in scope as Layer 2), and Belgian Debt Agency auctions (from the ECIL ADA calendar, already in scope as Layer 2). All seven of these inputs are publicly available; none require participant position data or confidential exchange records. These are published market data from Eurex and are accessible via Bloomberg, Refinitiv, or direct Eurex market data feed. They do not require any participant position data or confidential exchange records. The distinction is critical: MTSAM cannot know whether Participant X holds a Bund futures position. It can observe that Bund futures activity was abnormally elevated immediately before, during, or after the OLO activity pattern being analysed. The first is Level 4 (impossible). The second is Level 2 (implement it). The Cross-Instrument Context Intelligence (CICI) layer operationalises this distinction by adding Bund futures public market data to the ECIL context enrichment, enabling a Cross-Market Convergence Score (CMCS) that provides contextual amplification of OLO manipulation hypotheses without asserting participant-level futures positions. The result is 80â90% of the analytical value of cross-venue surveillance without requiring access to confidential Eurex position records.
+
+Epistemological position: CICI produces a Cross-Market Hypothesis, not a Cross-Market Proof. A CICI finding states: âRepeated aggressive buying in Belgian OLOs immediately preceded significant Bund futures volume expansion and spread compression.â It does not state: âParticipant X profited through a Bund futures position.â The first is an observable, documentable, reproducible behavioural finding grounded in public market data. The second requires participant position data that MTSAM does not have. The CICI output is analytically valuable precisely because it produces a defensible, evidenced contextual hypothesis that justifies an information request to the participant about their derivatives positions â which is a supervisory action that can be taken on the basis of the CICI finding alone, without needing to confirm the position first.
+
+### A.4.3.1 ECIL amplification auto-validation threshold (SBSP-AMD-BVR-001)
+
+A.4.3.1 ECIL Amplification Auto-Validation Threshold. The ECIL amplification value (ibe.ecil_amplification) participates directly in Automatic Validation as Condition 3 (§VI-A.5.3 UCE v30). The threshold of 0.20 was selected to exclude signals where macro or event context has materially amplified the analytical result. A human reviewer must confirm whether the event adequately explains the behaviour before closure.
+
+### A.4.3.2 CICI data inputs and three-level framework
+
+| CICI Level | Public Data Input | Analytical Output and MTSAM Application |
+| --- | --- | --- |
+| Level 1 â Futures Activity Context (Easy to implement. Always add to ECIL.) | Bund futures daily: settlement price, total volume, open interest (OI). Source: Eurex published data, Bloomberg BRG futures fields, or Refinitiv. Frequency: daily end-of-session. No real-time feed required. Accessible via any financial data subscription. | cmcs_l1_abnormal_futures_activity = TRUE where Bund futures volume on date D exceeds FUT_VOLUME_THRESHOLD (reference: 1.5Ã the 20-day rolling average for the same contract) OR open interest change exceeds FUT_OI_THRESHOLD (reference: OI change â¥ 2Ã average daily OI change). Context question: was there abnormal futures activity on the same day as the OLO pattern? This is the simplest and highest-reliability contextual enrichment: it requires only a daily data point, no intraday data, and no participant identification. It adds context without any false attribution risk. ECIL integration: CICI Level 1 becomes a named ECIL event type (ecil_event_type = FUTURES_ACTIVITY_ELEVATED) contributing to ECIL CRS scoring for SB-26 hypothesis support. |
+| Level 2 â Cash-Futures Relationship (Stronger signal. Add when basis data available.) | Bund futures daily settlement price AND OLO daily yield/price movements from MTS trade data (in scope) AND sovereign spread data: OLO/Bund spread (derivable from OLO prices + Bund settlement) AND OLO/OAT spread (Bloomberg/Refinitiv sovereign spread feed, same subscription as Economic Calendar). Cash-futures basis = OLO implied yield − Bund futures implied yield (carry + CTD adjusted). OLO yield movement = session yield change vs prior 20-session distribution (derived from MTS trade prices, no additional source). Sovereign spread movement = daily change in OLO/Bund ASW spread or OLO/OAT spread. No incremental data cost: OLO yield is derived from in-scope MTS prices; OLO/Bund spread uses Bund settlement (Level 1 Eurex feed); OLO/OAT uses Bloomberg/Refinitiv already needed for Economic Calendar. | cmcs_l2_basis_shift = TRUE where: (a) basis_change on date D is in the 90th percentile of historical basis changes for the same OLO/Bund pair (instrument-specific baseline); AND (b) the direction of the basis shift is consistent with the OLO activity pattern direction (e.g., OLO price rises AND Bund futures price also rises, compressing the OLO/Bund spread â consistent with a cross-position benefit). Context question: did the OLO/Bund relationship move in a way that was consistent with the manipulation hypothesis on this date? cmcs_l2_alignment = TRUE where OLO conditioning direction AND basis shift direction are co-directional in â¥ CMCS_ALIGNMENT_SESSIONS (reference: 3 of the same participantâs HIGH/MEDIUM-INVESTIGATE sessions in LOOKBACK_30D). Three co-directional sessions is analytically significant: the probability of random co-directional alignment three times in 30 days is low (â¤ 12.5% under independence). ECIL integration: cmcs_l2_alignment contributes +0.50 CQS as a contextual amplifier for SB-26 hypothesis signals. |
+| Level 3 â Cross-Market Convergence Score (Advanced. Build when Levels 1 and 2 are operational.) | All Level 1 and Level 2 inputs PLUS: intraday Bund futures prices (5-minute bars or better) AND intraday OLO session data from MTS. Intraday Bund futures data is available via Bloomberg real-time feeds or Eurex market data API. This requires a real-time or near-real-time data connection, which is a more significant integration investment than Levels 1 and 2. | CMCS (Cross-Market Convergence Score): composite score combining six signals within a configurable window (reference: 30-minute intraday window centred on the OLO activity IBE). (a) cmcs_s1_olo_dominance: participant dominates OLO closing window or benchmark window (CWPS_cross ≥ 0.55). (b) cmcs_s2_futures_volume: Bund futures volume spike ≥ FUT_INTRADAY_THRESHOLD (reference: 2× average volume in same 30-minute window over prior 20 sessions). (c) cmcs_s3_oi_change: Bund futures OI change consistent with net new positioning (increasing OI = new positions being opened). (d) cmcs_s4_basis_move: OLO/Bund cash-futures basis change ≥ CMCS_BASIS_THRESHOLD (reference: 2bp) in direction consistent with OLO activity pattern. (e) cmcs_s5_olo_yield: OLO yield movement in the session exceeds the 90th percentile of the prior 20-session distribution for the same instrument cluster AND the direction is consistent with the participant's activity (yield compression for buy-side dominance; yield widening for sell-side aggression). Derived from MTS trade prices already in scope --- no additional data source required. (f) cmcs_s6_sovereign_spread: sovereign spread movement (OLO/Bund ASW spread or OLO/OAT spread) ≥ CMCS_SOV_SPREAD_THRESHOLD (reference: 3bp) in the session, in direction consistent with OLO activity. OLO/Bund derivable from MTS OLO prices + Bund settlement price. OLO/OAT from Bloomberg/ Refinitiv sovereign spread feed (same subscription as Economic Calendar). CMCS = weighted sum: (0.25 × s1) + (0.20 × s2) + (0.15 × s3) + (0.15 × s4) + (0.15 × s5) + (0.10 × s6). The original four-component formula (s1--s4) is a subset: the two new components explicitly add OLO yield movements and sovereign spread movements. CMCS ≥ 0.55: cmcs_confirmed = TRUE. CMCS ≥ 0.70: cmcs_high_confidence = TRUE (+0.25 additional CQS, total +1.00). ECB and ADA event co-occurrence: where the CMCS window overlaps an ECB event (ECIL CRS ≥ HIGH) or an ADA auction window, cmcs_event_amplified = TRUE and the cmcs_confirmed threshold reduces from 0.55 to 0.45 --- the co-occurrence of an identified economic incentive event makes a lower convergence score analytically more significant. Scoring: cmcs_confirmed: +0.75 CQS, sb26_hypothesis_supported = TRUE. cmcs_high_confidence: +1.00 CQS total. ISGO mandatory language: "Cross-Market Convergence Score confirmed (CMCS = [value]; [N] of 6 components active). OLO yield moved [X]bp; OLO/Bund sovereign spread moved [Y]bp; Bund futures volume was [Z]× historical average. [ECB event/ADA auction co-occurrence: yes/no.] This finding does not confirm participant-level futures holdings. An information request regarding the participant's derivatives and futures positions during the relevant period is recommended." |
+
+### A.4.3.3 CICI and the three-position data types
+
+The CICI framework specifically addresses the frequent question of whether MTSAM can incorporate three participant-level position data types. The answer for each:
+
+| Position Data Type | MTSAM Status | Correct Treatment |
+| --- | --- | --- |
+| Participant OTC Positions (bilateral bond trades, repo books, net OLO exposure) | FORMALLY REMOVED from operational model. Document 3 Â§1.0.1 Removal Register. MTSAM receives T+1 bilateral trade reports (direction and size) but not net position books, repo financing positions, or intraday OTC flows. | Level 3 investigative hypothesis only. The OTC bilateral trade direction (available T+1) feeds the CVCE detection in Â§A.4.2. The net position is inferred from persistent directional patterns (SCS_bpl, scs_direction_confirmed) â not observed directly. CICI does not change this. ISGO where relevant: âNet OTC position data is unavailable. The directional pattern observed on MTS is consistent with [hypothesis].â |
+| Participant Futures Positions (Bund futures, OAT futures, derivative overlay) | FORMALLY REMOVED from operational model. MTSAM-L10: cross-asset futures data absent. No Eurex position data, no EMIR-reported derivatives positions, no FCM records. | CICI (this section) provides the correct substitute: public Bund futures market data (volume, price, OI) produces the CMCS contextual score without requiring participant-level position data. The CMCS says âfutures market activity was elevatedâ not âParticipant X held futures.â The CQS contribution (+0.50 at Level 2, +0.75 at Level 3) is calibrated to reflect the contextual, not confirmatory, nature of the finding. |
+| Participant Repo Positions (overnight and term repo, securities financing) | FORMALLY REMOVED from operational model. MTSAM-L10: repo intelligence absent. Repo books are bilateral OTC and are not reported to any MTSAM-accessible data source. | No direct substitute available. Repo positions are relevant to the SB-26 hypothesis (a participant who repos out a large OLO position may be financing a speculative cross-position) but this cannot be observed from MTSAM data. Where the AOB pathway applies (OLO activity is systematically unprofitable in isolation â OS=0 while conditioning confirmed), the ISGO notes that repo financing is a possible explanation for the economic irrationality: âThe systematic absence of direct P&L from OLO activity may reflect a cross-position structure (including repo financing) that cannot be assessed from available data.â |
+
+CICI operational summary: Levels 1 and 2 are achievable with existing Bloomberg/Refinitiv data subscriptions that MTSAM would already need for the ECIL Economic Calendar. Level 3 requires an additional real-time Bund futures data integration. The recommended implementation sequence is: first deploy Levels 1 and 2 (immediate) to add futures context to ECIL; then evaluate Level 3 (based on pilot findings about how often CMCS would have added analytical value). Document 3 Â§1.0 API stack should include a new Layer 2 feed: âEurex Public Market Dataâ at Level 1/2 immediately and Level 3 subject to pilot evaluation.
+
+<!-- sec:s-7095176e -->
+## 3. Belgian sovereign bond risk universe (Section A.6)
+
+**BT-01** (also known as: bt01_usage_rate)
+<!-- concept:bt-01:start -->
+Block-trade indicator BT-01: bt01_usage_rate vs POFP baseline + peer 90th percentile across LOOKBACK_30D.
+<!-- concept:bt-01:end -->
+
+**event_context** (also known as: IBE.metadata['event_context'], event_context_map)
+<!-- concept:event-context:start -->
+Event context label provided by the Silver enrichment step (DataEnrichmentOrchestrator) from the API enrichment connectors and written to IBE.metadata['event_context']; MediumReviewEngine reads this field as the event_context_map input.
+<!-- concept:event-context:end -->
+
+**explanation_type**
+<!-- concept:explanation-type:start -->
+BVR grouping dimension derived from BOA label and suppressor codes; MediumReviewEngine groups MEDIUM signals by explanation_type, and the BOA-archetype mapping is authoritative for BVR grouping and is implemented in medium_review._derive_explanation_type().
+<!-- concept:explanation-type:end -->
+
+**SB-02** (also known as: Price Support)
+<!-- concept:sb-02:start -->
+Price-family risk archetype Price Support; detection basis RT01 buy-side, SCS_buyside, AOB (cost accepted), BENCHMARK_SHAPING campaign, BT-02 directional buy dominance.
+<!-- concept:sb-02:end -->
+
+**SB-03** (also known as: Price Suppression)
+<!-- concept:sb-03:start -->
+Price-family risk archetype Price Suppression; detection basis RT01 sell-side, SCS_sellside, scs_direction_confirmed, BT-02 sell dominant, BOA sell-side hypotheses.
+<!-- concept:sb-03:end -->
+
+**SB-09** (also known as: Artificial Spread Widening)
+<!-- concept:sb-09:start -->
+Liquidity-family risk archetype Artificial Spread Widening; detection basis SD01 Intraday Spread Widening (QBBE baseline), SD03 Spread Reversion, SPREAD_WIDENING primitive, SRI spread crossing.
+<!-- concept:sb-09:end -->
+
+**SB-11** (also known as: Dominance Through Liquidity Control)
+<!-- concept:sb-11:start -->
+Liquidity-family risk archetype Dominance Through Liquidity Control; detection basis QDSP, PLCS, LIQUIDITY_REMOVAL primitive, RD-03 repeated liquidity concentration, BT-04.
+<!-- concept:sb-11:end -->
+
+**SB-15** (also known as: Layering-like Quote Behaviour)
+<!-- concept:sb-15:start -->
+Quote-family risk archetype Layering-like Quote Behaviour; detection basis quote lifecycle detection framework §A.6.2 (HQLD-dependent). Detection pathway defined; operationalisation requires MTSAM-L08 HQLD data remediation.
+<!-- concept:sb-15:end -->
+
+**SB-16** (also known as: Repeated Block Trade Usage)
+<!-- concept:sb-16:start -->
+Block-family risk archetype Repeated Block Trade Usage; detection basis BT-01: bt01_usage_rate vs POFP baseline + peer 90th percentile across LOOKBACK_30D.
+<!-- concept:sb-16:end -->
+
+**SB-17** (also known as: Block Trade Dominance)
+<!-- concept:sb-17:start -->
+Block-family risk archetype Block Trade Dominance; detection basis BT-04: bt04_dominance_share ≥ 30% block notional in instrument cluster LOOKBACK_30D.
+<!-- concept:sb-17:end -->
+
+**SB-18** (also known as: Block Trade Conditioning)
+<!-- concept:sb-18:start -->
+Block-family risk archetype Block Trade Conditioning; detection basis BT-05 clustering near events, BT-07 alert convergence (CLOSE_WINDOW + AUCTION_WINDOW sub-types).
+<!-- concept:sb-18:end -->
+
+**SB-19** (also known as: Block Trade Reversal Behaviour)
+<!-- concept:sb-19:start -->
+Block-family risk archetype Block Trade Reversal Behaviour; detection basis BT-03: block trade reversal (profitable bt03_profitable and adverse bt03_adverse sub-types).
+<!-- concept:sb-19:end -->
+
+### A.6.1 Mandatory audit language for BVR closures (SBSP-AMD-BVR-001)
+
+A.6.1 Mandatory Audit Language for BVR Closures. Every BVR closure (Automatic Validation, Batch, Thematic, Event, or Participant) must include a validation basis statement in the L5 audit record. The following mandatory language templates apply. Fields in {braces} are populated by MediumReviewEngine or MediumReviewGroup fields at closure time and written to the OAIC audit trail. Five-year retention required per FSMA supervisory defensibility requirements.
+
+### A.6.2 The 35 risk archetypes
+
+The table below enumerates all 35 risk archetypes identified as realistically plausible in an anonymous, quote-driven, sovereign bond interdealer market with a limited number of professional participants. For each archetype, the primary detection mechanism, MTSAM supervisory tier, and coverage status are specified. Archetypes marked with section cross-references have dedicated analytical frameworks specified in §A.6.1--A.6.6 below.
+
+**Domain 1 --- Price Manipulation**
+
+**Code**
+
+**Domain**
+
+**Risk Archetype**
+
+**Primary Detection Mechanism**
+
+**MTSAM Tier**
+
+**Coverage / Gap**
+
+**SB-01**
+
+Price
+
+Momentum Ignition
+
+RT01, AGGRESSIVE_BUY/SELL primitives, SCS_bpl directional, MDCS, BT-03 reversal, BOA=MOMENTUM_IGNITION, ORS_outcome_type
+
+Tier 3 (downgraded from Tier 1: investigative hypothesis, not primary detection pillar)
+
+Investigative hypothesis §A.4.0
+
+**SB-02**
+
+Price
+
+Price Support
+
+RT01 buy-side, SCS_buyside, AOB (cost accepted), BENCHMARK_SHAPING campaign, BT-02 directional buy dominance
+
+Tier 2
+
+Full
+
+**SB-03**
+
+Price
+
+Price Suppression
+
+RT01 sell-side, SCS_sellside, scs_direction_confirmed, BT-02 sell dominant, BOA sell-side hypotheses
+
+Tier 2
+
+Full
+
+**SB-04**
+
+Price
+
+Marking the Close
+
+RD03 (quote), RD04 (execution), CWPS_intra CLOSE_WINDOW, D.6 Open-Close Framing, BOA=REFERENCE_PRICE_INFLUENCE
+
+Tier 2
+
+Full
+
+**Domain 2 --- Benchmark & Auction Manipulation**
+
+**Code**
+
+**Domain**
+
+**Risk Archetype**
+
+**Primary Detection Mechanism**
+
+**MTSAM Tier**
+
+**Coverage / Gap**
+
+**SB-05**
+
+Benchmark
+
+Auction Conditioning
+
+RD05, AUCTION_WINDOW, SF_issuance, ECIL auction calendar, MDCS conditioning vector, BT-07/BT-08, BENCHMARK_SHAPING
+
+Tier 1
+
+Full
+
+**SB-06**
+
+Benchmark
+
+Benchmark Conditioning
+
+BENCHMARK_SHAPING campaign (CWPS_cross + MDCS + CLOSE_WINDOW), IPI on benchmark OLOs, BT-04 block dominance in cluster
+
+Tier 1
+
+Full
+
+**SB-07**
+
+Benchmark
+
+Yield Curve Distortion
+
+SD02 cross-instrument spread dislocation (5Y/10Y, 10Y/30Y), RD06 cross-instrument coordination, CROSS_WINDOW campaign. See §A.6.1.
+
+Tier 2
+
+Named framework added §A.6.1
+
+**Domain 3 --- Liquidity Manipulation**
+
+**Code**
+
+**Domain**
+
+**Risk Archetype**
+
+**Primary Detection Mechanism**
+
+**MTSAM Tier**
+
+**Coverage / Gap**
+
+**SB-08**
+
+Liquidity
+
+Liquidity Withdrawal
+
+QUOTE_WITHDRAWAL primitive, anticipatory withdrawal, BPL_liquidity_drift_confirmed, LIQUIDITY_CONDITIONING campaign, D.3 Pre-Stress Withdrawal
+
+Tier 1
+
+Full
+
+**SB-09**
+
+Liquidity
+
+Artificial Spread Widening
+
+SD01 Intraday Spread Widening (QBBE baseline), SD03 Spread Reversion, SPREAD_WIDENING primitive, SRI spread crossing
+
+Tier 1
+
+Full
+
+**SB-10**
+
+Liquidity
+
+Liquidity Conditioning
+
+LIQUIDITY_CONDITIONING campaign (BDS + BPL_liquidity_drift + anticipatory withdrawal ≥3 sessions), BOA=LIQUIDITY_CONDITIONING
+
+Tier 1
+
+Full
+
+**SB-11**
+
+Liquidity
+
+Dominance Through Liquidity Control
+
+QDSP, PLCS, LIQUIDITY_REMOVAL primitive, RD-03 repeated liquidity concentration, BT-04
+
+Tier 1
+
+Full
+
+**Domain 4 --- Quote-Based Manipulation**
+
+**Code**
+
+**Domain**
+
+**Risk Archetype**
+
+**Primary Detection Mechanism**
+
+**MTSAM Tier**
+
+**Coverage / Gap**
+
+**SB-12**
+
+Quote
+
+Quote Signalling
+
+**§D.4 BVR Grouping Dimension Mapping --- Sector Pack Contribution (SBSP-AMD-BVR-001, NEW SECTION)**
+
+D.4.1 BOA Archetype to Explanation Type Mapping. MediumReviewEngine groups MEDIUM signals by explanation_type, which is derived from BOA label and suppressor codes. The following mapping is authoritative for BVR grouping and is implemented in medium_review._derive_explanation_type().
+
+*Explanation types listed as 'safe' are accepted as automatic validation basis (Condition 5 of the seven auto-validation conditions, §VI-A.5.3 UCE v30). This does not mean they are confirmed non-manipulative --- it means the model has structural grounds to accept the explanation without individual review. Any QA sample that challenges the explanation triggers recalibration.*
+
+D.4.2 Market Event to BVR Event Context Mapping. BVR Event Validation groups signals by a shared market event. The event context label is provided by the Silver enrichment step (DataEnrichmentOrchestrator) from the API enrichment connectors and written to IBE.metadata['event_context']. MediumReviewEngine reads this field as the event_context_map input. Where no event context is available (API connector unavailable), the signal falls through to BOA archetype grouping (Priority 2 in the four-pass grouping cascade).
+
+§D.5 Quote-Based Inter-Participant Signalling, CCT=IMPLICIT/EXPLICIT, full signal cycle detection, anonymity attribution framework
+
+Tier 1
+
+Full
+
+**SB-13**
+
+Quote
+
+Quote Leadership
+
+§D.5.5 QML (Quote Market Leadership): QML_lead_rate, QML_direction, QML_market_impact
+
+Tier 1
+
+Full
+
+**SB-14**
+
+Quote
+
+Quote Withdrawal Before Events
+
+Anticipatory withdrawal, QBLI_SUSPENSION, PRE_SUSPENSION_WINDOW, BPL_liquidity_drift_confirmed, SUSPENSION context primitive
+
+Tier 1
+
+Full
+
+**SB-15**
+
+Quote
+
+Layering-like Quote Behaviour
+
+Quote lifecycle detection framework §A.6.2 (HQLD-dependent). Detection pathway defined; operationalisation requires MTSAM-L08 HQLD data remediation.
+
+Tier 3
+
+Data-dependent §A.6.2
+
+**Domain 5 --- Block Trade Risks**
+
+**Code**
+
+**Domain**
+
+**Risk Archetype**
+
+**Primary Detection Mechanism**
+
+**MTSAM Tier**
+
+**Coverage / Gap**
+
+**SB-16**
+
+Block
+
+Repeated Block Trade Usage
+
+BT-01: bt01_usage_rate vs POFP baseline + peer 90th percentile across LOOKBACK_30D
+
+Tier 1
+
+Full
+
+**SB-17**
+
+Block
+
+Block Trade Dominance
+
+BT-04: bt04_dominance_share ≥ 30% block notional in instrument cluster LOOKBACK_30D
+
+Tier 1
+
+Full
+
+**SB-18**
+
+Block
+
+Block Trade Conditioning
+
+BT-05 clustering near events, BT-07 alert convergence (CLOSE_WINDOW + AUCTION_WINDOW sub-types)
+
+Tier 1
+
+Full
+
+**SB-19**
+
+Block
+
+Block Trade Reversal Behaviour
+
+BT-03: block trade reversal (profitable bt03_profitable and adverse bt03_adverse sub-types)
+
+Tier 1
+
+Full
+
+**SB-20**
+
+Block
+
+Block Trade Counterparty Concentration
+
+BT-06: bt06_counterparty_hhi ≥ HHI threshold, POFP baseline comparison for regime change
+
+Tier 1
+
+Full
+
+<!-- sec:s-51e0b874 -->
+## 4. Document control
+
+### 4.1 Section index
+
+| Section | Content |
+| --- | --- |
+| A --- Sovereign Bond Market Context | Structural characteristics of sovereign bond markets that govern pattern detection: quote-driven liquidity, concentrated dealer networks, reference price significance, issuance windows. |
+| B --- Behavioural Primitive Mapping | How the Universal Core Engine's behavioural primitives map to sovereign bond market behaviour, with fixed income-specific weight adjustments. |
+| C --- Pattern Taxonomy | Tier 1 Core Patterns, Tier 2 Behavioural Amplifiers, Tier 3 Advanced Detection --- calibrated for sovereign bond markets. |
+| D --- Quoting Behaviour Architecture | Complete specification of quote-based detection patterns for sovereign bond and dealer markets: withdrawal cycling, auction manipulation, inter-participant signalling, quote stuffing, pre-trade conditioning. |
+| E --- RT Alert Taxonomy | Complete 25-code intraday RT alert taxonomy for sovereign bond markets with fixed income-specific calibration notes. |
+| F --- RD Alert Taxonomy | Complete 15-code end-of-day RD alert taxonomy with CLOSE_WINDOW framework and Marking-the-Close Triad. |
+| G --- RT--RD Cross-Pass Convergence | Intraday × EOD materiality scoring (RDCS), fifteen named RT--RD combinations, and the five priority combinations for sovereign bond markets. |
+| H --- Quote Intelligence Architecture | QBRS, QBLI, QBCCL --- composite quote risk scoring and contextual enrichment for dealer markets. |
+| I --- Sovereign Bond Surveillance Doctrine | Analytical doctrine for quote-driven, liquidity-sensitive, cumulative manipulation in sovereign bond markets. |
+| J --- Explanation Framework Constraints | Sovereign bond-specific explanation category constraints: market making obligations, auto-hedging intragroup standard, primary dealer context. |
+
+### 4.2 Section banners
+
+|  |  |
+| --- | --- |
+| A | Sovereign Bond Market Context |
+| B | Behavioural Primitive Mapping --- Fixed Income Weight Adjustments |

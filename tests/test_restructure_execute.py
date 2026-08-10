@@ -165,3 +165,73 @@ def test_the_real_plan_reproduces_the_golden():
     gold_tokens, ours = _tokens(golden), _tokens(text)
     assert not (gold_tokens - ours), dict(gold_tokens - ours)
     assert not (ours - gold_tokens), dict(ours - gold_tokens)
+
+
+def test_the_real_s_plan_reproduces_the_s_golden():
+    """The step 9.1 bar, same shape as U's: markers, definitions, tokens."""
+    from detangle.config import Config
+    from detangle.records import load_records
+    from detangle.restructure import load_plan
+    from detangle.restructure.execute import execute
+
+    root = Path(__file__).resolve().parents[1]
+    Config.load(root)
+    plan, findings = load_plan(root / "eval" / "golden" / "sbsp.plan.yaml", root)
+    assert findings == []
+    records, _ = load_records(root / "concepts", root)
+    source = (root / "samples" / "blueprint-SBSP-shortened.md").read_text(
+        encoding="utf-8"
+    )
+    text = execute(plan, records, source)
+    golden = (root / "eval" / "golden" / "sbsp.md").read_text(encoding="utf-8")
+
+    assert re.findall(r"<!-- sec:(s-[0-9a-f]{8}) -->", text) == re.findall(
+        r"<!-- sec:(s-[0-9a-f]{8}) -->", golden
+    )
+    def_pattern = r"<!-- concept:([a-z0-9-]+):start -->\n(.*?)\n<!-- concept"
+    assert re.findall(def_pattern, text, re.S) == re.findall(
+        def_pattern, golden, re.S
+    )
+    gold_tokens, ours = _tokens(golden), _tokens(text)
+    assert not (gold_tokens - ours), dict(gold_tokens - ours)
+    assert not (ours - gold_tokens), dict(ours - gold_tokens)
+
+
+# -- the grid-list hint (step 9.1) -------------------------------------------
+
+
+GRID = (
+    "+---------------+------+\n"
+    "| **Domain 1**  |      |\n"
+    "+===============+======+\n"
+    "| **SB-01**     | One  |\n"
+    "|               |      |\n"
+    "|               | Two  |\n"
+    "+---------------+------+\n"
+)
+
+
+def test_grid_list_renders_every_row_and_drops_nothing():
+    """Unlike `history-list`, no row is read as a header: the archetype and
+    change-log grids open with content, and a drop there is a content loss."""
+    from detangle.restructure.execute import render
+    from detangle.restructure.plan import Plan, Section
+
+    from detangle.records.spans import block_hash, normalise, split_blocks
+
+    [block] = split_blocks(GRID)
+    h = "sha256:" + block_hash(normalise(block)).removeprefix("sha256:")
+    plan = Plan(
+        path=Path("x"),
+        rel="x",
+        doc="S",
+        pinned_blob=None,
+        sections=[Section(id="s-00000001", title="T", kind="content")],
+        assignments=[{"block": h, "section": "s-00000001", "render": "grid-list"}],
+    )
+    rendered = render(plan, [], GRID)
+    text = rendered.text()
+    assert "**Domain 1**" in text and "****" not in text
+    assert "**SB-01**" in text
+    assert "One" in text and "Two" in text
+    assert rendered.drops == []

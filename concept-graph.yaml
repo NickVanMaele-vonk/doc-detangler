@@ -16,7 +16,7 @@ generator: detangle graph
 counts:
   nodes: 359
   dependency_edges: 402
-  usage_edges: 230
+  usage_edges: 460
   cycles: 1
   orphans: 185
   undefined: 187
@@ -2834,9 +2834,699 @@ edges:
   # uses are its record's canonical depends_on (Nick, 2026-08-08).
   # Extracted from the bodies in detangle.toml [bodies]; derived
   # data (D10), regenerated on every run, never hand-maintained.
-  # Scanned: U=eval/golden/uce.md.
-  # No body yet: M, S — absent, not empty; the
+  # Scanned: S=eval/golden/sbsp.md, U=eval/golden/uce.md.
+  # No body yet: M — absent, not empty; the
   # dead-entry sweep waits until every component has a body.
+    - doc: S
+      section: s-3f57d431
+      term: alert
+    - doc: S
+      section: s-3f57d431
+      term: bund
+    - doc: S
+      section: s-3f57d431
+      term: intent-score
+    - doc: S
+      section: s-3f57d431
+      term: mts-associated-markets
+    - doc: S
+      section: s-3f57d431
+      term: mtsam-calibration-layer
+    - doc: S
+      section: s-3f57d431
+      term: oat
+    - doc: S
+      section: s-3f57d431
+      term: sovereign-bond-sector-pack
+    - doc: S
+      section: s-3f57d431
+      term: universal-core-engine
+    - doc: S
+      section: s-51e0b874
+      term: behavioural-primitive
+    - doc: S
+      section: s-51e0b874
+      term: close-window
+    - doc: S
+      section: s-51e0b874
+      term: convergence
+    - doc: S
+      section: s-51e0b874
+      term: explanation-framework
+    - doc: S
+      section: s-51e0b874
+      term: marking-the-close-triad
+    - doc: S
+      section: s-51e0b874
+      term: pattern-gate
+    - doc: S
+      section: s-51e0b874
+      term: primary-dealer
+    - doc: S
+      section: s-51e0b874
+      term: qbli
+    - doc: S
+      section: s-51e0b874
+      term: quote-behaviour-contextual-confidence-layer
+    - doc: S
+      section: s-51e0b874
+      term: quote-behaviour-risk-score
+    - doc: S
+      section: s-51e0b874
+      term: quote-intelligence-architecture
+    - doc: S
+      section: s-51e0b874
+      term: rdcs
+    - doc: S
+      section: s-51e0b874
+      term: rt-rd-alert-taxonomies
+    - doc: S
+      section: s-51e0b874
+      term: sovereign-bond-surveillance-doctrine
+    - doc: S
+      section: s-51e0b874
+      term: universal-core-engine
+    - doc: S
+      section: s-7095176e
+      term: alert
+    - doc: S
+      section: s-7095176e
+      term: amendment-sbsp-amd-bvr-001
+    - doc: S
+      section: s-7095176e
+      term: aob
+    - doc: S
+      section: s-7095176e
+      term: auction-window
+    - doc: S
+      section: s-7095176e
+      term: automatic-validation
+    - doc: S
+      section: s-7095176e
+      term: batch
+    - doc: S
+      section: s-7095176e
+      term: behavioural-drift-score
+    - doc: S
+      section: s-7095176e
+      term: behavioural-objective-assessment
+    - doc: S
+      section: s-7095176e
+      term: behavioural-primitive
+    - doc: S
+      section: s-7095176e
+      term: bt-01
+    - doc: S
+      section: s-7095176e
+      term: bt-02
+    - doc: S
+      section: s-7095176e
+      term: bt-03
+    - doc: S
+      section: s-7095176e
+      term: bt-04
+    - doc: S
+      section: s-7095176e
+      term: bt-05
+    - doc: S
+      section: s-7095176e
+      term: bt-06
+    - doc: S
+      section: s-7095176e
+      term: bt-07
+    - doc: S
+      section: s-7095176e
+      term: bt-08
+    - doc: S
+      section: s-7095176e
+      term: bvr
+    - doc: S
+      section: s-7095176e
+      term: campaign
+    - doc: S
+      section: s-7095176e
+      term: close-window
+    - doc: S
+      section: s-7095176e
+      term: convergence
+    - doc: S
+      section: s-7095176e
+      term: coordination-classification-tier
+    - doc: S
+      section: s-7095176e
+      term: cross-window-campaign
+    - doc: S
+      section: s-7095176e
+      term: cross-window-persistence-score
+    - doc: S
+      section: s-7095176e
+      term: cwps-intra
+    - doc: S
+      section: s-7095176e
+      term: d6-open-close-framing
+    - doc: S
+      section: s-7095176e
+      term: dataenrichmentorchestrator
+    - doc: S
+      section: s-7095176e
+      term: event-context
+    - doc: S
+      section: s-7095176e
+      term: explanation-type
+    - doc: S
+      section: s-7095176e
+      term: external-context-intelligence-layer
+    - doc: S
+      section: s-7095176e
+      term: four-pass-grouping-cascade
+    - doc: S
+      section: s-7095176e
+      term: historical-quote-lifecycle-dataset
+    - doc: S
+      section: s-7095176e
+      term: instrument-cluster
+    - doc: S
+      section: s-7095176e
+      term: intent-score
+    - doc: S
+      section: s-7095176e
+      term: ipi
+    - doc: S
+      section: s-7095176e
+      term: l5-audit-record
+    - doc: S
+      section: s-7095176e
+      term: liquidity-removal
+    - doc: S
+      section: s-7095176e
+      term: lookback-30d
+    - doc: S
+      section: s-7095176e
+      term: mediumreviewengine
+    - doc: S
+      section: s-7095176e
+      term: mediumreviewgroup
+    - doc: S
+      section: s-7095176e
+      term: mts-associated-markets
+    - doc: S
+      section: s-7095176e
+      term: mtsam-l08
+    - doc: S
+      section: s-7095176e
+      term: multi-day-conditioning-score
+    - doc: S
+      section: s-7095176e
+      term: oaic-audit-trail
+    - doc: S
+      section: s-7095176e
+      term: participant-liquidity-contribution-score
+    - doc: S
+      section: s-7095176e
+      term: participant-order-flow-profile
+    - doc: S
+      section: s-7095176e
+      term: pre-stress-liquidity-withdrawal
+    - doc: S
+      section: s-7095176e
+      term: pre-suspension-window
+    - doc: S
+      section: s-7095176e
+      term: qml
+    - doc: S
+      section: s-7095176e
+      term: qml-direction
+    - doc: S
+      section: s-7095176e
+      term: qml-lead-rate
+    - doc: S
+      section: s-7095176e
+      term: qml-market-impact
+    - doc: S
+      section: s-7095176e
+      term: quote-behaviour-baseline-engine
+    - doc: S
+      section: s-7095176e
+      term: quote-depth-share-position
+    - doc: S
+      section: s-7095176e
+      term: rd03
+    - doc: S
+      section: s-7095176e
+      term: rd04
+    - doc: S
+      section: s-7095176e
+      term: rd05
+    - doc: S
+      section: s-7095176e
+      term: rd06
+    - doc: S
+      section: s-7095176e
+      term: risk-archetype
+    - doc: S
+      section: s-7095176e
+      term: rt01
+    - doc: S
+      section: s-7095176e
+      term: sb-01
+    - doc: S
+      section: s-7095176e
+      term: sb-02
+    - doc: S
+      section: s-7095176e
+      term: sb-03
+    - doc: S
+      section: s-7095176e
+      term: sb-04
+    - doc: S
+      section: s-7095176e
+      term: sb-05
+    - doc: S
+      section: s-7095176e
+      term: sb-06
+    - doc: S
+      section: s-7095176e
+      term: sb-07
+    - doc: S
+      section: s-7095176e
+      term: sb-08
+    - doc: S
+      section: s-7095176e
+      term: sb-09
+    - doc: S
+      section: s-7095176e
+      term: sb-10
+    - doc: S
+      section: s-7095176e
+      term: sb-11
+    - doc: S
+      section: s-7095176e
+      term: sb-12
+    - doc: S
+      section: s-7095176e
+      term: sb-13
+    - doc: S
+      section: s-7095176e
+      term: sb-15
+    - doc: S
+      section: s-7095176e
+      term: sb-16
+    - doc: S
+      section: s-7095176e
+      term: sb-17
+    - doc: S
+      section: s-7095176e
+      term: sb-18
+    - doc: S
+      section: s-7095176e
+      term: sb-19
+    - doc: S
+      section: s-7095176e
+      term: scs
+    - doc: S
+      section: s-7095176e
+      term: sd01
+    - doc: S
+      section: s-7095176e
+      term: sd02
+    - doc: S
+      section: s-7095176e
+      term: sd03
+    - doc: S
+      section: s-7095176e
+      term: sf-issuance
+    - doc: S
+      section: s-7095176e
+      term: signal
+    - doc: S
+      section: s-7095176e
+      term: sovereign-bond-sector-pack
+    - doc: S
+      section: s-7095176e
+      term: spread-rationality-indicator
+    - doc: S
+      section: s-7095176e
+      term: spread-widening
+    - doc: S
+      section: s-7095176e
+      term: suppressor-code
+    - doc: S
+      section: s-7095176e
+      term: universal-core-engine
+    - doc: S
+      section: s-7466306a
+      term: amendment-sbsp-amd-bvr-001
+    - doc: S
+      section: s-7466306a
+      term: anonymity-attribution-basis
+    - doc: S
+      section: s-7466306a
+      term: anonymous-quote-driven-market-structure
+    - doc: S
+      section: s-7466306a
+      term: aob
+    - doc: S
+      section: s-7466306a
+      term: automatic-validation
+    - doc: S
+      section: s-7466306a
+      term: behavioural-objective-assessment
+    - doc: S
+      section: s-7466306a
+      term: bilateral-execution-following-anonymous-quote-pressure
+    - doc: S
+      section: s-7466306a
+      term: bund
+    - doc: S
+      section: s-7466306a
+      term: cash-futures-basis
+    - doc: S
+      section: s-7466306a
+      term: classification
+    - doc: S
+      section: s-7466306a
+      term: contradicts-pattern
+    - doc: S
+      section: s-7466306a
+      term: convergence
+    - doc: S
+      section: s-7466306a
+      term: convergence-quality-score
+    - doc: S
+      section: s-7466306a
+      term: coordination-classification-tier
+    - doc: S
+      section: s-7466306a
+      term: cross-instrument-context-intelligence
+    - doc: S
+      section: s-7466306a
+      term: cross-market-convergence-score
+    - doc: S
+      section: s-7466306a
+      term: cross-venue-manipulation
+    - doc: S
+      section: s-7466306a
+      term: cross-window-campaign
+    - doc: S
+      section: s-7466306a
+      term: cross-window-persistence-score
+    - doc: S
+      section: s-7466306a
+      term: crs
+    - doc: S
+      section: s-7466306a
+      term: cvce
+    - doc: S
+      section: s-7466306a
+      term: dependency-score
+    - doc: S
+      section: s-7466306a
+      term: dominance-threshold
+    - doc: S
+      section: s-7466306a
+      term: downstream-exposure
+    - doc: S
+      section: s-7466306a
+      term: dqs
+    - doc: S
+      section: s-7466306a
+      term: ecil-amplification
+    - doc: S
+      section: s-7466306a
+      term: ecil-event
+    - doc: S
+      section: s-7466306a
+      term: economic-irrationality
+    - doc: S
+      section: s-7466306a
+      term: emt-threshold
+    - doc: S
+      section: s-7466306a
+      term: explanation-trace
+    - doc: S
+      section: s-7466306a
+      term: external-context-intelligence-layer
+    - doc: S
+      section: s-7466306a
+      term: four-level-observability-framework
+    - doc: S
+      section: s-7466306a
+      term: futures-activity-elevated
+    - doc: S
+      section: s-7466306a
+      term: identity-driven-coordination
+    - doc: S
+      section: s-7466306a
+      term: information-request
+    - doc: S
+      section: s-7466306a
+      term: instrument-cluster
+    - doc: S
+      section: s-7466306a
+      term: intent-score
+    - doc: S
+      section: s-7466306a
+      term: intraday-behavioural-event
+    - doc: S
+      section: s-7466306a
+      term: intraday-dominance
+    - doc: S
+      section: s-7466306a
+      term: ipi
+    - doc: S
+      section: s-7466306a
+      term: iscore
+    - doc: S
+      section: s-7466306a
+      term: isgo
+    - doc: S
+      section: s-7466306a
+      term: layer-2-feed
+    - doc: S
+      section: s-7466306a
+      term: liquid-regime-classification
+    - doc: S
+      section: s-7466306a
+      term: liquidity-driven-reaction
+    - doc: S
+      section: s-7466306a
+      term: liquidity-migration
+    - doc: S
+      section: s-7466306a
+      term: lookback-30d
+    - doc: S
+      section: s-7466306a
+      term: medium-investigate
+    - doc: S
+      section: s-7466306a
+      term: modelconfidence
+    - doc: S
+      section: s-7466306a
+      term: mts-associated-markets
+    - doc: S
+      section: s-7466306a
+      term: mts-mid
+    - doc: S
+      section: s-7466306a
+      term: mts-spa
+    - doc: S
+      section: s-7466306a
+      term: mtsam-calibration-layer
+    - doc: S
+      section: s-7466306a
+      term: mtsam-l01
+    - doc: S
+      section: s-7466306a
+      term: mtsam-l02
+    - doc: S
+      section: s-7466306a
+      term: mtsam-l10
+    - doc: S
+      section: s-7466306a
+      term: mtsam-l11
+    - doc: S
+      section: s-7466306a
+      term: multi-day-conditioning-score
+    - doc: S
+      section: s-7466306a
+      term: oat
+    - doc: S
+      section: s-7466306a
+      term: off-platform-price-conditioning
+    - doc: S
+      section: s-7466306a
+      term: off-the-run
+    - doc: S
+      section: s-7466306a
+      term: otc-bilateral-trading
+    - doc: S
+      section: s-7466306a
+      term: outcome-score
+    - doc: S
+      section: s-7466306a
+      term: participant-interaction
+    - doc: S
+      section: s-7466306a
+      term: pfne
+    - doc: S
+      section: s-7466306a
+      term: primary-dealer
+    - doc: S
+      section: s-7466306a
+      term: quote-behaviour-contextual-confidence-layer
+    - doc: S
+      section: s-7466306a
+      term: quote-behaviour-risk-score
+    - doc: S
+      section: s-7466306a
+      term: quote-behaviour-without-trade-execution
+    - doc: S
+      section: s-7466306a
+      term: quote-depth-share-position
+    - doc: S
+      section: s-7466306a
+      term: quote-intelligence-architecture
+    - doc: S
+      section: s-7466306a
+      term: rd02
+    - doc: S
+      section: s-7466306a
+      term: rd03
+    - doc: S
+      section: s-7466306a
+      term: rd04
+    - doc: S
+      section: s-7466306a
+      term: rd06
+    - doc: S
+      section: s-7466306a
+      term: rd07
+    - doc: S
+      section: s-7466306a
+      term: rd12
+    - doc: S
+      section: s-7466306a
+      term: rdcs
+    - doc: S
+      section: s-7466306a
+      term: removal-register
+    - doc: S
+      section: s-7466306a
+      term: repetition-indicator
+    - doc: S
+      section: s-7466306a
+      term: repo-market-linkage
+    - doc: S
+      section: s-7466306a
+      term: rt04
+    - doc: S
+      section: s-7466306a
+      term: rt08
+    - doc: S
+      section: s-7466306a
+      term: sb-05
+    - doc: S
+      section: s-7466306a
+      term: sb-06
+    - doc: S
+      section: s-7466306a
+      term: sb-07
+    - doc: S
+      section: s-7466306a
+      term: sb-08
+    - doc: S
+      section: s-7466306a
+      term: sb-10
+    - doc: S
+      section: s-7466306a
+      term: sb-12
+    - doc: S
+      section: s-7466306a
+      term: sb-25
+    - doc: S
+      section: s-7466306a
+      term: sb-26
+    - doc: S
+      section: s-7466306a
+      term: sb-27
+    - doc: S
+      section: s-7466306a
+      term: sb-28
+    - doc: S
+      section: s-7466306a
+      term: sb-29
+    - doc: S
+      section: s-7466306a
+      term: sb-30
+    - doc: S
+      section: s-7466306a
+      term: scs
+    - doc: S
+      section: s-7466306a
+      term: sd02
+    - doc: S
+      section: s-7466306a
+      term: sf-issuance
+    - doc: S
+      section: s-7466306a
+      term: signal
+    - doc: S
+      section: s-7466306a
+      term: signal-transmission-window-seconds
+    - doc: S
+      section: s-7466306a
+      term: sovereign-auction-calendar
+    - doc: S
+      section: s-7466306a
+      term: sovereign-bond-dealer-market
+    - doc: S
+      section: s-7466306a
+      term: sovereign-bond-surveillance-doctrine
+    - doc: S
+      section: s-7466306a
+      term: supports-explanation
+    - doc: S
+      section: s-7466306a
+      term: systemic-consequence-uplift
+    - doc: S
+      section: s-7466306a
+      term: three-position-data-types
+    - doc: S
+      section: s-7466306a
+      term: unified-enriched-event-object
+    - doc: S
+      section: s-7466306a
+      term: universal-core-engine
+    - doc: S
+      section: s-7466306a
+      term: venue-arbitrage
+    - doc: S
+      section: s-a1fbd09a
+      term: intent-score
+    - doc: S
+      section: s-a879be67
+      term: anonymous-quote-driven-market-structure
+    - doc: S
+      section: s-a879be67
+      term: classification
+    - doc: S
+      section: s-a879be67
+      term: cross-instrument-context-intelligence
+    - doc: S
+      section: s-a879be67
+      term: intent-score
+    - doc: S
+      section: s-a879be67
+      term: mts-associated-markets
+    - doc: S
+      section: s-a879be67
+      term: mtsam-calibration-layer
+    - doc: S
+      section: s-a879be67
+      term: sovereign-bond-sector-pack
+    - doc: S
+      section: s-a879be67
+      term: universal-core-engine
     - doc: U
       section: u-03d2b71e
       term: cco
