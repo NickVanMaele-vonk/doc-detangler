@@ -16,7 +16,7 @@ from detangle.findings import EXIT_CLEAN, EXIT_USAGE
 from detangle.graph.usage import UsageEdge, build_index, extract
 from detangle.records import load_records
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parent / "data"
 
 BODY = """\
 Title block naming a widget before any section exists.

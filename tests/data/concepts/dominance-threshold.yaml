@@ -1,0 +1,32 @@
+id: dominance-threshold
+term: DOMINANCE_THRESHOLD
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:7f9567d43084f13b1d3df844f549f450961399c1334baedc902c234d2547b3ea
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: keep - disambiguate into 2 separate terms (Nick,
+  candidate-terms-merged.md §1e)
+notes: >-
+  Split from the merged DOMINANCE_THRESHOLD / DOMINANCE_THRESHOLD_PCT row
+  per Nick's decision. Resolved (Nick's ruling, in-session 2026-07-29):
+  DOMINANCE_THRESHOLD and DOMINANCE_THRESHOLD_PCT are considered one
+  parameter for now — see [[dominance-threshold-pct]], which carries M's
+  formula. The bare form is anchorable only in S in the shortened corpus;
+  used_in and placement keep the reviewed candidate row's S,M, which the
+  one-parameter ruling makes consistent (the parameter is used in both
+  documents across its two surface forms).

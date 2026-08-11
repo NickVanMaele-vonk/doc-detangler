@@ -1,0 +1,55 @@
+id: primary-signal-generation-layer
+term: primary signal generation layer
+aliases: [foundational detection layer, primary signal generation framework, core trade-based surveillance baseline]
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Layer 1: produces trade-based market abuse signals covering core MAR
+  Article 12 manipulation risks in the MTSAM market.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:0bb59fc8c573161d96f5d677c97f66c0327ea0d46385751a1a0ce3928d383cd8
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:4f7a164102b07d022a12b940b01ec1fb8dd86db33a72c4ba3d3c8795807d5fcb
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:3a38212043afb31167c84bdefb9f3d9283f2588f50807611f52861f71fe5c326
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - mts-associated-markets
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The FSMA framing block instructs that
+  the existing RT/RD framework 'should be presented as the primary signal
+  generation layer — the detection foundation on which behavioural
+  adjudication, contextual enrichment, and quote intelligence are built.'
+  The aliases are the co-approved formulations for describing that
+  framework in the §0.3 governance table ('Foundational detection layer;
+  primary signal generation framework; core trade-based surveillance
+  baseline'); the prohibited counter-formulations ('Complete coverage;
+  full MAR coverage; exhaustive detection') stay in their row. The term is
+  itself a governed phrase — an approved formulation, not loose prose. See
+  [[language-governance]], [[behavioural-intelligence-overlay]],
+  [[five-layer-architecture]].

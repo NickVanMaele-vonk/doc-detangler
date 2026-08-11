@@ -1,0 +1,43 @@
+id: signal-integrity-summary
+term: Signal Integrity Summary
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Signal Integrity Summary: weakest_link and escalation_distance
+  documented per signal.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:57501d0d8e273fad20c3612f1899b1bc72e929d5015133aaf025104a1519e677
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:899fd545102ba5aa32e51cb63edd008ae0809be5e7b021e94e8bf8f106608dfe
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Core Design Principle 10 enforcement
+  line; the principle title reads 'Every escalation must remain
+  supervisor- defensible' (OCR mid-word split reproduced, criterion 5).
+  weakest_link and escalation_distance are per-signal output fields, not
+  surface forms of this term, and are not carried as aliases. The Part
+  XIII contents row lists the summary alongside ELS weight governance and
+  the holistic output schema — see [[holistic-output-schema]] and
+  [[escalation-likelihood-score]].

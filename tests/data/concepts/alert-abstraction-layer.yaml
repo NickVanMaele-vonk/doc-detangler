@@ -1,0 +1,40 @@
+id: alert-abstraction-layer
+term: Alert Abstraction Layer
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Alert Abstraction Layer (Section 3.2): translates MTS alert names to UCE
+  behavioural primitives.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+  - behavioural-primitive
+  - mts-spa
+  - universal-core-engine
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Named in the §1.0 MTS Alerts (RT/RD)
+  feed row; the definition is its integration-point clause. Its own
+  Section 3.2 is not included in the shortened corpus (§7b caution —
+  absence is not evidence of absence). Scope: 'Nine implemented alert
+  types from MTS S.p.A. surveillance system' ([[mts-spa]]); 'All nine
+  alerts mapped to Domain 3 primitive codes' ([[behavioural-primitive]]).
+  Coverage: 'Nine of c.30 implemented MTS alerts mapped'; 'RD05 and RD06
+  not yet implemented — identified as high-priority additions in
+  enhancement roadmap' — see [[rd05]], [[rd06]], [[enhancement-roadmap]].

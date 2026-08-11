@@ -1,0 +1,35 @@
+id: intraday-behavioural-event-builder
+term: Intraday Behavioural Event Builder
+aliases: [IBEB]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: the business term is the IBE; the Builder is software and is not defined (Nick, 2026-07-30, cycle disposition on IBE ↔ IBEB)"
+notes: >-
+  Single-document term (§3 bulk). §XVII.10 is referenced but not present
+  in the shortened UCE. Its output unit is [[intraday-behavioural-event]],
+  a glossary term. Cycle disposition (Nick, 2026-07-30): only the IBE is
+  a business term; the Builder is a piece of software and its record
+  carries no definition, resolving the IBE ↔ IBEB cycle (its outgoing
+  edges are dropped — edges live only on defined records, D10 §4). Not
+  flagged orphan: the source does define it; the corpus wording is
+  preserved here verbatim: "Stage 0 (pre-pipeline): the Intraday
+  Behavioural Event Builder (IBEB, §XVII.10) groups raw data streams —
+  trades, quotes, alerts, ECIL context, and participant history — into
+  Intraday Behavioural Events (IBEs) for each participant-instrument pair
+  within a configurable temporal window. Each IBE is the primary input to
+  Stage 1."

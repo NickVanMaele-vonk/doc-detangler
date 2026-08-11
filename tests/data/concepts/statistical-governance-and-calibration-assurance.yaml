@@ -1,0 +1,34 @@
+id: statistical-governance-and-calibration-assurance
+term: Statistical Governance & Calibration Assurance
+aliases: [Statistical Governance]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:96582d743a313085962bb502aaf541f60fd3d7724a7fc378b0cb9dfe94781889
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked in the v23 row as
+  'Statistical Governance (XV.4)' and in the Part XV contents row as
+  '§XV.4: Statistical Governance & Calibration Assurance.'; Part XV is not
+  included in the shortened corpus. See [[supervisory-challenge-pack]],
+  [[qa-validation]].

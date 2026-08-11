@@ -1,0 +1,35 @@
+id: os-u-disclosure-requirements
+term: OS=U Disclosure Requirements
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:b7e97d7371d6677596dc4ef63785091ae4864111ef835470352eda1601008cce
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: added in v27 as '§VI-A.4.2 OS=U
+  Disclosure Requirements — tiered by signal priority'; the section is not
+  included in the shortened corpus. OS=U is a state of the Outcome Score,
+  whose scale is written OS (0–2/U) — see [[outcome-score]]; the U state
+  is not expanded in the shortened corpus. Also listed in the Part XIV
+  contents row.

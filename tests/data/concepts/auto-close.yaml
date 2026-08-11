@@ -1,0 +1,29 @@
+id: auto-close
+term: AUTO_CLOSE
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: disposition-eligibility state,
+  paired with BATCH; neither is defined in the shortened corpus. Step 21b:
+  'GATE: required for HIGH (not AUTO_CLOSE or BATCH)' and 'required for
+  HIGH classification that is not already eligible for AUTO_CLOSE or
+  BATCH. Where BDRS < threshold: signal retained at MEDIUM-INVESTIGATE.'
+  See [[batch]], [[behavioural-distinctiveness-score]],
+  [[medium-investigate]].

@@ -1,0 +1,54 @@
+id: liquidity-driven-reaction
+term: liquidity-driven reaction
+aliases: [LIQUIDITY_DRIVEN_REACTION]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The default classification for sequential quote behaviour in the
+  anonymous order book — participant B's quotes moving in response to
+  observable market conditions following participant A's quote activity —
+  unless post-session order attribution or statistical specificity testing
+  confirms identity-driven coordination.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3.1 Identity-Driven Coordination vs Liquidity-Driven Reaction"
+    para_hash: sha256:7ef109ec8429808498523c9cb58f730bbbbd01d0fc80a7fc9b519c27d4a52e9e
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+    para_hash: sha256:99ea73702e040cec47e0f36dbef0d0ff977c716983c84c13a05e1855ca85de92
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - classification
+  - identity-driven-coordination
+flags: []
+conflict: null
+review: >-
+  Decision: keep master term `liquidity-driven reaction`; the other term is
+  its representation as variable in software code (Nick,
+  candidate-terms-merged.md §1f)
+notes: >-
+  ACCEPTED CYCLE (Nick, 2026-07-29, ISO 704 §6.5.2 outer circle): this
+  record and [[identity-driven-coordination]] are deliberately defined by
+  mutual contrast — the default-unless clause here and the
+  identical-observable-pattern clause there are each load-bearing, so both
+  edges are kept. The view generator must treat the two-node cycle as one
+  unit in the topological sort, placing the pair adjacently.
+  Master-term/variable pairing per Nick's ruling, matching the
+  EscalationReadiness precedent: LIQUIDITY_DRIVEN_REACTION is the software
+  code value (casing verbatim in aliases, criterion 5). Counterpart
+  classification: [[identity-driven-coordination]]. The burden of
+  establishing coordination lies with the identity-driven hypothesis (S
+  default interpretation rule).

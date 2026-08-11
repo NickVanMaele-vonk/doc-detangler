@@ -1,0 +1,39 @@
+id: ecil-amplification
+term: ECIL amplification
+aliases: [ibe.ecil_amplification]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  The ECIL amplification value (ibe.ecil_amplification) participates
+  directly in Automatic Validation as Condition 3 (§VI-A.5.3 UCE v30);
+  the threshold of 0.20 was selected to exclude signals where macro or
+  event context has materially amplified the analytical result.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
+    para_hash: sha256:40620ed67d518a68c38bae94e62ab3567c5ea37badd4a1a7f3bbfe478b6f24a3
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - automatic-validation
+  - signal
+  - universal-core-engine
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); introduced under
+  [[amendment-sbsp-amd-bvr-001]] ('A.4.3.1 ECIL Amplification
+  Auto-Validation Threshold'). The span's apposition supports the field
+  alias. Human-review boundary: 'A human reviewer must confirm whether
+  the event adequately explains the behaviour before closure.' See
+  [[external-context-intelligence-layer]], [[automatic-validation]],
+  [[intraday-behavioural-event]], [[bvr]].

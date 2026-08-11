@@ -1,0 +1,38 @@
+id: degraded-mode-doctrine
+term: degraded-mode doctrine
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:385922492a0a886c90787a1972e6a11b279c700ab2207a1c54958defbde7af06
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:6d2f83b70f2d4aa8d3d451523ea32ea5ebf06841e483a78284efaa137f1ca259
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked in the Part XX
+  contents row ('throughput governance, degraded-mode doctrine,
+  resiliency and operational failure escalation') and never specified.
+  The Part XIX row separately names 'degraded-mode procedures' and
+  states the deliberate split: 'Note: Part XIX provides frameworks;
+  Part XX provides universal doctrine that cannot be varied by
+  Calibration Layers.' The procedures surface is therefore not recorded
+  as an alias — the corpus distinguishes framework from doctrine. See
+  [[production-operations-governance]].

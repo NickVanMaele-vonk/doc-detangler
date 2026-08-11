@@ -1,0 +1,39 @@
+id: escalation-likelihood-score
+term: Escalation Likelihood Score
+aliases: [ELS, ELS bands, ELS weight governance]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  ELS (0.0–1.0): f(ExplanationFailure×25%, CCL×25%, CFS×20%, OS×OPL×15%,
+  RRF×10%, CCS_penalty×5%). Rebalanced from original
+  ExplanationFailure×30% to reduce false-positive pressure from binary
+  explanation flag.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:1ed71d5f09e8db4f498a5654e2ad2b0a2c153e5b5bb4579b48441584ffc64f00
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - causality-confidence-layer
+  - counterfactual-strength
+  - explanationfailure
+  - outcome-persistence-layer
+  - outcome-score
+  - regulatory-risk-factor
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Step 19. The document records a weight-
+  rebalancing history (ExplanationFailure 30% → 25%) — a versioned
+  definition, reproduced as stated. ELS weight governance sits in Part
+  XIII per the Part-contents table.

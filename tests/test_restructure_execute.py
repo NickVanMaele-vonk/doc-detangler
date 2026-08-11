@@ -144,7 +144,7 @@ def test_the_real_plan_reproduces_the_golden():
     from detangle.restructure import load_plan
     from detangle.restructure.execute import execute
 
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     Config.load(root)  # asserts the real config parses
     plan, findings = load_plan(root / "eval" / "golden" / "uce.plan.yaml", root)
     assert findings == []
@@ -174,7 +174,7 @@ def test_the_real_s_plan_reproduces_the_s_golden():
     from detangle.restructure import load_plan
     from detangle.restructure.execute import execute
 
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     Config.load(root)
     plan, findings = load_plan(root / "eval" / "golden" / "sbsp.plan.yaml", root)
     assert findings == []
@@ -243,7 +243,7 @@ def test_the_real_m_plan_reproduces_the_m_golden():
     from detangle.restructure import load_plan
     from detangle.restructure.execute import execute
 
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     Config.load(root)
     plan, findings = load_plan(root / "eval" / "golden" / "mcl.plan.yaml", root)
     assert findings == []

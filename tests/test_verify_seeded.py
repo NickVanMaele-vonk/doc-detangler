@@ -39,7 +39,7 @@ import pytest
 from detangle.cli import main
 from detangle.findings import EXIT_FINDINGS
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent / "data"
 GOLDEN = ROOT / "eval" / "golden" / "uce.md"
 
 #: The three seeds, each a full claim under `param-claim-granularity` (a cell
@@ -63,7 +63,7 @@ def run_seeded(tmp_path_factory, name: str, mutate) -> tuple[int, dict, str]:
     text = GOLDEN.read_text(encoding="utf-8")
     mutated = mutate(text)
     assert mutated != text
-    rel = f"tests/.seeded-{name}.md"
+    rel = f".seeded-{name}.md"
     path = ROOT / rel
     report = tmp_path_factory.mktemp(name) / "report.md"
     path.write_text(mutated, encoding="utf-8")
@@ -73,7 +73,7 @@ def run_seeded(tmp_path_factory, name: str, mutate) -> tuple[int, dict, str]:
             code = main(
                 [
                     "verify", "--root", str(ROOT), "--json",
-                    "--output", f"U={rel}", "--report", str(report),
+                    "--output", f"U={path}", "--report", str(report),
                 ]
             )
     finally:

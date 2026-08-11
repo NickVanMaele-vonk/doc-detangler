@@ -1,0 +1,49 @@
+id: mts-spa
+term: MTS S.p.A.
+aliases:
+  - MTS
+  - MTS platform
+  - MTS surveillance system
+  - MTS surveillance export
+  - MTS export
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  An Italian firm operating an electronic fixed income trading market for
+  European government bonds, corporate bonds, covered bonds and repo, with
+  average daily trading volume exceeding EUR 85 billion.
+source:
+  - doc: samples/blueprint-analytical-layer.md
+    section: "0. Definitions"
+    para_hash: sha256:8d90f178449563133a501c9cbd16a0cfa297606a695736ae04a60a56d3e0e6f8
+    origin: corpus
+    verified_against:
+      git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
+      stated_version: "0.1 — Draft for Review"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: [orphan, A]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1a)"
+notes: >-
+  Set-level orphan: used in S and M but defined only in (A) — the definition
+  above is sourced from (A) §0 Definitions, which is informational and never
+  counts toward C9 placement. "MTS" alone is used loosely in the sources for
+  the platform, the operator, and the surveillance export; high confusion
+  risk with MTS Associated Markets (MTSAM). Nick's review note (not source):
+  legal entity in Italy, "Mercato dei Titoli di Stato", sister company of
+  MTSAM. Conflict P-2 (candidate list §7c) is closed, not open: (P) §0.1
+  supplies the expansion but assigns it the venue sense — "MTS Mercato dei
+  Titoli di Stato the electronic trading venue" — and (P) §0.2 repeats it
+  ("one row of the MTS (Mercato dei Titoli di Stato) Trades feed"). Nick
+  ruled 2026-07-30 that MTS is a legal entity and the venue reading is a
+  confusion introduced by (P). The expansion is kept; the venue sense is
+  not, and no conflict is raised. The (A) §0 span was re-anchored
+  2026-07-30: the recorded hash predated the block-hash convention and no
+  longer resolved; the block carrying the definition sentence is the "0.
+  Definitions" heading block, and the definition wording is unchanged.

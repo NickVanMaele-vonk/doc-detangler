@@ -1,0 +1,51 @@
+id: sovereign-bond-surveillance-doctrine
+term: Sovereign Bond Surveillance Doctrine
+aliases: [sovereign bond market doctrine]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Analytical doctrine for quote-driven, liquidity-sensitive, cumulative
+  manipulation in sovereign bond markets: manipulation is often subtle,
+  liquidity-driven, and cumulative across the trading day. No single
+  intraday event is typically decisive. The analytical question is not
+  'was this trade suspicious?' but 'did this participant's cumulative
+  intraday behaviour combine with their EOD market position to produce
+  a material manipulation outcome?'
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:e9bc15cee93a9fa7f092f93d1811f8fa0e3e113bdd7096fd8bbe006fc0c58c30
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:b03c626c124a717f804a18c7d024bd3c4bc4e3197fcd35a9011975153fc2ca64
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled (C2) from the
+  Section I overview row (first span) and the A.1 doctrine statement
+  (second span), stitched at the colon. The Section I body is absent
+  from the shortened file, so the A.1 statement is the only substantive
+  articulation (absence from the shortened blueprints is not evidence
+  of absence from the full set, §7b caution). Alias 'Sovereign bond
+  market doctrine' is the A.1 statement's own label (sentence-initial
+  capitalisation in the source). The extraction
+  alias 'analytical doctrine' is not adopted: it is a generic
+  descriptor — the front-matter abstract lists 'the pattern taxonomy,
+  alert architecture, scoring calibration, and analytical doctrine that
+  extend the Universal Core Engine' ([[universal-core-engine]]).

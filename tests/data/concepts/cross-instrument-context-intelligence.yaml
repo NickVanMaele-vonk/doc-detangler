@@ -1,0 +1,46 @@
+id: cross-instrument-context-intelligence
+term: Cross-Instrument Context Intelligence
+aliases: [CICI]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The layer adding Bund futures public market data to the ECIL context
+  enrichment, enabling a Cross-Market Convergence Score that contextually
+  amplifies OLO manipulation hypotheses without asserting participant-level
+  futures positions.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.4.3.1 ECIL Context Thresholds --- BVR Auto-Validation Threshold (SBSP-AMD-BVR-001)"
+    para_hash: sha256:415098bc8d39b35527902e83bb2313a9e9f8186cbf3062ff89754da582e59052
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - bund
+  - cross-market-convergence-score
+  - external-context-intelligence-layer
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Open disposition carried from the candidate list: CICI's internal Levels
+  1–3 clash with the Four-Level Observability Framework's level numbering —
+  see [[four-level-observability-framework]] and the "Level" scale
+  collision warning on [[evidence-hierarchy]]. The S definition site sits
+  under the §A.4.3 CICI heading (OCR damage in the heading: "â" for the em
+  dash — reproduced as found, criterion 5 applies to spans, not to this
+  note).

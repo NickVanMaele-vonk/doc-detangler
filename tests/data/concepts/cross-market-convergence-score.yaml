@@ -1,0 +1,68 @@
+id: cross-market-convergence-score
+term: Cross-Market Convergence Score
+aliases: [CMCS]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  A composite score combining six signals within a configurable window
+  (reference: a 30-minute intraday window centred on the OLO activity IBE),
+  computed as the weighted sum (0.25 × s1) + (0.20 × s2) + (0.15 × s3) +
+  (0.15 × s4) + (0.15 × s5) + (0.10 × s6).
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:8fbae0a7d02daa5d5d8d6180fc8c6dcc596f179b3a08b0b5d88027a7a85e3f4c
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:9e752d5c38c8abcf9eb0029a95f0a5d9dd17e722d259bc6bb8c38cd8f9565b87
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - intraday-behavioural-event
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Defined in both S and M ("Six-component CMCS weighting") with the same
+  formula, but component names differ slightly between the docs
+  (candidate-list note) — drift, not conflict, per the S drift note: "The
+  original four-component formula (s1–s4) is a subset: the two new
+  components explicitly add OLO yield movements and sovereign spread
+  movements." Thresholds: CMCS ≥ 0.55 cmcs_confirmed; ≥ 0.70
+  cmcs_high_confidence (+0.25 additional CQS, total +1.00); event
+  co-occurrence reduces the confirmation threshold from 0.55 to 0.45.
+  Six calibration parameters are name-checked here rather than given
+  records ([[sd03]] route, Nick's ruling 2026-07-30): FUT_VOLUME_THRESHOLD
+  and FUT_OI_THRESHOLD calibrate cmcs_l1_abnormal_futures_activity (third
+  span); FUT_INTRADAY_THRESHOLD calibrates cmcs_s2_futures_volume,
+  CMCS_BASIS_THRESHOLD cmcs_s4_basis_move, and CMCS_SOV_SPREAD_THRESHOLD
+  cmcs_s6_sovereign_spread (first span); CMCS_ALIGNMENT_SESSIONS
+  calibrates cmcs_l2_alignment (second span). The extraction's grouping
+  label "CMCS calibration parameter set" is not corpus wording.

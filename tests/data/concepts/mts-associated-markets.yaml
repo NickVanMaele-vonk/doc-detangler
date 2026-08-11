@@ -1,0 +1,60 @@
+id: mts-associated-markets
+term: MTS Associated Markets
+aliases:
+  - MTSAM
+  - MTS Associated Markets N.V.
+  - MTS Associate Markets N.V.
+  - MTS AM
+  - the MTSAM market
+  - MTS Belgium OLO sovereign bond market
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: >-
+  The Belgian legal entity — MTS Associated Markets N.V., a joint venture
+  between MTS and a consortium of banks, supervised by the FSMA and subject
+  to the EU Market Abuse Regulation (MAR) — operating the electronic
+  interdealer trading venue for Belgian OLO sovereign bonds.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:43baf6844eb80500e0dd7e32e4eb23d80bf857a2a84aa4ba9c9160a6ee8e4e94
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-analytical-layer.md
+    section: "0. Definitions"
+    para_hash: sha256:cc8d34cedb8feaf61199a1769a137c4e80c04f49a4622385b87631384c500699
+    origin: corpus
+    verified_against:
+      git_blob: 7d88ad14949875467adea94e452433e2417e7f4a
+      stated_version: "0.1 — Draft for Review"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - mts-spa
+flags: [A]
+conflict: null
+review: >-
+  Decision: keep — it's a legal entity. Use "Associated" spelling as master
+  (Nick, candidate-terms-merged.md §1a)
+notes: >-
+  Meaning drifts in the sources: MTSAM denotes both the trading venue (the
+  market) and the surveilling institution ("MTSAM's surveillance framework",
+  "MTSAM considers…"). (A) uses both "Associated" and "Associate" spellings;
+  its §0 Definitions entry (second source span, joint-venture/FSMA sentence)
+  uses "Associate" — reproduced verbatim there, master spelling per Nick's
+  ruling. Distinct from MTS S.p.A. (the platform operator); (A) also embeds
+  "MTS AM" meaning MTSAM. The MCL 1.1 grid table is OCR-split across
+  blank-line blocks under the convention pipeline; the span anchors the
+  table-header block carrying the operative "Market type" row (re-anchored
+  per Nick's ruling 2026-07-30). Conflict P-1 (candidate list §7c) is
+  closed, not open: (P) §0.1 supplies a third expansion — "MTSAM MTS
+  Analytical Market surveillance this deployment" — and (P) §1.1 repeats
+  it as "the MTSAM (MTS Analytical Market) data contract"; Nick ruled
+  2026-07-30 that the (P) definition is incorrect. Not carried as an
+  alias and not surfaced as a conflict.

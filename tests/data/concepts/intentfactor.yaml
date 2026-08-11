@@ -1,0 +1,35 @@
+id: intentfactor
+term: IntentFactor
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:81ced9d4c73e29ee1d236a74c897987847ad03dd42a709a803b2fa6fbc1c5e45
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:4857a1f3433004765437ba1f133df76e0669382e11fc82a65775d876b9a395ba
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Set-level orphan (definition: null — not
+  invented, C2): used but never defined. Step 8: "IS=0 → IntentFactor=0 →
+  PriorityScore collapses." Step 13: multiplier in the formula
+  "PriorityScore = IScore × CF × IntentFactor × DependencyFactor." On the
+  step 3.4 dangling-reference list; this record resolves the dangling
+  target for [[intent-score]].

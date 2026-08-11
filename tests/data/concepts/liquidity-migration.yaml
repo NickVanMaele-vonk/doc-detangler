@@ -1,0 +1,40 @@
+id: liquidity-migration
+term: Liquidity Migration
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cross-venue manipulation pattern in which the participant reduces
+  electronic quoting presence (quote withdrawal, widening spreads, depth
+  removal from MTS order book) and increases bilateral OTC execution
+  volume in the same instrument during the same session; OTC execution
+  benefits from prices that the electronic venue withdrawal has
+  influenced.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:49c3c27b177abf8ae3ee57d34bf2500f8e6d9fdd53c655cc375d84cb5510776f
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - cross-venue-manipulation
+  - mts-spa
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); one of the four named
+  [[cross-venue-manipulation]] patterns (grid-table row; the hash covers
+  the pattern table block). Definition assembled from the row's
+  MTS-observable, OTC-observable and detection-logic cells. The row notes
+  the electronic leg 'appears as normal quote management or potential RT08
+  pre-stress signal', and detection requires OTC trade data with intraday
+  timestamps ('MTSAM-L01 remediation required for full detection').

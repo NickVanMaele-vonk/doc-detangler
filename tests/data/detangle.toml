@@ -1,0 +1,113 @@
+# detangle configuration.
+#
+# ADR-001 Decision 2: "No hard-coded values (working agreement). Every param-*
+# from definition-of-done.md §Parameters is read from a config file
+# (detangle.toml); the code ships no default that contradicts the rubric."
+#
+# The code carries no fallback for anything in [params]: a missing value is a
+# usage error (exit 2), not a silent default. Parameters that the rubric has
+# not set yet are therefore ABSENT here rather than guessed — see the note at
+# the end of this file.
+
+[paths]
+concepts = "concepts"
+registers = "registers"
+samples = "samples"
+
+# Written by `detangle graph`; read by `detangle generate`. Derived, never
+# hand-edited (ADR-001 Decision 5) — `detangle graph --check` is the guard.
+graph = "concept-graph.yaml"
+
+# Written by `detangle generate` (plan step 3.5). Derived like the graph: a
+# view of the records, never hand-edited, guarded by `generate --check`.
+# `index.md` and `concept-graph.mmd` are absent until step 3.6 writes them.
+glossary = "glossary.md"
+
+# The claim-split register (ADR-003 Decision 1; home ruled by Nick 2026-08-07).
+# Canonical human rulings whose provenance is a PR thread, so it sits in
+# `registers/` with the other three. Read by `detangle verify`; an absent file
+# is the normal empty state, not an error.
+claim-splits = "registers/claim-splits.yaml"
+
+[documents]
+# The two input sets (Nick, 2026-08-05). `components` is the detangle set:
+# the documents being restructured, the only ones C9 counts for placement and
+# the only ones the orphan measure reads. `references` is the read-only
+# reference set: never modified, never counted, but citable for provenance —
+# a definition found only in a reference document is lifted with a span into
+# it, and the record keeps its orphan flag. Reference codes double as
+# informational record flags. Every code above the lists must appear in
+# exactly one of them; adding a side document is one path + one list entry,
+# never a code change.
+U = "samples/blueprint-UCE-shortened.md"
+S = "samples/blueprint-SBSP-shortened.md"
+M = "samples/blueprint-MCL-shortened.md"
+A = "samples/blueprint-analytical-layer.md"
+P = "samples/prototype-BC17.md"
+components = ["U", "S", "M"]
+references = ["A", "P"]
+
+[placements]
+# Placement name per component code (C9): where a single-document term is
+# defined. Previously hard-coded in records/load.py, which contradicted the
+# working agreement's "no hard-coded values". Reference codes have no entry —
+# nothing is ever placed in a reference document.
+U = "UCE"
+S = "SBSP"
+M = "MCL"
+
+[bodies]
+# Restructured component bodies, code → path: the extraction source for the
+# graph's usage edges (C11, step 3.7). Only bodies that exist are listed — an
+# absent entry is the normal "no body yet" state, which the emitted graph
+# states rather than defaulting. U's first real body is the approved golden
+# (Nick, 2026-08-08). Repoint an entry when the live document lands, and
+# regenerate concept-graph.yaml in the same PR (`graph --check` guards it).
+# Reference codes may not appear: reference documents are never scanned.
+U = "eval/golden/uce.md"
+S = "eval/golden/sbsp.md"
+M = "eval/golden/mcl.md"
+
+[params]
+# Mirrors definition-of-done.md §Parameters. Keep the two in step; the value
+# there is normative, this file is the machine-readable copy.
+max-terms-changed-per-PR = 200         # set — raised from 25 (Nick, 2026-08-05); confirmed by the 5.3 baseline
+glossary-order = "topological"         # set
+max-comments-per-PR = 25               # set — 5.3 baseline: 9 clusters measured for a whole-document run
+max-definitions-per-approval = 50      # set — Nick, 2026-08-07, ADR-004 Decision 4
+low-confidence-threshold = 0.80        # set, provisional — 5.3 baseline; MUST re-baseline at step 6.2
+overview-max-words = 400               # proposal
+false-positive-tolerance = "none"
+claim-granularity = "one claim per source sentence; one claim per table cell carrying an independent assertion"
+manual-reviewer = "Nick, optionally Ivo for domain accuracy"
+full-verify-cadence = "every re-run; release tags additionally"  # set — Nick, 2026-08-07, ADR-004 Decision 7
+
+[validate]
+# Smallest run of characters from a definition that must appear verbatim in one
+# of its own anchored blocks. This is a TRIPWIRE against a wholly invented
+# definition, not a quality bar: definitions are assembled and lightly stitched
+# (C2), so a stitched definition legitimately has short runs. The floor is
+# derived from the current record set, whose weakest run is 11 characters
+# (`risk-archetype`, the record Nick's 2026-07-30 "ordinary English is free"
+# ruling was written about). Raising this above 11 would flag records that
+# ruling already accepted.
+min-verbatim-run-chars = 10
+
+# Markdown files whose tables are checked for a consistent cell count.
+# `samples/` is deliberately absent: it is read-only input, its grid tables are
+# OCR-damaged, and its defects are data (criterion 6), not findings.
+table-globs = [
+    "*.md",
+    "plan/*.md",
+    "registers/*.md",
+    "concepts/*.md",
+    "eval/*.md",
+    "work/**/*.md",
+]
+
+# Nothing is deliberately absent any more: param-low-confidence-threshold,
+# the last unset parameter, was set (provisionally) from the 5.3 baseline on
+# 2026-08-05 — see eval/review-load.md and the rubric row for the mandatory
+# re-baseline at step 6.2. The rule stands for any future parameter: a value
+# the rubric has not set is absent here, and a command that needs it exits 2
+# rather than proceeding on a guess.

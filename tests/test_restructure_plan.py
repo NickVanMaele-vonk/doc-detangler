@@ -164,7 +164,7 @@ def test_shape_errors_are_plan_schema(mini_repo, text, where):
 
 def test_the_real_plan_validates_against_the_real_corpus():
     """The 6.1 fixture: uce.plan.yaml covers every block of the pinned U."""
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     config = Config.load(root)
     plan, findings = load_plan(root / "eval" / "golden" / "uce.plan.yaml", root)
     assert findings == [], [f.message for f in findings]

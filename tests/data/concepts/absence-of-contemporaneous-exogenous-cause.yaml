@@ -1,0 +1,30 @@
+id: absence-of-contemporaneous-exogenous-cause
+term: absence_of_contemporaneous_exogenous_cause
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:a0b127073f54fc2d18f7d2a5ed6600b26a9870dc729ee29276da7e7e3d097e05
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: boolean evidence field named
+  once, in the Pillar 3 ECIL row — 'Where no event exists:
+  absence_of_contemporaneous_exogenous_cause=TRUE strengthens CCL causal
+  evidence.' Underscore casing is the corpus form (criterion 5). The
+  contrasting branch: where ECIL confirms a coinciding ECB announcement,
+  'the momentum signal may be CONTRADICTS_PATTERN (event provides a full
+  alternative explanation)'. See [[external-context-intelligence-layer]],
+  [[causality-confidence-layer]].

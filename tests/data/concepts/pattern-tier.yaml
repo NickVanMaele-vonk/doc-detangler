@@ -1,0 +1,59 @@
+id: pattern-tier
+term: pattern tier
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:033a43178b51902dfd84dcd7165133bc4b4a9839b31ec6a371773d7e7a26aaa3
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:5f042237cf4ac1ed894639cd76822a1233ccfdf82ca09b86b0d4c5463ac37384
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:712b5b3a1bd46e8cf16208e9bfcacd438f6c2a5252eb149b0d798bcba42f3a38
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan, with a surface caveat: the
+  exact phrase 'pattern tier' never occurs in this document — it is the
+  extraction's label for the three-tier pattern taxonomy of the Section
+  C overview row (first span): 'Pattern Taxonomy Tier 1 Core Patterns,
+  Tier 2 Behavioural Amplifiers, Tier 3 Advanced Detection — calibrated
+  for sovereign bond markets.' The Section C body is absent from the
+  shortened file (absence from the shortened blueprints is not evidence
+  of absence from the full set, §7b caution). Second span: 'The Tier 1
+  archetypes' (A.4.1 operational-priority paragraph). The three tier
+  names are values enumerated in the overview row, not aliases (C9
+  hygiene); the extraction aliases 'MTSAM Tier' and 'Tier 1 archetypes'
+  are not adopted — the A.6 'MTSAM supervisory tier' (third span) is a
+  distinct per-archetype taxonomy, recorded as [[scl]]. 'Tier' is
+  overloaded three ways in this document: pattern tiers, the MTSAM
+  supervisory tier, and external-context feed tiers ('sovereign auction
+  calendar Tier 1 mandatory (not Tier 2 recommended)', A.1 primary-market
+  issuance row). Nick ruled the cluster 2026-07-30
+  (candidate-terms-merged.md §4 item 29): each sense gets a distinct
+  record rather than a shared disambiguation note, so the feed sense is
+  now [[sovereign-auction-calendar]] and this record covers the pattern
+  sense only. The shortened U carries its own Tier-1 collision, surfaced
+  on [[three-tier-escalation-modifier]]; the AI-governance and
+  archetype-status senses are [[ai-hard-controls]] and [[sb-26]].

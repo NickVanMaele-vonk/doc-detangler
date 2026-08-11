@@ -1,0 +1,27 @@
+id: three-level-suspicion-taxonomy
+term: three-level suspicion taxonomy
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5dde7fbce6b6c22f0c9d79e26cf785853bdfb24efcf926b977f9a4345bddfa5f
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked once in the Part
+  XVII contents row — 'automated instability detection, three-level
+  suspicion taxonomy, campaign intelligence roadmap' — and never
+  expanded. Distinct surface from [[three-level-review]] (Part X row);
+  no document relates the two. See [[campaign]].

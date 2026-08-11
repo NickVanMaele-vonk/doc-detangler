@@ -1,0 +1,29 @@
+id: rd12
+term: RD12
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:104538add1bf447473617b7bb9d258ea3ba3b6bcb09a935fdfe0ca6205e4d9a7
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling. Orphan: the code
+  appears in no register or definitional span of the shortened corpus
+  (C2). Sole usage, A.1 High-value reference prices row: 'Downstream
+  exposure assessment mandatory for all RD03, RD04, RD07, RD12 signals.
+  OS=2 automatic where downstream exposure confirmed.' See
+  [[downstream-exposure]]; sibling codes [[rd03]] and [[rd04]] have
+  records.

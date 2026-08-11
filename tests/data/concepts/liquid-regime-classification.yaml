@@ -1,0 +1,72 @@
+id: liquid-regime-classification
+term: Liquid Regime Classification
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Four-regime classification of sovereign bond market conditions, each
+  regime defined for the sovereign bond context with an EMT Threshold
+  Adjustment: NORMAL — bid-ask spread within 1.5× historical median;
+  order book depth within 20% of 30-day baseline; no circuit breaker or
+  suspension events; THIN — spread 1.5×–3× historical median; depth
+  50%–80% of baseline; or seasonal low-liquidity period; ILLIQUID —
+  spread >3× historical median; depth <50% of baseline; or
+  post-suspension reopening within first 30 minutes; STRESSED —
+  sovereign spread widening >50bps in session; confirmed macro event
+  driving market-wide directional moves.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:62ba0fd504911b9eb5d3d520c4f91d7fb1fd2b769504b23ee2429dd9bdb25e42
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:00a27341102a5026c0703d259e687dcb66ebf2dfed818d3372223e1e059209cc
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:4dff97f22d08f05d3f5c9e9fc8f90a6723ccd6604651abc7075fcf6840f2bce8
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.2 Liquid Regime Classification for Sovereign Bonds"
+    para_hash: sha256:6bc0c17bf9c8e6dbe947aa0d46d2eb768fec4f7b7d1dc3e40abb33d0d63f5ab9
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - classification
+  - emt-threshold
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The A.2 grid table is OCR-split
+  across four blocks — one per regime row — so all four row blocks are
+  anchored; the definition assembles the four 'Definition for Sovereign
+  Bond Context' cells. Regime names NORMAL/THIN/ILLIQUID/STRESSED are
+  values enumerated in the definition, not aliases (C9 hygiene).
+  Per-regime EMT Threshold Adjustments: NORMAL — 'Standard calibrated
+  thresholds apply.'; THIN — 'Dominance threshold reduced 20%; price
+  deviation threshold increased 30%. Volume indicator reliability
+  downgraded to MEDIUM.'; ILLIQUID — 'Dominance threshold reduced 40%;
+  price deviation threshold increased 50%; spread widening threshold
+  doubled.'; STRESSED — 'All EMT thresholds elevated 30%.
+  ModelConfidence capped at MEDIUM. PFNE monitoring suspended for
+  stressed session.' See [[emt-threshold]], [[modelconfidence]],
+  [[pfne]].

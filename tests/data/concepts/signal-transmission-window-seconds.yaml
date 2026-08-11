@@ -1,0 +1,33 @@
+id: signal-transmission-window-seconds
+term: SIGNAL_TRANSMISSION_WINDOW_SECONDS
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:b2298b5bc63e8f0c6ade4e99ebb92bd3be7b44fb94da1db036aa099475c747d8
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: a named calibration
+  parameter whose value is not given in this document. Detection window
+  for [[bilateral-execution-following-anonymous-quote-pressure]] (A.4
+  pattern-table row; the hash covers the pattern table block):
+  'Third-party OTC execution response: where OTC bilateral prices from
+  other participants shift in the direction of the suspected
+  participant's MTS quote pressure within
+  SIGNAL_TRANSMISSION_WINDOW_SECONDS.' Contrast
+  SD03_REVERSION_WINDOW_SECONDS, which is name-checked on [[sd03]]
+  rather than carried as a record — this parameter was extracted as its
+  own §3 queue term.

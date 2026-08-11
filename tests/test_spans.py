@@ -58,4 +58,4 @@ def test_real_records_still_hash_to_their_anchored_blocks(repo_root):
 def repo_root():
     from pathlib import Path
 
-    return Path(__file__).resolve().parent.parent
+    return Path(__file__).resolve().parent / "data"

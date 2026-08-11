@@ -1,0 +1,77 @@
+id: risk-archetype
+term: risk archetype
+aliases: [SB risk archetype, Risk Archetype Taxonomy]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  A named market-abuse behaviour pattern in the sector risk universe,
+  identified by an SB-## code and catalogued with its abuse type, detection
+  signal mapping, and tier.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.6 Belgian Sovereign Bond Risk Universe --- 35 Archetype Reference Table"
+    para_hash: sha256:2740873e120d375bfc1e99a92819fb194aa82d424c077f8e73db0e4eba426904
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - signal
+flags: [conflict]
+conflict:
+  summary: >-
+    Archetype-count conflict: S's reference table claims 35 archetypes, U's
+    §VI.1a claims a 45-archetype taxonomy — surfaced, not reconciled (C8 /
+    criterion 6). S's table is additionally truncated: rows SB-21..SB-35
+    are missing from the shortened source. Identifier-scheme conflict
+    (candidate list §7c, conflict P-4): (P) numbers its archetypes RA-##
+    (RA-28, RA-29), a third scheme alongside SB-## and the two counts —
+    separate taxonomy or renumbering is unstated, and RA-29
+    "Front-Running Indicator" may overlap [[sb-30]] (§4 conflict #8).
+    Nick's ruling 2026-07-30: keep, flag to humans for disambiguation.
+  spans:
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.6 Belgian Sovereign Bond Risk Universe --- 35 Archetype Reference Table"
+      quote: >-
+        A.6 Belgian Sovereign Bond Risk Universe — 35 Archetype Reference
+        Table
+      para_hash: sha256:2740873e120d375bfc1e99a92819fb194aa82d424c077f8e73db0e4eba426904
+    - doc: samples/blueprint-UCE-shortened.md
+      section: "Front matter"
+      quote: >-
+        Risk Archetype Taxonomy (45 archetypes)
+      para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    - doc: samples/prototype-BC17.md
+      section: "Layer 5 — Risk Archetypes"
+      quote: >-
+        RA-28 Insider Dealing Indicator — Sensitive Timing Sensitive Timing
+        + Event Proximity + Aggressor Dominance convergence
+        IBE_sensitive_timing_flag = TRUE + ECIL event proximity confirmed
+        RA-29 Front-Running Indicator
+      para_hash: sha256:c0cc0757651652c6ffc233f8f39b0f9a9a2c602497607a36a6e032e51cc9398f
+review: >-
+  Decision: keep - master term is `risk archetype`, possible values
+  (SB-01...SB-35 or other IDs) to be listed separately in term definition
+  section (Nick, candidate-terms-merged.md §1e)
+notes: >-
+  Master term per Nick's ruling: individual SB-## values are not separate
+  glossary entries except where the candidate list carries them as rows
+  (SB-05, SB-26, SB-28, SB-29, SB-30 — see their records); the value list
+  belongs in this term's definition section when drafted. (P) uses a
+  separate RA-## identifier scheme (RA-28, RA-29 — held as (P)-only rows);
+  per Nick's ruling 2026-07-30 that scheme collision is now carried in the
+  conflict field, not only here. The U conflict span sits in the
+  version-history grid table; hashes cover whole table blocks.

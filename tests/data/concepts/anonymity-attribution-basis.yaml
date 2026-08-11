@@ -1,0 +1,44 @@
+id: anonymity-attribution-basis
+term: anonymity_attribution_basis
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The mandatory explanation_trace field recording the attribution basis for
+  quote-domain interaction signals, with three enumerated values:
+  'order_id_post_session' (confirmed), 'market_pattern_probabilistic'
+  (unconfirmed), 'trade_execution_confirmed'.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3 Anonymous Quote-Driven Market Structure --- Analytical Implications"
+    para_hash: sha256:2e2e768904476f482680f84e7c3f1237457a60bc86260068befba076dc48b606
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:d7ac0d414ae42cb03e957624fc4b1502c6aafa346a25a5a9ed4767c5e93a0498
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - explanation-trace
+  - quote-domain-signal
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Defined in both S and M with the same three enumerated values
+  (candidate-list note); the value list and its quoting/casing are
+  reproduced verbatim from M (criterion 5). Carried by
+  [[explanation-trace]]; the 'market_pattern_probabilistic' value is what
+  caps ModelConfidence at MEDIUM — see [[modelconfidence]].

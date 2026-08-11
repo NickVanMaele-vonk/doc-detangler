@@ -1,0 +1,35 @@
+id: bci-levels
+term: BCI levels
+aliases: [BCI_PRIMARY_DRIVER]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Five levels: Follower (0–2) · Contributor (3–4) · Amplifier (5–6) ·
+  Leader (7–9) · Primary Driver (10–12).
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The bare level names (Follower,
+  Contributor, Amplifier, Leader, Primary Driver) are not carried as
+  aliases, matching the [[mwbr-score-levels]] precedent.
+  BCI_PRIMARY_DRIVER is the bci_concern_driver_code value at BCI ≥ 10 and
+  occurs nowhere else, so it stays an alias here. Signal-sense collision:
+  Amplifier the BCI level vs the Amplifier/Suppressor Assessment
+  ([[amplifier-suppressor-assessment]]). The scale belongs to
+  [[behavioural-causality-indicator]].

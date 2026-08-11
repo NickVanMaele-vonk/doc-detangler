@@ -1,0 +1,53 @@
+id: behavioural-intelligence-overlay
+term: behavioural intelligence overlay
+aliases: [Behavioural adjudication, behavioural adjudication layer]
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Layer 2 (Behavioural adjudication): assesses each signal through
+  non-compensatory convergence analysis, contextual causality assessment,
+  legitimate explanation testing, and evidence hierarchy. Converts alerts
+  into supervisory-defensible escalation packages.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "SECTION 0 --- Regulatory Positioning Framework --- FSMA Engagement Architecture"
+    para_hash: sha256:6306cc768afd78a7afbe2ab26ada6ca59d03d584cec92507641472e9e37295cb
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:9c1c5d86045471183a9b80c03b4aa650453805724dae52341894e55705fa24a0
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+  - convergence
+  - evidence-hierarchy
+  - non-compensatory-architecture
+  - signal
+  - supervisory-defensible-escalation-package
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled from the Layer 2
+  row of the §0.2 architecture table: the layer title is 'Layer 2:
+  Behavioural adjudication (Veridict Core Engine)' and the role
+  formulation is the term itself — both surfaces name the same layer, so
+  the adjudication surfaces are adopted as aliases (sb-12 precedent);
+  'Layer 2' alone is a position, not an alias (C9 hygiene). First use in
+  the SECTION 0 intro, presented and defended alongside 'the existing
+  RT/RD surveillance scenarios' and the [[enhancement-roadmap]]. Status:
+  'In development. Pilot validation planned against 90 days historical
+  MTSAM data.' See [[universal-core-engine]], [[evidence-hierarchy]],
+  [[supervisory-defensible-escalation-package]], [[convergence-gate]].

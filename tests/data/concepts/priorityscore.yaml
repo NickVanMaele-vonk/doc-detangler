@@ -1,0 +1,46 @@
+id: priorityscore
+term: PriorityScore
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: >-
+  The pipeline's secondary, ranking-only output, computed as PriorityScore =
+  IScore × CF × IntentFactor × DependencyFactor; non-compensatory and bounded
+  by gate strength, it orders signals but does not influence classification.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:4857a1f3433004765437ba1f133df76e0669382e11fc82a65775d876b9a395ba
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.1 MTS Associated Markets --- Key Characteristics"
+    para_hash: sha256:43baf6844eb80500e0dd7e32e4eb23d80bf857a2a84aa4ba9c9160a6ee8e4e94
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - cf
+  - classification
+  - gate
+  - intentfactor
+  - iscore
+  - non-compensatory-architecture
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  M usage: "QBRS is co-primary with PriorityScore for all signals generated
+  on MTSAM" (MTSAM calibration grid table; the hash covers the whole table
+  block). The formula's DependencyFactor vs the DAF applied at Step 4 is the
+  same open verification flagged on [[dependency-score]].

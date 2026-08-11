@@ -1,0 +1,38 @@
+id: quote-behaviour-without-trade-execution
+term: quote behaviour without trade execution
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  In anonymous interdealer electronic sovereign bond markets, manipulative
+  behaviour may occur entirely through displayed quote behaviour —
+  liquidity withdrawal, spread conditioning, order book influence, depth
+  removal — without requiring or producing any executed transactions.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3.2 Quote Behaviour Without Trade Execution --- Standalone Manipulation in Anonymous Markets"
+    para_hash: sha256:f8ee0ec413bfc8dcc8d1125c6db4f82507a91db5cc1c6dea09656b6165011e53
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - sb-08
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition is the A.3.2 lead sentence
+  verbatim; the span continues: 'The absence of a trade is not evidence of
+  the absence of manipulation.' The following paragraph makes it a primary
+  detection pathway: equity-style frameworks 'will systematically miss the
+  most important manipulation vectors in anonymous sovereign bond dealer
+  markets'. The extraction's alias 'standalone quote manipulation' is not
+  adopted — the phrase does not occur in the corpus (the A.3.2 heading
+  says 'Standalone Manipulation in Anonymous Markets').

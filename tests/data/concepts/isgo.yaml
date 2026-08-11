@@ -1,0 +1,61 @@
+id: isgo
+term: ISGO
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:acc935a86cb5fffefabcc77eefb9b0749d3a4905b5a38ab6b58df338e2f226b0
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:7c1c374aa1686c2293139d0a3bb3dd354f44bf70da19e49e6f89701b4bc2c721
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:d7a708d30cf175f132c49c1b8f4d12d8a7de5570d90cbb3c4f6c21dfdc592ab2
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan, conflict]
+conflict:
+  summary: >-
+    Role conflict per the candidate list: S treats ISGO as a
+    narrative/output object carrying mandatory language, M treats it as a
+    gap-finding register (findings like ISGO-02) — surfaced, not reconciled
+    (C8 / criterion 6).
+  spans:
+    - doc: samples/blueprint-SBSP-shortened.md
+      section: "A.4.1 Four-Level Observability Framework"
+      quote: >-
+        Different analytical findings belong at different levels, and the
+        ISGO language should reflect which level applies to each finding.
+      para_hash: sha256:7c1c374aa1686c2293139d0a3bb3dd354f44bf70da19e49e6f89701b4bc2c721
+    - doc: samples/blueprint-MCL-shortened.md
+      section: "1.2 Anonymous Quoting --- MTSAM-Specific Analytical Framework"
+      quote: >-
+        MTSAM-L07 surveillance gap flag applied. ISGO-02 finding generated.
+      para_hash: sha256:a4633c9e59ef984b7877db4267817a9382439ba808dd0c36222edfffa1b8424f
+review: "Decision: keep - define later (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2; Nick: define
+  later). Never letter-expanded anywhere in the corpus. The S role is
+  reinforced by the §A.6.1 heading "ISGO Mandatory Language" and per-row
+  mandated formulations; the M role by the 0.3 governance row "Describing
+  coverage limitations (ISGO): … structured gap identification and
+  quantified roadmap" and the numbered findings register. U's sole usage is
+  the Part XVI front-matter row ("… no-data-no-risk principle, synthetic
+  testing, ISGO").

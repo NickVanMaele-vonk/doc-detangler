@@ -296,7 +296,7 @@ def test_pinned_u_blob_decomposition_is_stable():
     entries there are human judgment, so the machine number stays pinned
     here until overrides land by PR.
     """
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     blob = subprocess.run(
         ["git", "-C", str(root), "cat-file", "blob", PINNED_U_BLOB],
         capture_output=True,

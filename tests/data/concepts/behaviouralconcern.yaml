@@ -1,0 +1,38 @@
+id: behaviouralconcern
+term: BehaviouralConcern
+aliases: [five-level BehaviouralConcern axis]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "Front matter"
+    para_hash: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): one of the three
+  outputs of the BehaviouralConcern / EvidenceConfidence /
+  EscalationReadiness three-output model, formalised in M's v22 block
+  (Section 11, with a five-level axis) and used in U's Follower Rule ("BCI
+  < 3 → BehaviouralConcern capped at MEDIUM (hard cap, not overridable)")
+  — but never itself defined in the shortened corpus. Extraction
+  observation, surfaced: the HIGH / VERY HIGH classification levels used
+  throughout M 0.1 and 1.2 appear to be values of this axis, though never
+  stated explicitly. See [[escalationreadiness]].

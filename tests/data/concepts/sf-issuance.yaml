@@ -1,0 +1,36 @@
+id: sf-issuance
+term: SF_issuance
+aliases: [SF_issuance flag]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:5323b56b94bfcf5a962221d93adabb8ee05068a3c77334961b68584af5137721
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:6e835a4f85710a9e5ef25a2f7b9cf78ce118fb833850cff662b89b625dc9bfd2
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2): an ECIL
+  situational flag for issuance events, named but not defined. M: "ECIL
+  auction calendar: SF_issuance flag, AUCTION_WINDOW activation, RD05
+  timing context" (1.0, ADA calendar row). S: "QBCCL SF_issuance = 1.5 —
+  highest contextual sensitivity factor" (A.1). The SF_ prefix suggests a
+  family of situational flags not otherwise listed in the corpus
+  (extraction observation). See [[external-context-intelligence-layer]].

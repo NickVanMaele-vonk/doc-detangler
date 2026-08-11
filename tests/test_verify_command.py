@@ -19,8 +19,12 @@ from detangle.cli import main
 from detangle.findings import EXIT_FINDINGS, EXIT_USAGE
 from detangle.verify import report as verify_report
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent / "data"
 GOLDEN = "eval/golden/uce.md"
+#: `--output` paths are read relative to the cwd, not `--root` (cli.py
+#: `cmd_verify`), so the runs below must pass the absolute form; the relative
+#: one stays for asserting on the report's root-relative version rows.
+GOLDEN_ABS = ROOT / GOLDEN
 
 
 # -- usage -------------------------------------------------------------------
@@ -50,7 +54,7 @@ def real() -> tuple[int, dict]:
     buffer = StringIO()
     with redirect_stdout(buffer):
         code = main(
-            ["verify", "--root", str(ROOT), "--json", "--output", f"U={GOLDEN}"]
+            ["verify", "--root", str(ROOT), "--json", "--output", f"U={GOLDEN_ABS}"]
         )
     return code, json.loads(buffer.getvalue())
 
@@ -99,7 +103,7 @@ def rendered(tmp_path_factory) -> str:
     main(
         [
             "verify", "--root", str(ROOT), "--json",
-            "--output", f"U={GOLDEN}", "--report", str(out),
+            "--output", f"U={GOLDEN_ABS}", "--report", str(out),
         ]
     )
     return out.read_text(encoding="utf-8")
@@ -176,7 +180,7 @@ def test_a_malformed_register_blocks_the_run_and_cannot_be_waived(tmp_path):
         code = main(
             [
                 "verify", "--root", str(ROOT), "--json", "--config", str(config),
-                "--output", f"U={GOLDEN}",
+                "--output", f"U={GOLDEN_ABS}",
             ]
         )
     payload = json.loads(buffer.getvalue())

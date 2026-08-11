@@ -1,0 +1,64 @@
+id: bci-dimensions-d1-d4
+term: BCI dimensions D1–D4
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  BCI composite range [0–12] = D1 + D2 + D3 + D4, each scored [0–3]. D1
+  (Quote Leadership) and D2 (Liquidity Leadership) require HQLD, which is
+  not currently available.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - behavioural-causality-indicator
+  - historical-quote-lifecycle-dataset
+  - sb-13
+flags: [conflict]
+conflict:
+  summary: >-
+    Label collision on D1/D2 (candidate list §7c, conflict P-6): here they
+    are BCI dimensions (D1 Quote Leadership, D2 Liquidity Leadership),
+    while (P) uses the same tokens for signal domains (D1 Volume and
+    Participation, D2 Timing) — and (P) assigns Domain D2 to two different
+    signals, §3.2 Sensitive Timing and §3.3 Event Proximity. A third,
+    project-internal sense exists outside the corpus: the plan's decision
+    register D1–D10. Nick's ruling 2026-07-30: keep, flag to humans for
+    disambiguation — surfaced, not reconciled (C8 / criterion 6).
+  spans:
+    - doc: samples/prototype-BC17.md
+      section: "§0.1 Master glossary — every abbreviation spelled out"
+      quote: >-
+        BCI Behavioural Causality Indicator leader-vs-follower score; four
+        dimensions D1–D4
+      para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    - doc: samples/prototype-BC17.md
+      section: "§3.1 Aggressor Dominance (Domain D1 — Volume and Participation)"
+      quote: >-
+        §3.1 Aggressor Dominance (Domain D1 — Volume and Participation)
+      para_hash: sha256:0613d76bfc95bd223e3b8c5bd954b4a61f781ce5a722f40d5364e7b0d143c888
+    - doc: samples/prototype-BC17.md
+      section: "§3.2 Sensitive Timing (Domain D2 — Timing)"
+      quote: >-
+        §3.2 Sensitive Timing (Domain D2 — Timing)
+      para_hash: sha256:9d8412d54874b00417828853444d3f4341390fa47ba2aeae0a351df71937559c
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). D3 and D4 are never named or expanded in
+  the shortened corpus — only D1 (Quote Leadership) and D2 (Liquidity
+  Leadership) are named. In all MTSAM sessions until HQLD is obtained
+  ([[historical-quote-lifecycle-dataset]]): D1 = 0 (bci_d1_available =
+  FALSE), D2 = 0 (bci_d2_available = FALSE), bci_data_limitation = TRUE,
+  and maximum achievable BCI = D3 + D4 = 6 (Amplifier level maximum). See
+  [[behavioural-causality-indicator]].

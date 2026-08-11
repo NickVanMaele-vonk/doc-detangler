@@ -17,7 +17,7 @@ from detangle.records.load import Record
 from detangle.registers import CycleEntry, CycleRegister
 from detangle.verify.structure import Document, check, scan
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent / "data"
 
 
 def record(rid: str, term: str, aliases=(), definition="A definition.") -> Record:

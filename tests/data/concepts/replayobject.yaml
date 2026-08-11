@@ -1,0 +1,41 @@
+id: replayobject
+term: ReplayObject
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  ReplayObject: full score chain and configuration snapshot archived per
+  signal.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:ca05497f25959126c31f69ffa5cac26421ca5f2a901b423d04b2d687c22a59f6
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:6d2f83b70f2d4aa8d3d451523ea32ea5ebf06841e483a78284efaa137f1ca259
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Core Design Principle 9 (every decision
+  must be reproducible: every score, source, and human action is immutably
+  recorded) enforcement line. The Part XIX contents row lists 'replay and
+  evidence reconstruction' among the generic frameworks Institution
+  Calibration Layers instantiate — a descriptive surface form, not carried
+  as an alias.

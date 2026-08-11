@@ -1,0 +1,31 @@
+id: behaviour-centric-reweighting
+term: behaviour-centric reweighting
+aliases: [behaviour-centricity]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Behaviour-centric reweighting: raw alert outputs (Volume, Price) are
+  weighted lower than behavioural indicators (Cross-alert, Repetition,
+  Dominance with persistence).
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:0715241c210dbb068b1ed5b7d2f5ddec126d6d3584d2447a598664b01ead5243
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Stated in the Step 9 row of the II.1
+  step table — see [[six-indicators]].
