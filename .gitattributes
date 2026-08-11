@@ -1,0 +1,10 @@
+# Line endings are part of the provenance contract, not a style choice:
+# `para_hash` values and every recorded/pinned `git_blob` id (e.g. the U
+# blob in eval/README.md and tests/test_verify_*.py) are byte-exact. A CRLF
+# conversion anywhere — a Windows clone with core.autocrlf=true, or a parent
+# repo's `* text=auto` after the move into MTSAM-docs — changes every blob id
+# and para_hash at once and turns all four CI gates red.
+#
+# All 475 tracked files were verified LF-only when this file was added
+# (2026-08-11), so this declaration renormalizes nothing.
+* text=auto eol=lf

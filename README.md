@@ -78,7 +78,7 @@ If one term appears in more than one input document, then:
 | `./plan/adr-004-iterative-rerun.md` | The operating model: the detangle run is a repeatable campaign, and **assurance** rather than corpus anchoring carries definitional strength *(all decisions ruled 2026-08-07; the normative-document edits for Decisions 1 and 3 are outstanding)* |
 | `./plan/backlog.md` | Parked candidate work, `B-n`. Non-normative — nothing in it is approved or scheduled |
 | `src/detangle/` | The toolchain: `validate`, `graph`, `generate`, `lift`, `restructure` and `verify` *(built)*. `generate` seeded `glossary.md`, which from 2026-08-04 is human-edited rather than regenerated and since 2026-08-08 is mirrored into the records by `lift`; `index.md` awaits the document bodies (step 3.6); the Mermaid render is designed as an on-demand command and **not built** (backlog B-6); `verify` runs deterministically and its two model-dependent stages are **not built** (backlog B-9) |
-| `.github/workflows/ci.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check`, `detangle lift --check` — one job per gate *(built)*. The fourth gate is the glossary drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent — `lift --check` compares the records' derived copies against it instead |
+| `azure-pipelines.yml` | Branch policy: tests + lint, `detangle validate`, `detangle graph --check`, `detangle lift --check` — one job per gate *(built)*. The fourth gate is the glossary drift lint, not `detangle generate --check`: `glossary.md` is edited by humans, so byte-comparing it is incoherent — `lift --check` compares the records' derived copies against it instead |
 | `detangle.toml` | Configuration: `param-*` values from the rubric, the document registry — the detangle set (`components`) and the read-only reference set (`references`, 2026-08-05) — and validation thresholds. No value is hard-coded in the package |
 | `glossary.md` | Business domain glossary — first document of the output set; defines every term used in more than one document, ordered topologically. Seeded by `detangle generate` from the concept records *(step 3.5 — built; the overview is a marked gap and 77 entries are undefined)*. From Nick's ruling of 2026-08-04 it is the **fourth editable document**: humans edit it directly and `detangle lift` mirrors its definitions into the records, guarded by `lift --check` in CI (built 2026-08-08). The guard's *reorder* of an out-of-order entry remains Phase 10; today `lift-order` flags it for a human |
 | `index.md` | Alphabetical index across all four other documents: every term plus the location of its definition. Generated *(Phase 3 — pending)* |
@@ -249,6 +249,9 @@ merge on one converts a review prompt into a hard stop.
 `pandoc` must be on `PATH` — the `para_hash` scheme is defined in terms of its
 plain-text output, so it is a hard dependency, not a convenience.
 
+Run everything from the project root — the directory holding `detangle.toml`
+(`detangler/` inside the MTSAM-docs repository, not the repository root):
+
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -e ".[dev]"
@@ -355,9 +358,12 @@ open, which is why a waived finding is still printed on every run.
 
 ### In branch policy
 
-`.github/workflows/ci.yml` runs four gates on every PR to `main`, one job
+`azure-pipelines.yml` runs four gates on every PR to `main`, one job
 each, so a red run names which gate failed and each can be marked required
-separately:
+separately (in Azure DevOps, PR validation is a Build Validation branch
+policy pointing at the pipeline — the YAML `pr:` keyword is ignored for
+Azure Repos; `.github/workflows/ci.yml` is the same four gates in their
+original GitHub Actions form, kept until the move to MTSAM-docs completes):
 
 | Job | Command | Guards |
 |-----|---------|--------|

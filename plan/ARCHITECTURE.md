@@ -325,23 +325,32 @@ scope and the cadence question that comes with it.
 "generated from commit X at time Y" header — visible age instead of enforcement,
 which `concept-graph.yaml` cannot have without breaking byte comparison.
 
-The same trap governs which gates go into `ci.yml`: an unsatisfiable gate blocks
+The same trap governs which gates go into the CI pipeline: an unsatisfiable gate blocks
 every PR (it stuck PR #81 once), and a permanently red job trains reviewers to
 ignore CI.
 
 ### Repository, CI and branch protection
 
-The repo is public **only** so branch protection could be used (2026-08-04).
-One ruleset, `protect-main`, covers `deletion`, `non_fast_forward`,
-`pull_request`, `required_status_checks` (the CI contexts, strict) and
-`code_scanning`; earlier overlapping rulesets were deleted.
+**The project is moving into Azure DevOps** (decided 2026-08-11): the tree
+becomes the `detangler/` subfolder of the private `MTSAM-docs` repository
+(`dev.azure.com/TF-DR-PreSales/MTSAM`). The four gates are defined in
+`azure-pipelines.yml`; merge protection is Azure branch policies on the
+default branch — PR required, Build Validation pointing at the pipeline
+(path-filtered to `/detangler/*`), and force-push/deletion locked. The YAML
+`pr:` trigger keyword is ignored for Azure Repos; Build Validation is what
+runs the gates on a PR.
 
-CodeQL default setup is on for `python` and `actions`. **`.claude/` is untracked
-and gitignored** because a single stray `.js` file there made CodeQL detect a
-JavaScript language it could not analyse.
-
-`code_quality` is deliberately **not** in the ruleset until that feature is
-actually enabled — see the unsatisfiable-gate trap above.
+History, so the earlier rationale stays legible: on GitHub the repo was
+public **only** so branch protection could be used (2026-08-04) — one
+ruleset, `protect-main`, covering `deletion`, `non_fast_forward`,
+`pull_request`, `required_status_checks` (strict) and `code_scanning`;
+CodeQL default setup on for `python` and `actions`; `code_quality`
+deliberately excluded until enabled (the unsatisfiable-gate trap above).
+Azure DevOps has no CodeQL default setup — static analysis is an open
+question after the move. **`.claude/` stays untracked and gitignored**; the
+original reason (a stray `.js` file made CodeQL detect a JavaScript language
+it could not analyse) lapses with CodeQL, but local settings still do not
+belong in the repo.
 
 ## 8. Two operating modes (D10)
 
@@ -588,15 +597,19 @@ like it does** (investigated 2026-08-04; a proposal to gitignore and purge it
 was raised and withdrawn). First, `detangle validate` reads the corpus from HEAD
 and from disk — `git rev-parse HEAD:<doc>` in `records/checks.py`, then the file
 itself in `records/spans.py`, which raises `UsageError` (**exit 2**) when it is
-missing. It is a required check on `protect-main`, so untracking `samples/`
+missing. It is a required merge gate, so untracking `samples/`
 blocks every PR: the unsatisfiable-gate trap again. Second, if the aim were
 keeping corpus wording out of a public repo, deleting `samples/` does not
 achieve it — `concepts/` holds ~186k characters of verbatim corpus wording in
 `notes` plus ~33k in `definition`, and `glossary.md` another ~56k, against ~369k
 for the three blueprints. A purge would have to take `concepts/`, `glossary.md`
 and `work/term-extraction/` with it, which is the whole project. Making the repo
-private is the coherent version of that wish; the repo is public **only** so
-branch protection could be used.
+private is the coherent version of that wish; the repo was public **only** so
+branch protection could be used. *(Note, 2026-08-11: the move into the private
+`MTSAM-docs` repo satisfies the privacy half of that reasoning by itself. The
+first limb — `validate` reads the corpus from HEAD, so untracking it kills a
+required gate — still stands unchanged. Whether the ruling deserves
+re-examination is Nick's call, flagged at the move; nothing here reopens it.)*
 
 ### Working artifacts
 

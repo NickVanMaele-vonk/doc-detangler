@@ -116,8 +116,11 @@ class GitBlobs:
         self._dirty: dict[str, bool] = {}
 
     def head(self, rel_doc: str) -> str:
+        # HEAD:./<path> resolves relative to -C's directory; the bare
+        # HEAD:<path> form resolves from the git tree root, which is no
+        # longer the detangle root when the project lives in a subfolder.
         if rel_doc not in self._head:
-            self._head[rel_doc] = _git(self.root, "rev-parse", f"HEAD:{rel_doc}")
+            self._head[rel_doc] = _git(self.root, "rev-parse", f"HEAD:./{rel_doc}")
         return self._head[rel_doc]
 
     def commit(self) -> str:
@@ -144,7 +147,7 @@ class GitBlobs:
         here rather than raising.
         """
         proc = subprocess.run(
-            ["git", "-C", str(self.root), "cat-file", "-e", f"HEAD:{rel_doc}"],
+            ["git", "-C", str(self.root), "cat-file", "-e", f"HEAD:./{rel_doc}"],
             capture_output=True,
         )
         return proc.returncode == 0 and not self.worktree_differs(rel_doc)
