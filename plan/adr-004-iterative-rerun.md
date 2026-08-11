@@ -373,10 +373,12 @@ which is why the record starts in the verification report rather than waiting
 three phases for its designed home.
 
 Durability caveat, stated once so it is not rediscovered: a blob stays
-retrievable while it is reachable from a ref. Document history lives on `main`,
-which `protect-main` guards with `non_fast_forward`, so a force-push cannot
-orphan past blobs. A history rewrite is the only thing that would break this,
-and it is already forbidden.
+retrievable while it is reachable from a ref. Document history lives on the
+default branch, whose branch policy forbids force-pushes (`non_fast_forward`
+in GitHub's `protect-main` ruleset until 2026-08-11; the force-push lock in
+Azure DevOps branch policies after the move to `MTSAM-docs`), so a force-push
+cannot orphan past blobs. A history rewrite is the only thing that would
+break this, and it is already forbidden.
 
 ### Why option C — the full harness on every PR — was rejected
 

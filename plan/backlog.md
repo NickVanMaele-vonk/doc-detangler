@@ -235,6 +235,13 @@ The second half — declaring the expected version in `detangle.toml` and
 having `validate` compare `pandoc --version` against it — **stays parked**,
 including its open finding-vs-notice question.
 
+**CI half re-done for Azure DevOps (2026-08-11).** The move to
+`MTSAM-docs/detangler` retires `r-lib/actions/setup-pandoc@v2` (no Azure
+equivalent). `azure-pipelines.yml` keeps the same contract by downloading the
+upstream 3.1.3 release deb from GitHub's CDN directly, installing it with
+`dpkg`, and failing the step if `pandoc --version` does not report 3.1.3.
+Same pin, same hash-safety verification as above; only the installer changed.
+
 ---
 
 ## B-4 — Label the sources table rows by input set
