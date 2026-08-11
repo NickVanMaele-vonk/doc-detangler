@@ -214,10 +214,9 @@ GRID = (
 def test_grid_list_renders_every_row_and_drops_nothing():
     """Unlike `history-list`, no row is read as a header: the archetype and
     change-log grids open with content, and a drop there is a content loss."""
+    from detangle.records.spans import block_hash, normalise, split_blocks
     from detangle.restructure.execute import render
     from detangle.restructure.plan import Plan, Section
-
-    from detangle.records.spans import block_hash, normalise, split_blocks
 
     [block] = split_blocks(GRID)
     h = "sha256:" + block_hash(normalise(block)).removeprefix("sha256:")
