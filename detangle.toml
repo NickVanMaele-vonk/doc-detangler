@@ -65,6 +65,7 @@ M = "MCL"
 # regenerate concept-graph.yaml in the same PR (`graph --check` guards it).
 # Reference codes may not appear: reference documents are never scanned.
 U = "eval/golden/uce.md"
+S = "eval/golden/sbsp.md"
 
 [params]
 # Mirrors definition-of-done.md §Parameters. Keep the two in step; the value

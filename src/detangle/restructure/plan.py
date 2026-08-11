@@ -55,7 +55,7 @@ SECTION_KINDS = ("head", "generated", "content")
 NOISE_KINDS = ("furniture", "artifact", "navigation")
 #: Presentation transforms an assignment may declare. Each is implemented
 #: deterministically by the renderer; declaring one is a stage-A judgment.
-RENDER_HINTS = ("history-list", "part-row", "note-italic")
+RENDER_HINTS = ("history-list", "part-row", "note-italic", "grid-list")
 SECTION_ID = re.compile(r"^head$|^[a-z]-[0-9a-f]{8}$")
 HASH = re.compile(r"^sha256:[0-9a-f]{64}$")
 

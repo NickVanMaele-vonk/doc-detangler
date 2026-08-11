@@ -66,6 +66,18 @@ holding its shared terms, and the index slice. A restructured document without
 its glossary slice cannot demonstrate criterion 1, and the rubric's unit of
 assessment is the output set, not a single file.
 
+## Step 9.1 goldens for `S` and `M`
+
+Phase 9.1 runs the toolchain against the remaining documents. Each golden
+follows the `U` route: an authored reorder plan (`golden/<doc>.plan.yaml`,
+ADR-002), the executed document (`golden/<doc>.md`), the generated 8f
+self-report (`golden/<doc>-report/`), the hand-written rulings the plan's
+`exceptions` point at (`golden/<doc>-rulings.md`), and the deterministic
+verification baseline (`verify-<CODE>.md`, step 7.5). Unlike the `U`
+triple, no per-document glossary or index slice is produced: the live
+`glossary.md` serves the whole set, and `index.md` is step 3.6, which
+needs all three bodies.
+
 ## Re-baseline rule
 
 A change to any pinned blob above voids the golden and the 5.3 baseline. Both
