@@ -1,0 +1,39 @@
+id: automated-narrative-generation
+term: automated narrative generation
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Automated narrative generation (§XX.5.1 Doc 1): the three narrative
+  templates (MEDIUM-BATCH closure, MEDIUM-INVESTIGATE reviewed, STOR
+  narrative input) are populated from structured Level 1–4 audit chain
+  fields and passed to the LLM for fluent narrative assembly.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:c637edc0dd9b1a22a9f4bcd7ce3f50867a9bc31a7ad23bf26689cec97343758e
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - medium-investigate
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled from the §1.0 Azure
+  OpenAI / AWS Bedrock (LLM) feed row; the citation '§XX.5.1 Doc 1' is an
+  unresolved placeholder reproduced verbatim (criterion 5). Governance
+  boundary shares the block with [[ai-governance-prohibitions]]: 'The LLM
+  does not make analytical decisions — it renders pre-computed structured
+  fields into readable prose' and 'All LLM outputs are reviewed by the
+  analyst before any disposal decision is recorded'. The LLM providers
+  themselves are external vendors: reference-terms.md rows, not records
+  (Nick's ruling 2026-07-30).

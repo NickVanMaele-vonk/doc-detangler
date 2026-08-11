@@ -1,0 +1,44 @@
+id: quote-driven-manipulation-vectors
+term: quote-driven manipulation vectors
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "Front matter"
+    para_hash: sha256:f9babcb531dc963dcc04c6ed4504c2be7dbb6c064e61a431158e68abbac2c4de
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.3.2 Quote Behaviour Without Trade Execution --- Standalone Manipulation in Anonymous Markets"
+    para_hash: sha256:f8ee0ec413bfc8dcc8d1125c6db4f82507a91db5cc1c6dea09656b6165011e53
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:e66dab154b21b89032f1d05abca964e8068169f745d3597a098d5f2f46c8e59e
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Family
+  membership varies between enumerations (candidate-list note) — the three
+  anchored lists differ: S front matter "withdrawal cycling, auction
+  manipulation, inter-participant signalling, quote stuffing, pre-trade
+  conditioning"; S A.3.2 "liquidity withdrawal, spread conditioning, order
+  book influence, depth removal"; M Pillar 2 "Spread conditioning, depth
+  manipulation, and systematic quote pressure". Surfaced, not
+  reconciled.

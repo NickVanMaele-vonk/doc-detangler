@@ -1,0 +1,27 @@
+id: no-benign-explanation-challenge
+term: No-Benign-Explanation Challenge
+aliases: [NBEC]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:001f3b76c6963d6de21218febc89250403d7746d069a745d7855253af4cc680b
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Set-level orphan (definition: null — not
+  invented, C2): expanded in-line at Step 21 — the source surface form is
+  OCR-damaged ("NBEC (No- Benign-Explanation Challenge)", space after
+  hyphen — damage is data, criterion 5) — but specified only in §VI.3.1,
+  which is not present in the shortened UCE.

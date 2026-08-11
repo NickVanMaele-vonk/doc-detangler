@@ -1,0 +1,39 @@
+id: derisking-assessment
+term: Derisking Assessment
+aliases: [nine-condition standard, nine conditions]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Derisking Assessment: nine conditions, all mandatory.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:9ce1f053978b33d247ff2223c8f60dcfd6c93c9c5a7a18a2f3d629a4fc373f49
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.2 Human Intervention Checkpoints"
+    para_hash: sha256:bfbf87a262e1a9353c453d72bd5c0f6c929d0571a59ee6b9b3ea030ae9834f3f
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Core Design Principle 7 (negative
+  evidence reduces suspicion: legitimate explanations are assessed with
+  equal rigour as incriminatory signals) enforcement line; also the Step
+  22 closure gate row: 'Nine-condition standard. All mandatory. RRF≥3
+  elevates evidential standard.' The nine conditions themselves are not
+  enumerated in the shortened corpus.

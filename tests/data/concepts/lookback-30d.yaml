@@ -1,0 +1,35 @@
+id: lookback-30d
+term: LOOKBACK_30D
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:36cfb0db6066451bbceaec7c07e47ba890e109b95811c50d432a141bc421c5ba
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:50da8d427966518ac37401139bdf383ab408d9585b8c525122b16febf6a18d09
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Usage implies a
+  30-day lookback window but no source defines it: S uses it for CMCS
+  alignment sessions ("3 of the same participant's HIGH/MEDIUM-INVESTIGATE
+  sessions in LOOKBACK_30D") and BT-01 baselines; M for cross-session
+  campaign evidence ("The same RT01 pattern across six sessions in
+  LOOKBACK_30D").

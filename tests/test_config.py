@@ -90,7 +90,7 @@ def test_a_placement_for_a_reference_code_is_a_usage_error(mini_repo):
 def test_the_real_config_names_the_two_input_sets():
     from pathlib import Path
 
-    root = Path(__file__).resolve().parent.parent
+    root = Path(__file__).resolve().parent / "data"
     config = Config.load(root)
     docs = config.documents()
     registry = config.registry()

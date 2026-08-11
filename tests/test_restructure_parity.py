@@ -192,7 +192,7 @@ def test_the_real_plan_leaves_no_unexplained_word():
     from detangle.records import load_records
     from detangle.restructure import load_plan
 
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     plan, findings = load_plan(root / "eval" / "golden" / "uce.plan.yaml", root)
     assert findings == []
     records, _ = load_records(root / "concepts", root)

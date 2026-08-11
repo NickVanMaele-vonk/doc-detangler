@@ -1,0 +1,36 @@
+id: off-the-run
+term: off-the-run
+aliases: [benchmark vs off-the-run]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:418747f5375cb6fe56e813626ac90f92aadf833f608b9fcca20fa650e2c2425b
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: author as glossary records (Nick, 2026-07-29, ruling on the multi-document leftover list)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Standard bond-
+  market term (non-benchmark issue) — industry-owned like quote stuffing,
+  which was routed to reference-terms.md; recorded here as a glossary
+  record per Nick's leftover ruling 2026-07-29, with the ownership tension
+  noted for a later pass. S: "OLO benchmark vs off-the-run" is a Level 1
+  cross-instrument detection axis (A.4.1); M: instrument reference data
+  carries "benchmark designation (on-the-run / off-the-run)" (1.0).

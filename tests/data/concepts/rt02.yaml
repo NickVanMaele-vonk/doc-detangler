@@ -1,0 +1,43 @@
+id: rt02
+term: RT02
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Alert code RT02 (Abnormal trade count): Abnormal number of trades in a
+  session relative to participant's historical baseline.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:81451ceec7d1d1d50ec3eee0beaadb2f88fe1b4b19ff09a74456174ce390c18f
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+flags: [P]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled from the RT02 row
+  of the §0.1 alert table; its assessment column reads 'Moderate —
+  provides activity concentration signal, strongest when combined with
+  RT04 or RT01 convergence' — see [[rt01]], [[rt04]]. One of the nine
+  implemented scenarios in the §0.2 Layer 1 row and the §1.0 MTS Alerts
+  feed row ([[alert-abstraction-layer]]). Placement MCL: the surface
+  occurs in M only (3 occurrences; 0 in U, 0 in S), so the C9 count
+  places it in that document. This supersedes the earlier RT*/RD*
+  re-placement ruling that had put it in the glossary — Nick ruled
+  2026-07-30, on the placement findings of the first `detangle validate`
+  run, that the standard rule governs on the corpus we have. Expected to
+  be revisited against the full documents, where a second component
+  blueprint may well use it. (P) §0.1 names it 'RT02 Excessive activity' — that §7b row was
+  promoted to §1e (Nick, 2026-07-28), but (P) is informational only and
+  its expansion is not promoted into the definition (C2).

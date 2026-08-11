@@ -1,0 +1,35 @@
+id: ai-hard-controls
+term: AI_HARD controls
+aliases: [AI_HARD_01 through AI_HARD_06, Tier 1 controls]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Tier 1 controls: AI_HARD_01 through AI_HARD_06 code- level enforcement.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:fe8ed75c1fdf936aba06e482486451cceff5f3cf802af682762018a5553ebef6
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Core Design Principle 8 enforcement
+  line; the Principle cell reads 'AI may assist but never decide' and the
+  Statement cell reads 'AI enriches explanation and drafts narratives. AI
+  never determines suspicion or triggers STOR filing.' The OCR mid-word
+  split 'code- level' is
+  reproduced verbatim (criterion 5). AI_HARD_01 through AI_HARD_06 is a
+  code family named only as a range; the shortened corpus gives no
+  per-code content, so no per-code records are authored (contrast the
+  SB-xx codes, which each have content).

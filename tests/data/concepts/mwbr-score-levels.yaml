@@ -1,0 +1,56 @@
+id: mwbr-score-levels
+term: MWBR score levels
+aliases: [MWBR_score, MWBR_NORMAL]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U]
+definition: >-
+  MWBR_score: ANOMALOUS (>2σ from peer median); ELEVATED (1σ–2σ); NORMAL
+  (<1σ); BELOW_NORMAL (<0 — participant is less active than peers).
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:da20b9107bac24b84736c12f001e8276cbbfd3e3e89c28b23004dd492b4d67b4
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: [conflict]
+conflict:
+  summary: >-
+    Band-count conflict internal to (P) (candidate list §7c, conflict
+    P-11): its §0.1 glossary row lists three bands
+    (NORMAL/ELEVATED/ANOMALOUS) while its own §1.8 formula yields four,
+    adding BELOW_NORMAL. The U scale recorded here carries four bands,
+    agreeing with (P) §1.8 and against (P) §0.1. Nick's ruling 2026-07-30:
+    keep, flag to humans for disambiguation — surfaced, not reconciled
+    (C8 / criterion 6).
+  spans:
+    - doc: samples/prototype-BC17.md
+      section: "§0.1 Master glossary — every abbreviation spelled out"
+      quote: >-
+        MWBR Market-Wide Behavioural Reference peer normalisation
+        (NORMAL/ELEVATED/ANOMALOUS)
+      para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    - doc: samples/prototype-BC17.md
+      section: "§1.8 The Market-Wide Behavioural Reference (MWBR) peer baseline"
+      quote: >-
+        bands: sigma ≥ 2.0 → ANOMALOUS · ≥ 1.0 → ELEVATED · < 0 →
+        BELOW_NORMAL · else NORMAL
+      para_hash: sha256:8963b2a510f334d1b82cb308d161feccea1930c5b0c6692546c4fa7b028af42b
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The term name is the extraction's label
+  for the Step 11c level scale; the level names and thresholds are corpus
+  text. The bare level names (ANOMALOUS, ELEVATED, NORMAL, BELOW_NORMAL)
+  are not carried as aliases. The value token MWBR_ANOMALOUS also occurs
+  in MCL and is now its own glossary record per Nick's leftover ruling
+  2026-07-29 — see [[mwbr-anomalous]]; the alias was removed here to keep
+  one definition site per term (C9). The scale belongs to
+  [[market-wide-behavioural-reference]].

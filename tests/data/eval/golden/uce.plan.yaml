@@ -1,0 +1,237 @@
+# Machine-readable reorder plan for U — ADR-002 Decision 2.
+# The stage-A judgment as data: what moves where, in what order, what is
+# noise, which fragments rejoin, which whitespace-only repairs apply, and
+# the authored Category C text. Executed by `detangle restructure`; blocks
+# addressed by para_hash, never line numbers (D10).
+doc: U
+pinned_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+sections:
+  - {id: head, title: "Document identity", kind: head}
+  - {id: u-a48738c9, title: "Overview", kind: generated}
+  - {id: u-61b5f491, title: "Terms defined in this document", kind: generated}
+  - {id: u-db14c483, title: "1. What the Universal Core Engine is", kind: content}
+  - {id: u-b30dd7df, title: "2. What the engine is not", kind: content}
+  - {id: u-8b56eed5, title: "3. Core design principles", kind: content}
+  - {id: u-43d38f1e, title: "4. The analytical pipeline", kind: content}
+  - {id: u-03d2b71e, title: "5. Human intervention checkpoints", kind: content}
+  - {id: u-2f87db53, title: "6. Document control", kind: content}
+assignments:
+  - {block: sha256:c66cf5b4dc5ff37ad8253db02305fcc504df83f249e6be8797584f0ea54e7074, section: head}  # brand
+  - {block: sha256:5183ba057fbf36c794cf992621548c46ee78227c2c33362198f325aec278ecb4, section: head}  # title
+  - {block: sha256:a0d0f00da45aae86caae7ae5333e80f5f001a8740307b0327fde345a34bc5f3a, section: head}  # subtitle
+  - {block: sha256:3ebfe9c277de8f92f925591719743184aa527e60f6f3412504f1879cbda12cc7, section: head}  # Document 1 of 3
+  - {block: sha256:0c0b1c983fb3885796e0e17f6dfa39c744afd5814053197ef1db698118ad20bd, section: head}  # version / classification
+  - {block: sha256:2d88e3e22d86912a98438dc1de2894dfd020843b2d9590d1dbaf01c5417929b3, section: u-db14c483}  # purpose paragraph
+  - {block: sha256:f0767104d9d9254f299cb80699dd52e53fb9b766645447239465ee0f5c91ec6f, section: u-db14c483}  # sector-agnostic scope
+  - {block: sha256:6d714ffd440abcdf98cd6be3dffb844cdd89deb5fe3a88cf63323bc8dd2a3fb1, section: u-db14c483}  # the analytical question
+  - {block: sha256:3402e2283c0db5468701a1d0b84f7b75ec9a81a27fced3422c630872e7d45e08, section: u-b30dd7df}  # header + row 1
+  - {block: sha256:a6f664d199db627fb37fb0aab362a2498012c932698ced65f0a6d88900dba936, section: u-b30dd7df}  # row 2
+  - {block: sha256:5270e32f9de95a62c0061d7111620e8563f315f46dd98d54437d72cddd3b41ac, section: u-b30dd7df}  # row 3
+  - {block: sha256:a8ce5b2db944aa9ce76e5c6a7dbbb22d12909f2bc121ebff1fb5be1abf54a4be, section: u-b30dd7df}  # row 4
+  - {block: sha256:bac8e640fab6d4992108e9747fd2fb66938264ffbea6aaf4f0d398b3104417ea, section: u-b30dd7df}  # row 5
+  - {block: sha256:d710a1de2006d75e46e16503cdda197bba31c166bc64e3b606aab9f88fa81f7e, section: u-8b56eed5}  # intro
+  - {block: sha256:b4211898ac39aaa2e6d89eb80411b8bb30ef67327a131a82bfcfafa5aa87f8cc, section: u-8b56eed5}  # header + principle 1
+  - {block: sha256:b1519fceb8989aba1d05557a1371ecde4d53e38b2e3ec3912d882beeef5520e7, section: u-8b56eed5}  # principle 2
+  - {block: sha256:dd8c2d6d81b3209d4cd5d983d469474dcbd7a889456494e6c9bbb47153e24f2e, section: u-8b56eed5}  # principle 3
+  - {block: sha256:9983905f3a3b9854e0d8ae3b4a281ba676041776fe49cfa4bbc3bd87364d10c9, section: u-8b56eed5}  # principle 4
+  - section: u-8b56eed5  # principle 5, page-split
+    fragments:
+      - sha256:38b5bfb9b5330b26c2d80543a9a1ae5821c6fa1c608e889e854c01b0b95c0ed3
+      - sha256:dfa1b8b7e01e08f0a1bbc65057f0f2b54d999f7b9d1d0e78541e3b182b366a8d
+  - {block: sha256:0bb48ef81e6315f80276f3afeacc26b3adce3c6ef3c5bc50e5be8802cf0d32de, section: u-8b56eed5}  # principle 6
+  - {block: sha256:9ce1f053978b33d247ff2223c8f60dcfd6c93c9c5a7a18a2f3d629a4fc373f49, section: u-8b56eed5}  # principle 7
+  - {block: sha256:fe8ed75c1fdf936aba06e482486451cceff5f3cf802af682762018a5553ebef6, section: u-8b56eed5}  # principle 8
+  - {block: sha256:ca05497f25959126c31f69ffa5cac26421ca5f2a901b423d04b2d687c22a59f6, section: u-8b56eed5}  # principle 9
+  - {block: sha256:57501d0d8e273fad20c3612f1899b1bc72e929d5015133aaf025104a1519e677, section: u-8b56eed5}  # principle 10
+  - {block: sha256:58b71947a6187be26d0637a0e64943ae6fbe33065f0ce51f19fd5d48cfa96a05, section: u-8b56eed5}  # principle 11
+  - {block: sha256:27823ec049e31190172e5842ba37e998b680d7740addb474d03cd85748e38cdd, section: u-8b56eed5}  # principle 12
+  - {block: sha256:ed835a3e89cb0f841f8b1edd98f94dc68c27c1d2452f7371a3fa2ac229eb060e, section: u-8b56eed5, render: note-italic}  # New-in-Version-25 note
+  - block: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696  # Stage 0 / IBEB prose
+    section: u-43d38f1e
+    subheading: '### 4.1 Stage 0 and the Intraday Behavioural Event Builder'
+  - block: sha256:4d2307b0726cb43b0de4de01455c977b84f93cc9c141632f8efcac05e7d2f0fe  # pipeline header + step 1
+    section: u-43d38f1e
+    subheading: '### 4.2 The twenty-two steps'
+  - {block: sha256:065b497963ff66c5056b9a3beaf8b7f0dac9b4ee7470a64b380ce985377cac69, section: u-43d38f1e}  # step 2
+  - {block: sha256:5bf0f2e5a7c241a9714b61835a2cc218d90e21868b0000e4d85d46e29cd6670a, section: u-43d38f1e}  # step 3
+  - {block: sha256:bc64cc32f3d2caf74943b0856b28609a467f805544406dfe7dd7fa568d4bb17e, section: u-43d38f1e}  # step 4
+  - {block: sha256:7191cd539673ee9333a6cb850f3ec841fdd1d4a972132c4fce78f67d9222e38c, section: u-43d38f1e}  # step 5
+  - section: u-43d38f1e  # step 5b DIF, page-split
+    fragments:
+      - sha256:6797c9a0aa1d0532c50680e3c3eaeebde246a2517b41bdd6734c59f88905afc4
+      - sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+  - {block: sha256:e03662294af2a9bc3c098619a9f2d6bf2114f3d03d12c188fd67bc1da983e180, section: u-43d38f1e}  # step 6
+  - {block: sha256:947a550ee83080bab944ed620b7abc3e05a2e90a496fadc30f749eff0d89cb8c, section: u-43d38f1e}  # step 7
+  - {block: sha256:81ced9d4c73e29ee1d236a74c897987847ad03dd42a709a803b2fa6fbc1c5e45, section: u-43d38f1e}  # step 8
+  - section: u-43d38f1e  # step 9, page-split
+    fragments:
+      - sha256:e338ced46c3e559fe43a0d70da9358b1be094adac3eb922d0c4bbd1fa2720cf9
+      - sha256:0715241c210dbb068b1ed5b7d2f5ddec126d6d3584d2447a598664b01ead5243
+  - {block: sha256:50020b55b40b1937d744f26b10d8afcd6774790dbccb2174aabdc2d6ddc19716, section: u-43d38f1e}  # step 10
+  - {block: sha256:08e83d59dc3a0fa249b9a5472c9cbe20b524d685c309ab0fe52a0bb227b6e77b, section: u-43d38f1e}  # step 11
+  - {block: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2, section: u-43d38f1e}  # step 11b
+  - section: u-43d38f1e  # step 11c MWBR, page-split
+    fragments:
+      - sha256:f22a48f4de51b08afc6567e39c97cfb06403ad408eb4128d4932a10e984eb58e
+      - sha256:da20b9107bac24b84736c12f001e8276cbbfd3e3e89c28b23004dd492b4d67b4
+  - {block: sha256:08afa188d619b207ca15f42e5bd3cb49f3c27a95d1c4cbe3bfa8aecad721d184, section: u-43d38f1e}  # step 12
+  - {block: sha256:4857a1f3433004765437ba1f133df76e0669382e11fc82a65775d876b9a395ba, section: u-43d38f1e}  # step 13
+  - {block: sha256:9e124028b5956ea43be8df0fdf98793db6dffb81857567b863d9375167c2c7b7, section: u-43d38f1e}  # step 14
+  - {block: sha256:473e8909975e2dfe7252251a8921ff3d051478d50bb91046b3aaec146cb70c62, section: u-43d38f1e}  # step 15
+  - {block: sha256:873d1527f21032be9f25777bec20ca2a5db8f52a3c8f53e4f5a368cb432b2f32, section: u-43d38f1e}  # step 16
+  - {block: sha256:82432824315a349e0bb3553fa65e37f4585f6c2ce7342eef747b64f9c03de0b4, section: u-43d38f1e}  # step 17
+  - section: u-43d38f1e  # step 18 RRF, page-split
+    fragments:
+      - sha256:71ad2737aa4c5e98782ab2798f7aff097271d740b8e2335c42b3f3d72901a643
+      - sha256:5d96abc377ce7e684362a4443cfcc4076923adfa907e1415f67a4dda44e7c191
+  - {block: sha256:1ed71d5f09e8db4f498a5654e2ad2b0a2c153e5b5bb4579b48441584ffc64f00, section: u-43d38f1e}  # step 19
+  - {block: sha256:25269910f1bbc32a3acb66fea0bf5f69326c36763c1cfcd009857fda6bfafdc8, section: u-43d38f1e}  # step 20
+  - {block: sha256:001f3b76c6963d6de21218febc89250403d7746d069a745d7855253af4cc680b, section: u-43d38f1e}  # step 21
+  - section: u-43d38f1e  # step 21b BDRS, split into §II.2
+    fragments:
+      - sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+      - sha256:2f3effca78f5d10ef560f3ed6db2dd9738f0957dedc6a7bd7f68b9af381b8e68
+  - {block: sha256:bfbf87a262e1a9353c453d72bd5c0f6c929d0571a59ee6b9b3ea030ae9834f3f, section: u-43d38f1e}  # step 22 (sat inside the §II.2 fragment)
+  - {block: sha256:da8a322e129c1e11c071d0180d576fa78e038757450b8ff7d6b0dcce52dfc1d6, section: u-03d2b71e}  # HCP header + HCP-1
+  - {block: sha256:deb07ec48e54602074121896ffc185050a0a5f8f1a8a46abd500a05e56064863, section: u-03d2b71e}  # HCP-2
+  - {block: sha256:f71a4663c323fea7559ad9b145c394ed9318405c084443a9c9dd07819fc1d58e, section: u-03d2b71e}  # HCP-3
+  - {block: sha256:58f611893ecdeb6f2f8bfd147be905061666e01c0f2bc8b676b65f370d1baf8c, section: u-03d2b71e}  # HCP-4
+  - {block: sha256:ca75f34708ee68631ce45ca8dd0200db57da9dccc3970b2aed56c36a95705f48, section: u-03d2b71e}  # HCP-5
+  - block: sha256:aff478d7e01ac1786b7c19115a23e7a1b735702fbae92909edcc81c21d24b980  # version-history lead
+    section: u-2f87db53
+    subheading: '### 6.1 Version history'
+  - {block: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d, section: u-2f87db53, render: history-list}  # version history v23–v29 incl. amendments
+  - {block: sha256:d76ca515baba23061c2c63df35dd83e5b219da2122448a01bf8d769d10ba348f, section: u-2f87db53}  # change-note convention
+  - block: sha256:50b40ed08a1c0399a455c76e326b2b2253490dd70398bfe15bf116ef9f95d89d  # PART I banner → index row
+    section: u-2f87db53
+    render: part-row
+    subheading: '### 6.2 Parts index'
+  - {block: sha256:b37f82a93269c899ea8fd29c6c97f3676942eb0b02148dc53cbbe1ba02550388, section: u-2f87db53, render: part-row}  # PART II banner → index row
+  - {block: sha256:a317a7f38f771b7c94136b37cdd5feafe7fec6eae5ca22b5dd3620d6fc3cff03, section: u-2f87db53}  # Parts header + Part X
+  - {block: sha256:20d2760c251dd9c57b1ce3abfa06d85c230c7fd750489c1e335b81458c80bd30, section: u-2f87db53}  # Part XI
+  - {block: sha256:cf94d66e9649038382d55123932f25911523c9b4ada87352cc9d1d75481fe192, section: u-2f87db53}  # Part XII
+  - {block: sha256:899fd545102ba5aa32e51cb63edd008ae0809be5e7b021e94e8bf8f106608dfe, section: u-2f87db53}  # Part XIII
+  - {block: sha256:b7e97d7371d6677596dc4ef63785091ae4864111ef835470352eda1601008cce, section: u-2f87db53}  # Part XIV
+  - {block: sha256:96582d743a313085962bb502aaf541f60fd3d7724a7fc378b0cb9dfe94781889, section: u-2f87db53}  # Part XV
+  - {block: sha256:acc935a86cb5fffefabcc77eefb9b0749d3a4905b5a38ab6b58df338e2f226b0, section: u-2f87db53}  # Part XVI
+  - {block: sha256:5dde7fbce6b6c22f0c9d79e26cf785853bdfb24efcf926b977f9a4345bddfa5f, section: u-2f87db53}  # Part XVII
+  - {block: sha256:362c09fd102fe07c9f86a27efd89ba584402b515b3c00610bbd7ef02c3dd0c20, section: u-2f87db53}  # Part XVIII
+  - {block: sha256:6d2f83b70f2d4aa8d3d451523ea32ea5ebf06841e483a78284efaa137f1ca259, section: u-2f87db53}  # Part XIX
+  - {block: sha256:385922492a0a886c90787a1972e6a11b279c700ab2207a1c54958defbde7af06, section: u-2f87db53}  # Part XX
+  - section: u-2f87db53  # Doc 7 row + 'readiness.' continuation
+    fragments:
+      - sha256:9e5feda3c2e59ce4f863a9626b88cd4dde61c0e7f27d5e747f7efee976673a71
+      - sha256:f4e3162a8a18c3ea488b5c36ed80a2b28e96e6ad405e49212474b475126291a9
+  - {block: sha256:3029bcb1149b66a00e6366655d774ec2425dda7b7511ba4030ef47222d331a97, section: u-2f87db53}  # ECIL Supplemental row
+noise:
+  - {block: sha256:2eba52c01705b14469162ea565225c790711d5ab11a71fdb3182f17ebc1ad18d, kind: navigation}  # pseudo-heading: Version History
+  - {block: sha256:a5231ff4c92ba900fea6efc2f7676f6c51f70752ade673a3588743e1c9c2557a, kind: navigation}  # pseudo-heading: I.1
+  - {block: sha256:67dd08a720e4ed617be4aed813bc3ccb055b4099e0d11390e76b125e30d4b97d, kind: navigation}  # pseudo-heading: I.2
+  - {block: sha256:ef2c6bd68e121cffb8b798a47b09f8ebec0dff9e86d2c74294a1c4299cd25358, kind: navigation}  # pseudo-heading: I.3
+  - {block: sha256:0d022aec527eac5df6dfc2440de87e9723dc2b9fb36dae460fae9c3cbbc2249a, kind: navigation}  # pseudo-heading: II.1
+  - {block: sha256:75605d1454a42ec0f52399d8c9f34b886cad97336b43ac190531253443e1c160, kind: navigation}  # pseudo-heading: II.2
+  - {block: sha256:5be59d365acb8d35446f682c6d314fffd5db5846ab8c6eb021e6bacd98a82aa0, kind: furniture}  # bare grid rule; hash occurs 4x, one entry covers all
+  - {block: sha256:54a686b03529340686e6c1b92ef480c5717d3cd3b1628ac7c4b3e7db95633c39, kind: artifact}  # page-9 footer
+  - {block: sha256:dc9470a3294a94a0287ad40e6f7d2c866fd332a7573c5a9e96f16f012d06ea87, kind: artifact}  # page-10 footer
+  - {block: sha256:2741d0fdba08eb8613df25ac097a45e7a70712c6b8917b5359d45f62eae5dd8c, kind: artifact}  # stray fragment: refi S ector Pack ( Doc 2)
+  - {block: sha256:aca56d930ba35e69e2dbfcfca3a5a58d521935d78691b29c919044b79e0d8d2b, kind: artifact}  # page-11 footer
+  - {block: sha256:456f98c2bc820f3047146218f45f79120b4c2f835a7601c308134226c6eb7860, kind: artifact}  # stray fragment: dfi S ector Pack ( Doc 2)
+inline_removals:
+  - {block: sha256:da20b9107bac24b84736c12f001e8276cbbfd3e3e89c28b23004dd492b4d67b4, remove: "fi S ector Pack ("}
+  - {block: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169, remove: "fi S ector Pack ("}
+repairs:
+  # whitespace-only, machine-verified: rejoined split characters in
+  # table furniture (headers, step IDs). Damage inside claim text is
+  # NOT repaired — it is carried verbatim (family-A precedent).
+  - {block: sha256:4d2307b0726cb43b0de4de01455c977b84f93cc9c141632f8efcac05e7d2f0fe, from: "St ep", to: "Step"}
+  - {block: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2, from: "11 b", to: "11b"}
+  - {block: sha256:f22a48f4de51b08afc6567e39c97cfb06403ad408eb4128d4932a10e984eb58e, from: "11 c", to: "11c"}
+  - {block: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169, from: "21 b", to: "21b"}
+definitions:
+  - {record: derisking-assessment, section: u-61b5f491}
+  - {record: signal-integrity-summary, section: u-61b5f491}
+  - {record: domain-independence-filter, section: u-61b5f491}
+  # Used in §4's prose and inside persistence-gate's definition block, which
+  # renders here — so it is used in two sections, and the front section is
+  # read first. Corrected 2026-08-05 (Nick): the section count that first put
+  # it in §4 counted prose sections only. See exceptions.md §9.
+  - {record: participant-interaction, section: u-61b5f491}
+  - {record: persistence-gate, section: u-61b5f491}
+  - {record: qa-validation, section: u-61b5f491}
+  - {record: escalation-likelihood-score, section: u-61b5f491}
+  - {record: ai-hard-controls, section: u-8b56eed5}
+  - {record: replayobject, section: u-8b56eed5}
+  - {record: minimum-necessary-escalation, section: u-8b56eed5}
+  - {record: contextual-suppression-gate, section: u-8b56eed5}
+  - {record: early-disposal-layer, section: u-8b56eed5}
+  - {record: enrichment-gate, section: u-43d38f1e}
+  - {record: dif-analytical-domains, section: u-43d38f1e}
+  - {record: collusion-assessment, section: u-43d38f1e}
+  - {record: six-indicators, section: u-43d38f1e}
+  - {record: behaviour-centric-reweighting, section: u-43d38f1e}
+  - {record: kill-switch, section: u-43d38f1e}
+  - {record: mwbr-metric, section: u-43d38f1e}
+  - {record: explanation-fragility-score, section: u-43d38f1e}
+  - {record: minimum-evidence-requirement, section: u-43d38f1e}
+  - {record: three-tier-escalation-modifier, section: u-43d38f1e}
+  - {record: behavioural-distinctiveness-score, section: u-43d38f1e}
+  - {record: human-intervention-checkpoint, section: u-03d2b71e}
+  - {record: pir-amplifier-only-rule, section: u-2f87db53}
+  - {record: assessment-basis, section: u-2f87db53}
+  - {record: price-impact-gate, section: u-2f87db53}
+  - {record: behavioural-causality-principle, section: u-2f87db53}
+  - {record: behavioural-causality-indicator, section: u-2f87db53}
+  - {record: bci-dimensions-d1-d4, section: u-2f87db53}
+  - {record: bci-levels, section: u-2f87db53}
+  - {record: follower-rule, section: u-2f87db53}
+  - {record: production-operations-governance, section: u-2f87db53}
+  - {record: stor-reporting-intelligence-layer, section: u-2f87db53}
+  - {record: ecil-supplemental-specification, section: u-2f87db53}
+additions:
+  - section: u-a48738c9
+    form: ai-addition-section
+    # The one Category C text, verbatim from the approved golden.
+    text: |
+      > [AI addition] This section was written to introduce the document; it is
+      > not derived from a single source passage.
+
+      This document specifies the Universal Core Engine, the analytical
+      architecture shared by every Veridict MAR Intelligence deployment. It is
+      Document 1 of 3: Sector Intelligence Packs (Document 2) and Institution
+      Calibration Layers (Document 3) extend it for specific markets and
+      institutions without changing its core logic.
+
+      The document is organised general to specific. Section 1 states what the
+      engine is and the single analytical question it answers. Section 2 bounds
+      that scope by stating what the engine is not. Section 3 gives the core
+      design principles the architecture enforces. Section 4 specifies the
+      analytical pipeline — the pre-pipeline event builder and the twenty-two
+      sequential steps. Section 5 lists the checkpoints where a human, not the
+      engine, acts. Section 6 holds document control: the version history,
+      including the normative amendment texts recorded inside it, and the index
+      of Parts. Terms used across several sections are defined directly below
+      this overview; terms local to one section are defined at the top of that
+      section; terms shared with the other documents of the set are defined in
+      the glossary, which is read first.
+
+      This extract contains the content of Parts I and II only. Parts III–XX
+      exist here only as one-line summaries in the Parts index in section 6.
+
+# Rulings a human made about this document (criterion 8f / 8c). Title and
+# pointer only: the reasoning is written once, where the pointer says, and
+# the tool never reprints it. They are listed here because the 8c comment
+# budget counts PR comments, and a comment the tool cannot see is one it
+# would count wrong (Nick, 2026-08-05).
+exceptions:
+  - title: Version skew carried, not harmonised
+    where: eval/golden/exceptions.md §3
+  - title: Normative rules left inside the change log
+    where: eval/golden/exceptions.md §4
+  - title: Source defects carried verbatim (B-1 candidates)
+    where: eval/golden/exceptions.md §5
+  - title: Interleaved section boundaries reconstructed
+    where: eval/golden/exceptions.md §6
+  - title: "Deviation: no generated navigation"
+    where: eval/golden/exceptions.md §7
+  - title: "Deviation: exceptions list instead of waiver entries"
+    where: eval/golden/exceptions.md §8

@@ -1,0 +1,35 @@
+id: behavioural-concern-framework
+term: Behavioural Concern Framework
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:ed835a3e89cb0f841f8b1edd98f94dc68c27c1d2452f7371a3fa2ac229eb060e
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: Part VI-A content is not
+  included in the shortened corpus. Introduced in v24; the 'New in Version
+  25' note records its elevation to Part VI-A (a location designation, not
+  carried as an alias). Umbrella for [[behavioural-concern-layer]] and the
+  §VI-A constructs — see [[gate-failure-cause-distinction]],
+  [[os-u-disclosure-requirements]], [[behavioural-causality-principle]].

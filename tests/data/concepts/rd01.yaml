@@ -1,0 +1,46 @@
+id: rd01
+term: RD01
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Alert code RD01 (High EOD volume): Abnormal end-of-day volume
+  concentration in CLOSE_WINDOW.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:9c261fe2ed8385a130fd27ecb5f750474d38cad6660a4cd34ff928e7351ada4f
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+  - close-window
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition assembled from the RD01 row
+  of the §0.1 alert table; its assessment column reads 'Moderate —
+  provides volume context for RD02/RD03/RD04 convergence;
+  Marking-the-Close Triad requires RD01 + RD02 + RD04 simultaneously' —
+  see [[rd02]], [[rd03]], [[rd04]], [[close-window]]. The triad membership
+  (M omits RD03 where S SB-04 detects via RD03+RD04) is §4 item 3 —
+  surfaced, not harmonised; see [[marking-the-close-triad]]. One of the
+  nine implemented scenarios in the §0.2 Layer 1 row and the §1.0 MTS
+  Alerts feed row ([[alert-abstraction-layer]]). Placement MCL: the
+  surface occurs in M only (4 occurrences; 0 in U, 0 in S), so the C9
+  count places it in that document. This supersedes the earlier
+  RT*/RD* re-placement ruling that had put it in the glossary — Nick
+  ruled 2026-07-30, on the placement findings of the first `detangle
+  validate` run, that the standard rule governs on the corpus we have.
+  RD01 also occurs 3 times in (P), which never counts and which this
+  record does not flag. Expected to be revisited against the full
+  documents, where a second component blueprint may well use it.

@@ -1,0 +1,33 @@
+id: behavioural-causality-principle
+term: Behavioural Causality Principle
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  The universal principle that analytical assessments shall distinguish
+  participants that materially influenced the observed pattern from those
+  that merely reacted to prevailing conditions. Concern proportionate to
+  demonstrated behavioural influence, not analytical coincidence.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). v29 row, §VI-A.3.7; the row reads
+  'formalises the universal principle that …' — the definition carries the
+  principle content. The section designation §VI-A.3.7 is not carried as
+  an alias. Implemented by the [[behavioural-causality-indicator]] engine.

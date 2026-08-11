@@ -1,0 +1,45 @@
+id: collusion-override-path
+term: Collusion Override Path
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:88ed49e1e15160159928dc51406eebd6b44ecb29b251b7a1be8561f3a48366a2
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:d3f60862f6b976a9027e880826eb0863937223aef983b24cb8d944ce715b4169
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: a named exception path that
+  bypasses three gates but is specified nowhere in the shortened corpus.
+  Step 5b: 'Exception: Collusion Override Path bypasses DIF.' Step 11b:
+  'Exception: (a) Collusion Override Path; (b) EscalationReadiness is
+  confirmed (six gates all met — EscalationReadiness requires IS≥2 which
+  itself implies pattern persistence)'. Step 21b: 'Exception: Collusion
+  Override Path; EscalationReadiness confirmed.' See
+  [[domain-independence-filter]], [[persistence-gate]],
+  [[behavioural-distinctiveness-score]], [[escalationreadiness]].

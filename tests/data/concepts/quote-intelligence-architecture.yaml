@@ -1,0 +1,49 @@
+id: quote-intelligence-architecture
+term: quote intelligence architecture
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The architecture (Document 2 Section H: QBRS, QBLI, QBCCL) providing
+  composite quote risk scoring and contextual enrichment for dealer
+  markets, addressing anonymous order-book manipulation — spread
+  conditioning, depth manipulation, and systematic quote pressure — which
+  may leave no trade footprint.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:223dcd93c912f614d8c0b4af0428262480e223299d380862804f7f404ffa2140
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:e66dab154b21b89032f1d05abca964e8068169f745d3597a098d5f2f46c8e59e
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - qbli
+  - quote-behaviour-contextual-confidence-layer
+  - quote-behaviour-risk-score
+  - sovereign-bond-sector-pack
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1d)"
+notes: >-
+  The candidate list quotes M calling this the "Single most important
+  strategic enhancement dependency" — that phrasing does not appear in the
+  shortened M, which instead has "Quote intelligence architecture (Document
+  2, Section D and H) is primary detection framework" (MTSAM calibration
+  table). Definition marked "M (partial)" in the candidate list and
+  assembled from S's Section H summary plus M's gap table. Components have
+  their own records: [[quote-behaviour-risk-score]], [[qbli]],
+  [[quote-behaviour-contextual-confidence-layer]].

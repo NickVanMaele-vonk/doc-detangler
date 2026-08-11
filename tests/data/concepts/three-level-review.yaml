@@ -1,0 +1,36 @@
+id: three-level-review
+term: Three-Level Review
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:a317a7f38f771b7c94136b37cdd5feafe7fec6eae5ca22b5dd3620d6fc3cff03
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: named in the v23 baseline row
+  and in the Part X contents row ('Three-level review, STOR decision
+  architecture, legitimate explanation framework') but the review
+  framework itself (Part X) is not included in the shortened corpus.
+  Distinct from the three-level suspicion taxonomy (Part XVII) — the
+  extraction warns not to merge the two. For the legitimate explanation
+  framework see [[explanation-framework]].

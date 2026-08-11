@@ -1,0 +1,43 @@
+id: event-context
+term: event_context
+aliases: ["IBE.metadata['event_context']", event_context_map]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Event context label provided by the Silver enrichment step
+  (DataEnrichmentOrchestrator) from the API enrichment connectors and
+  written to IBE.metadata['event_context']; MediumReviewEngine reads
+  this field as the event_context_map input.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - dataenrichmentorchestrator
+  - intraday-behavioural-event
+  - mediumreviewengine
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); defined by the embedded §D.4.2
+  'Market Event to BVR Event Context Mapping' amendment text inside the
+  A.6 archetype table (hash covers the whole table block). 'BVR Event
+  Validation groups signals by a shared market event.' Fallback:
+  'Where no event context is available (API connector unavailable), the
+  signal falls through to BOA archetype grouping (Priority 2 in the
+  four-pass grouping cascade).' The storage path and the input name are
+  aliased on this record: the span calls all three surfaces the same
+  field. See [[dataenrichmentorchestrator]], [[mediumreviewengine]],
+  [[four-pass-grouping-cascade]], [[intraday-behavioural-event]],
+  [[bvr]].

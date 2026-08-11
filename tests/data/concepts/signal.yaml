@@ -1,0 +1,36 @@
+id: signal
+term: signal
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.1 The Five-Pillar FSMA Argument"
+    para_hash: sha256:0bb59fc8c573161d96f5d677c97f66c0327ea0d46385751a1a0ce3928d383cd8
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). The sources rely on
+  a doctrinal three-way distinction alert → IBE/signal → episode that is
+  never explicitly defined. Usage evidence: UCE II.1 ("The pipeline receives
+  IBEs, not individual alerts … Scoring orders signals within classification
+  bands … classified signals for the same participant are grouped into
+  episodes"); MCL Pillar text framing the RT/RD framework as "the primary
+  signal generation layer".

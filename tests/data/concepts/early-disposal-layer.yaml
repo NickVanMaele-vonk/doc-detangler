@@ -1,0 +1,31 @@
+id: early-disposal-layer
+term: Early Disposal Layer
+aliases: [EDL]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  The Early Disposal Layer (EDL) aggressively disposes benign signals
+  before analyst review.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:58b71947a6187be26d0637a0e64943ae6fbe33065f0ce51f19fd5d48cfa96a05
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - signal
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Named only in Principle 11; no
+  operational specification in the shortened UCE. One of the five
+  enforcement mechanisms of [[minimum-necessary-escalation]].

@@ -1,0 +1,37 @@
+id: rd06
+term: RD06
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:66a49d890e0a30565284cf18032328a3bef6afc93bfeeef9911d1d226e67536f
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: >-
+  Decision: keep - disambiguate to separate terms `RD05`, `RD06` (Nick,
+  candidate-terms-merged.md §1e)
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Split from the
+  merged RD05/RD06 candidate row per Nick's decision. Not yet implemented
+  per M (same roadmap note as [[rd05]]). S usage: the A.4.1 observability
+  table ("SD02, RD06, IPI, CROSS_WINDOW campaign type") and the archetype
+  table's "RD06 cross-instrument coordination". Both spans are grid tables;
+  each hash covers the whole table block.

@@ -1,0 +1,35 @@
+id: minimum-necessary-escalation
+term: Minimum Necessary Escalation
+aliases: [MNE, MNE principle]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Where two scoring approaches produce equally defensible escalation
+  conclusions, the architecture must prefer the one that generates fewer
+  analyst queue entries. The architecture is disposal-oriented first,
+  escalation-oriented second. Detection must be complete; escalation must
+  be selective.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "I.2 Core Design Principles"
+    para_hash: sha256:58b71947a6187be26d0637a0e64943ae6fbe33065f0ce51f19fd5d48cfa96a05
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Principle 11. Its five enforcement
+  mechanisms are enumerated as [[domain-independence-filter]],
+  [[persistence-gate]], [[contextual-suppression-gate]],
+  [[early-disposal-layer]] and [[market-wide-behavioural-reference]]. The
+  extraction also records the gloss "cost-aware design".

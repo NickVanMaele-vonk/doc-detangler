@@ -17,7 +17,7 @@ from detangle.findings import EXIT_CLEAN, EXIT_FINDINGS
 from detangle.records import load_records
 from detangle.records.spans import BlockIndex
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parent / "data"
 
 GLOSSARY = """\
 <!--

@@ -1,0 +1,40 @@
+id: production-operations-governance
+term: Production Operations Governance
+aliases: [Part XX]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Universal doctrine applying to every deployment regardless of
+  institution or market: throughput governance, degraded-mode doctrine,
+  resiliency and operational failure escalation, queue prioritisation.
+  These principles cannot be varied by Calibration Layers — only
+  operationalised.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:385922492a0a886c90787a1972e6a11b279c700ab2207a1c54958defbde7af06
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - degraded-mode-doctrine
+  - mtsam-calibration-layer
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition is the Part XX contents
+  row's descriptive cell (C2); Part XX itself exists only as this
+  one-line summary in the shortened corpus. Alias 'Part XX' follows the
+  Doc 7 alias precedent. Its four named constituents are name-checked
+  only; degraded-mode doctrine has a record — see
+  [[degraded-mode-doctrine]]. 'Calibration Layers' are Document 3
+  (Institution Calibration Layers), which has no record in the U-local
+  set.

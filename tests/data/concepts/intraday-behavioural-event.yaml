@@ -1,0 +1,47 @@
+id: intraday-behavioural-event
+term: Intraday Behavioural Event
+aliases: [IBE]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: >-
+  A grouping of raw data streams — trades, quotes, alerts, ECIL context, and
+  participant history — built by the Intraday Behavioural Event Builder for
+  one participant-instrument pair within a configurable temporal window; each
+  IBE is the primary input to Stage 1 of the analytical pipeline.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:5b57c1020609f273093596b434696e21e62e47c5ea2404842bd7205d9cb33696
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:8fbae0a7d02daa5d5d8d6180fc8c6dcc596f179b3a08b0b5d88027a7a85e3f4c
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - 22-step-analytical-pipeline
+  - alert
+  - external-context-intelligence-layer
+  - intraday-behavioural-event-builder
+  - participant-history
+flags: [A]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1b)"
+notes: >-
+  SBSP never letter-expands IBE; its usages are object-style ("the OLO
+  activity IBE", "ibe.ecil_amplification"). Open verification from the
+  candidate list: confirm IBE ≡ the object SBSP means (S notes an "IBEB
+  near-miss"). The definition site in the shortened UCE is the II.1 Stage 0
+  description; the dedicated §XVII.10 (IBEB) is referenced but not present in
+  the shortened source.

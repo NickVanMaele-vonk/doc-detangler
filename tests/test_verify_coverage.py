@@ -21,7 +21,7 @@ from detangle.verify.coverage import match
 #: B-1 source correction re-baselines both files in the same PR.
 PINNED_U_BLOB = "4cae72dece7638c1ddec8206a3c6a24610196de0"
 
-GOLDEN = Path(__file__).resolve().parents[1] / "eval" / "golden" / "uce.md"
+GOLDEN = Path(__file__).resolve().parent / "data" / "eval" / "golden" / "uce.md"
 
 
 def claim(cid: str, text: str, kind: str = "prose") -> Claim:
@@ -134,7 +134,7 @@ def test_no_findings_are_raised_here():
 
 
 def pinned_source() -> Decomposition:
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     blob = subprocess.run(
         ["git", "-C", str(root), "cat-file", "blob", PINNED_U_BLOB],
         capture_output=True,

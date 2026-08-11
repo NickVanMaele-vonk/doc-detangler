@@ -1,0 +1,43 @@
+id: cross-venue-surveillance-feed
+term: Cross-Venue Surveillance Feed
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Any real-time or near-real-time data feed from other electronic trading
+  venues (EuroMTS, Tradeweb, Bloomberg) or OTC reporting platforms.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:2f683daf9b9c17da5d157aef4aa658a1d63202498077df75afd5c1fc2f645ed3
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: >-
+  Decision: mint the four Formally Removed Data Categories as records, as
+  values of their master term (Nick, in-session ruling 2026-07-30;
+  candidate-terms-merged.md §4 item 18)
+notes: >-
+  Row 3 of the four removed-category entries in [[removal-register]]; the
+  definition is the row's "Description" cell verbatim. MTSAM Limitation
+  cell: "Outside MTS surveillance perimeter." — the only one of the four
+  scoped by perimeter rather than by an MTSAM-L code. Removal Rationale and
+  Residual Treatment cell, verbatim: "Removed. The Four-Level Observability
+  Framework (§A.4.1 Doc 2) correctly positions MTS-only cross-instrument
+  intelligence (Level 1) and public market context (Level 2) as the
+  operational detection layers. Cross-venue analytical hypotheses (Level 3)
+  use only data already in scope." See
+  [[four-level-observability-framework]]. The three named venues — EuroMTS,
+  Tradeweb, Bloomberg — are externally owned and are reference-terms rows,
+  not records (criterion 3; Eurex precedent). Distinct from
+  [[cross-venue-manipulation]], which is a behaviour, not a feed.

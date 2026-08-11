@@ -1,0 +1,45 @@
+id: economic-irrationality
+term: economic irrationality
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.1 Four-Level Observability Framework"
+    para_hash: sha256:00eea2ca7688de674fb732e77d58fcfbd0c8c1e5a0688ac881402a563a350ff5
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.2 CICI and the Three-Position Data Types"
+    para_hash: sha256:b7d901e9448e06cc841c76ee2ed415e30469c9dd6106a96b78222bc69f191e37
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: used as a Level 3 hypothesis
+  component but never defined — 'The model identifies the pattern,
+  timing, influence capability, and economic irrationality. It cannot
+  prove the external profit.' and 'pattern + timing + influence
+  capability + economic irrationality (AOB) together support the
+  hypothesis.' (first span, Level 3 grid row). Repo-financing ISGO
+  language (second span): 'repo financing is a possible explanation for
+  the economic irrationality', where the AOB pathway applies — 'OLO
+  activity is systematically unprofitable in isolation' with 'OS=0
+  while conditioning confirmed' (the dash between the two clauses is
+  mojibake-damaged in the source — C1 control bytes not reproducible in
+  this record, surfaced instead). Near-synonym drift among 'economic
+  irrationality', 'AOB', and 'cost accepted' ([[sb-02]] row) —
+  surfaced, not harmonised (criterion 6); AOB has no record yet (see
+  [[sb-02]] notes). See [[sb-25]], [[repo-market-linkage]],
+  [[outcome-score]].

@@ -1,0 +1,45 @@
+id: futures-activity-elevated
+term: FUTURES_ACTIVITY_ELEVATED
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [S, M]
+definition: >-
+  The named ECIL event type (ecil_event_type = FUTURES_ACTIVITY_ELEVATED)
+  produced by CICI Level 1, contributing to ECIL CRS scoring for SB-26
+  hypothesis support.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.3.1 CICI Data Inputs and Three-Level Framework"
+    para_hash: sha256:9e752d5c38c8abcf9eb0029a95f0a5d9dd17e722d259bc6bb8c38cd8f9565b87
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0 MTSAM API Stack --- Data Architecture and Scope Specification"
+    para_hash: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - cross-instrument-context-intelligence
+  - crs
+  - ecil-event
+  - external-context-intelligence-layer
+  - sb-26
+flags: []
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1e)"
+notes: >-
+  Underscore casing reproduced verbatim (criterion 5). Defined in S (Def?
+  = S per the candidate list); M mirrors it as "CICI Level 1 event type
+  (FUTURES_ACTIVITY_ELEVATED)". See [[ecil-event]] for the parent
+  concept and [[cross-instrument-context-intelligence]] for the producing
+  layer.

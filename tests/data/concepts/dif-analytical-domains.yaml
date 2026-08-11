@@ -1,0 +1,48 @@
+id: dif-analytical-domains
+term: DIF analytical domains
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  Domains: (A) Behavioural/Transactional — RT alert patterns, order book
+  behaviour, execution sequences; (B) Persistence — BPL components (BDS,
+  SCS_bpl, MDCS, CWPS, EDT); (C) Interaction — IDS/ISS/IQ participant
+  interaction; (D) Outcome — OS, CCL, CFS, OPL; (E) Contextual — ECIL
+  AMPLIFIES_SUSPICION (only where context amplifies rather than explains).
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+  - behavioural-drift-score
+  - behavioural-persistence-layer
+  - causality-confidence-layer
+  - counterfactual-strength
+  - cross-window-persistence-score
+  - escalating-dominance-trend
+  - external-context-intelligence-layer
+  - multi-day-conditioning-score
+  - outcome-persistence-layer
+  - outcome-score
+  - participant-interaction
+  - scs
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). The term name is the extraction's label
+  for a taxonomy the corpus states but does not name; the domain letters
+  A–E and their contents are corpus text. Used by
+  [[domain-independence-filter]] at Step 5b and echoed in the U domain
+  taxonomy note on [[behavioural-persistence-layer]].

@@ -1,0 +1,36 @@
+id: iscore
+term: IScore
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, S]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:0715241c210dbb068b1ed5b7d2f5ddec126d6d3584d2447a598664b01ead5243
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:223dcd93c912f614d8c0b4af0428262480e223299d380862804f7f404ffa2140
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep, disambiguate (Nick, candidate-terms-merged.md §1c)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). Distinct from
+  Intent Score (IS) and easy to conflate — see [[intent-score]]. Usage
+  evidence: U gives the scale "IScore (0–24.3)" with behaviour-centric
+  reweighting, and Step 13 uses it as a factor ("PriorityScore = IScore × CF
+  × IntentFactor × DependencyFactor"); S substitutes QBRS for IScore where
+  quote-domain patterns are dominant. U v25 version history cites a "§VI.1c
+  IScore mapping" not present in the shortened source.

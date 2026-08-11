@@ -1,0 +1,35 @@
+id: human-review-required
+term: HUMAN_REVIEW_REQUIRED
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.2 Human Intervention Checkpoints"
+    para_hash: sha256:da8a322e129c1e11c071d0180d576fa78e038757450b8ff7d6b0dcce52dfc1d6
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.2 Human Intervention Checkpoints"
+    para_hash: sha256:f71a4663c323fea7559ad9b145c394ed9318405c084443a9c9dd07819fc1d58e
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: system state that triggers
+  HCP-1; the HCP-1 Trigger cell reads 'HUMAN_REVIE W_REQUIRED state'
+  (OCR-split token). Companion state CCO_REVIEW triggers HCP-3:
+  'CCO_REVIEW state; STOR_Readine ss assessed' (OCR-split). Neither state
+  is defined in the shortened corpus. See
+  [[human-intervention-checkpoint]], [[cco]].

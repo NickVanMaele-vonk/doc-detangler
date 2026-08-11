@@ -1,0 +1,33 @@
+id: systemic-consequence-uplift
+term: systemic_consequence_uplift
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  RDCS receives additional +0.10 systemic_consequence_uplift where
+  downstream_exposure includes repo margin calculations.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.1 Structural Characteristics Governing Detection"
+    para_hash: sha256:09ddf6ebde66c1524a71fa15fcb1278f922eacaa5c7901d65843d0565752c3bf
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - rdcs
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); field-style scoring term with a
+  single occurrence, in the A.1 Repo market linkage grid row (the hash
+  covers the row block). Context from the same row: 'Repo market impact
+  classified as systemic consequence. OS=2 automatic.' See [[rdcs]],
+  [[downstream-exposure]], [[repo-market-linkage]], [[outcome-score]].

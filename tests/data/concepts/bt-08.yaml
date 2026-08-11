@@ -1,0 +1,27 @@
+id: bt-08
+term: BT-08
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: null
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling; family form per
+  [[bt-06]]; master term [[bt-block-trade-code-family]]. Orphan. Sole
+  U/S/M usage: SB-05 row 'BT-07/BT-08'. Not on the closing-pass dangling
+  list (it appears in no record definition) but included per the
+  all-code-families ruling; flagged in the PR body.

@@ -1,0 +1,64 @@
+# Claim-split register — CANONICAL.
+#
+# ADR-003 Decision 1 (Nick, 2026-08-06): where the deterministic decomposer
+# cannot confidently split a span, the split is judgment, and judgment is
+# DATA. It is drafted with LLM assistance, reviewed and merged by PR, and
+# `detangle verify` executes it. The same pattern as the reorder plan
+# (ADR-002), one level down: the tool authors nothing and calls no model.
+#
+# Its home here was ruled by Nick on 2026-08-07: canonical data whose
+# provenance is a PR thread rather than a corpus span belongs in `registers/`,
+# one file for the whole set. Claim ids already carry their document, so the
+# per-document view is a filter, not a missing fact.
+#
+# WHAT IT IS FOR — the decomposer's work-list, not a general edit surface.
+# `detangle verify` flags four shapes it will not guess at: OCR-broken
+# hyphens, cells asserting several things at once, sentence fragments, and
+# over-long spans. An entry disposes of one flag. Nothing else belongs here:
+# wording is fixed in the source document (backlog B-1), never by re-typing it
+# into a split.
+#
+# ENTRY SHAPE — exactly one of `claim` or `block`, and both target the
+# machine's hash-anchored ids, never line numbers (D10):
+#
+#   - claim: "U:1a2b3c4d:0:2"   # doc:hash8:occ:n — this claim, split
+#     into:
+#       - "First sub-claim, wording preserved verbatim."
+#       - "Second sub-claim."
+#     owner: Nick
+#     pr: 128
+#     rationale: one line; the reasoning itself lives in the PR thread
+#
+#   - block: "U:5e6f7a8b:0"     # doc:hash8:occ — an unparseable block, whose
+#     into: ["The one claim this OCR-damaged row asserts."]   # claims are
+#     owner: Nick                                             # supplied whole
+#     pr: 128
+#     rationale: one line
+#
+# Criterion 5 is absolute inside `into`: numbers, thresholds, comparison
+# operators, modality (`must` vs `should`), scoping qualifiers, internal codes
+# and their casing are reproduced verbatim from the source. A split divides
+# text; it never rewrites it.
+#
+# SCOPE — source documents only, today. Every flag the decomposer raises is on
+# a source document, so that is where entries are written; whether and how a
+# split propagates to the restructured output is unruled, and the parts of a
+# split claim currently land in the coverage residue. See
+# `src/detangle/verify/splits.py` for the measurement behind that.
+#
+# Entries and live flags stay 1:1, like every register. An entry matching
+# nothing raises `split-stale` — but only on a run that decomposed its
+# document, because a run over `U` alone cannot prove an `S` entry dead.
+# `split-parse` and `split-schema` cannot be waived: a malformed register must
+# not be able to excuse itself.
+#
+# Splits are Nick's rulings. The assistant never mints or changes one.
+
+version: 1
+
+# Empty by design, not by omission. The decomposer raises 44 flags across 29
+# claims on `U` today — 16 broken hyphens, 10 multi-assertion cells, 10
+# fragment suspects, 8 over-long, some claims carrying two — and no anomalous
+# blocks at all. None has been ruled. They are dispositioned in the Decision 7
+# dry-run, which is also what calibrates the flagging heuristics.
+splits: []

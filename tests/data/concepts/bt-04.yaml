@@ -1,0 +1,34 @@
+id: bt-04
+term: BT-04
+aliases: [bt04_dominance_share]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Block-trade indicator BT-04: bt04_dominance_share ≥ 30% block notional
+  in instrument cluster LOOKBACK_30D.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "§A.6.1 ISGO Mandatory Language --- BVR Validation Basis (SBSP-AMD-BVR-001)"
+    para_hash: sha256:8af20c46c9164713d66a4d1fcd5c2e097b6f370fd98d26cc83659792b842621a
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - instrument-cluster
+  - lookback-30d
+flags: []
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling; family form per
+  [[bt-06]]; master term [[bt-block-trade-code-family]]. Definition
+  assembled from S's SB-17 archetype row (Block Trade Dominance); also
+  cited in the SB-06 row ('BT-04 block dominance in cluster') and the
+  SB-11 row.

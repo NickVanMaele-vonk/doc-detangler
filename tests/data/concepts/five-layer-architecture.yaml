@@ -1,0 +1,40 @@
+id: five-layer-architecture
+term: Five-Layer Architecture
+aliases: [Five-Layer Architecture for FSMA]
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  The Five-Layer Architecture for FSMA: the complete surveillance
+  architecture as it should be described to FSMA.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:29c98e84a0ce10036efc3623c45ee75ba2b20284b925ddfa6e67c8d6da6ef6f5
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition from the §0.2 table
+  introduction; each layer's role is a row of that table. The five layers
+  are values, not aliases (C9 hygiene): Layer 1 (existing RT/RD
+  surveillance scenarios — [[primary-signal-generation-layer]]), Layer 2
+  (behavioural adjudication — [[behavioural-intelligence-overlay]]), Layer
+  3 ([[block-trade-behavioural-analysis]]), Layer 4 (quote intelligence
+  surveillance — [[quote-intelligence-architecture]]), Layer 5 (contextual
+  enrichment and [[replayable-audit]]). The Layer 4 title carries the
+  emphasis 'THE SINGLE MOST IMPORTANT STRATEGIC ENHANCEMENT DEPENDENCY' —
+  casing reproduced (criterion 5). Not to be confused with the four data
+  layers of the §1.0 MTSAM API Stack — two different layer taxonomies in
+  the same document (extraction caution; cf. the three-way Tier overload
+  surfaced on the S side).

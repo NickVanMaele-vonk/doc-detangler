@@ -1,0 +1,40 @@
+id: venue-arbitrage
+term: Venue Arbitrage
+aliases: []
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  Cross-venue manipulation pattern in which the participant identifies a
+  price discrepancy between the electronic MTS market and bilateral OTC
+  pricing — a discrepancy that the participant may have manufactured
+  through electronic quote conditioning — and exploits the spread,
+  executing bilaterally at the favourable side of the manufactured
+  discrepancy.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:cd33f7e5bdc577438b704d99e7cce68ea7b19584c943b0e74c93e4fda2d1354d
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - cross-venue-manipulation
+  - mts-spa
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk); one of the four named
+  [[cross-venue-manipulation]] patterns (grid-table row; the hash covers
+  the pattern table block). Detection logic: cross-venue spread |MTS_mid -
+  OTC_execution_price| materially exceeding the historical cross-venue
+  spread distribution; 'Where MTS mid was influenced by participant's own
+  electronic quoting (RT04 candidate), the OTC execution at MTS-influenced
+  prices is the exploitation leg.'

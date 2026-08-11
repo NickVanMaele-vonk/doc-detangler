@@ -1,0 +1,43 @@
+id: collusion-assessment
+term: Collusion assessment
+aliases: [CS, CCaS, CFPS]
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: >-
+  CS (0–3); CCT; CCaS (0–2); CFPS (0–2). CFPS=2 suspends collusion.
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:947a550ee83080bab944ed620b7abc3e05a2e90a496fadc30f749eff0d89cb8c
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f1e5d90525bc2ea84e2eeaddd8c59320ad1739ea2e620a33cde02e01f0538875
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - coordination-classification-tier
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk; queue correction in PR #39 — an earlier
+  coverage check had this term masked by the CCT acronym on
+  [[coordination-classification-tier]]). Step 7 dimension row, SCORED
+  OUTPUT ([[participant-interaction]] precedent). CS, CCaS and CFPS are
+  never letter-expanded. CCT is deliberately not an alias here: it is
+  the acronym of [[coordination-classification-tier]], a shared U/S/M
+  term with its own definition site (C9). Step 5b anonymous-market
+  context: 'Consistent with CCT=IMPLICIT cap in anonymous markets
+  (Document 3 §1.2; Document 2 §D.5.3).' See [[collusion-override-path]].

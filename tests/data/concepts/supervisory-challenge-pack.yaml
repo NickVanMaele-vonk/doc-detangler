@@ -1,0 +1,29 @@
+id: supervisory-challenge-pack
+term: Supervisory Challenge Pack
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U, M]
+definition: null
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:262a4043dee9dc8383dd874346eb543d050724e35d29cd140d366943b29a2b0b
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep (Nick, candidate-terms-merged.md §1f)"
+notes: >-
+  Set-level orphan (definition: null — not invented, C2). M's Layer 5 row
+  places "Supervisory Challenge Pack assembly" in the supervisory
+  defensibility layer, "ensuring every escalation and every closure can be
+  analytically defended before FSMA". The candidate list counts U usage,
+  but no anchorable span exists in the shortened U — same situation as
+  the M-side of [[four-level-observability-framework]]; worth a check
+  against the full U during review.

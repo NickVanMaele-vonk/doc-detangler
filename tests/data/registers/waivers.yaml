@@ -1,0 +1,78 @@
+# Waiver register — CANONICAL.
+#
+# Findings that have a human disposition but no fix yet. `detangle validate`
+# reports a covered finding as accepted debt rather than re-firing it as a
+# live finding, so a gate that is waiting on work outside this repository can
+# still be green and can therefore be marked required (plan step 3.9).
+#
+# A waiver is a DEFERRAL, NOT AN APPROVAL (definition-of-done.md §3): the set
+# is not fully done while waivers are open, which is why a waived finding is
+# still printed on every run and still counted in the summary.
+#
+# Scope — one entry per LIVE finding, and only live findings:
+#   - An entry matches on `check` + `where`, narrowed by the optional `match`
+#     substring of the finding's message. Exact strings only; no globs, no
+#     regex.
+#   - An entry that matches nothing on a full run is a stale ruling and is
+#     flagged, never silently dropped. So the fix and the removal of its
+#     waiver land in the same PR — the discipline `concept-graph.yaml`
+#     regeneration already imposes.
+#   - `register-parse` and the `waiver-*` hygiene checks cannot be waived: a
+#     malformed register must not be able to excuse itself.
+#
+# Not for cycles. An accepted outer circle is an approval and permanent, so it
+# belongs in `cycles.yaml`; filing it here would block done-ness forever and
+# destroy this register's signal (ADR-001 Decision 6).
+#
+# Dispositions are Nick's. The assistant never mints or changes one.
+
+waivers:
+  - id: boa-archetype-hyphen
+    check: definition-token
+    where: concepts/explanation-type.yaml:definition
+    match: "'BOA-archetype'"
+    disposition: source-defect
+    owner: Nick
+    ticket: B-1
+    review_by: "2026-12-31"
+    rationale: >-
+      SBSP writes "BOA Archetype"; the record's attributive use — "the
+      BOA-archetype mapping" — wants the hyphen English grammar puts there.
+      A transcription-level defect, not a wording difference, so the remedy
+      is to correct the source rather than to reproduce the damage in the
+      record or to loosen the validator across it.
+    authority: >-
+      Ruled by Nick 2026-07-31 (family A); recorded in CLAUDE.md session
+      state and in plan/backlog.md B-1.
+
+  - id: eod-only-hyphen
+    check: definition-token
+    where: concepts/otc-bilateral-trading.yaml:definition
+    match: "'EOD-only'"
+    disposition: source-defect
+    owner: Nick
+    ticket: B-1
+    review_by: "2026-12-31"
+    rationale: >-
+      MCL writes "EOD only"; the record's attributive use — "EOD-only
+      timestamps" — wants the hyphen. Same shape as boa-archetype-hyphen.
+    authority: >-
+      Ruled by Nick 2026-07-31 (family A); recorded in CLAUDE.md session
+      state and in plan/backlog.md B-1.
+
+  - id: medium-investigate-ocr-split
+    check: definition-token
+    where: concepts/persistence-gate.yaml:definition
+    match: "'MEDIUM-INVESTIGATE'"
+    disposition: source-defect
+    owner: Nick
+    ticket: B-1
+    review_by: "2026-12-31"
+    rationale: >-
+      UCE carries the code both ways: "MEDIUM-INVESTIGATE" elsewhere in the
+      document, and "MEDIUM- INVESTIGATE" in the block this record is
+      anchored to, where the hyphen is broken by OCR damage. The record
+      reproduces the intended code; the anchored block does not contain it.
+    authority: >-
+      Ruled by Nick 2026-07-31 (family A); recorded in CLAUDE.md session
+      state and in plan/backlog.md B-1.

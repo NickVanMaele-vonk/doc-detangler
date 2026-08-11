@@ -1,0 +1,38 @@
+id: daf
+term: DAF
+aliases: [DAF dual-mechanism]
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:899fd545102ba5aa32e51cb63edd008ae0809be5e7b021e94e8bf8f106608dfe
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:bc64cc32f3d2caf74943b0856b28609a467f805544406dfe7dd7fa568d4bb17e
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Set-level orphan (definition: null — not
+  invented, C2): never expanded in the corpus; likely Dependency
+  Adjustment Factor. First use is the Part-contents row for Part XIII
+  ("DAF dual- mechanism", OCR line-wrap; front-matter span). Operational
+  use at Step 4 ("DS (0–2) assessed; DAF applied.") and Principle 4 ("DS
+  gate: DS=2 collapses DAF to 0.0"). RECONCILIATION FLAG, surfaced not
+  judged: Step 13's PriorityScore formula uses "DependencyFactor" —
+  probably the same construct under a different surface form. On the step
+  3.4 dangling-reference list.

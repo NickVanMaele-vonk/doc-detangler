@@ -1,0 +1,54 @@
+id: cross-venue-manipulation
+term: cross-venue manipulation
+aliases: [cross-venue behavioural inconsistency, cross-venue divergence]
+status: candidate
+superseded_by: null
+placement: SBSP
+used_in: [S]
+definition: >-
+  A participant conditions the anonymous electronic order book through
+  quote behaviour (creating price expectations, removing depth, signalling
+  directionality) and then executes the profitable side of the strategy
+  bilaterally in the OTC market — outside the electronic venue's detection
+  perimeter.
+source:
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4 Cross-Instrument & External Context Intelligence --- Observability Framework and OTC Analytical Hypotheses"
+    para_hash: sha256:524f86641e8837b3d5c0b7fc840c82388561b75a8c14a46063d67e6613aa44bf
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+  - doc: samples/blueprint-SBSP-shortened.md
+    section: "A.4.2 Cross-Venue Analytical Framework --- OTC Bilateral Detection"
+    para_hash: sha256:e3498bb704c14c1e59328c73c14da7f398ae69f2cc0650d04ab9ad51870c7892
+    origin: corpus
+    verified_against:
+      git_blob: 8a96710aac6c798eac3df1fbde0839725639ba95
+      stated_version: null
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on: []
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Definition is the A.4 'core cross-venue
+  manipulation logic' paragraph, which continues: 'The electronic venue
+  sees the conditioning behaviour without the execution; the OTC bilateral
+  reporting sees the execution without the conditioning. Neither view
+  alone is sufficient for detection.' Second span: the A.4.2 principle row
+  assesses cross-venue behavioural inconsistency 'as an independent
+  behavioural indicator contributing to the convergence score, not merely
+  as a data reconciliation problem'; where divergence is confirmed,
+  cross_venue_divergence_confirmed=TRUE feeds the
+  [[repetition-indicator]] and the Dependency Filter assessment
+  ([[dependency-score]]). The extraction's alias 'cross-venue
+  fragmentation detection' is not adopted: the corpus phrase 'cross-venue
+  fragmentation' appears only in the MTSAM-L03 participant-identity
+  limitation row. The four named patterns are [[liquidity-migration]],
+  [[off-platform-price-conditioning]],
+  [[bilateral-execution-following-anonymous-quote-pressure]] and
+  [[venue-arbitrage]].

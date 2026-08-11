@@ -1,0 +1,49 @@
+id: behaviour-category-taxonomy
+term: Behaviour Category Taxonomy
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:5d8a6dce9c46b9702ad884135c05166a2aaf068e3b8985162b9e4c72e2c7462d
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan, conflict]
+conflict:
+  summary: >-
+    Acronym collision inside one table (candidate list §7c, conflict P-5):
+    (P) §0.1 defines BC as "Behaviour Category" — the classification unit
+    this taxonomy enumerates — and then, three rows later in the same
+    glossary, uses BC for "Behavioural-Conditioning impact" as an Outcome
+    Score dimension. Two senses of one abbreviation in a document whose
+    stated rule is that every abbreviation is spelled out. Nick's ruling
+    2026-07-30: keep, flag to humans for disambiguation — surfaced, not
+    reconciled (C8 / criterion 6). See [[outcome-score]].
+  spans:
+    - doc: samples/prototype-BC17.md
+      section: "§0.1 Master glossary — every abbreviation spelled out"
+      quote: >-
+        BC Behaviour Category the classification unit; BC-17 is one of
+        seventeen
+      para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+    - doc: samples/prototype-BC17.md
+      section: "§0.1 Master glossary — every abbreviation spelled out"
+      quote: >-
+        OS Outcome Score PI Price / LI Liquidity / I Information / BC
+        Behavioural-Conditioning impact
+      para_hash: sha256:45bfc4f332c99228fcfeedf40e60b33089ed61236b08fca01c32636e63acb435
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: the v24 row names it with 17
+  categories; the taxonomy itself is not included in the shortened corpus.
+  Behaviour Category 17 (Event-Driven Information Behaviour) was added in
+  v25 — see [[event-driven-information-behaviour]]. Part of §VI.1a — see
+  [[behavioural-concern-layer]].

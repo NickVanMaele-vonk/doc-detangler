@@ -1,0 +1,223 @@
+# Machine-readable reorder plan for M — ADR-002 Decision 2, produced for
+# step 9.1. The stage-A judgment as data, executed by `detangle
+# restructure`; blocks addressed by para_hash, never line numbers (D10).
+doc: M
+pinned_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+sections:
+  - {id: head, title: "Document identity", kind: head}
+  - {id: m-62d51646, title: "Overview", kind: generated}
+  - {id: m-f0449e6b, title: "Terms defined in this document", kind: generated}
+  - {id: m-71fdf1cf, title: "1. Regulatory positioning framework (Section 0)", kind: content}
+  - {id: m-b7d82c27, title: "2. MTSAM market structure (Section 1)", kind: content}
+  - {id: m-6c1a3dba, title: "3. Document control", kind: content}
+assignments:
+  - {block: sha256:c66cf5b4dc5ff37ad8253db02305fcc504df83f249e6be8797584f0ea54e7074, section: head}  # b0 VERIDICT INTELLIGENCE
+  - {block: sha256:3f51d8df8121c048c35e7e281f181f2dd84cf40bd16ab8114f5c5bf277844017, section: head}  # b1 MTSAM Institution Calibration Layer | Document 3 of 
+  - {block: sha256:d52284f28177ad47760f5baaacbbaf0122b6fa5bc86f75fa60c4489d8d6a6a72, section: head}  # b2 Version 21
+  - {block: sha256:6306cc768afd78a7afbe2ab26ada6ca59d03d584cec92507641472e9e37295cb, section: m-71fdf1cf}  # b13 This section establishes the analytical and regulato
+  - {block: sha256:3c3ebfeb28b1e2aba416126a7647dc1ee835bee6610022d806b8a19c6bc6a4b2, section: m-71fdf1cf}  # b14 Regulatory positioning doctrine  architectural separ
+  - {block: sha256:9ad4ecf2f18a9707d6d0de1d553e64d998df38d056f8159241fc32e97a386150, section: m-71fdf1cf}  # b15 The Core Regulatory Position: MTSAM considers the cu
+  - block: sha256:08858e7561e760087e9b0ded021242f72e228bf75de41faded2ee917f6f89802  # b17 The regulatory position is built on five analyticall
+    section: m-71fdf1cf
+    subheading: '### 0.1 The five-pillar FSMA argument'
+  - {block: sha256:9536a942e73333ca5fd9605cdb9ffe0bbae92b922065f5d0fb10507cd829f3e6, section: m-71fdf1cf}  # b18 Pillar 1  The Existing RT/RD Framework Covers the Co
+  - {block: sha256:0602aadd39a110708ee697d1600d8856c63a6ed8134b010c3b2b0b843710c954, section: m-71fdf1cf}  # b19 MTSAM's implemented surveillance scenarios already c
+  - {block: sha256:987a9e8d1e1b19e7ff4b8c17d2fc6bead06fd21e5b17849f9d4746a51b5f55bb, section: m-71fdf1cf}  # b20 ----------------------------------------------------
+  - {block: sha256:81451ceec7d1d1d50ec3eee0beaadb2f88fe1b4b19ff09a74456174ce390c18f, section: m-71fdf1cf}  # b21 RT02  Abnormal trade count Abnormal number of trades
+  - {block: sha256:99f0a520e3122eebeac0682fecf02d00cc10855ffceb1bccf928c149bf0c6ff1, section: m-71fdf1cf}  # b22 RT04  Price deviation Off-market pricing, fixing man
+  - {block: sha256:18153ef7152fb17cbc35c405819fd44d7ad0cfc19de7f989cc95bc92b6962b9c, section: m-71fdf1cf}  # b23 RT05  Opposite trades Wash trading, economic neutral
+  - {block: sha256:be08f57ecc1aa6fc011caf85c727e8723e3cb7d0519cd44835392ef2723a8707, section: m-71fdf1cf}  # b24 RT08  Liquidity stress proximity Liquidity triggerin
+  - {block: sha256:9c261fe2ed8385a130fd27ecb5f750474d38cad6660a4cd34ff928e7351ada4f, section: m-71fdf1cf}  # b25 RD01  High EOD volume Abnormal end-of-day volume con
+  - {block: sha256:fdf722deca098c23122315d62e8876f4c92008641e5ace222e9dc430efb45f24, section: m-71fdf1cf}  # b26 RD02  Participant market share Closing-window domina
+  - {block: sha256:321c080e6860f153640827f0440d1f9910e7677434cdf75503e5493bbbb8f3fd, section: m-71fdf1cf}  # b27 RD03  EOD price influence Marking the close, referen
+  - {block: sha256:9c52fb8112b6eb771794a912932c22eab9fd7ebd33e9a635a3fb01ef9e80d7a6, section: m-71fdf1cf}  # b28 RD04  Closing price deviation Off-market closing exe
+  - {block: sha256:0bb59fc8c573161d96f5d677c97f66c0327ea0d46385751a1a0ce3928d383cd8, section: m-71fdf1cf}  # b29 FSMA framing: the existing RT/RD framework should no
+  - {block: sha256:819471ac1e2ed5adb04528bc504bfe4064bccb0e7288ad1383b5b4e5424e8257, section: m-71fdf1cf}  # b30 Pillar 2  The Remaining Gap Is Primarily Quote-Drive
+  - {block: sha256:b17829f5392c52ddc6ec1a86e1f1da1d76ee9fbcb148c923781e208a72e180a0, section: m-71fdf1cf}  # b31 The principal residual detection gap in the MTSAM su
+  - {block: sha256:e66dab154b21b89032f1d05abca964e8068169f745d3597a098d5f2f46c8e59e, section: m-71fdf1cf}  # b32 ----------------------------------------------------
+  - {block: sha256:d4c9ca97e4dcccffbfcd9de815f8f6297feebd2d5ed50b41e5055d70003ebd60, section: m-71fdf1cf}  # b33 Anonymous order-book manipulation Spread conditionin
+  - {block: sha256:3d617c756b351d09a81ee907467166fa89088ed1e7d054c4c3ca8f9e99a66abe, section: m-71fdf1cf}  # b34 Cross-session cumulative patterns below threshold Gr
+  - {block: sha256:c809be35805b7f08d1cd63adcf4bac284c156357995bc5044966b117af60e339, section: m-71fdf1cf}  # b35 Contextual causality assessment The distinction betw
+  - {block: sha256:01ed9a1c9e6e7eae33d3a41988c33681b6d1a6ecd39bfc71699e8e0611799aa1, section: m-71fdf1cf}  # b36 Pillar 3  The Existing RT/RD Framework Becomes Mater
+  - {block: sha256:4dcade7ca9a7e8522579f2f351a1659310555e9e99515bb47e3ea36cc6d8761c, section: m-71fdf1cf}  # b37 This is the analytically strongest pillar. The imple
+  - {block: sha256:bceef3d967f697fbec3cc11860c7144b3de3143a3127e45f156cc74610816ae6, section: m-71fdf1cf}  # b38 ----------------------------------------------------
+  - {block: sha256:5d85c1caf5159f8ca1f37cfd875ac6d43af889989d410d0d1d355e6d1046d880, section: m-71fdf1cf}  # b39 RTRD cross-pass scoring (RDCS) Intraday RT alerts co
+  - {block: sha256:a0b127073f54fc2d18f7d2a5ed6600b26a9870dc729ee29276da7e7e3d097e05, section: m-71fdf1cf}  # b40 Contextual enrichment (ECIL) Structured assessment o
+  - {block: sha256:50da8d427966518ac37401139bdf383ab408d9585b8c525122b16febf6a18d09, section: m-71fdf1cf}  # b41 Repetition and recurrence analysis (BPL) Cross-sessi
+  - {block: sha256:0c924a6a9f7e5cf276585ff41e55b168067e7daa6b6a9fe901965f85e162bd67, section: m-71fdf1cf}  # b42 Participant-specific baseline comparison (QBBE/POFP)
+  - {block: sha256:85c5ee722be90e7d87a3535abd315e372bd54aa1b742eb87f14bfc5f8ad101fc, section: m-71fdf1cf}  # b43 Pillar 4  Block Trade Behavioural Analysis Closes an
+  - {block: sha256:03d9fb53cb5a3e0583be35c28a21bb5acc03ddade367577a0536b86a86116591, section: m-71fdf1cf}  # b44 MTSAM has already initiated behavioural categorisati
+  - {block: sha256:e2471ff9fc8390a8c3d57981b88f82f598c7a79d416294fd725a96d033662393, section: m-71fdf1cf}  # b45 ----------------------------------------------------
+  - {block: sha256:5e227f07e56eb3ad3b5a15eaf92b5d71b1a162484022f989e1d3f20ee331ebf0, section: m-71fdf1cf}  # b46 Behavioural indicators applied to block trade scenar
+  - {block: sha256:41580dfd799ae2fda824c344b4a9d93a6cfe8bc3bee77922241bc8de634c6323, section: m-71fdf1cf}  # b47 Liquidity suspension analysis integrated with alert 
+  - {block: sha256:c07fd1c64fb17709d27c110d678d5f674ccb63026d41149b4b08d26f61d4800f, section: m-71fdf1cf}  # b48 Risk-based prioritisation (LOW/MEDIUM/HIGH) Demonstr
+  - {block: sha256:ee8e9e508a053027e4cf511983876284af0937e840e4ba9bace678f82c86488a, section: m-71fdf1cf}  # b49 Pillar 5  Quote Intelligence Is the Logical and Prop
+  - {block: sha256:33c357d9fe7f50bf3b31d1f23e7dfe750a36c160ede5ec2614bdba16cca6bf83, section: m-71fdf1cf}  # b50 In a quote-driven sovereign bond interdealer market,
+  - {block: sha256:1a13eaa67c4b7d63f690ec4a9d062eea5317eabfc810da08c7a8fc0f154fc367, section: m-71fdf1cf}  # b51 The argument is not: 'the current framework is insuf
+  - block: sha256:29c98e84a0ce10036efc3623c45ee75ba2b20284b925ddfa6e67c8d6da6ef6f5  # b53 The following table presents the complete surveillan
+    section: m-71fdf1cf
+    subheading: '### 0.2 The five-layer architecture for FSMA'
+  - {block: sha256:4f7a164102b07d022a12b940b01ec1fb8dd86db33a72c4ba3d3c8795807d5fcb, section: m-71fdf1cf}  # b54 -------------------------------------------------- L
+  - {block: sha256:9c1c5d86045471183a9b80c03b4aa650453805724dae52341894e55705fa24a0, section: m-71fdf1cf}  # b55 Layer 2: Behavioural adjudication (Veridict Core Eng
+  - {block: sha256:74dd76aed6bbc6aa1fdfba5dfed54cf3f6f2b6cec12e3074a409e21960936244, section: m-71fdf1cf}  # b56 Layer 3: Block trade behavioural analysis Risk-based
+  - {block: sha256:0745d53ca948ecdb4cf17397286d15fb2384655b481173996cb6243f56094c49, section: m-71fdf1cf}  # b57 Layer 4: Quote intelligence surveillance  THE SINGLE
+  - {block: sha256:262a4043dee9dc8383dd874346eb543d050724e35d29cd140d366943b29a2b0b, section: m-71fdf1cf}  # b58 Layer 5: Contextual enrichment and replayable audit 
+  - block: sha256:4af8e3f116de743ae2570753a2b181f4f6ca9c829134b31f90211af209ec449c  # b60 The following table defines which formulations are a
+    section: m-71fdf1cf
+    subheading: '### 0.3 Language governance — approved and prohibited formulations'
+  - {block: sha256:3a38212043afb31167c84bdefb9f3d9283f2588f50807611f52861f71fe5c326, section: m-71fdf1cf}  # b61 ----------------------------------------------------
+  - {block: sha256:e84c9b5dfc71b6dde7e8b7feb30200751c4cf87e93f6060cedd5944a16367ea6, section: m-71fdf1cf}  # b62 Describing the remaining gap Principal residual enha
+  - {block: sha256:7c0ea457d4a411320a769bb726ca7462a27b2a781fd3c3d2b18d7f28777ba643, section: m-71fdf1cf}  # b63 Describing the enhancement plan Complement the exist
+  - {block: sha256:fb108457107cb7a121d78329e0dd161ddfd95e5d59febefbf67a1b77ae4c7c19, section: m-71fdf1cf}  # b64 Describing analytical capability Structured behaviou
+  - {block: sha256:d7a708d30cf175f132c49c1b8f4d12d8a7de5570d90cbb3c4f6c21dfdc592ab2, section: m-71fdf1cf}  # b65 Describing coverage limitations (ISGO) Known analyti
+  - {block: sha256:58be287e3c06228d180c62b54ef9efec4efcae23387d97da259c010d669a3dd8, section: m-71fdf1cf}  # b66 Describing RT22 absence and RT08 compensation RT08 p
+  - {block: sha256:9b3f0c6817fc7feb40036663658bb3f113ba924ba9182828d5c2352481e9943a, section: m-71fdf1cf}  # b67 Describing data limitation conclusions Data limitati
+  - {block: sha256:e21fb8237c2e83f81720c8f54a77222926bebb3ae4c67e72a4c5fc6ea2bbd7dc, section: m-71fdf1cf}  # b68 Describing Market Maker safe-harbour outcomes MM_SAF
+  - {block: sha256:513a37330e32059e7f952ddfb22066e559a27abbd2677d1f68ffede7865cdc9a, section: m-71fdf1cf}  # b69 Describing non-filing decisions (CLOSED_JUSTIFIED) S
+  - {block: sha256:4b781b5287be0459fffa0b3911bb6fb28dba69d2a38fb98c9dcc8651ce5e6e77, section: m-71fdf1cf}  # b70 Describing supervisory confidence (SCL tier) SCL-COM
+  - {block: sha256:78ad448c485b39b7778fbe54aedd8adca18d9bf8116f93d4341e0f76221a359b, section: m-71fdf1cf}  # b71 FSMA will evaluate MTSAM's surveillance posture on f
+  - block: sha256:03d2c2295fd90601b94623171e7b1197c0b1dd2c8757bb767e042d17f5ef42d1  # b74 The MTSAM analytical engine operates across four dat
+    section: m-b7d82c27
+    subheading: '### 1.0 MTSAM API stack — data architecture and scope specification'
+  - {block: sha256:075af4297e0567ff18d729e6455223bf925e373b8d4c8ee4e38c7f86e2c2bbe3, section: m-b7d82c27}  # b75 Layer 1  Core Surveillance (Primary analytical input
+  - {block: sha256:c9acc9c22ee4ef7180f8002b13b6d28e3fab57602881f49fbd1a82ef8d77dfdd, section: m-b7d82c27}  # b76 ----------------------------------------------------
+  - {block: sha256:520ec07b75b6c08bbb4a3103e5509ec05081cb671ac1c778f9e7e5c46dc07310, section: m-b7d82c27}  # b77 Core MTS Alerts (RT/RD) IN SCOPE Nine implemented al
+  - {block: sha256:f8b9f89015614cd23752fea545bf8d3c3d70caa26fab83101e61f72d368efe3d, section: m-b7d82c27}  # b78 Core MTS Quotes / Order Book IN SCOPE (partial) Aggr
+  - {block: sha256:418747f5375cb6fe56e813626ac90f92aadf833f608b9fcca20fa650e2c2425b, section: m-b7d82c27}  # b79 Core Instrument Reference Data IN SCOPE Static and s
+  - {block: sha256:884f8811b85964b6b0debc4e65aa98a96d182fafd9c6a58b1cf7fe89d0552cfa, section: m-b7d82c27}  # b80 Layer 2  Context (External market context for ECIL e
+  - {block: sha256:5323b56b94bfcf5a962221d93adabb8ee05068a3c77334961b68584af5137721, section: m-b7d82c27}  # b81 ----------------------------------------------------
+  - {block: sha256:749cdf5eb349b80c242dae443e64db5399bd93e0f76620afac210fe714aede83, section: m-b7d82c27}  # b82 ECB Event Calendar IN SCOPE Scheduled ECB Governing 
+  - {block: sha256:0a47ac35d06734555a59818f1c02f17eba2249a35a45f3a31102e229707a7ac9, section: m-b7d82c27}  # b83 Economic Calendar IN SCOPE Macro economic data relea
+  - {block: sha256:bbbbd0b7a49bf1a2aa89c4af674b378d1bf5bc67621334ab7fd6b6212328c87b, section: m-b7d82c27}  # b84 Eurex Public Market Data (Bund Futures) IN SCOPE (Le
+  - {block: sha256:1d6463a447a3330c2af7d9035dd4e73b48d11ea08bd868c07b952df300e79078, section: m-b7d82c27}  # b85 Layer 3  Intelligence (Participant and entity contex
+  - {block: sha256:77a0c82da2aa8e257d62625db0d715d84339b90979e96165feb434188a943164, section: m-b7d82c27}  # b86 ----------------------------------------------------
+  - {block: sha256:3496d76872a5f0efa7b4829f324dd08d0c72cf36edea30cfbfd9f8c9c80ceb2a, section: m-b7d82c27}  # b87 OpenCorporates IN SCOPE Open database of global comp
+  - {block: sha256:ed3f98471360055d30b51938f7d79da6224ae9c5dc07a2c8703c0cb172961857, section: m-b7d82c27}  # b88 Layer 4  AI (Narrative generation and analyst query 
+  - {block: sha256:c637edc0dd9b1a22a9f4bcd7ce3f50867a9bc31a7ad23bf26689cec97343758e, section: m-b7d82c27}  # b89 ----------------------------------------------------
+  - {block: sha256:b0c658fd2e77cc976354a71e65b56946a776719754a13adab57deb88b98dec3c, section: m-b7d82c27}  # b90 Azure AI Search IN SCOPE Vector search and full-text
+  - {block: sha256:0389d02d0e8aafbb3902bcd1a2acae3bf1d3ba57b0337bd1ae95674a47a6dd6d, section: m-b7d82c27}  # b91 Data stack governance: any addition of a new data fe
+  - block: sha256:c3e448275fd2bdf6ef73c27c8cf8986d2c2efe466bccac47ac53cceb7f1774a2  # b93 Earlier design iterations of the MTSAM analytical ar
+    section: m-b7d82c27
+    subheading: '### 1.0.1 Formally removed data categories'
+  - {block: sha256:c5ffafe5ded74001032250e2c0849d449861cd2daa68ccea1d9bed5a371b368d, section: m-b7d82c27}  # b94 ----------------------------------------------------
+  - {block: sha256:5dd021e704cc10f244ef075c84487de5612c93cd0c12b0136263d9628e903636, section: m-b7d82c27}  # b95 Futures Position Intelligence Bund futures, OAT futu
+  - {block: sha256:2f683daf9b9c17da5d157aef4aa658a1d63202498077df75afd5c1fc2f645ed3, section: m-b7d82c27}  # b96 Cross-Venue Surveillance Feed Any real-time or near-
+  - {block: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3, section: m-b7d82c27}  # b97 Client Portfolio / Order Flow Intelligence Any feed 
+  - block: sha256:43baf6844eb80500e0dd7e32e4eb23d80bf857a2a84aa4ba9c9160a6ee8e4e94  # b99 ----------------------------------------------------
+    section: m-b7d82c27
+    subheading: '### 1.1 MTS Associated Markets — key characteristics'
+  - {block: sha256:f5bdc44b1461ef99b9045a2513ad1f9a795f7b8f7fe82abdaee283a2876ad403, section: m-b7d82c27}  # b100 Participant universe Primary dealers authorised by t
+  - {block: sha256:8d68a21777d24329d8ea36a0d87fb7ae4f527a10a27f60e3e52a08195d64cbd5, section: m-b7d82c27}  # b101 Trading hours Electronic trading: 08:0017:00 CET (Br
+  - {block: sha256:e61559dc92f00738ac858d01428d14c80c7274268b91a099f3f21a63d291efc5, section: m-b7d82c27}  # b102 Instrument scope Belgian OLO sovereign bonds (primar
+  - {block: sha256:8ad12b0eacdf565e289c49af2a4c73908059ba15aaee8aee469c182bffb5964e, section: m-b7d82c27}  # b103 OTC bilateral component A proportion of interdealer 
+  - {block: sha256:a3d93dc4074f9b364716601962d15e8dce04c6271682f5091aac2ac8657df13d, section: m-b7d82c27}  # b104 Primary dealer obligations Authorised primary dealer
+  - {block: sha256:00f75cd151913d35231f3c14a25b11dd5d513389fc80921f53612050ec7d8575, section: m-b7d82c27}  # b105 Regulatory authority Financial Services and Markets 
+  - {block: sha256:d7ac0d414ae42cb03e957624fc4b1502c6aafa346a25a5a9ed4767c5e93a0498, section: m-b7d82c27}  # b106 Anonymous quote-driven structure MTS Associated Mark
+  - block: sha256:881a98c9c63d9328a34508539b7c14e68cae238d164e929d5ac09d248108ac2c  # b108 The anonymous quoting structure of MTSAM is the sing
+    section: m-b7d82c27
+    subheading: '### 1.2 Anonymous quoting — MTSAM-specific analytical framework'
+  - {block: sha256:a85339821e5da62b1ba53081fec42b1075d616ea74872cf6d8cf6a3d8a078c6b, section: m-b7d82c27}  # b109 In the MTSAM quote-driven anonymous interdealer envi
+  - {block: sha256:a4633c9e59ef984b7877db4267817a9382439ba808dd0c36222edfffa1b8424f, section: m-b7d82c27}  # b110 ----------------------------------------------------
+  - {block: sha256:99ea73702e040cec47e0f36dbef0d0ff977c716983c84c13a05e1855ca85de92, section: m-b7d82c27}  # b111 Sequential quote behaviour defaults to liquidity-dri
+  - {block: sha256:73c19ed7ed9a125dcedde0ef865b069e86e64d157e2934821b9c5be53fa50a42, section: m-b7d82c27}  # b112 ModelConfidence capped for anonymous attribution Whe
+  - {block: sha256:ed047bebe2d0443d5a2bd21a0a1d34aa6f3b915d1ccf2f65ee11eeabed5376a2, section: m-b7d82c27}  # b113 CCT defaults to IMPLICIT for anonymous quote interac
+  - {block: sha256:711caedf7d5ae9242af42d7780c7523a33e2505f7feff043bc7698a5a757c0ef, section: m-b7d82c27}  # b114 Supervisory challenge pre-emption FSMA or a regulato
+  - block: sha256:6fc49e53a45892162c09497d95f530392a6b0a211d61972610dab557fb29190a  # b116 ----------------------------------------------------
+    section: m-b7d82c27
+    subheading: '### 1.3 New surveillance gap — MTSAM-L07'
+  - block: sha256:c060eafe1ef98d8b5c0afd81c76d81d3125d9b38baa8d808f81fe28623e59677  # b4 ----------------------------------------------------
+    section: m-6c1a3dba
+    subheading: '### 3.1 Document reference'
+  - {block: sha256:df890299c3baf78b94ef772fcb7e031a05cc2d823784f18c914139d5fe410745, section: m-6c1a3dba}  # b5 Document Document 3 of 3
+  - {block: sha256:30bf6a0c184ac0c7afb89c3516758da298a13bb3c977515c8ec809c354c9ef27, section: m-6c1a3dba}  # b6 Version v21  Full document release
+  - {block: sha256:9681c02cb44f9b9cc5435ecea53ca82bdc3b0a7311400e36cdca510f19b2afff, section: m-6c1a3dba}  # b7 Date June 2026
+  - {block: sha256:35d107d0cac1b6d7fc3bbad42276e22b1ce16c37266db62716ee62446e8d4858, section: m-6c1a3dba}  # b8 Applies to UCE v28 (Document 1 of 3) | Document 2 v2
+  - {block: sha256:2b0f9973ada7249d2516df342e11c5341635d8d7f58a368a8ecf321bffdd4479, section: m-6c1a3dba}  # b9 Classification CONFIDENTIAL - 
+  - block: sha256:441cb3dd18ed78eb36fff7904b48d5e62a0eded962e4bfe006b1574a06fdb1f1  # b11 +---------------------------------------------------
+    section: m-6c1a3dba
+    render: grid-list
+    subheading: '### 3.2 What is new in v22'
+  - {block: sha256:3e01eee64cd704adec2ddaaf2860eb1e7205d23a927e1fc6466675e8d10c3d98, section: m-6c1a3dba}  # b3 Section 11  Three-Output Integration  MTSAM Configur
+  - block: sha256:8046e5c227e574d89102ac8f0f3a65b19ace57f84038c0e5bb2b0e8b5a4e4252  # b12 SECTION 0  Regulatory Positioning Framework  FSMA En
+    section: m-6c1a3dba
+    render: part-row
+    subheading: '### 3.3 Section banners'
+  - {block: sha256:c2e2731b2dd2ef06f7c6fb2397e3fac8c908797bf60db1f18435c31bcc52a5a5, section: m-6c1a3dba, render: part-row}  # b72 SECTION 1  MTSAM Market Structure  Operating Charact
+noise:
+  - {block: sha256:5be59d365acb8d35446f682c6d314fffd5db5846ab8c6eb021e6bacd98a82aa0, kind: furniture}  # b117 bare rule
+  - {block: sha256:2bca308e92a6060f619c46699ea4b5e8bbb21544b1a9f34fd34a440ea3412498, kind: navigation}  # b10 pseudo-heading: What is new in v22
+  - {block: sha256:5882cb770e8f31d416bcd90e77ba0871bc574b48f0489d332c4d794e90717438, kind: navigation}  # b16 pseudo-heading: 0.1
+  - {block: sha256:7cfcd4d1738d61c1c28d570ea89ae143ff768c4cfff8c7ce0619c2c0c26522dd, kind: navigation}  # b52 pseudo-heading: 0.2
+  - {block: sha256:ddd0a7ee84451127d548c9e58b5444d1fc70615095a4ca6147e8463e140b87da, kind: navigation}  # b59 pseudo-heading: 0.3
+  - {block: sha256:f094ac6cd74e4ceec3c8d41afec11899e9d5f461a1ad8e719970ebbd6b80e9da, kind: navigation}  # b73 pseudo-heading: 1.0
+  - {block: sha256:41e222f9b780b055961960943f2598f59ddc4d8cc048d671a233d9630a71e59c, kind: navigation}  # b92 pseudo-heading: 1.0.1
+  - {block: sha256:7ee3a1280bd106d0da3345ab8df6c893ef5ba3ebadf2c63e478890dba49d6279, kind: navigation}  # b98 pseudo-heading: 1.1
+  - {block: sha256:b16911ebc5992148f6e6c0a9676ca94ee3612e24d96cb3d26d0b5f14f02f7899, kind: navigation}  # b107 pseudo-heading: 1.2
+  - {block: sha256:2b3a9729f2352b0bdc236eb1cfa37172d7de81669f221729fa589511077fd0a4, kind: navigation}  # b115 pseudo-heading: 1.3
+definitions:
+  - {record: mtsam-l07, section: m-f0449e6b}
+  - {record: rd01, section: m-f0449e6b}
+  - {record: rt02, section: m-f0449e6b}
+  - {record: rt05, section: m-f0449e6b}
+  - {record: architectural-separation-principle, section: m-71fdf1cf}
+  - {record: behavioural-intelligence-overlay, section: m-71fdf1cf}
+  - {record: block-trade-behavioural-analysis, section: m-71fdf1cf}
+  - {record: convergence-gate, section: m-71fdf1cf}
+  - {record: core-regulatory-position, section: m-71fdf1cf}
+  - {record: five-layer-architecture, section: m-71fdf1cf}
+  - {record: five-pillar-fsma-argument, section: m-71fdf1cf}
+  - {record: language-governance, section: m-71fdf1cf}
+  - {record: primary-signal-generation-layer, section: m-71fdf1cf}
+  - {record: alert-abstraction-layer, section: m-b7d82c27}
+  - {record: anonymity-attribution-narrative, section: m-b7d82c27}
+  - {record: automated-narrative-generation, section: m-b7d82c27}
+  - {record: client-portfolio-order-flow-intelligence, section: m-b7d82c27}
+  - {record: correlated-instrument-pair, section: m-b7d82c27}
+  - {record: cross-venue-surveillance-feed, section: m-b7d82c27}
+  - {record: futures-position-intelligence, section: m-b7d82c27}
+  - {record: isgo-02, section: m-b7d82c27}
+  - {record: market-making-explanation-category, section: m-b7d82c27}
+  - {record: mts-trades, section: m-b7d82c27}
+  - {record: mtsam-api-stack, section: m-b7d82c27}
+  - {record: otc-positions-repo-intelligence, section: m-b7d82c27}
+  - {record: supervisory-challenge-pre-emption, section: m-b7d82c27}
+  - {record: three-output-integration, section: m-6c1a3dba}
+additions:
+  - section: m-62d51646
+    form: ai-addition-section
+    text: |
+      > [AI addition] This section was written to introduce the document; it is
+      > not derived from a single source passage.
+
+      This document specifies the MTSAM Institution Calibration Layer, which
+      calibrates the Universal Core Engine (Document 1) and the Sovereign
+      Government Bond Sector Intelligence Pack (Document 2) for the MTS
+      Associated Markets interdealer venue. It is Document 3 of 3 and is read
+      last.
+
+      The document is organised general to specific. Section 1 holds the
+      regulatory positioning framework of source Section 0: how the surveillance
+      architecture is presented and defended before FSMA — the five-pillar
+      argument, the layered architecture narrative, and the approved and prohibited
+      formulations. Section 2 holds the market structure material of source
+      Section 1: the four-layer data architecture and its formally removed data
+      categories, the venue's key characteristics, the anonymous quoting
+      framework, and the new surveillance gap the source records. Section 3 holds document
+      control: the document reference table, the v22 change note, and the source
+      section banners. Terms used across several sections are defined directly
+      below this overview; terms local to one section are defined at the top of
+      that section; terms shared with the other documents of the set are defined
+      in the glossary, which is read first.
+
+      This extract contains source Sections 0 and 1 only; the v22 change note in
+      Section 3 summarises the Section 11 material that is not part of this
+      extract.
+exceptions:
+  - title: "Version skew carried, not harmonised"
+    where: eval/golden/mcl-rulings.md §1
+  - title: "Source defects carried verbatim (B-1 candidates)"
+    where: eval/golden/mcl-rulings.md §2
+  - title: "Head names Section 11 this extract does not contain"
+    where: eval/golden/mcl-rulings.md §3
+  - title: "Deviation: no generated navigation"
+    where: eval/golden/mcl-rulings.md §4

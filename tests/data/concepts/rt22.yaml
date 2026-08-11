@@ -1,0 +1,53 @@
+id: rt22
+term: RT22
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [M]
+definition: >-
+  Alert code RT22: Pre-stress liquidity withdrawal.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.2 The Five-Layer Architecture for FSMA"
+    para_hash: sha256:0745d53ca948ecdb4cf17397286d15fb2384655b481173996cb6243f56094c49
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "0.3 Language Governance --- Approved and Prohibited Formulations"
+    para_hash: sha256:58be287e3c06228d180c62b54ef9efec4efcae23387d97da259c010d669a3dd8
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - alert
+  - pre-stress-liquidity-withdrawal
+flags: []
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Not an implemented alert: the §0.1 RT08
+  row notes 'Primary detection pathway for pre-stress manipulation given
+  RT22 is not yet implemented' — see [[rt08]]. Definition assembled from
+  the §0.2 Layer 4 naming appositive; that row continues 'This layer is
+  the only pathway to its full detection — RT08 provides compensating
+  coverage, not equivalent replacement' and is 'Addressable through
+  MTSAM-L07 remediation' ([[mtsam-l07]], [[five-layer-architecture]]). The
+  §0.3 row fixes the approved framing: 'RT08 provides compensating
+  coverage for the absent RT22 alert' and 'RT08 detects stress events — it
+  does not detect the anticipatory withdrawal that causes them' — see
+  [[language-governance]]. Placement MCL: the surface occurs in M only
+  (7 occurrences; 0 in U, 0 in S, and 0 in (P) — unlike RT02 and RT05,
+  this code has no prototype presence at all, so the (P)-promotion
+  rationale of the earlier RT*/RD* re-placement ruling never applied to
+  it). Nick ruled 2026-07-30, on the placement findings of the first
+  `detangle validate` run, that the standard rule governs on the corpus
+  we have. Expected to be revisited against the full documents, where a
+  second component blueprint may well use it.

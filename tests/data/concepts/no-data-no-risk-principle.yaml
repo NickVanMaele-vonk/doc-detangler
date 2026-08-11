@@ -1,0 +1,28 @@
+id: no-data-no-risk-principle
+term: no-data-no-risk principle
+aliases: []
+status: candidate
+superseded_by: null
+placement: UCE
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "Front matter"
+    para_hash: sha256:acc935a86cb5fffefabcc77eefb9b0749d3a4905b5a38ab6b58df338e2f226b0
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: keep all for now - revisit usefullness as design specifications evolve (Nick, candidate-terms-merged.md §3; author-as-is ruling 2026-07-29)"
+notes: >-
+  Single-document term (§3 bulk). Orphan: name-checked once in the Part
+  XVI contents row — 'Participant-Day Risk Profile, no-data-no-risk
+  principle, synthetic testing, ISGO.' — and never expanded; Part XVI
+  exists only as this one-line summary in the shortened corpus. See
+  [[isgo]]. Participant-Day Risk Profile (PDRP) is a glossary-queue term
+  (§7b promotion) with no record yet.

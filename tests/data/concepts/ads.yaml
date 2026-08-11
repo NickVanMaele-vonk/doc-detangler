@@ -1,0 +1,27 @@
+id: ads
+term: ADS
+aliases: []
+status: candidate
+superseded_by: null
+placement: glossary
+used_in: [U]
+definition: null
+source:
+  - doc: samples/blueprint-UCE-shortened.md
+    section: "II.1 Pipeline Overview"
+    para_hash: sha256:f22a48f4de51b08afc6567e39c97cfb06403ad408eb4128d4932a10e984eb58e
+    origin: corpus
+    verified_against:
+      git_blob: 4cae72dece7638c1ddec8206a3c6a24610196de0
+      stated_version: "Version 29 | June 2026"
+assurance: null
+depends_on: []
+flags: [orphan]
+conflict: null
+review: "Decision: dangling code families, sub-metrics and singletons warrant records (Nick, 2026-07-30, ruling on the closing-pass dangling list)"
+notes: >-
+  Authored per the 2026-07-30 dangling-list ruling. Orphan: never expanded
+  or defined (C2). Sole usage, step 11c row: 'For quote-domain signals
+  (where ADS/QBRS is the primary scoring dimension): MWBR' — the same span
+  that anchors [[quote-domain-signal]]. Cf. [[quote-behaviour-risk-score]]
+  (QBRS), which S expands.

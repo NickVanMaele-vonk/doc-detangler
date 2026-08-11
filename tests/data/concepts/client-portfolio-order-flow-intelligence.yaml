@@ -1,0 +1,44 @@
+id: client-portfolio-order-flow-intelligence
+term: Client Portfolio / Order Flow Intelligence
+aliases: []
+status: candidate
+superseded_by: null
+placement: MCL
+used_in: [M]
+definition: >-
+  Any feed of client order books, pending RFQ flows, client portfolio
+  positions, or institutional flow data received by dealers outside the MTS
+  anonymous order book.
+source:
+  - doc: samples/blueprint-MCL-shortened.md
+    section: "1.0.1 Formally Removed Data Categories"
+    para_hash: sha256:1856f8fe314e927af67216bdd4b6eca344123778795bb44b45cab7d597031eb3
+    origin: corpus
+    verified_against:
+      git_blob: 71b9d9520ea205c72208fcc5d090b744f1e3e43b
+      stated_version: "v21"
+assurance:
+  author: assistant
+  approved_by: null
+  pr: null
+depends_on:
+  - mts-spa
+flags: []
+conflict: null
+review: >-
+  Decision: mint the four Formally Removed Data Categories as records, as
+  values of their master term (Nick, in-session ruling 2026-07-30;
+  candidate-terms-merged.md §4 item 18)
+notes: >-
+  Row 4 of the four removed-category entries in [[removal-register]]; the
+  definition is the row's "Description" cell verbatim. MTSAM Limitation
+  cell: "MTSAM-L11: RFQ order flow absent." — see [[mtsam-l11]]. Removal
+  Rationale and Residual Treatment cell, verbatim: "Removed. MTSAM has no
+  access to dealer client books or pending RFQ flows. The SB-30 misuse of
+  confidential order information archetype uses a market footprint
+  detection approach based solely on MTS trade timing." This row is the
+  scoping site for [[sb-30]], which already anchors its M definition on
+  this block. Sense-collision edge, kept as textual truth and flagged: the
+  definition's "MTS anonymous order book" matches the [[mts-spa]] alias
+  "MTS", but the anonymous book is MTSAM's venue — see
+  [[mts-associated-markets]] and Nick's P-2 ruling 2026-07-30.

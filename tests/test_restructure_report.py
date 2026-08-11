@@ -301,7 +301,7 @@ def test_the_real_plan_reports_the_5_3_baseline_of_nine_clusters():
     from detangle.restructure.parity import measure
     from detangle.restructure.report import build
 
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parent / "data"
     config = Config.load(root, None)
     registry = config.registry()
     plan, findings = load_plan(root / "eval" / "golden" / "uce.plan.yaml", root)
