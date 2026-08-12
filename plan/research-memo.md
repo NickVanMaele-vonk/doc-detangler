@@ -595,7 +595,7 @@ three columns are the Phase 2 research position, kept as written.
 | Coverage checking | **bidirectional RTM** framing (ISO 29148, R3) | **none exists** | ~~per-claim IDs + MiniCheck run in reverse~~ | Per-claim hash-anchored IDs + exact normalised-text matching; the residue is reported **unscored**, not model-scored |
 | Precision preservation (C7) | — | — | token-multiset diff | Built as the criterion-5 `token-parity` check inside `restructure` |
 | Index generation | — | — | trivial | Not built — waits on the document bodies (step 3.6) |
-| PR integration | Azure DevOps REST 7.1 thread model | **`azure-devops` Python SDK `GitClient`** (MIT, R3) | finding→thread mapping; branch policy is the merge gate | Not built (Phase 8). Development ran on **GitHub** with `protect-main` as the branch policy until 2026-08-11; the project now moves into Azure DevOps (`MTSAM-docs/detangler`), which is the same host Phase 8 targets |
+| PR integration | Azure DevOps REST 7.1 thread model | **`azure-devops` Python SDK `GitClient`** (MIT, R3) | finding→thread mapping; branch policy is the merge gate | Not built (Phase 8). Development runs on **GitHub** with `protect-main` as the branch policy |
 
 ---
 

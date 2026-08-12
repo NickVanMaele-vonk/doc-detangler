@@ -23,19 +23,12 @@ Use the following places as master system:
 Do not restate in this file what the other files own. 
 In particular: no session logs, no counts a command can compute (backlog B-2), no design rationale that belongs in `plan/ARCHITECTURE.md`, no list of software building steps.
 
-## What this project is
+## What this repository is
 
 Detangle — an agent/pipeline that turns convoluted markdown specifications
 into a logically structured five-document set. 
 
-The project root is the directory holding `detangle.toml` — in the
-Azure DevOps monorepo that is `MTSAM-docs/detangler/`, not the repository
-root. Everything below applies to this subtree only; sibling directories in
-`MTSAM-docs` are other people's documents and none of these rules (or
-prohibitions) govern them. Run every command in this file from the project
-root.
-
-The project holds 
+The repo holds 
 - the normative specification (`plan/`), 
 - a read-only set of examples (sometimes calles "source corpus") (`samples/`),
 - the canonical Phase 3 data (`concepts/`, `registers/`), 
@@ -54,15 +47,12 @@ Decision 3, deferred by Nick 2026-08-07; backlog B-9).
 
 ## Commands
 
-Everything is git + Azure Repos PRs (`az repos pr create` or the web UI —
-`gh` only talks to GitHub), plus the package's own tooling:
+Everything is git + `gh`, plus the package's own tooling:
 
 ```bash
-git checkout -b detangler/<area>-<slug>   # areas in use: plan, work, samples, src;
-                                       # prefixed so branches don't collide with
-                                       # the rest of MTSAM-docs
-git add … && git commit                # then, every change lands via PR — see C4:
-az repos pr create --target-branch main --source-branch <branch>
+git checkout -b <area>/<slug>          # areas in use: plan/, work/, samples/, src/
+git add … && git commit                # then:
+gh pr create --base main               # every change lands via PR — see C4
 
 python3 -m venv .venv                  # system python is externally-managed
 .venv/bin/pip install -e ".[dev]"      # editable install, pytest + ruff
@@ -118,7 +108,7 @@ error. **`0` and `1` are verdicts; `2` is the absence of one** — never read `2
 as "no findings". Any unexpected exception exits `2`, never `1`, because branch
 policy reads `1` as a completed run that found things. Full table in the README.
 
-`azure-pipelines.yml` runs four jobs on every PR to `main` — tests+lint,
+`.github/workflows/ci.yml` runs four jobs on every PR to `main` — tests+lint,
 `validate`, `graph --check`, and `lift --check` — each as its own job, so a
 red run names the gate that failed. `verify` is deliberately **not** a gate (ADR-003 D5,
 reaffirmed by ADR-004 D7): every check it raises awaits a human disposition, so
@@ -126,9 +116,9 @@ blocking merge on one turns a review prompt into a hard stop. It runs at
 `param-full-verify-cadence` — every re-run, release tags additionally — not
 per PR.
 
-Branch naming follows the areas above (`detangler/plan-add-section-ids`,
-`detangler/work-upd-candidate-terms`, `detangler/src-validate-cmd`). PRs are
-merged by Nick, not by the assistant.
+Branch naming follows the areas above (`plan/add-section-ids`,
+`work/upd-candidate-terms`, `samples/new`, `src/validate-cmd`). PRs are merged
+by Nick, not by the assistant.
 
 `concept-graph.yaml` is derived: never hand-edit it, and regenerate it in the
 same PR as any change to a record's `depends_on`, to `registers/cycles.yaml`,
