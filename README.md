@@ -10,6 +10,15 @@ At times, supplied requirements documentation is dense and detail-first:
 - cryptic terms are used before they are introduced
 Representative examples: the `./samples/blueprint-*-shortened.md` files.
 
+Doc detangler takes the following input: 
+- source documents -> these will be restructured
+- reference documents: will be consulted as context and definitions sources
+
+Doc detangler generates the following output: 
+- restructured source documents: order of text changed so that every term is defined before it is used
+- glossary: for definitions of terms occurring in more than one document
+- index: where each term is used in the documents
+
 ## Approach
 
 A concept dependency graph drives the pipeline: extract domain terms, record
